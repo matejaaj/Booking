@@ -9,9 +9,9 @@ namespace BookingApp.Model
 {
     public class Location : ISerializable
     {
-        int locationId;
-        string City { get; set; }
-        string Country { get; set; }
+        public int locationId;
+        public string City { get; set; }
+        public string Country { get; set; }
 
         public Location() { }
         public Location(string city, string country)
