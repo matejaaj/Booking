@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Model
 {
-    public class Location : ISerializable
+     class Location : ISerializable
     {
         public int locationId;
         public string City { get; set; }
