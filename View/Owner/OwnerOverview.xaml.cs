@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BookingApp.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,13 +21,21 @@ namespace BookingApp.View.Owner
     /// </summary>
     public partial class OwnerOverview : Window
     {
-        public OwnerOverview()
+        public User LoggedInOwner { get; set; }
+
+        public static ObservableCollection<Accommodation> Accommodations { get; set; }
+        public OwnerOverview(User owner)
         {
             InitializeComponent();
+            DataContext = this;
+            LoggedInOwner = owner;
+            Accommodations = new ObservableCollection<Accommodation>();
         }
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
         {
+            AccommodationForm accommodationForm = new AccommodationForm(LoggedInOwner);
+            accommodationForm.Show();
         }
     }
 }
