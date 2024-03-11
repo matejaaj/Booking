@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Model
 {
-    internal class Language : ISerializable
+    public class Language : ISerializable
     {
          public int languageId;
         
