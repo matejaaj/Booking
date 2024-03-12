@@ -23,10 +23,11 @@
             <DataGrid ItemsSource="{Binding Comments}"
                   SelectedItem="{Binding Path=SelectedComment}"
                   IsReadOnly="True" SelectionMode="Single" 
-              AutoGenerateColumns="False" Height="325" HeadersVisibility="Column" FontSize="13">
+              AutoGenerateColumns="False" Height="325" HeadersVisibility="Column" FontSize="13" SelectionChanged="DataGrid_SelectionChanged">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Creation time" Binding="{Binding CreationTime}" Width="200"/>
-                    <DataGridTextColumn Header="Text" Binding="{Binding Text}" Width="*"/>
+                    <DataGridTextColumn Header="Adresa polaska" Binding="{Binding CreationTime}" Width="200"/>
+                    <DataGridTextColumn Header="Krajnja destinacija" Binding="{Binding Text}" Width="200"/>
+                    <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Text}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
@@ -35,7 +36,7 @@
             <Button Click="ShowCreateVehicleForm">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/add.png" Width="20" Height="25"/>
-                    <TextBlock Text="Create" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="Register Vehicle" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>

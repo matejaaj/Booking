@@ -33,5 +33,10 @@ namespace BookingApp.View.Driver
             VehicleForm vehicleForm = new VehicleForm();
             vehicleForm.Show();
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
