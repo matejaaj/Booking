@@ -1,7 +1,9 @@
 ﻿using BookingApp.Model;
 using BookingApp.Repository;
 using BookingApp.View.Driver;
+using BookingApp.View.Guest;
 using BookingApp.View.Owner;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -51,8 +53,31 @@ namespace BookingApp.View
             {
                 if(user.Password == txtPassword.Password)
                 {
-                    DriverOverview commentsOverview = new DriverOverview();
-                    commentsOverview.Show();
+                    switch (user.Role)
+                    {
+                        case Role.OWNER:
+                            OwnerOverview ownerOverview = new OwnerOverview(user);
+                            ownerOverview.Show();
+                            break;
+                        case Role.GUEST:
+                            GuestOverview guestOverview = new GuestOverview();
+                            guestOverview.Show();
+                            break;
+                        case Role.GUIDE:
+                            
+                            break;
+                        case Role.TOURIST:
+                            
+                            break;
+                        case Role.DRIVER:
+                            DriverOverview driverOverview = new DriverOverview();
+                            driverOverview.Show();
+                            break;
+                        default:
+                            CommentsOverview commentsOverview = new CommentsOverview(user);
+                            commentsOverview.Show();
+                            break;
+                    }
                     Close();
                 } 
                 else
