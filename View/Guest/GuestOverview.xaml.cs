@@ -22,24 +22,6 @@ namespace BookingApp.View.Guest
     /// <summary>
     /// Interaction logic for GuestOverview.xaml
     /// </summary>
-    public class GetLocationConverter : IValueConverter
-    {
-        private readonly LocationRepository _locationRepository = new LocationRepository();
-
-        public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value != null && value is int locationId)
-            {
-                return _locationRepository.GetLocationById(locationId);
-            }
-            return null;
-        }
-        public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
-    }
     public class GuestOverviewViewModel : INotifyPropertyChanged
     {
         private string _searchName;
@@ -120,27 +102,10 @@ namespace BookingApp.View.Guest
             _repository = new AccommodationRepository();
             Accommodations = new ObservableCollection<Accommodation>(_repository.GetAll());
             ViewModel = new GuestOverviewViewModel();
-            ((CollectionViewSource)Resources["FilteredAccommodations"]).Filter += FilterAccommodations;
+           
         }
 
-        private void FilterAccommodations(object sender, FilterEventArgs e)
-        {
-            Accommodation accommodation = e.Item as Accommodation;
-            if (accommodation != null)
-            {
-                string searchText = ViewModel.SearchName;
-                if (searchText != null && searchText.Length > 0)
-                {
-                    if (accommodation.Name.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        e.Accepted = true;
-                        return;
-                    }
-                }
-            }
-
-            e.Accepted = false;
-        }
+      
 
         /* public void SearchingAccommodations()
          {
