@@ -102,6 +102,7 @@ namespace BookingApp.View.Driver
             Vehicle newVehicle = new Vehicle(SelectedLocation.locationId, MaxPassengers,SelectedLanguage.languageId);
             Vehicle savedVehicle = _repository.Save(newVehicle);
             DriverOverview.Vehicles.Add(savedVehicle);
+            Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

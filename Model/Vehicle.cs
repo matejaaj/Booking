@@ -11,14 +11,11 @@ namespace BookingApp.Model
     public class Vehicle : ISerializable
     {
         public int VehicleId { get; set; }
-        public Location Location { get; set; }
-
-        public int locationId {  get; set; }
+        public int LocationId { get; set; }
 
         public int MaxPassengers { get; set; }
 
-        public Language Language { get; set; }
-        public int languageId {  get; set; }
+        public int LanguageId { get; set; }
 
         public List<string> imageSource;
         
@@ -29,23 +26,23 @@ namespace BookingApp.Model
 
         public Vehicle( int locationId, int maxPassengers, int languageId)
         {
-            this.locationId = locationId;
+            LocationId = locationId;
             MaxPassengers = maxPassengers;
-            this.languageId = languageId;
+            LanguageId = languageId;
             imageSource = new List<string>();
         }
 
         public void FromCSV(string[] values)
         {
             VehicleId = Convert.ToInt32(values[0]);
-            Location = new Location() { locationId = Convert.ToInt32(values[1]) };
+            LocationId = Convert.ToInt32(values[1]);
             MaxPassengers = Convert.ToInt32(values[2]);
-            Language = new Language() { languageId = Convert.ToInt32(values[3]) };
+            LanguageId = Convert.ToInt32(values[3]);
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { VehicleId.ToString(), Location.locationId.ToString(), MaxPassengers.ToString(), Language.languageId.ToString() };
+            string[] csvValues = { VehicleId.ToString(), LocationId.ToString(), MaxPassengers.ToString(), LanguageId.ToString() };
             return csvValues;
         }
     }
