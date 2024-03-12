@@ -3,97 +3,23 @@ using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace BookingApp.View.Guest
 {
-    /// <summary>
-    /// Interaction logic for GuestOverview.xaml
-    /// </summary>
-    public class GuestOverviewViewModel : INotifyPropertyChanged
-    {
-        private string _searchName;
-        public string SearchName
-        {
-            get { return _searchName; }
-            set
-            {
-                _searchName = value;
-                OnPropertyChanged(nameof(SearchName));
-            }
-        }
-
-        private string _searchLocation;
-        public string SearchLocation
-        {
-            get { return _searchLocation; }
-            set
-            {
-                _searchLocation = value;
-                OnPropertyChanged(nameof(SearchLocation));
-            }
-        }
-
-        private string _searchType;
-        public string SearchType
-        {
-            get { return _searchType; }
-            set
-            {
-                _searchType = value;
-                OnPropertyChanged(nameof(SearchType));
-            }
-        }
-
-        private int _searchGuestNumber;
-        public int SearchGuestNumber
-        {
-            get { return _searchGuestNumber; }
-            set
-            {
-                _searchGuestNumber = value;
-                OnPropertyChanged(nameof(SearchGuestNumber));
-            }
-        }
-
-        private int _searchReservationDays;
-        public int SearchReservationDays
-        {
-            get { return _searchReservationDays; }
-            set
-            {
-                _searchReservationDays = value;
-                OnPropertyChanged(nameof(SearchReservationDays));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
     public partial class GuestOverview : Window
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
+        public List<Location> locations { get; set; }
+        public string SelectedLocation { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
-        public GuestOverviewViewModel ViewModel { get; set; }
         public User LoggedInUser { get; set; }
 
         private readonly AccommodationRepository _repository;
+        private readonly LocationRepository _locationRepository;
         public GuestOverview(User guest)
         {
             InitializeComponent();
@@ -101,19 +27,47 @@ namespace BookingApp.View.Guest
             LoggedInUser = guest;
             _repository = new AccommodationRepository();
             Accommodations = new ObservableCollection<Accommodation>(_repository.GetAll());
-            ViewModel = new GuestOverviewViewModel();
-           
+            _locationRepository = new LocationRepository();
+            locations = _locationRepository.GetAll();
+            ButtonSearch.Click += ButtonSearch_Click;
         }
 
-      
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            if (ValidateFields())
+            {
+                string name = NameTextBox.Text.Trim();
+                string locationString = SelectedLocation;
+                int locationId = 0;
+                string type = ((ComboBoxItem)TypeCmbBox.SelectedItem).Content.ToString();
+                int guests = Convert.ToInt32(GuestsTextBox.Text);
+                int days = Convert.ToInt32(DaysTextBox.Text);
 
-        /* public void SearchingAccommodations()
-         {
-             if (searchingCriteria)
-             {
+                foreach (var loc in locations)
+                {
+                    if (loc.ToString().Equals(locationString))
+                        locationId = loc.locationId;
+                }
 
-             }
-         }*/
+                AccommodationsDataGrid.ItemsSource = Accommodations.Where(accommodation =>
+                    accommodation.Name.ToLower().Contains(name.ToLower()) &&
+                    accommodation.MaxGuests >= guests &&
+                    accommodation.MinReservations <= days &&
+                    accommodation.Type.ToString().ToLower().Equals(type.ToLower()) &&
+                    accommodation.LocationId == locationId
+                    );
+            }
+
+        }
+
+        private bool ValidateFields()
+        {
+            return !string.IsNullOrWhiteSpace(NameTextBox.Text) &&
+                                     !string.IsNullOrWhiteSpace(GuestsTextBox.Text) &&
+                                     !string.IsNullOrWhiteSpace(DaysTextBox.Text) &&
+                                     TypeCmbBox.SelectedItem != null &&
+                                     !string.IsNullOrWhiteSpace(SelectedLocation);
+        }
 
     }
 }
