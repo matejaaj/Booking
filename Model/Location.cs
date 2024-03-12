@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace BookingApp.Model
 {
     public class Location : ISerializable
+
     {
         public int locationId;
         public string City { get; set; }
@@ -31,6 +32,11 @@ namespace BookingApp.Model
         {
             string[] csvValues = { locationId.ToString(), City, Country };
             return csvValues;
+        }
+
+        public override string ToString()
+        {
+            return $"{City}, {Country}";
         }
     }
 }
