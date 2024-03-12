@@ -6,7 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:BookingApp.View.Owner"
         mc:Ignorable="d"
-        Title="Create new accommodation" Height="225" Width="400" WindowStartupLocation="CenterScreen">
+        Title="Create new accommodation" Height="241" Width="400" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -31,13 +31,15 @@
             </Grid.RowDefinitions>
 
             <Label Content="Name" Grid.Row="0"/>
-            <TextBox Name="txtIme" Text="{Binding Path=Accommodation.Name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
+            <TextBox Name="txtName" Text="{Binding Path=AccommodationName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
 
             <Label Content="Location" Grid.Row="1"/>
-            <TextBox Name="txtPrezime" Text="{Binding Path=Accommodation.Location, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5"/>
+            <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding locations}" SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Width="178" Margin="0,0,0,5">
+                
+            </ComboBox>
 
             <Label Content="Type" Grid.Row="2"/>
-            <ComboBox Name="cmbStatusStudenta"  SelectedItem="{Binding Path=Accommodation.Type, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="178" Margin="0,0,0,5">
+            <ComboBox Name="cmbType" IsTextSearchEnabled="True"  SelectedItem="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="178" Margin="0,0,0,5">
                 <ComboBox.ItemsSource>
                     <x:Array Type="{x:Type sys:String}">
                         <sys:String>Apartment</sys:String>
@@ -48,13 +50,13 @@
             </ComboBox>
 
             <Label Content="Capacity" Grid.Row="3"/>
-            <TextBox Name="txtAdresa" Text="{Binding Path=Accommodation.MaxGuests, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5"/>
+            <TextBox Name="txtCapacity" Text="{Binding Path=MaxGuests, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5"/>
 
             <Label Content="Minimum reservation days" Grid.Row="4"/>
-            <TextBox Name="txtKontakt" Text="{Binding Path=Accommodation.MinReservations, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5"/>
+            <TextBox Name="txtMinimumReservationDays" Text="{Binding Path=MinReservations, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5"/>
 
             <Label Content="Cancelation thershold" Grid.Row="5"/>
-            <TextBox Name="txtEmail" Text="{Binding Path=Accommodation.CancelThershold, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"/>
+            <TextBox Name="txtCancelThreshold" Text="{Binding Path=CancelThershold, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"/>
         </Grid>
 
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">
