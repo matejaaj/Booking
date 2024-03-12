@@ -1,6 +1,7 @@
 ﻿using BookingApp.Model;
 using BookingApp.Repository;
 using BookingApp.View.Driver;
+using BookingApp.View.Guest;
 using BookingApp.View.Owner;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -51,7 +52,7 @@ namespace BookingApp.View
             {
                 if(user.Password == txtPassword.Password)
                 {
-                    DriverOverview commentsOverview = new DriverOverview();
+                    GuestOverview commentsOverview = new GuestOverview(user);
                     commentsOverview.Show();
                     Close();
                 } 
