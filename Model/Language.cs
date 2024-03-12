@@ -1,6 +1,7 @@
 ﻿using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace BookingApp.Model
 {
     public class Language : ISerializable
     {
-         public int languageId;
+        public int languageId;
         
         string Name {  get; set; }
 
@@ -31,6 +32,10 @@ namespace BookingApp.Model
         {
             string[] csvValues = { languageId.ToString(), Name };
             return csvValues;
+        }
+        public override string ToString()
+        {
+            return $"{Name}";
         }
     }
 }

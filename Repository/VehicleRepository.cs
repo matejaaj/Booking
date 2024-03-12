@@ -10,7 +10,7 @@ namespace BookingApp.Repository
 {
     internal class VehicleRepository
     {
-        private const string FilePath = "../../../Resources/Data/vehicle.csv";
+        private const string FilePath = "../../../Resources/Data/vehicles.csv";
 
         private readonly Serializer<Vehicle> _serializer;
 
