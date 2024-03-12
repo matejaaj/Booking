@@ -8,28 +8,36 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace BookingApp.Model
 {
-    internal class Vehicle : ISerializable
+    public class Vehicle : ISerializable
     {
-        public int Id { get; set; }
-        Location Location { get; set; }
+        public int VehicleId { get; set; }
+        public Location Location { get; set; }
+
+        public int locationId {  get; set; }
 
         public int MaxPassengers { get; set; }
 
-        Language Language { get; set; }
+        public Language Language { get; set; }
+        public int languageId {  get; set; }
 
+        public List<string> imageSource;
         
-        public Vehicle() { }
-
-        public Vehicle( Location location, int maxPassengers, Language language)
+        public Vehicle() 
         {
-            Location = location;
+            imageSource = new List<string>();
+        }
+
+        public Vehicle( int locationId, int maxPassengers, int languageId)
+        {
+            this.locationId = locationId;
             MaxPassengers = maxPassengers;
-            Language = language;
+            this.languageId = languageId;
+            imageSource = new List<string>();
         }
 
         public void FromCSV(string[] values)
         {
-            Id = Convert.ToInt32(values[0]);
+            VehicleId = Convert.ToInt32(values[0]);
             Location = new Location() { locationId = Convert.ToInt32(values[1]) };
             MaxPassengers = Convert.ToInt32(values[2]);
             Language = new Language() { languageId = Convert.ToInt32(values[3]) };
@@ -37,7 +45,7 @@ namespace BookingApp.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Location.locationId.ToString(), MaxPassengers.ToString(), Language.languageId.ToString() };
+            string[] csvValues = { VehicleId.ToString(), Location.locationId.ToString(), MaxPassengers.ToString(), Language.languageId.ToString() };
             return csvValues;
         }
     }
