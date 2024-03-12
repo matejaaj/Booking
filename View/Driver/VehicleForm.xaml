@@ -25,16 +25,18 @@
             </Grid.RowDefinitions>
 
             <Label Content="Location" Grid.Row="0"/>
-            <TextBox Name="txtLokacija" Text="{Binding Path=Vehicle.Location, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
+            <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding locations}" SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Width="178" Margin="0,0,0,5">
 
+            </ComboBox>
+            
             <Label Content="Passenger Capacity" Grid.Row="1"/>
-            <TextBox Name="txtMax" Text="{Binding Path=Vehicle.MaxPassengers, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5"/>
+            <TextBox Name="txtMax" Text="{Binding Path=MaxPassengers, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5"/>
 
 
             <Label Content="Language" Grid.Row="2"/>
-            <TextBox Name="txtAdresa" Text="{Binding Path=Vehicle.Language, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5"/>
-
-          </Grid>
+            <ComboBox Name="cmbLanguage" IsTextSearchEnabled="True" ItemsSource="{Binding languages}" SelectedItem="{Binding Path=SelectedLanguage, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="178" Margin="0,0,0,5">
+            </ComboBox>
+        </Grid>
 
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">
             <Button Name="btnConfirm" Content="Confirm" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />

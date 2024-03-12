@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BookingApp.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +21,17 @@ namespace BookingApp.View.Driver
     /// </summary>
     public partial class DriverOverview : Window
     {
+        public static ObservableCollection<Vehicle> Vehicles { get; set; }
         public DriverOverview()
         {
             InitializeComponent();
+            DataContext = this;
+            Vehicles = new ObservableCollection<Vehicle>();
         }
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
+            VehicleForm vehicleForm = new VehicleForm();
+            vehicleForm.Show();
         }
     }
 }

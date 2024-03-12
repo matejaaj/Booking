@@ -24,40 +24,32 @@ namespace BookingApp.View.Driver
     public partial class VehicleForm : Window
     {
         public User LoggedInUser { get; set; }
-        public List<Location> Locations { get; set; }
-        public List<Language> Languages { get; set; }
-
 
         private readonly VehicleRepository _repository;
+        private readonly LocationRepository _locationRepository;
+        private readonly LanguageRepository _languageRepository;
+        public List<Location> locations { get; set; }
+        public List<Language> languages { get; set; }
 
-        private int _vehicleId;
 
-        public int VehicleId
+
+        private Location _selectedLocation;
+        public Location SelectedLocation
         {
-            get => _vehicleId;
+            get => _selectedLocation;
             set
             {
-                if(value != _vehicleId)
+                if(_selectedLocation != value)
                 {
-                    _vehicleId = value;
+                    _selectedLocation = value;
                     OnPropertyChanged();
                 }
             }
+
+
         }
 
-        private Location _locationId;
-        public  Location LocationId
-        {
-            get => _locationId;
-            set
-            {
-                if(value != _locationId)
-                {
-                    _locationId = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+       
 
         private int _maxPassengers;
         public int MaxPassengers
@@ -73,25 +65,29 @@ namespace BookingApp.View.Driver
             }
         }
 
-        private Language _languageId;
-        public Language LanguageId
+        private Language _selectedLanguage;
+        public Language SelectedLanguage
         {
-            get => _languageId;
+            get => _selectedLanguage;
             set
             {
-                if (value != _languageId)
+                if (_selectedLanguage != value)
                 {
-                    _languageId = value;
+                    _selectedLanguage = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        public VehicleForm(User driver)
+        public VehicleForm()
         {
             InitializeComponent();
             DataContext = this;
-            LoggedInUser = driver;
+            _repository = new VehicleRepository();
+            _languageRepository = new LanguageRepository();
+            languages = _languageRepository.GetAll();
+            _locationRepository = new LocationRepository();
+            locations = _locationRepository.GetAll();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -103,12 +99,15 @@ namespace BookingApp.View.Driver
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-
+            Vehicle newVehicle = new Vehicle(SelectedLocation.locationId, MaxPassengers,SelectedLanguage.languageId);
+            Vehicle savedVehicle = _repository.Save(newVehicle);
+            DriverOverview.Vehicles.Add(savedVehicle);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
+
     }
 }

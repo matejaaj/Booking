@@ -8,24 +8,30 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace BookingApp.Model
 {
-    internal class Vehicle : ISerializable
+    public class Vehicle : ISerializable
     {
         public int VehicleId { get; set; }
         public Location Location { get; set; }
 
+        public int locationId {  get; set; }
+
         public int MaxPassengers { get; set; }
 
         public Language Language { get; set; }
+        public int languageId {  get; set; }
 
         public List<string> imageSource;
         
-        public Vehicle() { }
-
-        public Vehicle( Location location, int maxPassengers, Language language)
+        public Vehicle() 
         {
-            Location = location;
+            imageSource = new List<string>();
+        }
+
+        public Vehicle( int locationId, int maxPassengers, int languageId)
+        {
+            this.locationId = locationId;
             MaxPassengers = maxPassengers;
-            Language = language;
+            this.languageId = languageId;
             imageSource = new List<string>();
         }
 
