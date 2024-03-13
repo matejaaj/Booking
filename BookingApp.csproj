@@ -29,4 +29,8 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.SfGrid.WPF" Version="24.2.9" />
+  </ItemGroup>
+
 </Project>

@@ -11,20 +11,22 @@ namespace BookingApp.Model
     public class Vehicle : ISerializable
     {
         public int VehicleId { get; set; }
-        public int LocationId { get; set; }
+        public List<int> LocationId { get; set; }
 
         public int MaxPassengers { get; set; }
 
-        public int LanguageId { get; set; }
+        public List<int> LanguageId { get; set; }
 
         public List<string> imageSource;
         
         public Vehicle() 
         {
+            LocationId = new List<int>();
+            LanguageId = new List<int>();
             imageSource = new List<string>();
         }
 
-        public Vehicle( int locationId, int maxPassengers, int languageId)
+        public Vehicle( List<int> locationId, int maxPassengers, List<int> languageId)
         {
             LocationId = locationId;
             MaxPassengers = maxPassengers;
@@ -35,14 +37,48 @@ namespace BookingApp.Model
         public void FromCSV(string[] values)
         {
             VehicleId = Convert.ToInt32(values[0]);
-            LocationId = Convert.ToInt32(values[1]);
+            foreach (string l in values[1].Split(','))
+            {
+                if (int.TryParse(l, out _))
+                    LocationId.Add(Convert.ToInt32(l));
+            }
             MaxPassengers = Convert.ToInt32(values[2]);
-            LanguageId = Convert.ToInt32(values[3]);
+            foreach(string s in values[3].Split(','))
+            {
+                if(int.TryParse(s,out _))
+                LanguageId.Add(Convert.ToInt32(s));
+            }
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { VehicleId.ToString(), LocationId.ToString(), MaxPassengers.ToString(), LanguageId.ToString() };
+            int last = LanguageId.Last();
+            string lang = "";
+            int lastloc = LocationId.Last();
+            string langloc = "";
+            foreach (int l in LanguageId)
+            {
+                if (last != l)
+                {
+                    lang += l + ",";
+                }
+                else
+                {
+                    lang += l;
+                }  
+            }
+            foreach (int lo in LocationId)
+            {
+                if (lastloc != lo)
+                {
+                    langloc += lo + ",";
+                }
+                else
+                {
+                    langloc += lo;
+                }
+            }
+            string[] csvValues = { VehicleId.ToString(), langloc, MaxPassengers.ToString(), lang };
             return csvValues;
         }
     }
