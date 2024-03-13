@@ -3,6 +3,7 @@ using BookingApp.Repository;
 using BookingApp.View.Driver;
 using BookingApp.View.Guest;
 using BookingApp.View.Owner;
+using BookingApp.View.Tourist;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -67,7 +68,8 @@ namespace BookingApp.View
                             
                             break;
                         case Role.TOURIST:
-                            
+                            ToursOverview tourOverview = new ToursOverview(user);
+                            tourOverview.Show();
                             break;
                         case Role.DRIVER:
                             DriverOverview driverOverview = new DriverOverview();

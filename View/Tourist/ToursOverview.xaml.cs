@@ -45,7 +45,7 @@ namespace BookingApp.View.Tourist
             createTourForm.Show();*/
         }
 
-        private void ShowViewTourForm(object sender, RoutedEventArgs e)
+        private void ShowViewTourForm(object sender, RoutedEventArgs e) 
         {
 /*            if (SelectedTour != null)
             {
@@ -75,6 +75,19 @@ namespace BookingApp.View.Tourist
                     Tours.Remove(SelectedTour);
                 }
             }*/
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedTour == null)
+            {
+                MessageBox.Show("Select tour first.");
+            } else
+            {
+                TourReservationWindow tourReservationWindow = new TourReservationWindow(SelectedTour);
+                tourReservationWindow.Show();
+            }
+
         }
     }
 }

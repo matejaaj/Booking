@@ -25,6 +25,14 @@ namespace BookingApp.Repository
             return _serializer.FromCSV(FilePath);
         }
 
+        public List<TourStartDate> GetAllById(int tourId)
+        {
+            var allTourStartDates = _serializer.FromCSV(FilePath);
+            var filteredTourStartDates = allTourStartDates.Where(tsd => tsd.TourId == tourId).ToList();
+            return filteredTourStartDates;
+        }
+
+
         public TourStartDate Save(TourStartDate tourStartDate)
         {
             tourStartDate.Id = NextId();
