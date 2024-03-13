@@ -45,7 +45,7 @@ namespace BookingApp.View.Guide
                 int minute = int.Parse(startMinute.SelectedItem.ToString());
                 startDate = startDate.AddHours(hour).AddMinutes(minute);
 
-                TourStartDate newStartDate = new TourStartDate(_startDateId, _tourId, _capacity, startDate);
+                TourStartDate newStartDate = new TourStartDate( _tourId, _capacity, startDate);
 
                 _startDates.Add(newStartDate);
 

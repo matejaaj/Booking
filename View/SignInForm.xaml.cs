@@ -61,15 +61,15 @@ namespace BookingApp.View
                             ownerOverview.Show();
                             break;
                         case Role.GUEST:
-                            GuestOverview guestOverview = new GuestOverview();
+                            GuestOverview guestOverview = new GuestOverview(user);
                             guestOverview.Show();
                             break;
                         case Role.GUIDE:
                             
                             break;
                         case Role.TOURIST:
-                            ToursOverview tourOverview = new ToursOverview(user);
-                            tourOverview.Show();
+                            TouristMainWindow touristMainWindow = new TouristMainWindow(user);
+                            touristMainWindow.Show();
                             break;
                         case Role.DRIVER:
                             DriverOverview driverOverview = new DriverOverview();

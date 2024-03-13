@@ -19,9 +19,8 @@ namespace BookingApp.Model
 
         public Tour() { }
 
-        public Tour(int id, string name, string description, int locationId, int languageId, int capacity, float durationHours)
+        public Tour(int id,string name, string description, int locationId, int languageId, int capacity, float durationHours)
         {
-            Id = id;
             Name = name;
             Description = description;
             LocationId = locationId;
