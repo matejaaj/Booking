@@ -1,4 +1,5 @@
 ﻿using BookingApp.Model;
+using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,17 +23,25 @@ namespace BookingApp.View.Driver
     public partial class DriverOverview : Window
     {
         public static ObservableCollection<Vehicle> Vehicles { get; set; }
+
+        public static ObservableCollection<DriveReservation> DriveReservations { get; set; }
+
+        private readonly DriveReservationRepository _repository;
         public DriverOverview()
         {
             InitializeComponent();
             DataContext = this;
             Vehicles = new ObservableCollection<Vehicle>();
+            _repository = new DriveReservationRepository();
+            DriveReservations = new ObservableCollection<DriveReservation>(_repository.GetAll());
+
         }
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
             VehicleForm vehicleForm = new VehicleForm();
             vehicleForm.Show();
         }
+
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

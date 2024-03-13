@@ -20,14 +20,18 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Comments}"
-                  SelectedItem="{Binding Path=SelectedComment}"
-                  IsReadOnly="True" SelectionMode="Single" 
-              AutoGenerateColumns="False" Height="325" HeadersVisibility="Column" FontSize="13" SelectionChanged="DataGrid_SelectionChanged">
+            <DataGrid ItemsSource="{Binding DriveReservations}"
+                      AutoGenerateColumns="False" Height="325" HeadersVisibility="Column" 
+                      FontSize="13" SelectionChanged="DataGrid_SelectionChanged">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Adresa polaska" Binding="{Binding CreationTime}" Width="200"/>
-                    <DataGridTextColumn Header="Krajnja destinacija" Binding="{Binding Text}" Width="200"/>
-                    <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Text}" Width="*"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
+                    <DataGridTextColumn Header="Pickup Location ID" Binding="{Binding PickupLocationId}" Width="120"/>
+                    <DataGridTextColumn Header="Dropoff Location ID" Binding="{Binding DropoffLocationid}" Width="125"/>
+                    <DataGridTextColumn Header="Departure Time" Binding="{Binding DepartureTime, StringFormat='{}{0:MM/dd/yyyy HH:mm:ss}'}" Width="120"/>
+                    <DataGridTextColumn Header="Driver ID" Binding="{Binding DriverId}" Width="80"/>
+                    <DataGridTextColumn Header="Tourist ID" Binding="{Binding TouristId}" Width="80"/>
+                    <DataGridTextColumn Header="Status ID" Binding="{Binding DriveReservationStatusId}" Width="80"/>
+                    <DataGridTextColumn Header="Delay Minutes" Binding="{Binding DelayMinutes}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
