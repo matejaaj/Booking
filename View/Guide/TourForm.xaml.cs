@@ -100,7 +100,7 @@ namespace BookingApp.View.Guide
         }
 
         private string _description;
-        public String Description
+        public string Description
         {
             get => _description;
             set
@@ -157,15 +157,15 @@ namespace BookingApp.View.Guide
 
         private bool ValidateFields()
         {
-            return _capacity > 0 && _description != null && _name != null && _durationHours > 0 && _selectedLanguage != null && _selectedLocation != null
-                && tourStartDates.Count() > 0 && checkpoints.Count() > 0;
+            return _capacity > 0  && _name != null && _durationHours > 0 && _selectedLanguage != null && _selectedLocation != null
+                && tourStartDates.Count() > 0 && checkpoints.Count() > 0 && _description != null;
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             if (ValidateFields())
             {
-                Tour newTour = new Tour(_tourId, _name, _description, _selectedLocation.locationId, _selectedLanguage.languageId, _capacity, _durationHours);
+                Tour newTour = new Tour(_name, _description, _selectedLocation.locationId, _selectedLanguage.languageId, _capacity, _durationHours);
                 _tourRepository.Save(newTour);
 
                 foreach(var image in images)
@@ -196,7 +196,7 @@ namespace BookingApp.View.Guide
         }
         private void btnAddCheckpoints_Click(object sender, RoutedEventArgs e)
         {
-            AddCheckpoint addCheckpointWindow = new AddCheckpoint(checkpoints, _checkpointRepository.NextId(), _tourId);
+            AddCheckpoint addCheckpointWindow = new AddCheckpoint(checkpoints, _tourId);
             addCheckpointWindow.Owner = this;
             addCheckpointWindow.ShowDialog();
         }
@@ -212,7 +212,7 @@ namespace BookingApp.View.Guide
         {
             if(_capacity > 0)
             {
-                AddStartDate addStartDateWindow = new AddStartDate(tourStartDates, _tourStartDateRepository.NextId(), _tourId, _capacity);
+                AddStartDate addStartDateWindow = new AddStartDate(tourStartDates, _tourId, _capacity);
                 addStartDateWindow.Owner = this;
                 addStartDateWindow.ShowDialog();
             }
@@ -238,7 +238,7 @@ namespace BookingApp.View.Guide
 
         private void btnAddImage_Click(object sender, RoutedEventArgs e)
         {
-            AddImage addImageWindow = new AddImage(images, _imageRepository.NextId(), _tourId);
+            AddImage addImageWindow = new AddImage(images, _tourId);
             addImageWindow.Owner = this;
             addImageWindow.ShowDialog(); 
         }

@@ -21,17 +21,15 @@ namespace BookingApp.View.Guide
     public partial class AddStartDate : Window
     {
         private List<TourStartDate> _startDates;
-        private int _startDateId;
         private int _tourId;
         private int _capacity;
-        public AddStartDate(List<TourStartDate> startDates, int startDateId, int tourId, int capacity)
+        public AddStartDate(List<TourStartDate> startDates, int tourId, int capacity)
         {
             InitializeComponent();
             DataContext = this;
             LoadTimeComboboxes();
 
             _tourId = tourId;
-            _startDateId = startDateId;
             _capacity = capacity;
             _startDates = startDates;
         }
@@ -45,7 +43,7 @@ namespace BookingApp.View.Guide
                 int minute = int.Parse(startMinute.SelectedItem.ToString());
                 startDate = startDate.AddHours(hour).AddMinutes(minute);
 
-                TourStartDate newStartDate = new TourStartDate( _tourId, _capacity, startDate);
+                TourStartDate newStartDate = new TourStartDate(_tourId, _capacity, startDate);
 
                 _startDates.Add(newStartDate);
 

@@ -18,15 +18,15 @@ namespace BookingApp.View.Guest
         public Accommodation SelectedAccommodation { get; set; }
         public User LoggedInUser { get; set; }
 
-        private readonly AccommodationRepository _repository;
+        private readonly AccommodationRepository _accommodationRepository;
         private readonly LocationRepository _locationRepository;
         public GuestOverview(User guest)
         {
             InitializeComponent();
             DataContext = this;
             LoggedInUser = guest;
-            _repository = new AccommodationRepository();
-            Accommodations = new ObservableCollection<Accommodation>(_repository.GetAll());
+            _accommodationRepository = new AccommodationRepository();
+            Accommodations = new ObservableCollection<Accommodation>(_accommodationRepository.GetAll());
             _locationRepository = new LocationRepository();
             locations = _locationRepository.GetAll();
             ButtonSearch.Click += ButtonSearch_Click;
@@ -51,7 +51,7 @@ namespace BookingApp.View.Guest
 
                 AccommodationsDataGrid.ItemsSource = Accommodations.Where(accommodation =>
                     accommodation.Name.ToLower().Contains(name.ToLower()) &&
-                    accommodation.MaxGuests >= guests &&
+                    accommodation.MaxGuests >= guests && guests > 0 &&
                     accommodation.MinReservations <= days &&
                     accommodation.Type.ToString().ToLower().Equals(type.ToLower()) &&
                     accommodation.LocationId == locationId

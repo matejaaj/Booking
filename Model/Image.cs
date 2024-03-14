@@ -22,9 +22,8 @@ namespace BookingApp.Model
 
         public Image() { }
 
-        public Image(int id, string path, int entityId, ImageResourceType type)
+        public Image(string path, int entityId, ImageResourceType type)
         {
-            Id = id;
             Path = path;
             EntityId = entityId;
             Type = type;
