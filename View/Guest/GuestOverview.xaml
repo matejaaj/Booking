@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.View.Guest"
         mc:Ignorable="d"
-        Title="GuestOverview" Height="450" Width="800">
+        Title="GuestOverview" Height="450" Width="1000">
     <Window.Resources>
         <local:LocationConverter x:Key="LocationConverter" />
     </Window.Resources>
@@ -33,6 +33,7 @@
             <TextBlock Text="Reservation days:" Margin="10 0 5 0"/>
             <TextBox x:Name="DaysTextBox" Text="" Width="50"/>
         </StackPanel>
+        
         <StackPanel  Grid.Row="1">
             <Button x:Name="ButtonSearch" Content="Search" Margin="50,4,50,13" Click="ButtonSearch_Click" Width="103"/>
         </StackPanel>
@@ -44,16 +45,22 @@
                       SelectedItem="{Binding Path=SelectedAccommodation}"
                       IsReadOnly="True" SelectionMode="Single" 
                       AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13">
+                
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150"/>
                     <DataGridTextColumn Header="Location" Binding="{Binding LocationId, Converter={StaticResource LocationConverter}}" Width="200"/>
                     <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="150"/>
                     <DataGridTextColumn Header="Capacity" Binding="{Binding MaxGuests}" Width="100"/>
-                    <DataGridTextColumn Header="Minimal reservation days" Binding="{Binding MinReservations}" Width="*"/>
+                    <DataGridTextColumn Header="Minimal reservation days" Binding="{Binding MinReservations}" Width="170"/>
+                    <DataGridTemplateColumn Header="Reservation" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Reserve accommodation" Click="ReserveAccommodation_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-
-
     </Grid>
 </Window>

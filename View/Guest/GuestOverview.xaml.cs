@@ -15,8 +15,7 @@ namespace BookingApp.View.Guest
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public List<Location> locations { get; set; }
         public string SelectedLocation { get; set; }
-        public Accommodation SelectedAccommodation { get; set; }
-        public User LoggedInUser { get; set; }
+        public User LoggedInGuest { get; set; }
 
         private readonly AccommodationRepository _accommodationRepository;
         private readonly LocationRepository _locationRepository;
@@ -24,7 +23,7 @@ namespace BookingApp.View.Guest
         {
             InitializeComponent();
             DataContext = this;
-            LoggedInUser = guest;
+            LoggedInGuest = guest;
             _accommodationRepository = new AccommodationRepository();
             Accommodations = new ObservableCollection<Accommodation>(_accommodationRepository.GetAll());
             _locationRepository = new LocationRepository();
@@ -67,6 +66,13 @@ namespace BookingApp.View.Guest
                                      !string.IsNullOrWhiteSpace(DaysTextBox.Text) &&
                                      TypeCmbBox.SelectedItem != null &&
                                      !string.IsNullOrWhiteSpace(SelectedLocation);
+        }
+
+        private void ReserveAccommodation_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedAccommodation = (sender as Button)?.DataContext as Accommodation;
+            AccommodationReservationForm reservationAccommodationWindow = new AccommodationReservationForm(selectedAccommodation, LoggedInGuest);
+            reservationAccommodationWindow.Show();
         }
 
     }
