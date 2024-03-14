@@ -1,5 +1,6 @@
 ﻿using BookingApp.Model;
 using BookingApp.Repository;
+using BookingApp.View.Guide;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +30,7 @@ namespace BookingApp.View.Owner
         private readonly AccommodationRepository _repository;
         private readonly LocationRepository _locationRepository;
         public List<Location> locations { get; set; }
+        public List<Model.Image> images { get; set; }
 
         private string _name;
         public string AccommodationName
@@ -128,6 +130,8 @@ namespace BookingApp.View.Owner
             }
         }
 
+        private int _accommodationId;
+
         public AccommodationForm(User owner)
         {
             InitializeComponent();
@@ -136,6 +140,8 @@ namespace BookingApp.View.Owner
             _repository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
             locations = _locationRepository.GetAll();
+            images = new List<Model.Image>();
+            _accommodationId = _repository.NextId();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -147,11 +153,12 @@ namespace BookingApp.View.Owner
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.locationId, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner);
-            Accommodation savedAccommodation = _repository.Save(newAccommodation);
-            OwnerOverview.Accommodations.Add(savedAccommodation);
-      
-
+            if (ValidateFields())
+            {
+                Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.locationId, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
+                Accommodation savedAccommodation = _repository.Save(newAccommodation);
+                OwnerOverview.Accommodations.Add(savedAccommodation);
+            }
             Close();
         }
 
@@ -168,6 +175,20 @@ namespace BookingApp.View.Owner
                    cmbType.SelectedItem != null &&
                    !string.IsNullOrWhiteSpace(txtCapacity.Text) &&
                    !string.IsNullOrWhiteSpace(txtCancelThreshold.Text);
+        }
+
+        private void btnAddImage_Click(object sender, RoutedEventArgs e)
+        {
+            AddImage addImageWindow = new AddImage(images, _accommodationId, ImageResourceType.ACCOMMODATION);
+            addImageWindow.Owner = this;
+            addImageWindow.ShowDialog();
+        }
+
+        private void btnShowImages_Click(object sender, RoutedEventArgs e)
+        {
+            ShowImages showImagesWindow = new ShowImages(images);
+            showImagesWindow.Owner = this;
+            showImagesWindow.ShowDialog();
         }
     }
 }

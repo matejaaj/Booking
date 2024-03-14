@@ -2,6 +2,7 @@
 using BookingApp.Repository;
 using BookingApp.View.Driver;
 using BookingApp.View.Guest;
+using BookingApp.View.Guide;
 using BookingApp.View.Owner;
 using System;
 using System.ComponentModel;
@@ -64,7 +65,8 @@ namespace BookingApp.View
                             guestOverview.Show();
                             break;
                         case Role.GUIDE:
-                            
+                            GuideOverview guideOverview = new GuideOverview();
+                            guideOverview.Show();
                             break;
                         case Role.TOURIST:
                             

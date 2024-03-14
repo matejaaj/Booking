@@ -6,21 +6,23 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:BookingApp.View.Owner"
         mc:Ignorable="d"
-        Title="Create new accommodation" Height="241" Width="400" WindowStartupLocation="CenterScreen">
+        Title="Create new accommodation" Height="276" Width="436" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="249*"/>
             <ColumnDefinition Width="83*"/>
-            <ColumnDefinition Width="17*"/>
+            <ColumnDefinition Width="68*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="1" Margin="10,10,10,10" Grid.ColumnSpan="2">
+        <Grid Grid.Column="1" Margin="10,10,10,10" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -35,7 +37,7 @@
 
             <Label Content="Location" Grid.Row="1"/>
             <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding locations}" SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Width="178" Margin="0,0,0,5">
-                
+
             </ComboBox>
 
             <Label Content="Type" Grid.Row="2"/>
@@ -57,9 +59,13 @@
 
             <Label Content="Cancelation thershold" Grid.Row="5"/>
             <TextBox Name="txtCancelThreshold" Text="{Binding Path=CancelThershold, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"/>
+
+            <Label Content="Images" Grid.Row="6"></Label>
+            <Button x:Name="btnAddImage" Grid.Row="6" Grid.Column="1" Content="Add image" HorizontalAlignment="Left" Margin="30,1,0,10" Width="90" Click="btnAddImage_Click"></Button>
+            <Button x:Name="btnShowImages" Grid.Row="6" Content="Show Images" Grid.Column="1" HorizontalAlignment="Left" Margin="150,1,0,10" Width="90" Click="btnShowImages_Click"/>
         </Grid>
 
-        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">
+        <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">
             <Button Name="btnConfirm" Content="Confirm" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />
             <Button Name="btnCancel" Content="Cancel" Width="75" Click="btnCancel_Click" />
         </StackPanel>
