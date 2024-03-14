@@ -60,7 +60,7 @@ namespace BookingApp.View
                             ownerOverview.Show();
                             break;
                         case Role.GUEST:
-                            GuestOverview guestOverview = new GuestOverview();
+                            GuestOverview guestOverview = new GuestOverview(user);
                             guestOverview.Show();
                             break;
                         case Role.GUIDE:
