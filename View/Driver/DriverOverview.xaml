@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:BookingApp.View.Driver"
         mc:Ignorable="d"
         Title="DriverOverview" Height="450" Width="800">
+    <Window.Resources>
+        <local:LocationConverterDriver x:Key="LocationConverterDriver" />
+    </Window.Resources>
+    
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,16 +25,25 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Comments}"
-                  SelectedItem="{Binding Path=SelectedComment}"
-                  IsReadOnly="True" SelectionMode="Single" 
-              AutoGenerateColumns="False" Height="325" HeadersVisibility="Column" FontSize="13" SelectionChanged="DataGrid_SelectionChanged">
+            <DataGrid ItemsSource="{Binding DriveReservations}"
+                      AutoGenerateColumns="False" Height="316" HeadersVisibility="Column" 
+                      FontSize="13" SelectionChanged="DataGrid_SelectionChanged"
+                      SelectedItem="{Binding SelectedReservation}"
+                      SelectionMode="Single">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Adresa polaska" Binding="{Binding CreationTime}" Width="200"/>
-                    <DataGridTextColumn Header="Krajnja destinacija" Binding="{Binding Text}" Width="200"/>
-                    <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Text}" Width="*"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
+                    <DataGridTextColumn Header="Pickup Location ID" Binding="{Binding PickupLocationId, Converter={StaticResource LocationConverterDriver}}" Width="140"/>
+                    <DataGridTextColumn Header="Dropoff Location ID" Binding="{Binding DropoffLocationid, Converter={StaticResource LocationConverterDriver}}" Width="140"/>
+                    <DataGridTextColumn Header="Departure Time" Binding="{Binding DepartureTime, StringFormat='{}{0:MM/dd/yyyy HH:mm:ss}'}" Width="120"/>
+                    <DataGridTextColumn Header="Driver ID" Binding="{Binding DriverId}" Width="70"/>
+                    <DataGridTextColumn Header="Tourist ID" Binding="{Binding TouristId}" Width="70"/>
+                    <DataGridTextColumn Header="Status ID" Binding="{Binding DriveReservationStatusId}" Width="70"/>
+                    <DataGridTextColumn Header="Delay Minutes" Binding="{Binding DelayMinutes}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" >
+                <TextBlock x:Name="txtVehicleCount" FontSize="16" Margin="5"/>
+            </StackPanel>
         </StackPanel>
 
         <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
@@ -40,27 +54,27 @@
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button>
+            <Button Click="ViewDrive_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/view.png" Width="20" Height="25"/>
-                    <TextBlock Text="View" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="Delay" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button>
+            <Button Click="ViewDrive_Respond">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/edit.png" Width="20" Height="25"/>
-                    <TextBlock Text="Update" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="Respond" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button>
+            <Button Click="ViewDrive_Cancel">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
-                    <TextBlock Name="DeleteTxtBlock" Text="Delete" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Name="DeleteTxtBlock" Text="Cancel Reservation" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </ToolBar>
-
+    
     </Grid>
 </Window>

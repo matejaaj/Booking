@@ -19,6 +19,8 @@ namespace BookingApp.Model
         public int DriveReservationStatusId { get; set; }
         public double DelayMinutes { get; set; }
 
+        public string PickupLocationDescription { get; set; }
+        public string DropoffLocationDescription { get; set; }
 
         public DriveReservation() { }
 

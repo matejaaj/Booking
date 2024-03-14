@@ -25,6 +25,7 @@ namespace BookingApp.View.Driver
     public partial class VehicleForm : Window
     {
         public User LoggedInUser { get; set; }
+        public event EventHandler VehicleAdded;
 
         private readonly VehicleRepository _repository;
         private readonly LocationRepository _locationRepository;
@@ -108,6 +109,7 @@ namespace BookingApp.View.Driver
             Vehicle newVehicle = new Vehicle(lokacija, MaxPassengers,lista);
             Vehicle savedVehicle = _repository.Save(newVehicle);
             DriverOverview.Vehicles.Add(savedVehicle);
+            VehicleAdded?.Invoke(this, EventArgs.Empty);
             Close();
         }
 
