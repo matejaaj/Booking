@@ -20,13 +20,13 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Comments}"
-                      SelectedItem="{Binding Path=SelectedComment}"
+            <DataGrid ItemsSource="{Binding Accommodations}"
+                      SelectedItem="{Binding Path=SelectedAccommodation}"
                       IsReadOnly="True" SelectionMode="Single" 
                   AutoGenerateColumns="False" Height="325" HeadersVisibility="Column" FontSize="13">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Creation time" Binding="{Binding CreationTime}" Width="200"/>
-                    <DataGridTextColumn Header="Text" Binding="{Binding Text}" Width="*"/>
+                    <DataGridTextColumn Header="Creation time" Binding="{Binding Name}" Width="200"/>
+                    <DataGridTextColumn Header="Text" Binding="{Binding LocationId}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

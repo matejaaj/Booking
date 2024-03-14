@@ -1,9 +1,10 @@
-﻿<Window x:Class="BookingApp.View.Driver.VehicleForm"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.View.Driver"
+        xmlns:Syncfusion="http://schemas.syncfusion.com/wpf" x:Class="BookingApp.View.Driver.VehicleForm"
         mc:Ignorable="d"
         Title="Register new vehicle" Height="200" Width="350">
     <Grid>
@@ -25,22 +26,19 @@
             </Grid.RowDefinitions>
 
             <Label Content="Location" Grid.Row="0"/>
-            <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding locations}" SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Width="178" Margin="0,0,0,5">
+            <Syncfusion:ComboBoxAdv AllowMultiSelect="True" Grid.Column="1" ItemsSource="{Binding locations}" SelectedItems="{Binding SelectedLocations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DefaultText="Locations" Height="30" Width="150" Margin="35,-4,34,0"/>
 
-            </ComboBox>
-            
             <Label Content="Passenger Capacity" Grid.Row="1"/>
-            <TextBox Name="txtMax" Text="{Binding Path=MaxPassengers, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5"/>
+            <TextBox x:Name="txtMax" Text="{Binding MaxPassengers, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="111,5,0,30" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
 
-            <Label Content="Language" Grid.Row="2"/>
-            <ComboBox Name="cmbLanguage" IsTextSearchEnabled="True" ItemsSource="{Binding languages}" SelectedItem="{Binding Path=SelectedLanguage, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="178" Margin="0,0,0,5">
-            </ComboBox>
+            <Label Content="Language" Grid.Row="2" Margin="0,6,0,-6"/>
+            <Syncfusion:ComboBoxAdv AllowMultiSelect="True" Grid.Column="1" ItemsSource="{Binding languages}" SelectedItems="{Binding SelectedLanguages, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DefaultText="Languages" Height="30" Width="150" Margin="35,6,34,-6" Grid.Row="2"/>
         </Grid>
 
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">
-            <Button Name="btnConfirm" Content="Confirm" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />
-            <Button Name="btnCancel" Content="Cancel" Width="75" Click="btnCancel_Click" />
+            <Button x:Name="btnConfirm" Content="Confirm" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />
+            <Button x:Name="btnCancel" Content="Cancel" Width="75" Click="btnCancel_Click" />
         </StackPanel>
     </Grid>
 </Window>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Model
 {
-    public class Reservation : ISerializable
+    public class AccommodationReservation : ISerializable
     {
         public int ReservationId { get; set; }
         public DateTime StartDate { get; set; }
@@ -16,10 +16,10 @@ namespace BookingApp.Model
         public int GuestNumber { get; set; }
         public Accommodation Accommodation { get; set; }
         public User Guest { get; set; }
-        public Reservation()
+        public AccommodationReservation()
         {
         }
-        public Reservation(DateTime startDate, DateTime endDate, int days, int guestNumber, Accommodation accommodation, User guest)
+        public AccommodationReservation(DateTime startDate, DateTime endDate, int days, int guestNumber, Accommodation accommodation, User guest)
         {
             StartDate = startDate;
             EndDate = endDate;

@@ -2,6 +2,7 @@
 using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -28,28 +29,25 @@ namespace BookingApp.View.Driver
         private readonly VehicleRepository _repository;
         private readonly LocationRepository _locationRepository;
         private readonly LanguageRepository _languageRepository;
-        public List<Location> locations { get; set; }
-        public List<Language> languages { get; set; }
+        public ObservableCollection<Location> locations {  get; set; }
+        public ObservableCollection<Language> languages { get; set; }
 
 
 
-        private Location _selectedLocation;
-        public Location SelectedLocation
+        private ObservableCollection<Location> _selectedLocations = new ObservableCollection<Location>();
+        public ObservableCollection<Location> SelectedLocations
         {
-            get => _selectedLocation;
+            get => _selectedLocations;
             set
             {
-                if(_selectedLocation != value)
-                {
-                    _selectedLocation = value;
-                    OnPropertyChanged();
-                }
+                
+                _selectedLocations = value;
+                OnPropertyChanged(nameof(SelectedLocations));
+
             }
-
-
         }
 
-       
+
 
         private int _maxPassengers;
         public int MaxPassengers
@@ -65,29 +63,27 @@ namespace BookingApp.View.Driver
             }
         }
 
-        private Language _selectedLanguage;
-        public Language SelectedLanguage
+        private ObservableCollection<Language> _selectedLanguages = new ObservableCollection<Language>();
+        public ObservableCollection<Language> SelectedLanguages
         {
-            get => _selectedLanguage;
+            get => _selectedLanguages;
             set
-            {
-                if (_selectedLanguage != value)
-                {
-                    _selectedLanguage = value;
-                    OnPropertyChanged();
-                }
+            { 
+                    _selectedLanguages = value;
+                    OnPropertyChanged(nameof(SelectedLanguages));
+               
             }
         }
 
         public VehicleForm()
         {
             InitializeComponent();
-            DataContext = this;
             _repository = new VehicleRepository();
             _languageRepository = new LanguageRepository();
-            languages = _languageRepository.GetAll();
+            languages = new ObservableCollection<Language>(_languageRepository.GetAll());
             _locationRepository = new LocationRepository();
-            locations = _locationRepository.GetAll();
+            locations = new ObservableCollection<Location>(_locationRepository.GetAll());
+            DataContext = this;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -99,15 +95,27 @@ namespace BookingApp.View.Driver
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            Vehicle newVehicle = new Vehicle(SelectedLocation.locationId, MaxPassengers,SelectedLanguage.languageId);
+            List<int> lista = new List<int>();
+            List<int> lokacija = new List<int>();
+            foreach(Language l in SelectedLanguages)
+            {
+                lista.Add(l.languageId);
+            }
+            foreach(Location location in SelectedLocations)
+            {
+                lokacija.Add(location.locationId);
+            }
+            Vehicle newVehicle = new Vehicle(lokacija, MaxPassengers,lista);
             Vehicle savedVehicle = _repository.Save(newVehicle);
             DriverOverview.Vehicles.Add(savedVehicle);
+            Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
+        
 
     }
 }

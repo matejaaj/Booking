@@ -10,7 +10,7 @@ namespace BookingApp.Model
 {
     public class Language : ISerializable
     {
-         public int languageId;
+        public int languageId;
         
         string Name {  get; set; }
 
@@ -34,6 +34,10 @@ namespace BookingApp.Model
             return csvValues;
         }
 
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
         public override string ToString()
         {
             return $"{Name}";
