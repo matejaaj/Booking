@@ -76,8 +76,6 @@ namespace BookingApp.View
                             driverOverview.Show();
                             break;
                         default:
-                            CommentsOverview commentsOverview = new CommentsOverview(user);
-                            commentsOverview.Show();
                             break;
                     }
                     Close();

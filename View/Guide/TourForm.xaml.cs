@@ -30,12 +30,12 @@ namespace BookingApp.View.Guide
         private readonly ImageRepository _imageRepository;
         private readonly LocationRepository _locationRepository;
         private readonly LanguageRepository _languageRepository;
-        private readonly TourStartDateRepository _tourStartDateRepository;
+        private readonly TourInstanceRepository _tourStartDateRepository;
         public List<Location> locations { get; set; }
         public List<Language> languages { get; set; }
 
         public List<BookingApp.Model.Image> images { get; set; }
-        public List<TourStartDate> tourStartDates { get; set; }
+        public List<TourInstance> tourStartDates { get; set; }
         public List<Checkpoint> checkpoints { get; set; }
 
         private int _tourId;
@@ -52,7 +52,7 @@ namespace BookingApp.View.Guide
             _imageRepository = new ImageRepository();
             _locationRepository = new LocationRepository();
             _languageRepository = new LanguageRepository();
-            _tourStartDateRepository = new TourStartDateRepository();
+            _tourStartDateRepository = new TourInstanceRepository();
 
             languages = new List<Language>();
             languages = _languageRepository.GetAll();
@@ -62,7 +62,7 @@ namespace BookingApp.View.Guide
             _tourId = _tourRepository.NextId();
             images = new List<Model.Image>();
             checkpoints = new List<Checkpoint>();
-            tourStartDates = new List<TourStartDate>();
+            tourStartDates = new List<TourInstance>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

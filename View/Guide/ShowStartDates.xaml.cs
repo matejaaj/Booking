@@ -22,7 +22,7 @@ namespace BookingApp.View.Guide
     {
 
         public List<string> StartDates { get; set; }
-        public ShowStartDates(List<TourStartDate> startDates)
+        public ShowStartDates(List<TourInstance> startDates)
         {
             InitializeComponent();
             DataContext = this;

@@ -9,17 +9,25 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ComboBox x:Name="cmbNumberOfPersons" Grid.Row="0" Margin="10" SelectionChanged="cmbNumberOfPersons_SelectionChanged">
+        <ComboBox x:Name="cmbStartTime" SelectionChanged="CmbStartTime_SelectionChanged" Grid.Row="0" Margin="10"/>
+
+        <ComboBox x:Name="cmbNumberOfPeople" Grid.Row="1" Margin="10" SelectionChanged="CmbNumberOfPeople_SelectionChanged">
             <ComboBoxItem Content="1"/>
             <ComboBoxItem Content="2"/>
             <ComboBoxItem Content="3"/>
         </ComboBox>
 
-        <ScrollViewer Grid.Row="1" Margin="10">
+
+
+        <ScrollViewer Grid.Row="2" Margin="10">
             <StackPanel x:Name="spPersonInputs" />
         </ScrollViewer>
+
+        <Button x:Name="btnSubmit" Content="Submit" Grid.Row="3" Margin="10" Click="BtnSubmit_Click"/>
     </Grid>
 </Window>

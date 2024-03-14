@@ -14,7 +14,7 @@ namespace BookingApp.Model
         public string Description { get; set; }
         public int LocationId { get; set; }
         public int LanguageId { get; set; }
-        public int Capacity { get; set; }
+        public int MaximumCapacity { get; set; }
         public float DurationHours { get; set; }
 
         public Tour() { }
@@ -25,7 +25,7 @@ namespace BookingApp.Model
             Description = description;
             LocationId = locationId;
             LanguageId = languageId;
-            Capacity = capacity;
+            MaximumCapacity = capacity;
             DurationHours = durationHours;
         }
 
@@ -36,7 +36,7 @@ namespace BookingApp.Model
             Description = values[2];
             LocationId = int.Parse(values[3]);
             LanguageId = int.Parse(values[4]);
-            Capacity = int.Parse(values[5]);
+            MaximumCapacity = int.Parse(values[5]);
             DurationHours = float.Parse(values[6]);
         }
 
@@ -48,7 +48,7 @@ namespace BookingApp.Model
             Description,
             LocationId.ToString(),
             LanguageId.ToString(),
-            Capacity.ToString(),
+            MaximumCapacity.ToString(),
             DurationHours.ToString("F2") // Assuming you want to format the duration to two decimal places
         };
         }
