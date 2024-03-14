@@ -26,7 +26,7 @@
 
         <StackPanel Grid.Row="2" Grid.Column="1">
             <DataGrid ItemsSource="{Binding DriveReservations}"
-                      AutoGenerateColumns="False" Height="325" HeadersVisibility="Column" 
+                      AutoGenerateColumns="False" Height="316" HeadersVisibility="Column" 
                       FontSize="13" SelectionChanged="DataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
@@ -39,6 +39,9 @@
                     <DataGridTextColumn Header="Delay Minutes" Binding="{Binding DelayMinutes}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" >
+                <TextBlock x:Name="txtVehicleCount" FontSize="16" Margin="5"/>
+            </StackPanel>
         </StackPanel>
 
         <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
@@ -70,6 +73,6 @@
                 </StackPanel>
             </Button>
         </ToolBar>
-
+    
     </Grid>
 </Window>

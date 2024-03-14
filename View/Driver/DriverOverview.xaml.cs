@@ -38,14 +38,26 @@ namespace BookingApp.View.Driver
             DriveReservations = new ObservableCollection<DriveReservation>(_repository.GetAll());
             _locationRepository = new LocationRepository();
             locations = _locationRepository.GetAll();
+            UpdateVehicleCount();
 
+        }
+        private void UpdateVehicleCount()
+        {
+            var vehicleRepository = new VehicleRepository();
+            var allVehicles = vehicleRepository.GetAll();
+            txtVehicleCount.Text = $"Ukupno registrovanih vozila: {allVehicles.Count}";
         }
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
             VehicleForm vehicleForm = new VehicleForm();
+            vehicleForm.VehicleAdded += VehicleForm_VehicleAdded;
             vehicleForm.Show();
         }
 
+        private void VehicleForm_VehicleAdded(object? sender, EventArgs e)
+        {
+            UpdateVehicleCount();
+        }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
