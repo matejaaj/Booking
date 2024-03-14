@@ -27,7 +27,9 @@
         <StackPanel Grid.Row="2" Grid.Column="1">
             <DataGrid ItemsSource="{Binding DriveReservations}"
                       AutoGenerateColumns="False" Height="316" HeadersVisibility="Column" 
-                      FontSize="13" SelectionChanged="DataGrid_SelectionChanged">
+                      FontSize="13" SelectionChanged="DataGrid_SelectionChanged"
+                      SelectedItem="{Binding SelectedReservation}"
+                      SelectionMode="Single">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
                     <DataGridTextColumn Header="Pickup Location ID" Binding="{Binding PickupLocationId, Converter={StaticResource LocationConverterDriver}}" Width="140"/>
@@ -52,24 +54,24 @@
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button>
+            <Button Click="ViewDrive_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/view.png" Width="20" Height="25"/>
-                    <TextBlock Text="View" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="Delay" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button>
+            <Button Click="ViewDrive_Respond">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/edit.png" Width="20" Height="25"/>
-                    <TextBlock Text="Update" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="Respond" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button>
+            <Button Click="ViewDrive_Cancel">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
-                    <TextBlock Name="DeleteTxtBlock" Text="Delete" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Name="DeleteTxtBlock" Text="Cancel Reservation" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </ToolBar>
