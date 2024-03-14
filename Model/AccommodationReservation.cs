@@ -14,24 +14,24 @@ namespace BookingApp.Model
         public DateTime EndDate { get; set; }
         public int Days { get; set; }
         public int GuestNumber { get; set; }
-        public Accommodation Accommodation { get; set; }
-        public User Guest { get; set; }
+        public int AccommodationId { get; set; }
+        public int GuestId { get; set; }
         public AccommodationReservation()
         {
         }
-        public AccommodationReservation(DateTime startDate, DateTime endDate, int days, int guestNumber, Accommodation accommodation, User guest)
+        public AccommodationReservation(DateTime startDate, DateTime endDate, int days, int guestNumber, int accommodationId, int guestId)
         {
             StartDate = startDate;
             EndDate = endDate;
             Days = days;
             GuestNumber = guestNumber;
-            Accommodation = accommodation;
-            Guest = guest;
+            AccommodationId = accommodationId;
+            GuestId = guestId;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { ReservationId.ToString(), StartDate.ToString(), EndDate.ToString(), Days.ToString(), GuestNumber.ToString(), Accommodation.AccommodationId.ToString(), Guest.Id.ToString() };
+            string[] csvValues = { ReservationId.ToString(), StartDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"), Days.ToString(), GuestNumber.ToString(), AccommodationId.ToString(), GuestId.ToString() };
             return csvValues;
         }
 
@@ -39,7 +39,7 @@ namespace BookingApp.Model
         {
             ReservationId = Convert.ToInt32(values[0]);
             DateTime startDate;
-            if (DateTime.TryParseExact(values[1], "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDate))
+            if (DateTime.TryParseExact(values[1], "dd.MM.yyyy", null, System.Globalization.DateTimeStyles.None, out startDate))
             {
                 StartDate = startDate;
             }
@@ -49,7 +49,7 @@ namespace BookingApp.Model
                 Console.WriteLine("Failed to parse start date from CSV.");
             }
             DateTime endDate;
-            if (DateTime.TryParseExact(values[2], "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out endDate))
+            if (DateTime.TryParseExact(values[2], "dd.MM.yyyy", null, System.Globalization.DateTimeStyles.None, out endDate))
             {
                 EndDate = endDate;
             }
@@ -60,8 +60,8 @@ namespace BookingApp.Model
             }
             Days = Convert.ToInt32(values[3]);
             GuestNumber = Convert.ToInt32(values[4]);
-            Accommodation = new Accommodation() { AccommodationId = Convert.ToInt32(values[5]) };
-            Guest = new User() { Id = Convert.ToInt32(values[6]) };
+            AccommodationId = Convert.ToInt32(values[5]);
+            GuestId = Convert.ToInt32(values[6]);
         }
 
     }

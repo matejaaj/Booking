@@ -65,7 +65,7 @@ namespace BookingApp.Repository
 
         public Location GetLocationById(int locationId)
         {
-            return _locations.FirstOrDefault(l => l.locationId == locationId);
+            return _locations.Find(l => l.locationId == locationId);
         }
     }
 }
