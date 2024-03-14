@@ -30,13 +30,11 @@ namespace BookingApp.View.Guide
         }
 
         private List<BookingApp.Model.Checkpoint> _checkpoints;
-        private int _checkpointId;
         private int _tourId;
-        public AddCheckpoint(List<Checkpoint> checkpoints, int checkpointId, int tourId)
+        public AddCheckpoint(List<Checkpoint> checkpoints, int tourId)
         {
             InitializeComponent();
             DataContext = this;
-            _checkpointId = checkpointId;
             _tourId = tourId;
             _checkpoints = checkpoints;
         }
@@ -59,7 +57,7 @@ namespace BookingApp.View.Guide
         {
             if(!string.IsNullOrEmpty(CheckpointName))
             {
-                Checkpoint newCheckpoint = new Checkpoint(_checkpointId, _name, _tourId);
+                Checkpoint newCheckpoint = new Checkpoint(_name, _tourId);
                 _checkpoints.Add(newCheckpoint);
 
                 MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);

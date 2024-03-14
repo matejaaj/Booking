@@ -15,9 +15,8 @@ namespace BookingApp.Model
 
         public Checkpoint() { }
 
-        public Checkpoint(int id, string name, int tourId)
+        public Checkpoint(string name, int tourId)
         {
-            Id = id;
             Name = name;
             TourId = tourId;
         }

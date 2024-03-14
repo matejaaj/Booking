@@ -33,6 +33,11 @@ namespace BookingApp.Model
             string[] csvValues = { languageId.ToString(), Name };
             return csvValues;
         }
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
         public override string ToString()
         {
             return $"{Name}";
