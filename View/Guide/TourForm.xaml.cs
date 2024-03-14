@@ -238,7 +238,7 @@ namespace BookingApp.View.Guide
 
         private void btnAddImage_Click(object sender, RoutedEventArgs e)
         {
-            AddImage addImageWindow = new AddImage(images, _tourId);
+            AddImage addImageWindow = new AddImage(images, _tourId, ImageResourceType.TOUR);
             addImageWindow.Owner = this;
             addImageWindow.ShowDialog(); 
         }

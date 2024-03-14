@@ -28,7 +28,8 @@ namespace BookingApp.View.Guide
         }
 
         private List<BookingApp.Model.Image> _images;
-        private int _tourId;
+        private int _entityId;
+        private ImageResourceType _imageResourceType;
 
         private string _source;
         public string Source
@@ -44,19 +45,20 @@ namespace BookingApp.View.Guide
             }
         }
 
-        public AddImage(List<BookingApp.Model.Image> images, int tourId)
+        public AddImage(List<BookingApp.Model.Image> images, int entityId, ImageResourceType imageResourceType)
         {
             InitializeComponent();
             DataContext = this;
             _images = images;
-            _tourId = tourId;
+            _entityId = entityId;
+            _imageResourceType = imageResourceType;
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             if(!string.IsNullOrEmpty(Source))
             {
-                BookingApp.Model.Image newImage = new BookingApp.Model.Image(_source, _tourId, ImageResourceType.TOUR);
+                BookingApp.Model.Image newImage = new BookingApp.Model.Image(_source, _entityId, _imageResourceType);
                 _images.Add(newImage);
                 MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
             }

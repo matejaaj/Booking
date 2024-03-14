@@ -18,15 +18,15 @@ namespace BookingApp.Model
         public int MaxGuests { get; set; }
         public int MinReservations { get; set; }
         public int CancelThershold { get; set; }
-        public List<string> imageSource;
-        public User Owner;
+        public List<int> imageSourceIds;
+        public int OwnerId;
 
         public Accommodation()
         {
-            imageSource = new List<string>();
+            imageSourceIds = new List<int>();
         }
 
-        public Accommodation(string name, int locationId, string type, int maxGuests, int minReservations, int cancelThershold, User owner)
+        public Accommodation(string name, int locationId, string type, int maxGuests, int minReservations, int cancelThershold, int ownerId)
         {
             Name = name;
             LocationId = locationId;
@@ -35,8 +35,8 @@ namespace BookingApp.Model
             MinReservations = minReservations;
             MaxGuests = maxGuests;
             CancelThershold = cancelThershold;
-            Owner = owner;
-            imageSource = new List<string>();
+            OwnerId = ownerId;
+            imageSourceIds = new List<int>();
         }
 
         public void FromCSV(string[] values)
@@ -49,12 +49,18 @@ namespace BookingApp.Model
             MaxGuests = Convert.ToInt32(values[4]);
             MinReservations = Convert.ToInt32(values[5]);
             CancelThershold = Convert.ToInt32(values[6]);
-            Owner = new User() { Id = Convert.ToInt32(values[7]) };
+            OwnerId = Convert.ToInt32(values[7]);
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { AccommodationId.ToString(), Name, LocationId.ToString(), Type.ToString(), MaxGuests.ToString(), MinReservations.ToString(), CancelThershold.ToString(), Owner.Id.ToString() };
+            string[] csvValues = { AccommodationId.ToString(), 
+                                   Name, LocationId.ToString(),
+                                   Type.ToString(), 
+                                   MaxGuests.ToString(), 
+                                   MinReservations.ToString(), 
+                                   CancelThershold.ToString(), 
+                                   OwnerId.ToString() };
             return csvValues;
         }
     }
