@@ -23,10 +23,12 @@ namespace BookingApp.View.Driver
     public partial class DriverOverview : Window
     {
         public static ObservableCollection<Vehicle> Vehicles { get; set; }
+        public List<Location> locations { get; set; }
 
         public static ObservableCollection<DriveReservation> DriveReservations { get; set; }
 
         private readonly DriveReservationRepository _repository;
+        private readonly LocationRepository _locationRepository;
         public DriverOverview()
         {
             InitializeComponent();
@@ -34,6 +36,8 @@ namespace BookingApp.View.Driver
             Vehicles = new ObservableCollection<Vehicle>();
             _repository = new DriveReservationRepository();
             DriveReservations = new ObservableCollection<DriveReservation>(_repository.GetAll());
+            _locationRepository = new LocationRepository();
+            locations = _locationRepository.GetAll();
 
         }
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
