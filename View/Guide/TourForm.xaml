@@ -56,7 +56,7 @@
             <Button x:Name="btnShowStartDates" Grid.Row="6" Content="Show start dates" Grid.Column="1" HorizontalAlignment="Left" Margin="150,5,0,10" Width="110" Click="btnShowStartDates_Click"/>
 
             <Label Content="Duration hours" Grid.Row="7"></Label>
-            <TextBox x:Name="txtDuraiton" Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox x:Name="txtDuraiton" Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" Text="{Binding Path=DurationHours, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Content="Images" Grid.Row="8"></Label>
             <Button x:Name="btnAddImage" Grid.Row="8" Grid.Column="1" Content="Add image" HorizontalAlignment="Left" Margin="30,5,0,10" Width="110" Click="btnAddImage_Click"></Button>
