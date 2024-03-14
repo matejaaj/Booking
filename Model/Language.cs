@@ -38,9 +38,6 @@ namespace BookingApp.Model
         {
             return $"{Name}";
         }
-        public override string ToString()
-        {
-            return $"{Name}";
-        }
+
     }
 }
