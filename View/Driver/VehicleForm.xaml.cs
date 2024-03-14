@@ -104,7 +104,7 @@ namespace BookingApp.View.Driver
             }
             foreach(Location location in SelectedLocations)
             {
-                lokacija.Add(location.locationId);
+                lokacija.Add(location.Id);
             }
             Vehicle newVehicle = new Vehicle(lokacija, MaxPassengers,lista);
             Vehicle savedVehicle = _repository.Save(newVehicle);

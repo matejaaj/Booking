@@ -165,7 +165,7 @@ namespace BookingApp.View.Guide
         {
             if (ValidateFields())
             {
-                Tour newTour = new Tour(_name, _description, _selectedLocation.locationId, _selectedLanguage.languageId, _capacity, _durationHours);
+                Tour newTour = new Tour(_name, _description, _selectedLocation.Id, _selectedLanguage.languageId, _capacity, _durationHours);
                 _tourRepository.Save(newTour);
 
                 foreach(var image in images)

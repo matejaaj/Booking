@@ -147,7 +147,7 @@ namespace BookingApp.View.Owner
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.locationId, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner);
+            Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner);
             Accommodation savedAccommodation = _repository.Save(newAccommodation);
             OwnerOverview.Accommodations.Add(savedAccommodation);
       

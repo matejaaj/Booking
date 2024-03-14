@@ -10,7 +10,7 @@ namespace BookingApp.Model
     public class Location : ISerializable
 
     {
-        public int locationId;
+        public int Id;
         public string City { get; set; }
         public string Country { get; set; }
 
@@ -23,14 +23,14 @@ namespace BookingApp.Model
 
         public void FromCSV(string[] values)
         {
-            locationId = Convert.ToInt32(values[0]);
+            Id = Convert.ToInt32(values[0]);
             City = values[1];
             Country = values[2];
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { locationId.ToString(), City, Country };
+            string[] csvValues = { Id.ToString(), City, Country };
             return csvValues;
         }
 
