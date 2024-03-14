@@ -45,7 +45,7 @@ namespace BookingApp.View.Guest
                 foreach (var loc in locations)
                 {
                     if (loc.ToString().Equals(locationString))
-                        locationId = loc.locationId;
+                        locationId = loc.Id;
                 }
 
                 AccommodationsDataGrid.ItemsSource = Accommodations.Where(accommodation =>

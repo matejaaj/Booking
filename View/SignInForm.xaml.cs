@@ -4,6 +4,7 @@ using BookingApp.View.Driver;
 using BookingApp.View.Guest;
 using BookingApp.View.Guide;
 using BookingApp.View.Owner;
+using BookingApp.View.Tourist;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -69,15 +70,14 @@ namespace BookingApp.View
                             guideOverview.Show();
                             break;
                         case Role.TOURIST:
-                            
+                            TouristMainWindow touristMainWindow = new TouristMainWindow(user);
+                            touristMainWindow.Show();
                             break;
                         case Role.DRIVER:
                             DriverOverview driverOverview = new DriverOverview();
                             driverOverview.Show();
                             break;
                         default:
-                            CommentsOverview commentsOverview = new CommentsOverview(user);
-                            commentsOverview.Show();
                             break;
                     }
                     Close();
