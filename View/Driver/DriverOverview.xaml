@@ -41,9 +41,11 @@
                     <DataGridTextColumn Header="Delay Minutes" Binding="{Binding DelayMinutes}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
+            
             <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" >
                 <TextBlock x:Name="txtVehicleCount" FontSize="16" Margin="5"/>
             </StackPanel>
+            
         </StackPanel>
 
         <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
@@ -72,6 +74,14 @@
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
                     <TextBlock Name="DeleteTxtBlock" Text="Cancel Reservation" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <TextBox x:Name="txtVehicleIdInput" Width="100" ToolTip="Enter Vehicle ID" TextChanged="txtVehicleIdInput_TextChanged" />
+            <Button x:Name="btnDeleteVehicle" Click="btnDeleteVehicle_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
+                    <TextBlock Text="Dismiss Vehicle" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </ToolBar>

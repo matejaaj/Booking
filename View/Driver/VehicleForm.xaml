@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BookingApp.View.Driver"
         xmlns:Syncfusion="http://schemas.syncfusion.com/wpf" x:Class="BookingApp.View.Driver.VehicleForm"
         mc:Ignorable="d"
-        Title="Register new vehicle" Height="200" Width="350">
+        Title="Register new vehicle" Height="230" Width="350">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -23,6 +23,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Label Content="Location" Grid.Row="0"/>
@@ -34,6 +35,12 @@
 
             <Label Content="Language" Grid.Row="2" Margin="0,6,0,-6"/>
             <Syncfusion:ComboBoxAdv AllowMultiSelect="True" Grid.Column="1" ItemsSource="{Binding languages}" SelectedItems="{Binding SelectedLanguages, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DefaultText="Languages" Height="30" Width="150" Margin="35,6,34,-6" Grid.Row="2"/>
+
+            <Label Content="Images" Grid.Row="3" Margin="0,12,0,-12"></Label>
+            <Button x:Name="btnAddImage" Grid.Row="3" Grid.Column="1" Content="Add image" HorizontalAlignment="Left" Margin="10,20,0,-5" Width="82" Click="btnAddImage_Click"></Button>
+            <Button x:Name="btnShowImages" Grid.Row="3" Content="Show Images" Grid.Column="1" HorizontalAlignment="Left" Margin="110,20,0,-5" Width="86" Click="btnShowImages_Click"/>
+
+
         </Grid>
 
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">
