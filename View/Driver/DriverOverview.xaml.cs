@@ -178,5 +178,33 @@ namespace BookingApp.View.Driver
                 canCancel = true;
             }
         }
+        private void btnDeleteVehicle_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(txtVehicleIdInput.Text, out int vehicleId))
+            {
+                var allVehicles = _vehicleRepository.GetAll();
+                var vehicleToDelete = allVehicles.FirstOrDefault(v => v.VehicleId == vehicleId);
+                if (vehicleToDelete != null)
+                {
+                    _vehicleRepository.Delete(vehicleToDelete);
+                    MessageBox.Show("Vozilo je uspešno izbrisano.");
+                    UpdateVehicleCount(); // Osvježava prikaz ukupnog broja vozila
+                    txtVehicleIdInput.Text = ""; // Očisti tekstualno polje nakon brisanja
+                }
+                else
+                {
+                    MessageBox.Show("Vozilo sa unetim ID-om nije pronađeno.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Unesite validan ID vozila.");
+            }
+        }
+        private void txtVehicleIdInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
     }
 }
