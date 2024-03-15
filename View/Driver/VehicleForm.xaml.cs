@@ -1,5 +1,6 @@
 ﻿using BookingApp.Model;
 using BookingApp.Repository;
+using BookingApp.View.Guide;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BookingApp.View.Driver
 {
@@ -30,9 +32,13 @@ namespace BookingApp.View.Driver
         private readonly VehicleRepository _repository;
         private readonly LocationRepository _locationRepository;
         private readonly LanguageRepository _languageRepository;
+        private readonly ImageRepository _imageRepository;
+
+        public List<BookingApp.Model.Image> images { get; set; }
         public ObservableCollection<Location> locations {  get; set; }
         public ObservableCollection<Language> languages { get; set; }
 
+        private int _vehicleId;
 
 
         private ObservableCollection<Location> _selectedLocations = new ObservableCollection<Location>();
@@ -85,6 +91,10 @@ namespace BookingApp.View.Driver
             _locationRepository = new LocationRepository();
             locations = new ObservableCollection<Location>(_locationRepository.GetAll());
             DataContext = this;
+
+            _vehicleId = _repository.NextId();
+            _imageRepository = new ImageRepository();
+            images = new List<BookingApp.Model.Image>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -96,6 +106,23 @@ namespace BookingApp.View.Driver
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedLanguages.Count == 0)
+            {
+                MessageBox.Show("Molimo odaberite barem jedan jezik.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (SelectedLocations.Count == 0)
+            {
+                MessageBox.Show("Molimo odaberite barem jednu lokaciju.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (MaxPassengers <= 0)
+            {
+                MessageBox.Show("Unesite validan maksimalan broj putnika.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             List<int> lista = new List<int>();
             List<int> lokacija = new List<int>();
             foreach(Language l in SelectedLanguages)
@@ -105,6 +132,10 @@ namespace BookingApp.View.Driver
             foreach(Location location in SelectedLocations)
             {
                 lokacija.Add(location.Id);
+            }
+            foreach (var img in images)
+            {
+                _imageRepository.Save(img);
             }
             Vehicle newVehicle = new Vehicle(lokacija, MaxPassengers,lista);
             Vehicle savedVehicle = _repository.Save(newVehicle);
@@ -117,7 +148,19 @@ namespace BookingApp.View.Driver
         {
             Close();
         }
-        
 
+        private void btnAddImage_Click(object sender, RoutedEventArgs e)
+        {
+            AddImage addImageWindow = new AddImage(images, _vehicleId, ImageResourceType.VEHICLE);
+            addImageWindow.Owner = this;
+            addImageWindow.ShowDialog();
+        }
+
+        private void btnShowImages_Click(object sender, RoutedEventArgs e)
+        {
+            ShowImages showImagesWindow = new ShowImages(images);
+            showImagesWindow.Owner = this;
+            showImagesWindow.ShowDialog();
+        }
     }
 }
