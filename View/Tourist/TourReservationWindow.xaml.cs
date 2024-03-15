@@ -117,15 +117,12 @@ namespace BookingApp.View.Tourist
             SelectedTourInstance.Capacity += numberOfPeople;
             _tourInstanceRepository.Update(SelectedTourInstance);
         }
-
         private void SaveTourReservation(List<TourGuest> tourGuests)
         {
             TourReservation tourReservation = new TourReservation(SelectedTourInstance.Id, UserId);
             _tourGuestRepository.SaveMultiple(tourGuests);
             _tourReservationRepository.Save(tourReservation); 
         }
-
-
         private List<TourGuest> GetGuestsFromInputFields()
         {
             var guests = new List<TourGuest>();
@@ -146,15 +143,10 @@ namespace BookingApp.View.Tourist
             return guests;
         }
 
-
         private bool ConfirmAction(string message, string caption)
         {
             var result = MessageBox.Show(message, caption, MessageBoxButton.YesNo, MessageBoxImage.Question);
             return result == MessageBoxResult.Yes;
         }
-
-
-
-
     }
 }

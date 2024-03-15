@@ -12,7 +12,7 @@ namespace BookingApp.View.Driver
 {
     public class LocationConverterDriver : IValueConverter
     {
-        public DetailLocationRepository _detailedLocationRepository = new DetailLocationRepository();
+        public DetailedLocationRepository _detailedLocationRepository = new DetailedLocationRepository();
         public LocationRepository _locationRepository = new LocationRepository();
         public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
         {

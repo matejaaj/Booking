@@ -64,5 +64,22 @@ namespace BookingApp.Repository
             return current;
         }
 
+        public List<int> GetDriverIdsByLocationId(int locationId)
+        {
+
+            _vehicles = _serializer.FromCSV(FilePath);
+
+            var driverIds = _vehicles
+                .Where(vehicle => vehicle.LocationId.Any(id => id == locationId))
+                .Select(vehicle => vehicle.DriverId)
+                .Distinct() 
+                .ToList();
+
+            return driverIds;
+        }
+
+
+
+
     }
 }

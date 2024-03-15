@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class DetailLocationRepository
+    public class DetailedLocationRepository
     {
         private const string FilePath = "../../../Resources/Data/detailedlocation.csv";
         private readonly Serializer<DetailedLocation> _serializer;
         private List<DetailedLocation> _detailedLocations;
 
-        public DetailLocationRepository()
+        public DetailedLocationRepository()
         {
             _serializer = new Serializer<DetailedLocation>();
             _detailedLocations = _serializer.FromCSV(FilePath);
@@ -65,6 +65,12 @@ namespace BookingApp.Repository
         public DetailedLocation GetDetailedLocationById(int id)
         {
             return _detailedLocations.FirstOrDefault(l => l.Id == id);
+        }
+
+        public DetailedLocation GetByAddress(string streetName)
+        {
+            _detailedLocations = _serializer.FromCSV(FilePath);
+            return _detailedLocations.FirstOrDefault(loc => loc.Address.Equals(streetName, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

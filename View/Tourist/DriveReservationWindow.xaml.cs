@@ -30,8 +30,8 @@ namespace BookingApp.View.Tourist
 
         private void btnRequestDrive_Click(object sender, RoutedEventArgs e)
         {
-            // Logika za Request Drive
-            MessageBox.Show("Requesting Drive...");
+            DriveReservationForm driveReservationForm = new DriveReservationForm(User);
+            driveReservationForm.Show();
         }
 
         private void btnRequestFastDrive_Click(object sender, RoutedEventArgs e)
