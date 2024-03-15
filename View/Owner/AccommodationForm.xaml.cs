@@ -155,11 +155,17 @@ namespace BookingApp.View.Owner
         {
             if (ValidateFields())
             {
-                Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.locationId, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
+                Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
                 Accommodation savedAccommodation = _repository.Save(newAccommodation);
                 OwnerOverview.Accommodations.Add(savedAccommodation);
+                Close();
             }
-            Close();
+            else
+            {
+                MessageBox.Show("Please fill all fields",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
