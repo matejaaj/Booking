@@ -11,7 +11,6 @@ namespace BookingApp.Model
     public class GuestRating : ISerializable
     {
         public int GuestRatingId { get; set; }
-        public int GuestId { get; set; }
         public int AccommodationReservationId { get; set; }
         public int Cleanliness { get; set; }
         public int RulesRespect { get; set; }
@@ -19,9 +18,8 @@ namespace BookingApp.Model
 
         public GuestRating() { }
 
-        public GuestRating(int guestId, int accommodationReservationId, int cleanliness, int rulesRespect, string comment)
+        public GuestRating(int accommodationReservationId, int cleanliness, int rulesRespect, string comment)
         {
-            GuestId = guestId;
             AccommodationReservationId = accommodationReservationId;
             Cleanliness = cleanliness;
             RulesRespect = rulesRespect;
@@ -31,17 +29,15 @@ namespace BookingApp.Model
         public void FromCSV(string[] values)
         {
             GuestRatingId = Convert.ToInt32(values[0]);
-            GuestId = Convert.ToInt32(values[1]);
-            AccommodationReservationId = Convert.ToInt32(values[2]);    
-            Cleanliness = Convert.ToInt32(values[3]);   
-            RulesRespect = Convert.ToInt32(values[4]);
-            Comment = values[5];
+            AccommodationReservationId = Convert.ToInt32(values[1]);    
+            Cleanliness = Convert.ToInt32(values[2]);   
+            RulesRespect = Convert.ToInt32(values[3]);
+            Comment = values[4];
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { GuestRatingId.ToString(), 
-                                   GuestId.ToString(), 
+            string[] csvValues = { GuestRatingId.ToString(),
                                    AccommodationReservationId.ToString(), 
                                    Cleanliness.ToString(), 
                                    RulesRespect.ToString(), 

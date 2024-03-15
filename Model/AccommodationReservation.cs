@@ -1,6 +1,7 @@
 ﻿using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +17,11 @@ namespace BookingApp.Model
         public int GuestNumber { get; set; }
         public int AccommodationId { get; set; }
         public int GuestId { get; set; }
+        public bool IsRated { get; set; }
         public AccommodationReservation()
         {
         }
-        public AccommodationReservation(DateTime startDate, DateTime endDate, int days, int guestNumber, int accommodationId, int guestId)
+        public AccommodationReservation(DateTime startDate, DateTime endDate, int days, int guestNumber, int accommodationId, int guestId, bool isRated)
         {
             StartDate = startDate;
             EndDate = endDate;
@@ -27,11 +29,12 @@ namespace BookingApp.Model
             GuestNumber = guestNumber;
             AccommodationId = accommodationId;
             GuestId = guestId;
+            IsRated = isRated;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { ReservationId.ToString(), StartDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"), Days.ToString(), GuestNumber.ToString(), AccommodationId.ToString(), GuestId.ToString() };
+            string[] csvValues = { ReservationId.ToString(), StartDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"), Days.ToString(), GuestNumber.ToString(), AccommodationId.ToString(), GuestId.ToString(), IsRated.ToString()};
             return csvValues;
         }
 
@@ -62,6 +65,19 @@ namespace BookingApp.Model
             GuestNumber = Convert.ToInt32(values[4]);
             AccommodationId = Convert.ToInt32(values[5]);
             GuestId = Convert.ToInt32(values[6]);
+            IsRated = Convert.ToBoolean(values[7]);
+        }
+
+        public override string ToString()
+        {
+            if (IsRated)
+            {
+               return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Rated";
+            }
+            else
+            {
+               return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Unrated";
+            }   
         }
 
     }

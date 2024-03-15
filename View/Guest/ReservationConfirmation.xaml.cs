@@ -65,7 +65,7 @@ namespace BookingApp.View.Guest
             AccommodationReservationRepository _accommodationReservationRepository = new AccommodationReservationRepository();
             DateTime startDate, endDate;
             (startDate, endDate) = ConvertStringToDates(selectedDateRange);
-            _accommodationReservationRepository.Save(new AccommodationReservation(startDate, endDate, days, GuestNumber, accommodationId, guestId));
+            _accommodationReservationRepository.Save(new AccommodationReservation(startDate, endDate, days, GuestNumber, accommodationId, guestId, false));
             Close();
         }
 
