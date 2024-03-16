@@ -15,6 +15,8 @@ namespace BookingApp.Model
         public int Capacity {  get; set; }
         public DateTime StartTime { get; set; }
 
+        public bool IsCompleted { get; set; }
+
         public TourInstance() { }
 
         public TourInstance(int tourId, int capacity, DateTime startTime)
@@ -22,6 +24,7 @@ namespace BookingApp.Model
             TourId = tourId;
             Capacity = capacity;
             StartTime = startTime;
+            IsCompleted = false;
         }
 
         public void FromCSV(string[] values)
@@ -30,6 +33,7 @@ namespace BookingApp.Model
             TourId = int.Parse(values[1]);
             Capacity = int.Parse(values[2]);
             StartTime = DateTime.Parse(values[3]);
+            IsCompleted = bool.Parse(values[4]);
         }
 
         public string[] ToCSV()
@@ -38,7 +42,8 @@ namespace BookingApp.Model
             Id.ToString(),
             TourId.ToString(),
             Capacity.ToString(),
-            StartTime.ToString()
+            StartTime.ToString(),
+            IsCompleted.ToString()
             };
         }
     }

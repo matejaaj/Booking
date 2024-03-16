@@ -23,7 +23,7 @@ namespace BookingApp.View.Guide
     public partial class TodayToursOverview : Window
     {
         private List<Tour> Tours;
-        public static ObservableCollection<Tour> TodayTours { get; set; }
+        public ObservableCollection<Tour> TodayTours { get; set; }
         public Tour SelectedTour { get; set; }
 
         private List<TourInstance> TourInstances;
@@ -31,7 +31,8 @@ namespace BookingApp.View.Guide
         private readonly TourRepository _tourRepository;
         private readonly TourInstanceRepository _tourInstaceRepository;
 
-        DateTime todayDate;
+        private int _tourInstanceId;
+        private DateTime todayDate;
 
         public TodayToursOverview()
         {
@@ -47,7 +48,7 @@ namespace BookingApp.View.Guide
 
             foreach(var tourInstace in TourInstances)
             {
-                if(tourInstace.StartTime.Date == todayDate.Date)
+                if(tourInstace.StartTime.Date == todayDate.Date && tourInstace.IsCompleted == false)
                 {
                     var matchingTour = Tours.Find(tour => tour.Id == tourInstace.TourId);
                     if (matchingTour != null)
@@ -64,8 +65,29 @@ namespace BookingApp.View.Guide
             }
             else
             {
-                ActiveTourOverview activeTourOverview = new ActiveTourOverview(SelectedTour.Id);
+                TourInstance tourInstace = TourInstances.Find(tour => tour.TourId == SelectedTour.Id &&
+                    tour.StartTime.Date == todayDate.Date && tour.IsCompleted == false);
+
+                _tourInstanceId = tourInstace.Id;
+
+                ActiveTourOverview activeTourOverview = new ActiveTourOverview(SelectedTour.Id, _tourInstanceId);
                 activeTourOverview.ShowDialog();
+            }
+            Update();
+        }
+
+        private void Update()
+        {
+            TodayTours.Clear();
+            TourInstances = _tourInstaceRepository.GetAll();
+            foreach (var tourInstace in TourInstances)
+            {
+                if (tourInstace.StartTime.Date == todayDate.Date && tourInstace.IsCompleted == false)
+                {
+                    var matchingTour = Tours.Find(tour => tour.Id == tourInstace.TourId);
+                    if (matchingTour != null)
+                        TodayTours.Add(matchingTour);
+                }
             }
         }
     }
