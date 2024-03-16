@@ -52,32 +52,8 @@ namespace BookingApp.Model
 
         public string[] ToCSV()
         {
-            int last = LanguageId.Last();
-            string lang = "";
-            int lastloc = LocationId.Last();
-            string langloc = "";
-            foreach (int l in LanguageId)
-            {
-                if (last != l)
-                {
-                    lang += l + ",";
-                }
-                else
-                {
-                    lang += l;
-                }  
-            }
-            foreach (int lo in LocationId)
-            {
-                if (lastloc != lo)
-                {
-                    langloc += lo + ",";
-                }
-                else
-                {
-                    langloc += lo;
-                }
-            }
+            string lang = string.Join(",", LanguageId);
+            string langloc = string.Join(",", LocationId);
             string[] csvValues = { VehicleId.ToString(), langloc, MaxPassengers.ToString(), lang };
             return csvValues;
         }

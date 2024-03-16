@@ -45,6 +45,11 @@ namespace BookingApp.View.Driver
         {
             if (!IsAtLocation)
             {
+                if (DelayMinutes < 0)
+                {
+                    MessageBox.Show("Can't put negative delay!");
+                    return;
+                }
                 reservation.DelayMinutes = DelayMinutes;
                 Repo.Update(reservation);
                 ReservationConfirmed?.Invoke(this, EventArgs.Empty);
