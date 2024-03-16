@@ -64,7 +64,8 @@ namespace BookingApp.View.Guide
             }
             else
             {
-
+                ActiveTourOverview activeTourOverview = new ActiveTourOverview(SelectedTour.Id);
+                activeTourOverview.ShowDialog();
             }
         }
     }
