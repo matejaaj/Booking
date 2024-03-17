@@ -74,7 +74,7 @@ namespace BookingApp.View
                             touristMainWindow.Show();
                             break;
                         case Role.DRIVER:
-                            DriverOverview driverOverview = new DriverOverview();
+                            DriverOverview driverOverview = new DriverOverview(user);
                             driverOverview.Show();
                             break;
                         default:
