@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace BookingApp.View.Tourist
 {
-    public partial class TourReservationWindow : Window
+    public partial class TourReservationForm : Window
     {
         public int UserId { get; set; }
         public Tour SelectedTour { get; private set; }
@@ -18,7 +18,7 @@ namespace BookingApp.View.Tourist
         private readonly TourReservationRepository _tourReservationRepository;
         private readonly TourGuestRepository _tourGuestRepository;
 
-        public TourReservationWindow(Tour selectedTour, User user)
+        public TourReservationForm(Tour selectedTour, User user)
         {
             InitializeComponent();
 
@@ -71,11 +71,10 @@ namespace BookingApp.View.Tourist
                 return; 
             }
 
-            int newCapacity = numberOfPeople + (SelectedTourInstance?.Capacity ?? 0);
 
-            if (newCapacity > SelectedTour.MaximumCapacity)
+            if (numberOfPeople > SelectedTourInstance.RemainingSlots)
             {
-                int remainingSeats = SelectedTour.MaximumCapacity - (SelectedTourInstance?.Capacity ?? 0);
+                int remainingSeats = SelectedTour.MaximumCapacity - (SelectedTourInstance?.RemainingSlots ?? 0);
                 MessageBox.Show($"Insufficient spots available for the selected tour. Remaining spots for the selected date: {remainingSeats}.");
                 cmbNumberOfPeople.SelectedItem = null;
                 return;
@@ -114,18 +113,15 @@ namespace BookingApp.View.Tourist
 
         private void UpdateTourInstanceCapacity(int numberOfPeople)
         {
-            SelectedTourInstance.Capacity += numberOfPeople;
+            SelectedTourInstance.RemainingSlots -= numberOfPeople;
             _tourInstanceRepository.Update(SelectedTourInstance);
         }
-
         private void SaveTourReservation(List<TourGuest> tourGuests)
         {
             TourReservation tourReservation = new TourReservation(SelectedTourInstance.Id, UserId);
             _tourGuestRepository.SaveMultiple(tourGuests);
             _tourReservationRepository.Save(tourReservation); 
         }
-
-
         private List<TourGuest> GetGuestsFromInputFields()
         {
             var guests = new List<TourGuest>();
@@ -146,15 +142,10 @@ namespace BookingApp.View.Tourist
             return guests;
         }
 
-
         private bool ConfirmAction(string message, string caption)
         {
             var result = MessageBox.Show(message, caption, MessageBoxButton.YesNo, MessageBoxImage.Question);
             return result == MessageBoxResult.Yes;
         }
-
-
-
-
     }
 }

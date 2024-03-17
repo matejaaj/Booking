@@ -19,15 +19,11 @@ namespace BookingApp.Model
         public int DriveReservationStatusId { get; set; }
         public double DelayMinutes { get; set; }
 
-        public string PickupLocationDescription { get; set; }
-        public string DropoffLocationDescription { get; set; }
-
         public DriveReservation() { }
 
 
-        public DriveReservation(int id, int pickupLocationId, int dropoffLocationId, DateTime departureTime, int driverId, int touristId, int driveReservationStatusId, double delayMinutes)
+        public DriveReservation(int pickupLocationId, int dropoffLocationId, DateTime departureTime, int driverId, int touristId, int driveReservationStatusId, double delayMinutes)
         {
-            Id = id;
             PickupLocationId = pickupLocationId;
             DropoffLocationid = dropoffLocationId;
             DepartureTime = departureTime;
