@@ -38,6 +38,7 @@ namespace BookingApp.View.Driver
         private readonly VehicleRepository _vehicleRepository;
 
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        private DriveReservation ConfirmedReservation {  get; set; }
         private int sec = 0;
 
         public DriverOverview()
@@ -53,7 +54,8 @@ namespace BookingApp.View.Driver
             canCancel = false;
             UpdateVehicleCount();
             UpdateReservationList();
-
+            dispatcherTimer.Interval = System.TimeSpan.Parse("00:00:01");
+            dispatcherTimer.Tick += Timer_Tick;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -79,8 +81,13 @@ namespace BookingApp.View.Driver
 
         private void ViewDrive_Click(object sender, RoutedEventArgs e)
         {
-            if(SelectedReservation != null)
+            if (SelectedReservation != null)
             {
+                if (SelectedReservation.DriveReservationStatusId != 2)
+                {
+                    MessageBox.Show("You can't delay resevation if it's not confirmed!");
+                    return;
+                }
                 ViewDrive vForm = new ViewDrive();
                 vForm.reservation = SelectedReservation;
                 vForm.ReservationConfirmed += DataGrid_Refresh;
@@ -112,6 +119,7 @@ namespace BookingApp.View.Driver
                 if(reservation.DriveReservationStatusId == 2)
                 {
                     DriveReservations.Clear();
+                    ConfirmedReservation = reservation;
                     DriveReservations.Add(reservation);
                     return;
                 }
@@ -122,12 +130,13 @@ namespace BookingApp.View.Driver
         private void DataGrid_Refresh(object? sender, EventArgs e)
         {
             UpdateReservationList();
-            if (sender is ViewDrive)
+            if (sender is ViewDrive && ConfirmedReservation.DelayMinutes < 0)
             {
-                dispatcherTimer.Tick += Timer_Tick;
-                dispatcherTimer.Interval = System.TimeSpan.Parse("00:00:01");
+                dispatcherTimer.Stop();
+                sec = 0;
                 dispatcherTimer.Start();
             }
+            canCancel = false;
         }
 
         private void ViewDrive_Respond(object? sender, EventArgs e)

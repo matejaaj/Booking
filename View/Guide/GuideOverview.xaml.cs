@@ -24,10 +24,16 @@ namespace BookingApp.View.Guide
             InitializeComponent();
             DataContext = this;
         }
-        private void ShowTourForm(object sender, RoutedEventArgs e)
+        private void btnShowTourForm_Click(object sender, RoutedEventArgs e)
         {
             TourForm tourForm = new TourForm();
             tourForm.ShowDialog();
+        }
+
+        private void btnShowTodayTours_Click(object sender, RoutedEventArgs e)
+        {
+            TodayToursOverview todayToursOverview = new TodayToursOverview();
+            todayToursOverview.ShowDialog();
         }
     }
  
