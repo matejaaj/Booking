@@ -28,13 +28,12 @@ namespace BookingApp.Model
             imageSource = new List<string>();
         }
 
-        public Vehicle( List<int> locationId, int maxPassengers, List<int> languageId, int driverId)
+        public Vehicle( List<int> locationId, int maxPassengers, List<int> languageId)
         {
             LocationId = locationId;
             MaxPassengers = maxPassengers;
             LanguageId = languageId;
             imageSource = new List<string>();
-            DriverId = driverId;
         }   
 
         public void FromCSV(string[] values)
@@ -51,38 +50,14 @@ namespace BookingApp.Model
                 if(int.TryParse(s,out _))
                 LanguageId.Add(Convert.ToInt32(s));
             }
-            DriverId = Convert.ToInt32(values[4]);
+            
         }
 
         public string[] ToCSV()
         {
-            int last = LanguageId.Last();
-            string lang = "";
-            int lastloc = LocationId.Last();
-            string langloc = "";
-            foreach (int l in LanguageId)
-            {
-                if (last != l)
-                {
-                    lang += l + ",";
-                }
-                else
-                {
-                    lang += l;
-                }  
-            }
-            foreach (int lo in LocationId)
-            {
-                if (lastloc != lo)
-                {
-                    langloc += lo + ",";
-                }
-                else
-                {
-                    langloc += lo;
-                }
-            }
-            string[] csvValues = { VehicleId.ToString(), langloc, MaxPassengers.ToString(), lang, DriverId.ToString() };
+            string lang = string.Join(",", LanguageId);
+            string langloc = string.Join(",", LocationId);
+            string[] csvValues = { VehicleId.ToString(), langloc, MaxPassengers.ToString(), lang };
             return csvValues;
         }
     }

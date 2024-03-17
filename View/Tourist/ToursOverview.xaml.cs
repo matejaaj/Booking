@@ -84,7 +84,7 @@ namespace BookingApp.View.Tourist
                 MessageBox.Show("Select tour first.");
             } else
             {
-                TourReservationWindow tourReservationWindow = new TourReservationWindow(SelectedTour, LoggedInUser);
+                TourReservationForm tourReservationWindow = new TourReservationForm(SelectedTour, LoggedInUser);
                 tourReservationWindow.Show();
             }
 
