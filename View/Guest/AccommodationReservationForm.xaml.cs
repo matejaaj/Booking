@@ -84,6 +84,8 @@ namespace BookingApp.View.Guest
         public AccommodationReservationForm(Accommodation accommodation, User guest)
         {
             InitializeComponent();
+            StartDate = DateTime.Today;
+            EndDate = DateTime.Today;
             DataContext = this;
             _accommodationReservationRepository = new AccommodationReservationRepository();
             AccommodationsReserved = _accommodationReservationRepository.GetByAccommodationId(accommodation.AccommodationId);
