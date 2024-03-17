@@ -12,7 +12,7 @@ namespace BookingApp.Model
     {
         public int Id { get; set; }
         public int TourId {  get; set; }
-        public int Capacity {  get; set; }
+        public int RemainingSlots {  get; set; }
         public DateTime StartTime { get; set; }
 
         public TourInstance() { }
@@ -20,7 +20,7 @@ namespace BookingApp.Model
         public TourInstance(int tourId, int capacity, DateTime startTime)
         {
             TourId = tourId;
-            Capacity = capacity;
+            RemainingSlots = capacity;
             StartTime = startTime;
         }
 
@@ -28,7 +28,7 @@ namespace BookingApp.Model
         {
             Id = int.Parse(values[0]);
             TourId = int.Parse(values[1]);
-            Capacity = int.Parse(values[2]);
+            RemainingSlots = int.Parse(values[2]);
             StartTime = DateTime.Parse(values[3]);
         }
 
@@ -37,7 +37,7 @@ namespace BookingApp.Model
             return new string[] {
             Id.ToString(),
             TourId.ToString(),
-            Capacity.ToString(),
+            RemainingSlots.ToString(),
             StartTime.ToString()
             };
         }
