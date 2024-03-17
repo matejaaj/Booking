@@ -41,13 +41,13 @@ namespace BookingApp.View.Driver
         private DriveReservation ConfirmedReservation {  get; set; }
         private int sec = 0;
 
-        public DriverOverview()
+        public DriverOverview(User driver)
         {
             InitializeComponent();
             DataContext = this;
             Vehicles = new ObservableCollection<Vehicle>();
             _repository = new DriveReservationRepository();
-            DriveReservations = new ObservableCollection<DriveReservation>(_repository.GetAll());
+            DriveReservations = new ObservableCollection<DriveReservation>(_repository.GetByDriver(driver.Id));
             _locationRepository = new LocationRepository();
             _vehicleRepository = new VehicleRepository();
             locations = _locationRepository.GetAll();

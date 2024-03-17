@@ -42,8 +42,8 @@ namespace BookingApp.Model
             Id.ToString(),
             TourId.ToString(),
             RemainingSlots.ToString(),
-            StartTime.ToString()
-            Is.Completed.ToString()
+            StartTime.ToString(),
+            IsCompleted.ToString()
             };
         }
     }

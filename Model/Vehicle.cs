@@ -28,13 +28,12 @@ namespace BookingApp.Model
             imageSource = new List<string>();
         }
 
-        public Vehicle( List<int> locationId, int maxPassengers, List<int> languageId, int driverId)
+        public Vehicle( List<int> locationId, int maxPassengers, List<int> languageId)
         {
             LocationId = locationId;
             MaxPassengers = maxPassengers;
             LanguageId = languageId;
             imageSource = new List<string>();
-            DriverId = driverId;
         }   
 
         public void FromCSV(string[] values)
@@ -51,7 +50,7 @@ namespace BookingApp.Model
                 if(int.TryParse(s,out _))
                 LanguageId.Add(Convert.ToInt32(s));
             }
-            DriverId = Convert.ToInt32(values[4]);
+            
         }
 
         public string[] ToCSV()
