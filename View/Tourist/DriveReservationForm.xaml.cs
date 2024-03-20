@@ -161,7 +161,7 @@ namespace BookingApp.View.Tourist
 
         private void UpdateDriverList()
         {
-            if (!AreAllCriteriaMet())
+            if (!ValidateInputs())
             {
                 MessageBox.Show("Enter all values.");
                 return;
@@ -169,12 +169,12 @@ namespace BookingApp.View.Tourist
 
             List<int> drivers = _vehicleRepository.GetDriverIdsByLocationId(PickupLocationId);
             DateTime? date = CreateDateTimeFromSelections();
-            drivers = FilterDrivers(drivers, date);
-            FillDriverComboBox(drivers);
+            drivers = FilterAvailableDrivers(drivers, date);
+            FillDrivers(drivers);
 
 
         }
-        private void FillDriverComboBox(List<int> driverIds)
+        private void FillDrivers(List<int> driverIds)
         {
             UserRepository userRepository = new UserRepository();
             List<User> drivers = userRepository.GetByIds(driverIds);
@@ -194,7 +194,7 @@ namespace BookingApp.View.Tourist
 
 
 
-        private List<int> FilterDrivers(List<int> driverIds, DateTime? targetStartTime)
+        private List<int> FilterAvailableDrivers(List<int> driverIds, DateTime? targetStartTime)
         {
             DriveReservationRepository driveReservationRepository = new DriveReservationRepository();
             var scheduledDrivers = driveReservationRepository.GetAll()
@@ -206,7 +206,7 @@ namespace BookingApp.View.Tourist
             return driverIds.Except(scheduledDrivers).ToList();
         }
 
-        private bool AreAllCriteriaMet()
+        private bool ValidateInputs()
         {
             return dpDepartureDate.SelectedDate != null &&
                    cbStartCountry.SelectedItem != null &&
