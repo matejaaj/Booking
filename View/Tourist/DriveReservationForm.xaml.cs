@@ -147,8 +147,6 @@ namespace BookingApp.View.Tourist
             }
         }
 
-
-
         private void UpdateDriverList()
         {
             if (!AreAllCriteriaMet())
@@ -160,7 +158,7 @@ namespace BookingApp.View.Tourist
             VehicleRepository vehicleRepository = new VehicleRepository();
             List<int> drivers = vehicleRepository.GetDriverIdsByLocationId(PickupLocationId);
             DateTime? date = CreateDateTimeFromSelections();
-            drivers = FilterDriverIdsBasedOnSchedule(drivers, date);
+            drivers = FilterDrivers(drivers, date);
             FillDriverComboBox(drivers);
 
 
@@ -188,12 +186,11 @@ namespace BookingApp.View.Tourist
             if (cbDrivers.SelectedItem is ComboBoxItem selectedItem)
             {
                 SelectedDriverId = (int)selectedItem.Tag; 
-
             }
         }
 
 
-        private List<int> FilterDriverIdsBasedOnSchedule(List<int> driverIds, DateTime? targetStartTime)
+        private List<int> FilterDrivers(List<int> driverIds, DateTime? targetStartTime)
         {
             DriveReservationRepository driveReservationRepository = new DriveReservationRepository();
             var scheduledDrivers = driveReservationRepository.GetAll()

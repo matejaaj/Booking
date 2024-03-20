@@ -137,7 +137,7 @@ namespace BookingApp.View.Driver
             {
                 _imageRepository.Save(img);
             }
-            Vehicle newVehicle = new Vehicle(lokacija, MaxPassengers,lista);
+            Vehicle newVehicle = new Vehicle(lokacija, MaxPassengers,lista, LoggedInUser.Id);
             Vehicle savedVehicle = _repository.Save(newVehicle);
             DriverOverview.Vehicles.Add(savedVehicle);
             VehicleAdded?.Invoke(this, EventArgs.Empty);
