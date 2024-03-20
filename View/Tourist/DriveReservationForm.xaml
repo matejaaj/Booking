@@ -27,10 +27,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <!-- Dodat RowDefinition za novi ComboBox -->
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <!-- Dodat RowDefinition za Button -->
         </Grid.RowDefinitions>
 
 
@@ -43,12 +41,6 @@
         <Label Content="Ulica polazišta:" Grid.Row="4"/>
         <ComboBox x:Name="cbStartStreet" Grid.Row="5" Margin="0,10,0,0" SelectionChanged="cbStartStreet_SelectionChanged"/>
 
-        <Label Content="Država odredišta:" Grid.Row="6"/>
-        <ComboBox x:Name="cbDestinationCountry" Grid.Row="7" Margin="0,0,0,10" SelectionChanged="cbDestinationCountry_SelectionChanged"/>
-
-        <Label Content="Grad odredišta:" Grid.Row="8"/>
-        <ComboBox x:Name="cbDestinationCity" Grid.Row="9" Margin="0,0,0,10" SelectionChanged="cbDestinationCity_SelectionChanged"/>
-
         <Label Content="Ulica odredišta:" Grid.Row="10"/>
         <ComboBox x:Name="cbDestinationStreet" Grid.Row="11" Margin="0,10,0,0" SelectionChanged="cbDestinationStreet_SelectionChanged"/>
 
@@ -57,12 +49,8 @@
         <Label Content="Sati polaska:" Grid.Row="14"/>
         <ComboBox x:Name="cbDepartureHour" Grid.Row="15" Margin="0,0,0,10"/>
         <Label Content="Minuti polaska:" Grid.Row="16"/>
-        <ComboBox x:Name="cbDepartureMinute" Grid.Row="17" Margin="0,0,0,10" SelectionChanged="cbDepartureMinute_SelectionChanged">
-            <ComboBoxItem Content="00"/>
-            <ComboBoxItem Content="15"/>
-            <ComboBoxItem Content="30"/>
-            <ComboBoxItem Content="45"/>
-        </ComboBox>
+        <ComboBox x:Name="cbDepartureMinute" Grid.Row="17" Margin="0,0,0,10" SelectionChanged="cbDepartureMinute_SelectionChanged"/>
+
 
         <Label Content="Vozač:" Grid.Row="18"/>
         <ComboBox x:Name="cbDrivers" Grid.Row="19" Margin="0,0,0,10" SelectionChanged="cbDrivers_SelectionChanged"></ComboBox>

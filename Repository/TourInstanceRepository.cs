@@ -8,7 +8,7 @@ using BookingApp.Serializer;
 
 namespace BookingApp.Repository
 {
-    internal class TourInstanceRepository
+    public class TourInstanceRepository
     {
         private const string FilePath = "../../../Resources/Data/tourinstance.csv";
         private readonly Serializer<TourInstance> _serializer;

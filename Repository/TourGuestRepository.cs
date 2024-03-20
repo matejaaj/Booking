@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    internal class TourGuestRepository
+    public class TourGuestRepository
     {
         private const string FilePath = "../../../Resources/Data/tourguest.csv";
         private readonly Serializer<TourGuest> _serializer;

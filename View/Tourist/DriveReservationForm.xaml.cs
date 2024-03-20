@@ -22,76 +22,51 @@ namespace BookingApp.View.Tourist
     public partial class DriveReservationForm : Window
     {
         public User Tourist;
-
         public int PickupLocationId { get; set; }
         public int DetailedPickupLocationId { get; set; }
-        public int DropoffLocationid { get; set; }
         public int DetailedDropoffLocationId { get; set; }
-
         public int SelectedDriverId { get; set; }
 
-        public DriveReservationForm(User user)
+
+        VehicleRepository _vehicleRepository { get; set; }
+        DetailedLocationRepository _detailedLocationRepository { get; set; }
+        LocationRepository _locationRepository { get; set; }
+        DriveReservationRepository _driveReservationRepository { get; set; }
+
+        public DriveReservationForm(User loggedUser)
         {
-            Tourist = user;
+            InitializeRepositories();
             InitializeComponent();
+            FillInitialComboBoxValues();
+
+            Tourist = loggedUser;
+        }
+
+
+        private void InitializeRepositories()
+        {
+            _detailedLocationRepository = new DetailedLocationRepository();
+            _locationRepository = new LocationRepository();
+            _vehicleRepository = new VehicleRepository();
+            _driveReservationRepository = new DriveReservationRepository();
+        }
+
+        private void FillInitialComboBoxValues()
+        {
             FillCountries(cbStartCountry);
-            FillCountries(cbDestinationCountry);
             FillHours();
+            FillMinutes();
         }
 
         private void FillCountries(ComboBox comboBox)
         {
-            LocationRepository _locationRepository = new LocationRepository();
             List<Location> locations = _locationRepository.GetAll();
             var countries = locations.Select(loc => loc.Country).Distinct().OrderBy(c => c).ToList();
+
             comboBox.Items.Clear();
             foreach (var country in countries)
             {
                 comboBox.Items.Add(country);
-            }
-        }
-
-        private void FillCities(ComboBox cbCountry, ComboBox cbCity)
-        {
-            var selectedCountry = cbCountry.SelectedItem?.ToString();
-            if (!string.IsNullOrEmpty(selectedCountry))
-            {
-                LocationRepository _locationRepository = new LocationRepository();
-                var cities = _locationRepository.GetAll()
-                    .Where(location => location.Country == selectedCountry)
-                    .Select(location => new KeyValuePair<int, string>(location.Id, location.City))
-                    .Distinct()
-                    .OrderBy(pair => pair.Value)
-                    .ToList();
-
-                cbCity.ItemsSource = cities;
-                cbCity.DisplayMemberPath = "Value";
-                cbCity.SelectedValuePath = "Key";
-            }
-            else
-            {
-                cbCity.ItemsSource = null;
-            }
-        }
-
-        private void FillAddress(ComboBox cbCity, ComboBox cbStreet)
-        {
-            if (cbCity.SelectedItem != null)
-            {
-                var selectedCity = (KeyValuePair<int, string>)cbCity.SelectedItem;
-                DetailedLocationRepository _detailedLocationRepository = new DetailedLocationRepository();
-                var addresses = _detailedLocationRepository.GetAll()
-                    .Where(detailedLocation => detailedLocation.LocationId == selectedCity.Key)
-                    .Select(detailedLocation => detailedLocation.Address)
-                    .Distinct()
-                    .OrderBy(address => address)
-                    .ToList();
-
-                cbStreet.ItemsSource = addresses;
-            }
-            else
-            {
-                cbStreet.ItemsSource = null;
             }
         }
 
@@ -104,28 +79,65 @@ namespace BookingApp.View.Tourist
             }
         }
 
-        private void FillAddressForCity(ComboBox cbCity, ComboBox cbStreet)
+
+        private void FillMinutes()
         {
-            FillAddress(cbCity, cbStreet);
-            if (cbCity.SelectedItem is KeyValuePair<int, string> selectedCity)
+            for (int minute = 0; minute < 60; minute += 15)
             {
-                if (cbCity == cbStartCity) PickupLocationId = selectedCity.Key;
-                else if (cbCity == cbDestinationCity) DropoffLocationid = selectedCity.Key;
+                string minuteText = minute.ToString("00");
+                cbDepartureMinute.Items.Add(minuteText);
             }
         }
 
+
+        private void FillCities()
+        {
+            var selectedCountry = cbStartCountry.SelectedItem?.ToString();
+
+            if (string.IsNullOrEmpty(selectedCountry))
+            {
+                cbStartCity.ItemsSource = null;
+                return;
+            }
+
+            var cities = _locationRepository.GetAll()
+                .Where(location => location.Country == selectedCountry)
+                .Select(location => new KeyValuePair<int, string>(location.Id, location.City))
+                .Distinct()
+                .OrderBy(pair => pair.Value)
+                .ToList();
+
+            cbStartCity.ItemsSource = cities;
+            cbStartCity.DisplayMemberPath = "Value";
+            cbStartCity.SelectedValuePath = "Key";
+ 
+        }
+
+        private void FillAddress()
+        {
+            var selectedCity = (KeyValuePair<int, string>)cbStartCity.SelectedItem;
+
+            var addresses = _detailedLocationRepository.GetAll()
+                .Where(detailedLocation => detailedLocation.LocationId == selectedCity.Key)
+                .Select(detailedLocation => detailedLocation.Address)
+                .Distinct()
+                .OrderBy(address => address)
+                .ToList();
+
+            cbStartStreet.ItemsSource = addresses;
+            cbDestinationStreet.ItemsSource = addresses;
+            PickupLocationId = selectedCity.Key;
+        }
         private void SetDetailedLocationId(ComboBox cbStreet, bool isStartLocation)
         {
-            if (cbStreet.SelectedItem != null)
+            if (cbStreet.SelectedItem == null) return;
+
+            var selectedAddress = cbStreet.SelectedItem.ToString();
+            var detailedLocation = _detailedLocationRepository.GetByAddress(selectedAddress);
+            if (detailedLocation != null)
             {
-                var selectedAddress = cbStreet.SelectedItem.ToString();
-                DetailedLocationRepository _detailedLocationRepository = new DetailedLocationRepository();
-                var detailedLocation = _detailedLocationRepository.GetByAddress(selectedAddress);
-                if (detailedLocation != null)
-                {
-                    if (isStartLocation) DetailedPickupLocationId = detailedLocation.Id;
-                    else DetailedDropoffLocationId = detailedLocation.Id;
-                }
+                if (isStartLocation) DetailedPickupLocationId = detailedLocation.Id;
+                else DetailedDropoffLocationId = detailedLocation.Id;
             }
         }
 
@@ -133,10 +145,10 @@ namespace BookingApp.View.Tourist
         {
             if (dpDepartureDate.SelectedDate.HasValue &&
                 cbDepartureHour.SelectedItem is string selectedHour &&
-                cbDepartureMinute.SelectedItem is ComboBoxItem selectedMinuteItem)
+                cbDepartureMinute.SelectedItem is string selectedMinute)
             {
                 int hour = int.Parse(selectedHour);
-                int minute = int.Parse(selectedMinuteItem.Content.ToString());
+                int minute = int.Parse(selectedMinute);
 
                 return new DateTime(dpDepartureDate.SelectedDate.Value.Year, dpDepartureDate.SelectedDate.Value.Month, dpDepartureDate.SelectedDate.Value.Day, hour, minute, 0);
             }
@@ -155,8 +167,7 @@ namespace BookingApp.View.Tourist
                 return;
             }
 
-            VehicleRepository vehicleRepository = new VehicleRepository();
-            List<int> drivers = vehicleRepository.GetDriverIdsByLocationId(PickupLocationId);
+            List<int> drivers = _vehicleRepository.GetDriverIdsByLocationId(PickupLocationId);
             DateTime? date = CreateDateTimeFromSelections();
             drivers = FilterDrivers(drivers, date);
             FillDriverComboBox(drivers);
@@ -181,13 +192,6 @@ namespace BookingApp.View.Tourist
             }
         }
 
-        private void cbDrivers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbDrivers.SelectedItem is ComboBoxItem selectedItem)
-            {
-                SelectedDriverId = (int)selectedItem.Tag; 
-            }
-        }
 
 
         private List<int> FilterDrivers(List<int> driverIds, DateTime? targetStartTime)
@@ -208,8 +212,6 @@ namespace BookingApp.View.Tourist
                    cbStartCountry.SelectedItem != null &&
                    cbStartCity.SelectedItem != null &&
                    cbStartStreet.SelectedItem != null &&
-                   cbDestinationCountry.SelectedItem != null &&
-                   cbDestinationCity.SelectedItem != null &&
                    cbDestinationStreet.SelectedItem != null &&
                    cbDepartureHour.SelectedItem != null &&
                    cbDepartureMinute.SelectedItem != null;
@@ -221,37 +223,23 @@ namespace BookingApp.View.Tourist
             DateTime departure = CreateDateTimeFromSelections();
 
             DriveReservation driveReservation = new(DetailedPickupLocationId, DetailedDropoffLocationId, departure, SelectedDriverId, Tourist.Id, 2, 0);
-            DriveReservationRepository driveReservationRepository = new DriveReservationRepository();
-            driveReservationRepository.Save(driveReservation);
+            _driveReservationRepository.Save(driveReservation);
             MessageBox.Show("Reservation succesfful");
             this.Close();
         }
-            
+        
         private void cbDepartureMinute_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateDriverList();
         }
-
         private void cbStartCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FillCities(cbStartCountry, cbStartCity);
+            FillCities();
         }
-
-        private void cbDestinationCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            FillCities(cbDestinationCountry, cbDestinationCity);
-        }
-
         private void cbStartCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FillAddressForCity(cbStartCity, cbStartStreet);
+            FillAddress();
         }
-
-        private void cbDestinationCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            FillAddressForCity(cbDestinationCity, cbDestinationStreet);
-        }
-
         private void cbStartStreet_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SetDetailedLocationId(cbStartStreet, true);
@@ -260,6 +248,15 @@ namespace BookingApp.View.Tourist
         private void cbDestinationStreet_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SetDetailedLocationId(cbDestinationStreet, false);
+        }
+
+
+        private void cbDrivers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbDrivers.SelectedItem is ComboBoxItem selectedItem)
+            {
+                SelectedDriverId = (int)selectedItem.Tag;
+            }
         }
     }
 }
