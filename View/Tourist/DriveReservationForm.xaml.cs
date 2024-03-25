@@ -195,7 +195,7 @@ namespace BookingApp.View.Tourist
         {
             DateTime departure = CreateDateTimeFromSelections();
 
-            DriveReservation driveReservation = new(DetailedPickupLocationId, DetailedDropoffLocationId, departure, SelectedDriverId, Tourist.Id, 2, 0);
+            DriveReservation driveReservation = new(DetailedPickupLocationId, DetailedDropoffLocationId, departure, SelectedDriverId, Tourist.Id, 2, 0, 0);
             _driveReservationRepository.Save(driveReservation);
             MessageBox.Show("Reservation succesfful");
             this.Close();

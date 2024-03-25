@@ -17,12 +17,15 @@ namespace BookingApp.Model
         public int DriverId { get; set; }
         public int TouristId { get; set; }
         public int DriveReservationStatusId { get; set; }
-        public double DelayMinutes { get; set; }
+        public double DelayMinutesDriver { get; set; }
+
+        public double DelayMinutesTourist { get; set; }
 
         public DriveReservation() { }
 
 
-        public DriveReservation(int pickupLocationId, int dropoffLocationId, DateTime departureTime, int driverId, int touristId, int driveReservationStatusId, double delayMinutes)
+
+        public DriveReservation(int pickupLocationId, int dropoffLocationId, DateTime departureTime, int driverId, int touristId, int driveReservationStatusId, double delayMinutesDriver, double delayMinutesTourist)
         {
             PickupLocationId = pickupLocationId;
             DropoffLocationid = dropoffLocationId;
@@ -30,8 +33,10 @@ namespace BookingApp.Model
             DriverId = driverId;
             TouristId = touristId;
             DriveReservationStatusId = driveReservationStatusId;
-            DelayMinutes = delayMinutes;
+            DelayMinutesDriver = delayMinutesDriver;
+            DelayMinutesTourist = delayMinutesTourist;
         }
+
 
         public void FromCSV(string[] values)
         {
@@ -42,12 +47,13 @@ namespace BookingApp.Model
             DriverId = Convert.ToInt32(values[4]);
             TouristId = Convert.ToInt32(values[5]);
             DriveReservationStatusId = Convert.ToInt32(values[6]);
-            DelayMinutes = Convert.ToDouble(values[7]);
+            DelayMinutesDriver = Convert.ToDouble(values[7]);
+            DelayMinutesTourist = Convert.ToDouble(values[8]);
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), PickupLocationId.ToString(), DropoffLocationid.ToString(), DepartureTime.ToString("o"), DriverId.ToString(), TouristId.ToString(), DriveReservationStatusId.ToString(), DelayMinutes.ToString() };
+            string[] csvValues = { Id.ToString(), PickupLocationId.ToString(), DropoffLocationid.ToString(), DepartureTime.ToString("o"), DriverId.ToString(), TouristId.ToString(), DriveReservationStatusId.ToString(), DelayMinutesDriver.ToString(), DelayMinutesTourist.ToString() };
             return csvValues;
         }
 

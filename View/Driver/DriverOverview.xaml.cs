@@ -130,7 +130,7 @@ namespace BookingApp.View.Driver
         private void DataGrid_Refresh(object? sender, EventArgs e)
         {
             UpdateReservationList();
-            if (sender is ViewDrive && ConfirmedReservation.DelayMinutes < 0)
+            if (sender is ViewDrive && ConfirmedReservation.DelayMinutesDriver < 0)
             {
                 dispatcherTimer.Stop();
                 sec = 0;
