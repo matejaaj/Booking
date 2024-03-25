@@ -237,5 +237,27 @@ namespace BookingApp.View.Driver
 
         }
 
+        private void btnDrive_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedReservation == null)
+            {
+                MessageBox.Show("You have to select ride!");
+                return;
+            }
+            if (SelectedReservation.DriveReservationStatusId != 2)
+            {
+                MessageBox.Show("Yoy don't have any confirmed reservations!");
+                return;
+            }
+            if (SelectedReservation.DelayMinutesDriver != -1)
+            {
+                MessageBox.Show("You aren't at location!");
+                return;
+            }
+            DriveOverview dForm = new DriveOverview();
+            dForm.Reservation = SelectedReservation;
+            dForm.Show();
+        }
+
     }
 }

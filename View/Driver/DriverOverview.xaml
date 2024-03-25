@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.View.Driver"
         mc:Ignorable="d"
-        Title="DriverOverview" Height="450" Width="800">
+        Title="DriverOverview" Height="447" Width="980">
     <Window.Resources>
         <local:LocationConverterDriver x:Key="LocationConverterDriver" />
     </Window.Resources>
@@ -13,10 +13,10 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="424"/>
-            <ColumnDefinition Width="336"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -27,18 +27,18 @@
 
         <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
             <DataGrid ItemsSource="{Binding DriveReservations}"
-                      AutoGenerateColumns="False" Height="316" HeadersVisibility="Column" 
+                      AutoGenerateColumns="False" Height="382" HeadersVisibility="Column" 
                       FontSize="13" SelectionChanged="DataGrid_SelectionChanged"
                       SelectedItem="{Binding SelectedReservation}"
-                      SelectionMode="Single">
+                      SelectionMode="Single" Width="800">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Pickup Location ID" Binding="{Binding PickupLocationId, Converter={StaticResource LocationConverterDriver}}" Width="140"/>
-                    <DataGridTextColumn Header="Dropoff Location ID" Binding="{Binding DropoffLocationid, Converter={StaticResource LocationConverterDriver}}" Width="140"/>
-                    <DataGridTextColumn Header="Departure Time" Binding="{Binding DepartureTime, StringFormat='{}{0:MM/dd/yyyy HH:mm:ss}'}" Width="120"/>
-                    <DataGridTextColumn Header="Tourist" Binding="{Binding Tourist.Username}" Width="70"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="70"/>
-                    <DataGridTextColumn Header="Delay Minutes Driver" Binding="{Binding DelayMinutesDriver}" Width="*"/>
-                    <DataGridTextColumn Header="Delay Minutes Tourist" Binding="{Binding DelayMinutesTourist}" Width="70"/>
+                    <DataGridTextColumn Header="Pickup Location ID" Binding="{Binding PickupLocationId, Converter={StaticResource LocationConverterDriver}}" Width="2*"/>
+                    <DataGridTextColumn Header="Dropoff Location ID" Binding="{Binding DropoffLocationid, Converter={StaticResource LocationConverterDriver}}" Width="2*"/>
+                    <DataGridTextColumn Header="Departure Time" Binding="{Binding DepartureTime, StringFormat='{}{0:MM/dd/yyyy HH:mm:ss}'}" Width="*"/>
+                    <DataGridTextColumn Header="Tourist" Binding="{Binding Tourist.Username}" Width="*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="*"/>
+                    <DataGridTextColumn Header="Delay Minutes Driver" Binding="{Binding DelayMinutesDriver}" Width="2*"/>
+                    <DataGridTextColumn Header="Delay Minutes Tourist" Binding="{Binding DelayMinutesTourist}" Width="2*"/>
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -82,6 +82,13 @@
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
                     <TextBlock Text="Dismiss Vehicle" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button x:Name="btnDrive" Click="btnDrive_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/car.png" Width="20" Height="25"/>
+                    <TextBlock Text="Drive overview" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </ToolBar>
