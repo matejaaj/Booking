@@ -40,10 +40,14 @@ namespace BookingApp.View.Driver
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private DriveReservation ConfirmedReservation {  get; set; }
         private int sec = 0;
+        private int secTourist = 0;
+
+        private int DriverId;
 
         public DriverOverview(User driver)
         {
             InitializeComponent();
+            DriverId = driver.Id;
             DataContext = this;
             Vehicles = new ObservableCollection<Vehicle>();
             _repository = new DriveReservationRepository();
@@ -73,7 +77,7 @@ namespace BookingApp.View.Driver
 
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
-            VehicleForm vehicleForm = new VehicleForm();
+            VehicleForm vehicleForm = new VehicleForm(DriverId);
             vehicleForm.VehicleAdded += VehicleForm_VehicleAdded;
             vehicleForm.Show();
         }
@@ -112,7 +116,7 @@ namespace BookingApp.View.Driver
 
         private void UpdateReservationList()
         {
-            ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(_repository.GetAll());
+            ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(_repository.GetByDriver(DriverId));
             DriveReservations.Clear();
             foreach(DriveReservation reservation in _reservations)
             {
@@ -134,6 +138,7 @@ namespace BookingApp.View.Driver
             {
                 dispatcherTimer.Stop();
                 sec = 0;
+                secTourist = 0;
                 dispatcherTimer.Start();
             }
             canCancel = false;
@@ -168,6 +173,9 @@ namespace BookingApp.View.Driver
                 {
                     SelectedReservation.DriveReservationStatusId = 8;
                     _repository.Update(SelectedReservation);
+                    dispatcherTimer.Stop();
+                    sec = 0;
+                    secTourist = 0;
                     UpdateReservationList();
                 }else
                     MessageBox.Show("Still can't cancel!");
@@ -180,7 +188,21 @@ namespace BookingApp.View.Driver
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            sec++;
+            if(ConfirmedReservation.DelayMinutesTourist == 0)
+            {
+                sec++;
+            }
+            else
+            {
+                secTourist++;
+                if (ConfirmedReservation.DelayMinutesTourist * 10 == secTourist)
+                {
+                    MessageBox.Show("Client hasn't showed up!");
+                    canCancel = true;
+                    ConfirmedReservation.DelayMinutesTourist = -1;
+                }
+            }
+            
             if(sec == 10)
             {
                 MessageBox.Show("Client hasn't showed up!");

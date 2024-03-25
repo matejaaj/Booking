@@ -1,4 +1,5 @@
-﻿using BookingApp.Serializer;
+﻿using BookingApp.Repository;
+using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,12 @@ namespace BookingApp.Model
 
         public double DelayMinutesTourist { get; set; }
 
-        public DriveReservation() { }
+        public DriveReservation() {
+            
+        }
 
-
+        public User Tourist { get; set; }
+        public DriveReservationStatus Status { get; set; }
 
         public DriveReservation(int pickupLocationId, int dropoffLocationId, DateTime departureTime, int driverId, int touristId, int driveReservationStatusId, double delayMinutesDriver, double delayMinutesTourist)
         {
@@ -35,6 +39,7 @@ namespace BookingApp.Model
             DriveReservationStatusId = driveReservationStatusId;
             DelayMinutesDriver = delayMinutesDriver;
             DelayMinutesTourist = delayMinutesTourist;
+            Tourist = new UserRepository().GetAll().Where(r => r.Id == touristId).First();
         }
 
 
@@ -49,6 +54,12 @@ namespace BookingApp.Model
             DriveReservationStatusId = Convert.ToInt32(values[6]);
             DelayMinutesDriver = Convert.ToDouble(values[7]);
             DelayMinutesTourist = Convert.ToDouble(values[8]);
+        }
+
+        public void UpdateTourist()
+        {
+            Tourist = new UserRepository().GetAll().Where(r => r.Id == TouristId).First();
+            Status = new DriveReservationStatusRepository().GetAll().Where(r => r.Id == DriveReservationStatusId).First();
         }
 
         public string[] ToCSV()

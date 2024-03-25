@@ -14,6 +14,7 @@ namespace BookingApp.Model
 
         public void FromCSV(string[] values)
         {
+            Console.WriteLine(values);
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
         }
