@@ -100,12 +100,7 @@ namespace BookingApp.View.Tourist
                 return;
             }
 
-            var cities = _locationRepository.GetAll()
-                .Where(location => location.Country == selectedCountry)
-                .Select(location => new KeyValuePair<int, string>(location.Id, location.City))
-                .Distinct()
-                .OrderBy(pair => pair.Value)
-                .ToList();
+            var cities = _locationRepository.GetCityByCountry(selectedCountry);
 
             cbStartCity.ItemsSource = cities;
             cbStartCity.DisplayMemberPath = "Value";
@@ -117,12 +112,7 @@ namespace BookingApp.View.Tourist
         {
             var selectedCity = (KeyValuePair<int, string>)cbStartCity.SelectedItem;
 
-            var addresses = _detailedLocationRepository.GetAll()
-                .Where(detailedLocation => detailedLocation.LocationId == selectedCity.Key)
-                .Select(detailedLocation => detailedLocation.Address)
-                .Distinct()
-                .OrderBy(address => address)
-                .ToList();
+            var addresses = _detailedLocationRepository.GetAddressByCity(selectedCity.Key);
 
             cbStartStreet.ItemsSource = addresses;
             cbDestinationStreet.ItemsSource = addresses;
@@ -169,10 +159,8 @@ namespace BookingApp.View.Tourist
 
             List<int> drivers = _vehicleRepository.GetDriverIdsByLocationId(PickupLocationId);
             DateTime? date = CreateDateTimeFromSelections();
-            drivers = FilterAvailableDrivers(drivers, date);
+            drivers = _driveReservationRepository.FilterAvailableDrivers(drivers, date);
             FillDrivers(drivers);
-
-
         }
         private void FillDrivers(List<int> driverIds)
         {
@@ -191,21 +179,6 @@ namespace BookingApp.View.Tourist
                 cbDrivers.Items.Add(item);
             }
         }
-
-
-
-        private List<int> FilterAvailableDrivers(List<int> driverIds, DateTime? targetStartTime)
-        {
-            DriveReservationRepository driveReservationRepository = new DriveReservationRepository();
-            var scheduledDrivers = driveReservationRepository.GetAll()
-                                    .Where(reservation => reservation.DepartureTime == targetStartTime && driverIds.Contains(reservation.DriverId))
-                                    .Select(reservation => reservation.DriverId)
-                                    .Distinct()
-                                    .ToList();
-
-            return driverIds.Except(scheduledDrivers).ToList();
-        }
-
         private bool ValidateInputs()
         {
             return dpDepartureDate.SelectedDate != null &&

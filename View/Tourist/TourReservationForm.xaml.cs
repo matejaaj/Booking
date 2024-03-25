@@ -86,12 +86,10 @@ namespace BookingApp.View.Tourist
         }
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (!ConfirmAction("Are you sure?", "Confirmation"))
-            {
-                return;
-            }
+            if (!ConfirmAction("Are you sure?", "Confirmation")) return;
 
             var guests = GetGuestsFromInputFields();
+
             UpdateTourInstanceCapacity(NumberOfPeople);
             SaveTourReservation(guests);
 
