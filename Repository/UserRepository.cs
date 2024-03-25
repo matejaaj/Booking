@@ -30,6 +30,11 @@ namespace BookingApp.Repository
             _users = _serializer.FromCSV(FilePath);
             return _users.Where(user => ids.Contains(user.Id)).ToList();
         }
+        public List<User> GetAll()
+        {
+            _users = _serializer.FromCSV(FilePath);
+            return _users;
+        }
 
     }
 }

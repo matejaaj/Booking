@@ -39,6 +39,7 @@ namespace BookingApp.View.Driver
         public ObservableCollection<Language> languages { get; set; }
 
         private int _vehicleId;
+        private int _userId;
 
 
         private ObservableCollection<Location> _selectedLocations = new ObservableCollection<Location>();
@@ -82,7 +83,7 @@ namespace BookingApp.View.Driver
             }
         }
 
-        public VehicleForm()
+        public VehicleForm(int userId)
         {
             InitializeComponent();
             _repository = new VehicleRepository();
@@ -106,21 +107,8 @@ namespace BookingApp.View.Driver
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedLanguages.Count == 0)
+            if(!ValidateInputs())
             {
-                MessageBox.Show("Molimo odaberite barem jedan jezik.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (SelectedLocations.Count == 0)
-            {
-                MessageBox.Show("Molimo odaberite barem jednu lokaciju.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (MaxPassengers <= 0)
-            {
-                MessageBox.Show("Unesite validan maksimalan broj putnika.", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             List<int> lista = new List<int>();
@@ -137,7 +125,7 @@ namespace BookingApp.View.Driver
             {
                 _imageRepository.Save(img);
             }
-            Vehicle newVehicle = new Vehicle(lokacija, MaxPassengers,lista, LoggedInUser.Id);
+            Vehicle newVehicle = new Vehicle(lokacija, MaxPassengers,lista, _userId);
             Vehicle savedVehicle = _repository.Save(newVehicle);
             DriverOverview.Vehicles.Add(savedVehicle);
             VehicleAdded?.Invoke(this, EventArgs.Empty);
@@ -161,6 +149,16 @@ namespace BookingApp.View.Driver
             ShowImages showImagesWindow = new ShowImages(images);
             showImagesWindow.Owner = this;
             showImagesWindow.ShowDialog();
+        }
+
+        private bool ValidateInputs()
+        {
+            if (MaxPassengers == null || SelectedLanguages.Count == 0 || SelectedLocations.Count == 0 || MaxPassengers <= 0)
+            {
+                MessageBox.Show("Please ensure all fields are correctly filled and at least one language and location are selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            return true;
         }
     }
 }

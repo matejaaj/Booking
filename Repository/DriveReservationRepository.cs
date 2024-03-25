@@ -77,6 +77,7 @@ namespace BookingApp.Repository
         public List<DriveReservation> GetByDriver(int driverId)
         {
             _driveReservations = _serializer.FromCSV(FilePath);
+            _driveReservations.ForEach(r => r.UpdateTourist());
             return _driveReservations.FindAll(r => r.DriverId == driverId);
         }
 
