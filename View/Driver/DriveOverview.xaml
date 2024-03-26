@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="DriveOverview" Height="200" Width="268">
     <Grid Height="190" VerticalAlignment="Top">
-        <TextBox HorizontalAlignment="Left" Text="{Binding StartingPrice, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" Height="24" TextChanged="TextBox_TextChanged" ToolTip="Start price"/>
+        <TextBox x:Name="txtStartingPrice" HorizontalAlignment="Left" Text="{Binding StartingPrice, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" Height="24" ToolTip="Start price"/>
         <Button Content="Start" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalAlignment="Top" Width="80" Click="btnStart"/>
         <Label Content="Current price: " HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Width="82"/>
         <Label x:Name="price" Content="{Binding Price}" HorizontalAlignment="Left" Margin="97,66,0,0" VerticalAlignment="Top" Width="82" Height="26"/>

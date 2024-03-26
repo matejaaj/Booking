@@ -107,6 +107,7 @@ namespace BookingApp.View.Driver
         private void VehicleForm_VehicleAdded(object? sender, EventArgs e)
         {
             UpdateVehicleCount();
+            UpdateReservationList();
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -256,8 +257,8 @@ namespace BookingApp.View.Driver
             }
             DriveOverview dForm = new DriveOverview();
             dForm.Reservation = SelectedReservation;
+            dForm.Finished += VehicleForm_VehicleAdded;
             dForm.Show();
         }
-
     }
 }
