@@ -21,33 +21,50 @@ namespace BookingApp.View.Guide
     {   
         public  ObservableCollection<Checkpoint> NotVisitedCheckpoints { get; set; }
         public  ObservableCollection<Checkpoint> VisitedCheckpoints { get; set; }
-
         public ObservableCollection<TourGuest> NotPresentTourists { get; set; }
 
         private List<Checkpoint> allCheckpoints;
         public Checkpoint SelectedCheckpoint { get; set; }
 
-        private readonly TourGuestRepository _tourGuestRpository;
+        private  TourGuestRepository _tourGuestRepository;
         private List<TourGuest> tourGuests;
 
-        private readonly TourInstanceRepository _tourInstanceRepository;
-        private List<TourInstance> tourInstaces;
+        private  TourInstanceRepository _tourInstanceRepository;
+        private List<TourInstance> tourInstances;
 
         private int _tourInstaceId;
 
-        private readonly CheckpointRepository _checkpointRepository;
+        private CheckpointRepository _checkpointRepository;
+
+
         public ActiveTourOverview(int tourId, int tourInstanceId)
         {
             InitializeComponent();
             DataContext = this;
             _tourInstaceId = tourInstanceId;
+
+            InitializeRepositories();
+            LoadData();
+            InitializeCheckpoints(tourId);
+            InitializeTourGuests();
+            ShowTourAttendanceOverview();
+        }
+        private void InitializeRepositories()
+        {
             _checkpointRepository = new CheckpointRepository();
-            _tourGuestRpository = new TourGuestRepository();
+            _tourGuestRepository = new TourGuestRepository();
             _tourInstanceRepository = new TourInstanceRepository();
+        }
 
-
-            tourInstaces = _tourInstanceRepository.GetAll();
+        private void LoadData()
+        {
+            tourInstances = _tourInstanceRepository.GetAll();
             allCheckpoints = _checkpointRepository.GetAll();
+            tourGuests = _tourGuestRepository.GetAll();
+        }
+
+        private void InitializeCheckpoints(int tourId)
+        {
             NotVisitedCheckpoints = new ObservableCollection<Checkpoint>();
             VisitedCheckpoints = new ObservableCollection<Checkpoint>();
             foreach (var checkpoint in allCheckpoints)
@@ -55,13 +72,14 @@ namespace BookingApp.View.Guide
                 if (checkpoint.TourId == tourId)
                     NotVisitedCheckpoints.Add(checkpoint);
             }
+
             var firstCheckpoint = NotVisitedCheckpoints.First();
             VisitedCheckpoints.Add(firstCheckpoint);
             NotVisitedCheckpoints.Remove(firstCheckpoint);
+        }
 
-            _tourGuestRpository = new TourGuestRepository();
-            tourGuests = _tourGuestRpository.GetAll();
-
+        private void InitializeTourGuests()
+        {
             NotPresentTourists = new ObservableCollection<TourGuest>();
             foreach (var tourGuest in tourGuests)
             {
@@ -70,8 +88,12 @@ namespace BookingApp.View.Guide
                     NotPresentTourists.Add(tourGuest);
                 }
             }
+        }
 
-            TourAttendanceOverview tourAttendanceOverview = new TourAttendanceOverview(firstCheckpoint.Id, NotPresentTourists);
+        private void ShowTourAttendanceOverview()
+        {
+            var firstCheckpointId = VisitedCheckpoints.First().Id; 
+            TourAttendanceOverview tourAttendanceOverview = new TourAttendanceOverview(firstCheckpointId, NotPresentTourists);
             tourAttendanceOverview.ShowDialog();
         }
 
@@ -87,7 +109,7 @@ namespace BookingApp.View.Guide
 
                 if (NotVisitedCheckpoints.Count() == 0)
                 {
-                    var finishedTour = tourInstaces.Find(tour => tour.Id == _tourInstaceId);
+                    var finishedTour = tourInstances.Find(tour => tour.Id == _tourInstaceId);
                     finishedTour.IsCompleted = true;
                     _tourInstanceRepository.Update(finishedTour);
                 }
@@ -96,7 +118,7 @@ namespace BookingApp.View.Guide
 
         private void btnEndTour_Click(object sender, RoutedEventArgs e)
         {
-            var finishedTour = tourInstaces.Find(tour => tour.Id == _tourInstaceId);
+            var finishedTour = tourInstances.Find(tour => tour.Id == _tourInstaceId);
             finishedTour.IsCompleted = true;
             _tourInstanceRepository.Update(finishedTour);
             Close();
