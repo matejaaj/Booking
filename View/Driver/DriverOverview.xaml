@@ -91,6 +91,13 @@
                     <TextBlock Text="Drive overview" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
+            <Separator/>
+            <Button x:Name="btnStats" Click="btnStats_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/car.png" Width="20" Height="25"/>
+                    <TextBlock Text="Stats" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
         </ToolBar>
 
     </Grid>
