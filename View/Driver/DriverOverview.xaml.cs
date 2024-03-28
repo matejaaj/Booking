@@ -260,5 +260,11 @@ namespace BookingApp.View.Driver
             dForm.Finished += VehicleForm_VehicleAdded;
             dForm.Show();
         }
+        private void btnStats_Click(object sender, RoutedEventArgs e)
+        {
+            Stats sForm = new Stats(DriverId);
+            sForm.Show();
+        }
     }
+
 }
