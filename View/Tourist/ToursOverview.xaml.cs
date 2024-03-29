@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace BookingApp.View.Tourist
 {
-    /// <summary>
-    /// Interaction logic for ToursOverview.xaml
-    /// </summary>
     public partial class ToursOverview : Window
     {
         public ObservableCollection<TourDTO> Tours { get; set; }
@@ -64,6 +61,20 @@ namespace BookingApp.View.Tourist
             }
         }
 
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedTour == null)
+            {
+                MessageBox.Show("Select tour first.");
+            }
+            else
+            {
+                TourReservationForm tourReservationWindow = new TourReservationForm(SelectedTour.ToTour(), LoggedInUser);
+                tourReservationWindow.Show();
+            }
+        }
+
         private void ShowCreateTourForm(object sender, RoutedEventArgs e)
         {
 
@@ -81,19 +92,6 @@ namespace BookingApp.View.Tourist
 
         private void Delete(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedTour == null)
-            {
-                MessageBox.Show("Select tour first.");
-            } else
-            {
-                TourReservationForm tourReservationWindow = new TourReservationForm(SelectedTour.ToTour() , LoggedInUser);
-                tourReservationWindow.Show();
-            }
 
         }
     }
