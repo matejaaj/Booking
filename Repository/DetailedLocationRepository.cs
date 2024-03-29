@@ -51,6 +51,19 @@ namespace BookingApp.Repository
             _serializer.ToCSV(FilePath, _detailedLocations);
         }
 
+        public List<string> GetAddressByCity(int cityId)
+        {
+            var addresses = GetAll()
+                .Where(detailedLocation => detailedLocation.LocationId == cityId)
+                .Select(detailedLocation => detailedLocation.Address)
+                .Distinct()
+                .OrderBy(address => address)
+                .ToList();
+
+
+            return addresses;
+        }
+
         public DetailedLocation Update(DetailedLocation detailedLocation)
         {
             _detailedLocations = _serializer.FromCSV(FilePath);

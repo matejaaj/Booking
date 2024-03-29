@@ -10,29 +10,33 @@ namespace BookingApp.View.Tourist
 {
     public partial class TourReservationForm : Window
     {
-        public int UserId { get; set; }
+        public int TouristId { get; set; }
         public Tour SelectedTour { get; private set; }
+        public int NumberOfPeople { get; set; }
+
         public TourInstance SelectedTourInstance { get; private set; }
+        public TourInstanceRepository _tourInstanceRepository { get; set; }
+        public TourReservationRepository _tourReservationRepository { get; set; }
+        public TourGuestRepository _tourGuestRepository { get; set; }
 
-        private readonly TourInstanceRepository _tourInstanceRepository;
-        private readonly TourReservationRepository _tourReservationRepository;
-        private readonly TourGuestRepository _tourGuestRepository;
-
-        public TourReservationForm(Tour selectedTour, User user)
+        public TourReservationForm(Tour selectedTour, User loggedUser)
         {
-            InitializeComponent();
-
-            UserId = user.Id;
+            TouristId = loggedUser.Id;
             SelectedTour = selectedTour;
 
+            InitializeComponent();
+            InitializeRepositories();
+            FillDates();
+        }
+
+        private void InitializeRepositories()
+        {
             _tourInstanceRepository = new TourInstanceRepository();
             _tourReservationRepository = new TourReservationRepository();
             _tourGuestRepository = new TourGuestRepository();
-
-            GenerateDatesComboBox();
         }
 
-        private void GenerateDatesComboBox()
+        private void FillDates()
         {
             var tourInstances = _tourInstanceRepository.GetAllById(SelectedTour.Id);
             cmbStartTime.ItemsSource = tourInstances.Select(t => t.StartTime.ToString("g")).ToList();
@@ -45,70 +49,78 @@ namespace BookingApp.View.Tourist
 
             for (int i = 0; i < numberOfPeople; i++)
             {
-                spPersonInputs.Children.Add(new TextBox { Margin = new Thickness(0, 0, 0, 10) }); // First Name
-                spPersonInputs.Children.Add(new TextBox { Margin = new Thickness(0, 0, 0, 20) }); // Last Name
+                spPersonInputs.Children.Add(new TextBox { Margin = new Thickness(0, 0, 0, 10) }); 
+                spPersonInputs.Children.Add(new TextBox { Margin = new Thickness(0, 0, 0, 20) });
+                spPersonInputs.Children.Add(new TextBox { Margin = new Thickness(0, 0, 0, 20) });
             }
         }
 
-
-
         private void CmbStartTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!(cmbStartTime.SelectedItem is string selectedTime) || !DateTime.TryParse(selectedTime, out DateTime selectedDate))
-            {
-                MessageBox.Show("Date not valid.");
-                return;
-            }
-
+            DateTime selectedDate = DateTime.Parse(cmbStartTime.SelectedItem.ToString());
             cmbNumberOfPeople.IsEnabled = true;
             SelectedTourInstance = _tourInstanceRepository.GetByDateAndId(SelectedTour.Id, selectedDate);
         }
 
         private void CmbNumberOfPeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!(cmbNumberOfPeople.SelectedItem is ComboBoxItem selectedItem) || !int.TryParse(selectedItem.Content.ToString(), out int numberOfPeople))
-            {
-                return; 
-            }
+            NumberOfPeople =  GetSelectedNumberOfPeople();
 
-
-            if (numberOfPeople > SelectedTourInstance.RemainingSlots)
-            {
-                int remainingSeats = SelectedTour.MaximumCapacity - (SelectedTourInstance?.RemainingSlots ?? 0);
-                MessageBox.Show($"Insufficient spots available for the selected tour. Remaining spots for the selected date: {remainingSeats}.");
+            if (NumberOfPeople > SelectedTourInstance.RemainingSlots)
+            {  
+                MessageBox.Show($"Insufficient spots available for the selected tour. Remaining spots for the selected date: {SelectedTourInstance.RemainingSlots}.");
                 cmbNumberOfPeople.SelectedItem = null;
                 return;
             }
 
-            GenerateInputFields(numberOfPeople);
+            GenerateInputFields(NumberOfPeople);
         }
 
-
-        private int GetSelectedNumberOfPeople(ComboBox comboBox)
+        private int GetSelectedNumberOfPeople()
         {
-            if (comboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int numberOfPeople))
+            if (cmbNumberOfPeople.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int numberOfPeople))
             {
                 return numberOfPeople;
             }
             return 0;
         }
-
-
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (!ConfirmAction("Are you sure?", "Confirmation"))
-            {
-                return; 
-            }
+            if (!ConfirmAction("Are you sure?", "Confirmation")) return;
 
             var guests = GetGuestsFromInputFields();
-            var numberOfPeople = GetSelectedNumberOfPeople(cmbNumberOfPeople);
 
-
-            UpdateTourInstanceCapacity((int)numberOfPeople);
+            UpdateTourInstanceCapacity(NumberOfPeople);
             SaveTourReservation(guests);
 
             MessageBox.Show("Reservation successful");
+        }
+
+        private bool ConfirmAction(string message, string caption)
+        {
+            var result = MessageBox.Show(message, caption, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            return result == MessageBoxResult.Yes;
+        }
+
+        private List<TourGuest> GetGuestsFromInputFields()
+        {
+            var guests = new List<TourGuest>();
+
+            for (int i = 0; i < spPersonInputs.Children.Count; i += 3)
+            {
+                var firstNameBox = spPersonInputs.Children[i] as TextBox;
+                var lastNameBox = spPersonInputs.Children[i + 1] as TextBox;
+                var ageBox = spPersonInputs.Children[i+2] as TextBox;
+
+                if (firstNameBox != null && lastNameBox != null && ageBox != null)
+                {
+                    string fullName = $"{firstNameBox.Text} {lastNameBox.Text}";
+                    int age = int.Parse(ageBox.Text);
+                    var tourGuest = new TourGuest(fullName, age, SelectedTourInstance.Id, TouristId, 0);
+                    guests.Add(tourGuest);
+                }
+            }
+            return guests;
         }
 
         private void UpdateTourInstanceCapacity(int numberOfPeople)
@@ -116,36 +128,12 @@ namespace BookingApp.View.Tourist
             SelectedTourInstance.RemainingSlots -= numberOfPeople;
             _tourInstanceRepository.Update(SelectedTourInstance);
         }
+
         private void SaveTourReservation(List<TourGuest> tourGuests)
         {
-            TourReservation tourReservation = new TourReservation(SelectedTourInstance.Id, UserId);
+            TourReservation tourReservation = new TourReservation(SelectedTourInstance.Id, TouristId);
             _tourGuestRepository.SaveMultiple(tourGuests);
-            _tourReservationRepository.Save(tourReservation); 
-        }
-        private List<TourGuest> GetGuestsFromInputFields()
-        {
-            var guests = new List<TourGuest>();
-
-            for (int i = 0; i < spPersonInputs.Children.Count; i += 2)
-            {
-                var firstNameBox = spPersonInputs.Children[i] as TextBox;
-                var lastNameBox = spPersonInputs.Children[i + 1] as TextBox;
-
-                if (firstNameBox != null && lastNameBox != null)
-                {
-                    string fullName = $"{firstNameBox.Text} {lastNameBox.Text}";
-                    var tourGuest = new TourGuest(fullName, SelectedTourInstance.Id, UserId, 0);
-                    guests.Add(tourGuest);
-                }
-            }
-
-            return guests;
-        }
-
-        private bool ConfirmAction(string message, string caption)
-        {
-            var result = MessageBox.Show(message, caption, MessageBoxButton.YesNo, MessageBoxImage.Question);
-            return result == MessageBoxResult.Yes;
+            _tourReservationRepository.Save(tourReservation);
         }
     }
 }

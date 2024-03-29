@@ -50,13 +50,13 @@ namespace BookingApp.View.Driver
                     MessageBox.Show("Can't put negative delay!");
                     return;
                 }
-                reservation.DelayMinutes = DelayMinutes;
+                reservation.DelayMinutesDriver = DelayMinutes;
                 Repo.Update(reservation);
                 ReservationConfirmed?.Invoke(this, EventArgs.Empty);
             }
             else
             {
-                reservation.DelayMinutes = -1;
+                reservation.DelayMinutesDriver = -1;
                 Repo.Update(reservation);
                 ReservationConfirmed?.Invoke(this, EventArgs.Empty);
             }

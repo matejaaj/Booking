@@ -63,9 +63,21 @@ namespace BookingApp.Repository
             return driveReservation;
         }
 
+        public List<int> FilterAvailableDrivers(List<int> drivers, DateTime? targetStartTime)
+        {
+            var unavailableDrivers = GetAll()
+                                    .Where(reservation => reservation.DepartureTime == targetStartTime && drivers.Contains(reservation.DriverId))
+                                    .Select(reservation => reservation.DriverId)
+                                    .Distinct()
+                                    .ToList();
+
+            return drivers.Except(unavailableDrivers).ToList();
+        }
+
         public List<DriveReservation> GetByDriver(int driverId)
         {
             _driveReservations = _serializer.FromCSV(FilePath);
+            _driveReservations.ForEach(r => r.UpdateTourist());
             return _driveReservations.FindAll(r => r.DriverId == driverId);
         }
 

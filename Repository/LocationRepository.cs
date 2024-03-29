@@ -63,6 +63,18 @@ namespace BookingApp.Repository
             return location;
         }
 
+      public List<KeyValuePair<int,string>> GetCityByCountry(string country)
+        {
+            var cities = GetAll()
+                .Where(location => location.Country == country)
+                .Select(location => new KeyValuePair<int, string>(location.Id, location.City))
+                .Distinct()
+                .OrderBy(pair => pair.Value)
+                .ToList();
+
+            return cities;
+        }
+
         public Location GetLocationById(int locationId)
         {
             return _locations.FirstOrDefault(l => l.Id == locationId);

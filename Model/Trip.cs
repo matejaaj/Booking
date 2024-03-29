@@ -1,6 +1,7 @@
 ﻿using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -49,8 +50,8 @@ namespace BookingApp.Model
         {
             Id = Convert.ToInt32(values[0]);
             DriveReservationId = Convert.ToInt32(values[1]);
-            StartTime = DateTime.Parse(values[2]);
-            EndTime = string.IsNullOrEmpty(values[3]) ? (DateTime?)null : DateTime.Parse(values[3]);
+            StartTime = DateTime.ParseExact(values[2], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+            EndTime = string.IsNullOrEmpty(values[3]) ? (DateTime?)null : DateTime.ParseExact(values[3], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
             StartPrice = decimal.Parse(values[4]);
             FinalPrice = decimal.Parse(values[5]);
             Status = (TripStatus)Enum.Parse(typeof(TripStatus), values[6]);
@@ -62,8 +63,8 @@ namespace BookingApp.Model
             string[] csvValues = {
             Id.ToString(),
             DriveReservationId.ToString(),
-            StartTime.ToString("o"),
-            endTimeValue,
+            String.Format("{0:yyyy-MM-dd HH:mm}",StartTime),
+            String.Format("{0:yyyy-MM-dd HH:mm}",EndTime),
             StartPrice.ToString(),
             FinalPrice.ToString(),
             Status.ToString()

@@ -40,10 +40,14 @@ namespace BookingApp.View.Driver
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private DriveReservation ConfirmedReservation {  get; set; }
         private int sec = 0;
+        private int secTourist = 0;
+
+        private int DriverId;
 
         public DriverOverview(User driver)
         {
             InitializeComponent();
+            DriverId = driver.Id;
             DataContext = this;
             Vehicles = new ObservableCollection<Vehicle>();
             _repository = new DriveReservationRepository();
@@ -73,7 +77,7 @@ namespace BookingApp.View.Driver
 
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
-            VehicleForm vehicleForm = new VehicleForm();
+            VehicleForm vehicleForm = new VehicleForm(DriverId);
             vehicleForm.VehicleAdded += VehicleForm_VehicleAdded;
             vehicleForm.Show();
         }
@@ -103,6 +107,7 @@ namespace BookingApp.View.Driver
         private void VehicleForm_VehicleAdded(object? sender, EventArgs e)
         {
             UpdateVehicleCount();
+            UpdateReservationList();
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -112,7 +117,7 @@ namespace BookingApp.View.Driver
 
         private void UpdateReservationList()
         {
-            ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(_repository.GetAll());
+            ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(_repository.GetByDriver(DriverId));
             DriveReservations.Clear();
             foreach(DriveReservation reservation in _reservations)
             {
@@ -130,10 +135,11 @@ namespace BookingApp.View.Driver
         private void DataGrid_Refresh(object? sender, EventArgs e)
         {
             UpdateReservationList();
-            if (sender is ViewDrive && ConfirmedReservation.DelayMinutes < 0)
+            if (sender is ViewDrive && ConfirmedReservation.DelayMinutesDriver < 0)
             {
                 dispatcherTimer.Stop();
                 sec = 0;
+                secTourist = 0;
                 dispatcherTimer.Start();
             }
             canCancel = false;
@@ -168,6 +174,9 @@ namespace BookingApp.View.Driver
                 {
                     SelectedReservation.DriveReservationStatusId = 8;
                     _repository.Update(SelectedReservation);
+                    dispatcherTimer.Stop();
+                    sec = 0;
+                    secTourist = 0;
                     UpdateReservationList();
                 }else
                     MessageBox.Show("Still can't cancel!");
@@ -180,7 +189,21 @@ namespace BookingApp.View.Driver
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            sec++;
+            if(ConfirmedReservation.DelayMinutesTourist == 0)
+            {
+                sec++;
+            }
+            else
+            {
+                secTourist++;
+                if (ConfirmedReservation.DelayMinutesTourist * 10 == secTourist)
+                {
+                    MessageBox.Show("Client hasn't showed up!");
+                    canCancel = true;
+                    ConfirmedReservation.DelayMinutesTourist = -1;
+                }
+            }
+            
             if(sec == 10)
             {
                 MessageBox.Show("Client hasn't showed up!");
@@ -215,5 +238,33 @@ namespace BookingApp.View.Driver
 
         }
 
+        private void btnDrive_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedReservation == null)
+            {
+                MessageBox.Show("You have to select ride!");
+                return;
+            }
+            if (SelectedReservation.DriveReservationStatusId != 2)
+            {
+                MessageBox.Show("Yoy don't have any confirmed reservations!");
+                return;
+            }
+            if (SelectedReservation.DelayMinutesDriver != -1)
+            {
+                MessageBox.Show("You aren't at location!");
+                return;
+            }
+            DriveOverview dForm = new DriveOverview();
+            dForm.Reservation = SelectedReservation;
+            dForm.Finished += VehicleForm_VehicleAdded;
+            dForm.Show();
+        }
+        private void btnStats_Click(object sender, RoutedEventArgs e)
+        {
+            Stats sForm = new Stats(DriverId);
+            sForm.Show();
+        }
     }
+
 }
