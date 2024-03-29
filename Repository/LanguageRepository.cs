@@ -25,6 +25,12 @@ namespace BookingApp.Repository
             return _serializer.FromCSV(FilePath);
         }
 
+        public Language GetById(int id)
+        {
+            _languages = _serializer.FromCSV(FilePath); 
+            return _languages.FirstOrDefault(l => l.languageId == id);
+        }
+
         public Language Save(Language language)
         {
             language.languageId = NextId();

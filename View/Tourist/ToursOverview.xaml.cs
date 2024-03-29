@@ -1,4 +1,5 @@
-﻿using BookingApp.Model;
+﻿using BookingApp.DTO;
+using BookingApp.Model;
 using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
@@ -22,59 +23,65 @@ namespace BookingApp.View.Tourist
     /// </summary>
     public partial class ToursOverview : Window
     {
-        public static ObservableCollection<Tour> Tours { get; set; }
+        public ObservableCollection<TourDTO> Tours { get; set; }
 
-        public Tour SelectedTour { get; set; }
+        public TourDTO SelectedTour { get; set; }
 
         public User LoggedInUser { get; set; }
 
-        private readonly TourRepository _repository;
+        private  TourRepository _tourRepository;
+        private LocationRepository _locationRepository;
+        private LanguageRepository _languageRepository;
 
         public ToursOverview(User user)
         {
             InitializeComponent();
+            InitializeRepositories();
+
             DataContext = this;
             LoggedInUser = user;
-            _repository = new TourRepository();
-            Tours = new ObservableCollection<Tour>(_repository.GetAll());
+            Tours = new ObservableCollection<TourDTO>();
+
+            Update();
+        }
+
+        private void InitializeRepositories()
+        {
+            _tourRepository = new TourRepository();
+            _locationRepository = new LocationRepository();
+            _languageRepository = new LanguageRepository();
+        }
+
+        public void Update()
+        {
+            Tours.Clear();
+            foreach (Tour tour in _tourRepository.GetAll())
+            {
+                TourDTO dto = new TourDTO(tour);
+                dto.Location = _locationRepository.GetLocationById(tour.LocationId).ToString();
+                dto.Language = _languageRepository.GetById(tour.LanguageId).ToString();
+                Tours.Add(dto);
+            }
         }
 
         private void ShowCreateTourForm(object sender, RoutedEventArgs e)
         {
-/*            TourForm createTourForm = new TourForm(LoggedInUser);
-            createTourForm.Show();*/
+
         }
 
         private void ShowViewTourForm(object sender, RoutedEventArgs e) 
         {
-/*            if (SelectedTour != null)
-            {
-                TourForm viewTourForm = new TourForm(SelectedTour);
-                viewTourForm.Show();
-            }*/
+
         }
 
         private void ShowUpdateTourForm(object sender, RoutedEventArgs e)
         {
-/*            if (SelectedTour != null)
-            {
-                TourForm updateTourForm = new TourForm(SelectedTour, LoggedInUser);
-                updateTourForm.Show();
-            }*/
+
         }
 
         private void Delete(object sender, RoutedEventArgs e)
         {
-/*            if (SelectedTour != null)
-            {
-                MessageBoxResult result = MessageBox.Show("Are you sure?", "Delete tour",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    _repository.Delete(SelectedTour);
-                    Tours.Remove(SelectedTour);
-                }
-            }*/
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -84,7 +91,7 @@ namespace BookingApp.View.Tourist
                 MessageBox.Show("Select tour first.");
             } else
             {
-                TourReservationForm tourReservationWindow = new TourReservationForm(SelectedTour, LoggedInUser);
+                TourReservationForm tourReservationWindow = new TourReservationForm(SelectedTour.ToTour() , LoggedInUser);
                 tourReservationWindow.Show();
             }
 
