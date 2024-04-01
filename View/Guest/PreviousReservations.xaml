@@ -1,0 +1,23 @@
+﻿<Window x:Class="BookingApp.View.Guest.PreviousReservations"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApp.View.Guest"
+        mc:Ignorable="d"
+        Title="PreviousReservations" Height="450" Width="800">
+    <Grid>
+        <ListBox x:Name="ReservationsListBox">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding AccommodationId}"/>
+                        <TextBlock Text="{Binding StartDate, StringFormat='Check-in: {0:dd.MM.yyyy}'}"/>
+                        <TextBlock Text="{Binding EndDate, StringFormat='Check-out: {0:dd.MM.yyyy}'}" />
+                        <Button Content="Rate" Click="RateButton_Click" Tag="{Binding}"></Button>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

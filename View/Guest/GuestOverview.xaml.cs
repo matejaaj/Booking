@@ -107,5 +107,18 @@ namespace BookingApp.View.Guest
             reservationAccommodationWindow.Show();
         }
 
+        private void PreviousReservations_Click(object sender, RoutedEventArgs e)
+        {
+            PreviousReservations reservationsWindow = new PreviousReservations(LoggedInGuest);
+            reservationsWindow.Show();
+        }
+
+/*        private List<AccommodationReservation> GetAllReservationsForGuest(User loggedInGuest)
+        {
+            AccommodationReservationRepository _accommodationReservationRepository = new AccommodationReservationRepository();
+            List<AccommodationReservation> accommodationReservations = _accommodationReservationRepository.GetByUser(loggedInGuest);
+
+
+        }*/
     }
 }
