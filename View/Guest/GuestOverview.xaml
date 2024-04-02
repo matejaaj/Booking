@@ -26,7 +26,6 @@
 
             <StackPanel Orientation="Horizontal">
                 <ToggleButton x:Name="TypeToggleButton" Content="▼" Width="20" VerticalContentAlignment="Center" Click="TypeToggleButton_Click"/>
-
                 <Popup x:Name="TypePopup" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=TypeToggleButton}">
                     <ListBox Width="150">
                         <CheckBox Content="Apartment" Command="{Binding ToggleTypeCommand}" CommandParameter="Apartment" LostFocus="CheckBox_LostFocus"/>
@@ -70,6 +69,7 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <Button Content="Previous Reservations" Click="PreviousReservations_Click"  Margin="50,4,50,13" Width="150"></Button>
         </StackPanel>
     </Grid>
 </Window>

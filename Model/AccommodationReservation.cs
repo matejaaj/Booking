@@ -18,10 +18,11 @@ namespace BookingApp.Model
         public int AccommodationId { get; set; }
         public int GuestId { get; set; }
         public bool IsRated { get; set; }
+        public bool IsAccommodationAndOwnerRated {  get; set; }
         public AccommodationReservation()
         {
         }
-        public AccommodationReservation(DateTime startDate, DateTime endDate, int days, int guestNumber, int accommodationId, int guestId, bool isRated)
+        public AccommodationReservation(DateTime startDate, DateTime endDate, int days, int guestNumber, int accommodationId, int guestId, bool isRated, bool isAccommodationAndOwnerRated)
         {
             StartDate = startDate;
             EndDate = endDate;
@@ -30,11 +31,12 @@ namespace BookingApp.Model
             AccommodationId = accommodationId;
             GuestId = guestId;
             IsRated = isRated;
+            IsAccommodationAndOwnerRated = isAccommodationAndOwnerRated;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { ReservationId.ToString(), StartDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"), Days.ToString(), GuestNumber.ToString(), AccommodationId.ToString(), GuestId.ToString(), IsRated.ToString()};
+            string[] csvValues = { ReservationId.ToString(), StartDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"), Days.ToString(), GuestNumber.ToString(), AccommodationId.ToString(), GuestId.ToString(), IsRated.ToString(), IsAccommodationAndOwnerRated.ToString()};
             return csvValues;
         }
 
@@ -66,18 +68,35 @@ namespace BookingApp.Model
             AccommodationId = Convert.ToInt32(values[5]);
             GuestId = Convert.ToInt32(values[6]);
             IsRated = Convert.ToBoolean(values[7]);
+            IsAccommodationAndOwnerRated = Convert.ToBoolean(values[8]);
         }
 
         public override string ToString()
         {
             if (IsRated)
             {
-               return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Rated";
+                if (IsAccommodationAndOwnerRated)
+                {
+                    return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Rated, Rated";
+                }
+                else
+                {
+                    return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Rated, Unrated";
+                }
             }
             else
             {
-               return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Unrated";
+                if (IsAccommodationAndOwnerRated)
+                {
+                    return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Unrated, Rated";
+                }
+                else
+                {
+                    return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Unrated, Unrated";
+                }
+               
             }   
+
         }
 
     }
