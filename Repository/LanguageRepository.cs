@@ -1,4 +1,5 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    internal class LanguageRepository
+    internal class LanguageRepository : ILanguageRepository
     {
         private const string FilePath = "../../../Resources/Data/languages.csv";
         private readonly Serializer<Language> _serializer;

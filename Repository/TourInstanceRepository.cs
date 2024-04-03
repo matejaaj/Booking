@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 
 namespace BookingApp.Repository
 {
-    public class TourInstanceRepository
+    public class TourInstanceRepository : ITourInstanceRepository
     {
         private const string FilePath = "../../../Resources/Data/tourinstance.csv";
         private readonly Serializer<TourInstance> _serializer;

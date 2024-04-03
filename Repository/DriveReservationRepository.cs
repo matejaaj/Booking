@@ -1,4 +1,5 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class DriveReservationRepository
+    public class DriveReservationRepository : IDriveReservationRepository
     {
         private const string FilePath = "../../../Resources/Data/drivereservation.csv";
         private readonly Serializer<DriveReservation> _serializer;

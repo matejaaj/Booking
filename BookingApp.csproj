@@ -38,7 +38,6 @@
 
   <ItemGroup>
     <Folder Include="Application\UseCases\" />
-    <Folder Include="Domain\RepositoryInterfaces\" />
     <Folder Include="WPF\ViewModel\Tourist\" />
   </ItemGroup>
 
