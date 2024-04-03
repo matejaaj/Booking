@@ -1,0 +1,104 @@
+﻿<Window x:Class="BookingApp.WPF.View.Driver.DriverOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
+        mc:Ignorable="d"
+        Title="DriverOverview" Height="447" Width="980">
+    <Window.Resources>
+        <local:LocationConverterDriver x:Key="LocationConverterDriver" />
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+            <DataGrid ItemsSource="{Binding DriveReservations}"
+                      AutoGenerateColumns="False" Height="382" HeadersVisibility="Column" 
+                      FontSize="13" SelectionChanged="DataGrid_SelectionChanged"
+                      SelectedItem="{Binding SelectedReservation}"
+                      SelectionMode="Single" Width="800">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Pickup Location ID" Binding="{Binding PickupLocationId, Converter={StaticResource LocationConverterDriver}}" Width="2*"/>
+                    <DataGridTextColumn Header="Dropoff Location ID" Binding="{Binding DropoffLocationid, Converter={StaticResource LocationConverterDriver}}" Width="2*"/>
+                    <DataGridTextColumn Header="Departure Time" Binding="{Binding DepartureTime, StringFormat='{}{0:MM/dd/yyyy HH:mm:ss}'}" Width="*"/>
+                    <DataGridTextColumn Header="Tourist" Binding="{Binding Tourist.Username}" Width="*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="*"/>
+                    <DataGridTextColumn Header="Delay Minutes Driver" Binding="{Binding DelayMinutesDriver}" Width="2*"/>
+                    <DataGridTextColumn Header="Delay Minutes Tourist" Binding="{Binding DelayMinutesTourist}" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" >
+                <TextBlock x:Name="txtVehicleCount" FontSize="16" Margin="5"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <ToolBar Grid.Row="0" Grid.ColumnSpan="4">
+            <Button Click="ShowCreateVehicleForm">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/add.png" Width="20" Height="25"/>
+                    <TextBlock Text="Register Vehicle" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button Click="ViewDrive_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/view.png" Width="20" Height="25"/>
+                    <TextBlock Text="Delay" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button Click="ViewDrive_Respond">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/edit.png" Width="20" Height="25"/>
+                    <TextBlock Text="Respond" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button Click="ViewDrive_Cancel">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
+                    <TextBlock Name="DeleteTxtBlock" Text="Cancel Reservation" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <TextBox x:Name="txtVehicleIdInput" Width="100" ToolTip="Enter Vehicle ID" TextChanged="txtVehicleIdInput_TextChanged" />
+            <Button x:Name="btnDeleteVehicle" Click="btnDeleteVehicle_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
+                    <TextBlock Text="Dismiss Vehicle" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button x:Name="btnDrive" Click="btnDrive_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/car.png" Width="20" Height="25"/>
+                    <TextBlock Text="Drive overview" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button x:Name="btnStats" Click="btnStats_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../Resources/Images/car.png" Width="20" Height="25"/>
+                    <TextBlock Text="Stats" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+        </ToolBar>
+
+    </Grid>
+</Window>

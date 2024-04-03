@@ -1,0 +1,17 @@
+﻿<Window x:Class="BookingApp.WPF.View.Driver.DriveOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
+        mc:Ignorable="d"
+        Title="DriveOverview" Height="200" Width="268">
+    <Grid Height="190" VerticalAlignment="Top">
+        <TextBox x:Name="txtStartingPrice" HorizontalAlignment="Left" Text="{Binding StartingPrice, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" Height="24" ToolTip="Start price"/>
+        <Button Content="Start" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalAlignment="Top" Width="80" Click="btnStart"/>
+        <Label Content="Current price: " HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Width="82"/>
+        <Label x:Name="price" Content="{Binding Price}" HorizontalAlignment="Left" Margin="97,66,0,0" VerticalAlignment="Top" Width="82" Height="26"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Click="btnCancel"/>
+        <Button Content="Finish" HorizontalAlignment="Left" Margin="185,145,0,0" VerticalAlignment="Top" Width="55" Click="btnFinish"/>
+    </Grid>
+</Window>

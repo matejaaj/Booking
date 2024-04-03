@@ -1,4 +1,4 @@
-﻿using BookingApp.Model;
+﻿using BookingApp.Domain.Model;
 using Syncfusion.UI.Xaml.Grid;
 using System;
 using System.Collections.Generic;

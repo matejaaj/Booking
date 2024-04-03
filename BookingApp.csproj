@@ -36,4 +36,10 @@
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="24.2.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\UseCases\" />
+    <Folder Include="Domain\RepositoryInterfaces\" />
+    <Folder Include="WPF\ViewModel\Tourist\" />
+  </ItemGroup>
+
 </Project>
