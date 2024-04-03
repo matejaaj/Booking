@@ -1,5 +1,7 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
+using BookingApp.WPF.ViewModel.Driver;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,15 +25,13 @@ namespace BookingApp.WPF.View.Driver
     /// </summary>
     public partial class ViewDrive : Window
     {
-        public bool IsAtLocation => rbAtLocation.IsChecked == true;
-        public int DelayMinutes => int.TryParse(txtDelayMinutes.Text, out int minutes) ? minutes : 0;
-        public DriveReservation reservation { get; set; }
-        public DriveReservationRepository Repo {  get; set; }
-        public event EventHandler ReservationConfirmed;
+        public ViewDriveViewModel VM { get; set; }
 
         public ViewDrive()
         {
+            VM = new ViewDriveViewModel();
             InitializeComponent();
+            DataContext = VM;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -43,30 +43,14 @@ namespace BookingApp.WPF.View.Driver
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsAtLocation)
-            {
-                if (DelayMinutes < 0)
-                {
-                    MessageBox.Show("Can't put negative delay!");
-                    return;
-                }
-                reservation.DelayMinutesDriver = DelayMinutes;
-                Repo.Update(reservation);
-                ReservationConfirmed?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                reservation.DelayMinutesDriver = -1;
-                Repo.Update(reservation);
-                ReservationConfirmed?.Invoke(this, EventArgs.Empty);
-            }
+            VM.Confirm_Click(sender, e);
             
             Close();
         }
 
         private void rbAtLocation_Checked(object sender, RoutedEventArgs e)
         {
-
+            VM.rbAtLocation_Checked(sender, e);
         }
     }
 }

@@ -9,7 +9,7 @@
     <Window.Resources>
         <local:LocationConverterDriver x:Key="LocationConverterDriver" />
     </Window.Resources>
-
+    
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -51,50 +51,50 @@
         <ToolBar Grid.Row="0" Grid.ColumnSpan="4">
             <Button Click="ShowCreateVehicleForm">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/add.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/add.png" Width="20" Height="25"/>
                     <TextBlock Text="Register Vehicle" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Click="ViewDrive_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/view.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/view.png" Width="20" Height="25"/>
                     <TextBlock Text="Delay" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Click="ViewDrive_Respond">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/edit.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/edit.png" Width="20" Height="25"/>
                     <TextBlock Text="Respond" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Click="ViewDrive_Cancel">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/delete.png" Width="20" Height="25"/>
                     <TextBlock Name="DeleteTxtBlock" Text="Cancel Reservation" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
-            <TextBox x:Name="txtVehicleIdInput" Width="100" ToolTip="Enter Vehicle ID" TextChanged="txtVehicleIdInput_TextChanged" />
+            <TextBox x:Name="txtVehicleIdInput" Width="100" ToolTip="Enter Vehicle ID" Text="{Binding TxtVehicleIdInput, UpdateSourceTrigger=PropertyChanged}" />
             <Button x:Name="btnDeleteVehicle" Click="btnDeleteVehicle_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/delete.png" Width="20" Height="25"/>
                     <TextBlock Text="Dismiss Vehicle" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button x:Name="btnDrive" Click="btnDrive_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/car.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/car.png" Width="20" Height="25"/>
                     <TextBlock Text="Drive overview" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button x:Name="btnStats" Click="btnStats_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/car.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/car.png" Width="20" Height="25"/>
                     <TextBlock Text="Stats" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>

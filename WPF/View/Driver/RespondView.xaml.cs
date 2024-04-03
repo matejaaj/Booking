@@ -1,5 +1,8 @@
-﻿using BookingApp.Domain.Model;
+﻿using BookingApp.Application.UseCases;
+using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
+using BookingApp.WPF.ViewModel.Driver;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,33 +26,20 @@ namespace BookingApp.WPF.View.Driver
     /// </summary>
     public partial class RespondView : Window
     {
-        public static DriveReservation Reservation { get; set; }
-        public static String Time { get; set; }
+        public RespondViewModel VM { get; set; }
 
-        private readonly DriveReservationRepository driveReservationRepository = new DriveReservationRepository();
-
-        public event EventHandler ReservationConfirmed;
-
-        public RespondView(DriveReservation driveReservation)
+        public RespondView(DriveReservation driveReservation, DriveReservationService service)
         {
             InitializeComponent();
-            Time = driveReservation.DepartureTime.ToString();
-            Reservation = driveReservation;
+            VM = new RespondViewModel(service, driveReservation);
             DataContext = this;
+            VM.Time = driveReservation.DepartureTime.ToString();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private void Respond_Accept(object sender, RoutedEventArgs e)
         {
-            Reservation.DriveReservationStatusId = 2;
-            driveReservationRepository.Update(Reservation);
-            ReservationConfirmed.Invoke(this, EventArgs.Empty);
+            VM.Respond_Accept(this, e);
             Close();
 
         }
