@@ -1,4 +1,5 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.WPF.ViewModel.Tourist;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,24 +21,29 @@ namespace BookingApp.View.Tourist
     /// </summary>
     public partial class DriveReservationWindow : Window
     {
-        public User User { get; set; }
+        private DriveReservationViewModel viewModel;
 
         public DriveReservationWindow(User user)
         {
-            User = user;
             InitializeComponent();
+            viewModel = new DriveReservationViewModel(user);
+            DataContext = viewModel;
         }
 
-        private void btnRequestDrive_Click(object sender, RoutedEventArgs e)
+        private void btnReserve_Click(object sender, RoutedEventArgs e)
         {
-            DriveReservationForm driveReservationForm = new DriveReservationForm(User);
-            driveReservationForm.Show();
+            viewModel.Reserve();
         }
 
-        private void btnRequestFastDrive_Click(object sender, RoutedEventArgs e)
+        private void Country_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Logika za Request Fast Drive
-            MessageBox.Show("Requesting Fast Drive...");
+            viewModel.FillCities();
+        }
+
+
+        private void Minutes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            viewModel.UpdateDriverList();
         }
     }
 }
