@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\UseCases\" />
     <Folder Include="WPF\ViewModel\Tourist\" />
   </ItemGroup>
 
