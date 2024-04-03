@@ -20,6 +20,7 @@ namespace BookingApp.Application
         { typeof(ITourGuestRepository), new TourGuestRepository() },
         { typeof(IDriveReservationRepository), new DriveReservationRepository() },
         { typeof(ILanguageRepository), new LanguageRepository() },
+        { typeof(ILocationRepository), new LocationRepository() },
         { typeof(IImageRepository), new ImageRepository() },
         { typeof(ICheckpointRepository), new CheckpointRepository() },
         { typeof(IDetailedLocationRepository), new DetailedLocationRepository() }

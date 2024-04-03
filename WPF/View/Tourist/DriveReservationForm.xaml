@@ -57,6 +57,5 @@
 
         <Button x:Name="btnReserve" Grid.Row="20" Content="Rezerviši" Click="btnReserve_Click" Margin="20,20,20,20"/>
 
-
     </Grid>
 </Window>
