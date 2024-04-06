@@ -8,7 +8,7 @@
         Title="RespondView" Height="209" Width="248">
     <Grid Margin="0,0,10,-6">
         <Label Content="Reservation info" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.089,2.02"/>
-        <Label Content="{Binding Time, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Margin="0,72,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Time, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Margin="0,72,0,0" VerticalAlignment="Top" Width="152"/>
         <Button Click="Respond_Accept" Content="Show responding" HorizontalAlignment="Left" Margin="119,154,0,0" VerticalAlignment="Top" Width="109"/>
         <Button Click="Respond_Decline" Content="Decline" HorizontalAlignment="Left" Margin="10,154,0,0" VerticalAlignment="Top" Width="66"/>
 

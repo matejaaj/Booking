@@ -32,8 +32,8 @@ namespace BookingApp.WPF.View.Driver
         {
             InitializeComponent();
             VM = new RespondViewModel(service, driveReservation);
-            DataContext = this;
             VM.Time = driveReservation.DepartureTime.ToString();
+            DataContext = VM;
         }
 
 
