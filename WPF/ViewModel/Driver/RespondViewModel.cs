@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace BookingApp.WPF.ViewModel.Driver
 {
@@ -16,12 +17,11 @@ namespace BookingApp.WPF.ViewModel.Driver
     {
         public static DriveReservation Reservation { get; set; }
 
-
         private readonly DriveReservationService driveReservationRepository;
 
         public event EventHandler ReservationConfirmed;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private string _time;
         public String Time 
@@ -33,7 +33,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 OnPropertyChanged(nameof(Time));
             }
         }
-
+        
         public RespondViewModel(DriveReservationService driveReservationRepository, DriveReservation driveReservation)
         {
             this.driveReservationRepository = driveReservationRepository;

@@ -1,7 +1,5 @@
-﻿using BookingApp.Application;
-using BookingApp.Application.UseCases;
+﻿using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
-using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Driver;
 using System;
@@ -10,8 +8,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -29,8 +25,9 @@ namespace BookingApp.WPF.ViewModel.Driver
         private readonly LocationRepository _locationRepository;
         private readonly VehicleService _vehicleRepository;
 
-        private DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        private DriveReservation ConfirmedReservation { get; set; }
+        private DispatcherTimer cancelTime = new DispatcherTimer();
+        private DispatcherTimer fastDriveTimer = new DispatcherTimer();
+        private DriveReservation? ConfirmedReservation { get; set; }
         private int sec = 0;
         private int secTourist = 0;
 
@@ -87,10 +84,14 @@ namespace BookingApp.WPF.ViewModel.Driver
             _vehicleRepository = new VehicleService();
             locations = _locationRepository.GetAll();
             canCancel = false;
+            ConfirmedReservation = null;
             UpdateVehicleCount();
             UpdateReservationList();
-            dispatcherTimer.Interval = System.TimeSpan.Parse("00:00:01");
-            dispatcherTimer.Tick += Timer_Tick;
+            cancelTime.Interval = System.TimeSpan.Parse("00:00:01");
+            cancelTime.Tick += CancelTime_Tick;
+            fastDriveTimer.Interval = System.TimeSpan.Parse("00:00:05");
+            fastDriveTimer.Tick += FastDriveTimer_Tick;
+            fastDriveTimer.Start();
         }
 
         public void UpdateVehicleCount()
@@ -141,6 +142,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         public void UpdateReservationList()
         {
             ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(_repository.GetByDriver(DriverId));
+            _reservations = new ObservableCollection<DriveReservation>(_reservations.OrderBy(d => d.DriveReservationStatusId).ToList());
             DriveReservations.Clear();
             foreach (DriveReservation reservation in _reservations)
             {
@@ -160,10 +162,10 @@ namespace BookingApp.WPF.ViewModel.Driver
             UpdateReservationList();
             if (sender is ViewDriveViewModel && ConfirmedReservation.DelayMinutesDriver < 0)
             {
-                dispatcherTimer.Stop();
+                cancelTime.Stop();
                 sec = 0;
                 secTourist = 0;
-                dispatcherTimer.Start();
+                cancelTime.Start();
             }
             canCancel = false;
         }
@@ -172,7 +174,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         {
             if (SelectedReservation != null)
             {
-                if (SelectedReservation.DriveReservationStatusId != 2)
+                if (SelectedReservation.DriveReservationStatusId == 1)
                 {
                     RespondView rvForm = new RespondView(SelectedReservation, _repository);
                     rvForm.VM.ReservationConfirmed += DataGrid_Refresh;
@@ -180,7 +182,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 }
                 else
                 {
-                    MessageBox.Show("You already have confirmed reservation!");
+                    MessageBox.Show("You can't confirm this one!");
                 }
             }
             else
@@ -197,7 +199,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 {
                     SelectedReservation.DriveReservationStatusId = 8;
                     _repository.Update(SelectedReservation);
-                    dispatcherTimer.Stop();
+                    cancelTime.Stop();
                     sec = 0;
                     secTourist = 0;
                     UpdateReservationList();
@@ -211,7 +213,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             }
         }
 
-        public void Timer_Tick(object? sender, EventArgs e)
+        public void CancelTime_Tick(object? sender, EventArgs e)
         {
             if (ConfirmedReservation.DelayMinutesTourist == 0)
             {
@@ -232,6 +234,39 @@ namespace BookingApp.WPF.ViewModel.Driver
             {
                 MessageBox.Show("Client hasn't showed up!");
                 canCancel = true;
+            }
+        }
+
+        public void FastDriveTimer_Tick(object? sender, EventArgs e)
+        {
+            if(ConfirmedReservation != null)
+            {
+                return;
+            }
+            ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(_repository.GetAll());
+            List<int> driversAtLocation;
+            foreach(DriveReservation dr in _reservations)
+            {
+                if(dr.DriveReservationStatusId == 12)
+                {
+                    driversAtLocation = _vehicleRepository.GetDriverIdsByLocationId(dr.PickupLocationId);
+                    if (!driversAtLocation.Contains(DriverId)) return;
+                    fastDriveTimer.Stop();
+                    MessageBoxResult result = MessageBox.Show("Nova brza rezervacija je dostupna!\n" + dr.DepartureTime + "\nDa li je prihvatate?", "Brza voznja", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if(result == MessageBoxResult.Yes)
+                    {
+                        DriveReservations.Clear();
+                        dr.DriveReservationStatusId = 2;
+                        dr.DriverId = DriverId;
+                        _repository.Update(dr);
+                        UpdateReservationList();
+                        return;
+                    }
+                    else
+                    {
+                        fastDriveTimer.Start();
+                    }
+                }
             }
         }
         public void btnDeleteVehicle_Click(object sender, RoutedEventArgs e)
