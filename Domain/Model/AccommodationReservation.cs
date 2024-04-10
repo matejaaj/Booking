@@ -77,11 +77,11 @@ namespace BookingApp.Domain.Model
             {
                 if (IsAccommodationAndOwnerRated)
                 {
-                    return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Rated, Rated";
+                    return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber},Guest Rated, Rated";
                 }
                 else
                 {
-                    return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber}, Rated, Unrated";
+                    return $"{StartDate.ToString("dd.MM.yyyy")}, {EndDate.ToString("dd.MM.yyyy")}, Days: {Days}, Number of Guests: {GuestNumber},Guest Rated, Unrated";
                 }
             }
             else

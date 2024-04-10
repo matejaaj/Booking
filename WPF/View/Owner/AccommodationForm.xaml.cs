@@ -1,6 +1,7 @@
 ﻿using BookingApp.Domain.Model;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Guide;
+using BookingApp.WPF.ViewModel.Owner;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,139 +26,20 @@ namespace BookingApp.WPF.View.Owner
     /// </summary>
     public partial class AccommodationForm : Window
     {
-        public User LoggedInOwner { get; set; }
-
-        private readonly AccommodationRepository _repository;
-        private readonly LocationRepository _locationRepository;
-        public List<Location> locations { get; set; }
-        public List<Domain.Model.Image> images { get; set; }
-
-        private string _name;
-        public string AccommodationName
-        {
-            get => _name;
-            set
-            {
-                if (value != _name)
-                {
-                    _name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private Location _selectedLocation;
-        public Location SelectedLocation
-        {
-            get => _selectedLocation;
-            set
-            {
-                if (_selectedLocation != value)
-                {
-                    _selectedLocation = value;
-                    OnPropertyChanged(); 
-                }
-            }
-        }
-
-        private int _locationId;
-        public int LocationId
-        {
-            get => _locationId;
-            set
-            {
-                if (value != _locationId)
-                {
-                    _locationId = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _type;
-        public string Type
-        {
-            get => _type;
-            set
-            {
-                if (value != _type)
-                {
-                    _type = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private int _maxGuests;
-        public int MaxGuests
-        {
-            get => _maxGuests;
-            set
-            {
-                if (value != _maxGuests)
-                {
-                    _maxGuests = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private int _minReservations;
-        public int MinReservations
-        {
-            get => _minReservations;
-            set
-            {
-                if (value != _minReservations)
-                {
-                    _minReservations = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private int _cancelThershold;
-        public int CancelThershold
-        {
-            get => _cancelThershold;
-            set
-            {
-                if (value != _cancelThershold)
-                {
-                    _cancelThershold = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private int _accommodationId;
+        public static AccommodationFormViewModel viewModel { get; set; }
 
         public AccommodationForm(User owner)
         {
             InitializeComponent();
-            DataContext = this;
-            LoggedInOwner = owner;
-            _repository = new AccommodationRepository();
-            _locationRepository = new LocationRepository();
-            locations = _locationRepository.GetAll();
-            images = new List<Domain.Model.Image>();
-            _accommodationId = _repository.NextId();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            viewModel = new AccommodationFormViewModel(owner, this);
+            DataContext = viewModel;
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             if (ValidateFields())
             {
-                Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
-                Accommodation savedAccommodation = _repository.Save(newAccommodation);
-                OwnerOverview.Accommodations.Add(savedAccommodation);
+                viewModel.btnConfirm_Click(sender, e);  
                 Close();
             }
             else
@@ -185,16 +67,12 @@ namespace BookingApp.WPF.View.Owner
 
         private void btnAddImage_Click(object sender, RoutedEventArgs e)
         {
-            AddImage addImageWindow = new AddImage(images, _accommodationId, ImageResourceType.ACCOMMODATION);
-            addImageWindow.Owner = this;
-            addImageWindow.ShowDialog();
+            viewModel.btnAddImage_Click(sender, e);
         }
 
         private void btnShowImages_Click(object sender, RoutedEventArgs e)
         {
-            ShowImages showImagesWindow = new ShowImages(images);
-            showImagesWindow.Owner = this;
-            showImagesWindow.ShowDialog();
+            viewModel.btnShowImages_Click(sender, e);
         }
     }
 }

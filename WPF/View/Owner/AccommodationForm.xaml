@@ -33,7 +33,7 @@
             </Grid.RowDefinitions>
 
             <Label Content="Name" Grid.Row="0"/>
-            <TextBox Name="txtName" Text="{Binding Path=AccommodationName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
+            <TextBox x:Name="txtName" Text="{Binding Path=AccommodationName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
 
             <Label Content="Location" Grid.Row="1"/>
             <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding locations}" SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Width="178" Margin="0,0,0,5">
