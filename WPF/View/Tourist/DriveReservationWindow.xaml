@@ -35,29 +35,31 @@
 
 
                     <Label Content="Izaberite drzavu:" Grid.Row="0" Grid.Column="0" Margin="40,0,0,15"/>
-                    <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"  SelectionChanged="Country_SelectionChanged" Grid.Row="0" Grid.Column="1" Margin="0,0,60,15"/>
+                    <ComboBox ItemsSource="{Binding FormViewModel.Countries}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding FormViewModel.SelectedCountry}"  SelectionChanged="Country_SelectionChanged" Grid.Row="0" Grid.Column="1" Margin="0,0,60,15"/>
 
                     <Label Content="Izaberite grad:" Grid.Row="1" Grid.Column="0" Margin="40,0,0,15"/>
-                    <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Grid.Row="1" Grid.Column="1" Margin="0,0,60,15"/>
+                    <ComboBox ItemsSource="{Binding FormViewModel.Cities}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding FormViewModel.SelectedCity}" Grid.Row="1" Grid.Column="1" Margin="0,0,60,15"/>
+
+
 
                     <Label Content="Izaberite ulicu polaska:" Grid.Row="2" Grid.Column="0" Margin="40,0,0,15"/>
-                    <TextBox Text="{Binding StartAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="2" Grid.Column="1" Margin="0,0,60,15"/>
+                    <TextBox Text="{Binding FormViewModel.StartAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="2" Grid.Column="1" Margin="0,0,60,15"/>
 
                     <Label Content="Izaberite krajnju ulicu:" Grid.Row="3" Grid.Column="0" Margin="40,0,0,15"/>
-                    <TextBox Text="{Binding EndAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="3" Grid.Column="1" Margin="0,0,60,15"/>
+                    <TextBox Text="{Binding FormViewModel.EndAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="3" Grid.Column="1" Margin="0,0,60,15"/>
 
                     <Label Content="Izaberite datum:" Grid.Row="4" Grid.Column="0" Margin="40,0,0,15"/>
-                    <DatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" Margin="0,0,60,15"/>
+                    <DatePicker SelectedDate="{Binding FormViewModel.SelectedDate, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" Margin="0,0,60,15"/>
 
                     <Label Content="Izaberite sate i minute" Grid.Row="5" Grid.Column="0" Margin="40,0,0,15"/>
                     <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="0,0,60,15" HorizontalAlignment="Left">
-                        <ComboBox ItemsSource="{Binding Hours}" SelectedItem="{Binding SelectedHour}" Width="50"/>
+                        <ComboBox ItemsSource="{Binding FormViewModel.Hours}" SelectedItem="{Binding FormViewModel.SelectedHour}" Width="50"/>
                         <TextBlock Text=":" VerticalAlignment="Center" Margin="5,0"/>
-                        <ComboBox ItemsSource="{Binding Minutes}" SelectedItem="{Binding SelectedMinute}" SelectionChanged="Minutes_SelectionChanged" Width="50"/>
+                        <ComboBox ItemsSource="{Binding FormViewModel.Minutes}" SelectedItem="{Binding FormViewModel.SelectedMinute}" SelectionChanged="Minutes_SelectionChanged" Width="50"/>
                     </StackPanel>
 
                     <Label Content="Izaberite vozaca:" Grid.Row="7" Grid.Column="0" Margin="40,0,0,15"/>
-                    <ComboBox ItemsSource="{Binding Drivers}" SelectedItem="{Binding SelectedDriver}" Grid.Row="7" Grid.Column="1" Margin="0,0,60,15"/>
+                    <ComboBox ItemsSource="{Binding FormViewModel.Drivers}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding FormViewModel.SelectedDriver}" Grid.Row="7" Grid.Column="1" Margin="0,0,60,15"/>
 
                     <Button x:Name="btnReserve" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Content="Rezerviši" Click="btnReserve_Click" Margin="20,20,20,20"/>
                 </Grid>

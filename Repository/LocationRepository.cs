@@ -70,15 +70,13 @@ namespace BookingApp.Repository
             return location;
         }
 
-      public List<string> GetCityByCountry(string country)
+        public List<KeyValuePair<int, string>> GetCitiesByCountry(string country)
         {
-            var cities = GetAll()
-                .Where(location => location.Country == country)
-                .Select(location => new string(location.City))
-                .Distinct()
+            _locations = _serializer.FromCSV(FilePath);
+            return _locations
+                .Where(l => l.Country == country)
+                .Select(l => new KeyValuePair<int, string>(l.Id, l.City))
                 .ToList();
-
-            return cities;
         }
 
         public Location GetLocationById(int locationId)

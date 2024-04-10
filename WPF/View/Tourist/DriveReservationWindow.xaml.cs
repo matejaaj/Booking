@@ -33,6 +33,7 @@ namespace BookingApp.View.Tourist
         private void btnReserve_Click(object sender, RoutedEventArgs e)
         {
             viewModel.Reserve();
+            this.Close();
         }
 
         private void Country_SelectionChanged(object sender, SelectionChangedEventArgs e)

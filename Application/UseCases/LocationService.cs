@@ -22,6 +22,7 @@ namespace BookingApp.Application.UseCases
         {
             return _locationRepository.GetLocationIdByCity(city);
         }
+
         public List<Location> GetAll()
         {
             return _locationRepository.GetAll();
@@ -42,9 +43,9 @@ namespace BookingApp.Application.UseCases
             return _locationRepository.Update(location);
         }
 
-        public List<string> GetCityByCountry(string country)
+        public List<KeyValuePair<int, string>> GetCitiesByCountry(string country)
         {
-            return _locationRepository.GetCityByCountry(country);
+            return _locationRepository.GetCitiesByCountry(country);
         }
 
         public Location GetLocationById(int locationId)

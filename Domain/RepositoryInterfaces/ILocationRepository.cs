@@ -15,7 +15,7 @@ namespace BookingApp.Domain.RepositoryInterfaces
         Location Save(Location location);
         void Delete(Location location);
         Location Update(Location location);
-        List<string> GetCityByCountry(string country);
+        List<KeyValuePair<int, string>> GetCitiesByCountry(string country);
         Location GetLocationById(int locationId);
     }
 }

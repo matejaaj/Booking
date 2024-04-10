@@ -92,7 +92,7 @@ namespace BookingApp.View.Tourist
 
         private void FillCities()
         {
-            var selectedCountry = cbStartCountry.SelectedItem?.ToString();
+/*            var selectedCountry = cbStartCountry.SelectedItem?.ToString();
 
             if (string.IsNullOrEmpty(selectedCountry))
             {
@@ -105,7 +105,7 @@ namespace BookingApp.View.Tourist
             cbStartCity.ItemsSource = cities;
             cbStartCity.DisplayMemberPath = "Value";
             cbStartCity.SelectedValuePath = "Key";
- 
+ */
         }
 
         private void FillAddress()
