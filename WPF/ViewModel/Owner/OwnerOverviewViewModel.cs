@@ -14,18 +14,68 @@ namespace BookingApp.WPF.ViewModel.Owner
 {
     public class OwnerOverviewViewModel
     {
-        public User LoggedInOwner { get; set; }
+        public Domain.Model.Owner LoggedInOwner { get; set; }
+        public bool isSuperOwner { get; set; }
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
-        private readonly AccommodationService _accommodationService;
-        private readonly AccommodationReservationService _accommodationReservationService;
+        private static AccommodationService _accommodationService;
+        private static AccommodationReservationService _accommodationReservationService;
+        private static AccommodationAndOwnerRatingService _accommodationAndOwnerRatingService;
+        private static OwnerService _ownerService;
+        public int RatingsNumber { get; set; }
+        public double AverageScore { get; set; }
 
-        public OwnerOverviewViewModel(User owner)
+        public OwnerOverviewViewModel(Domain.Model.Owner owner)
         {
             LoggedInOwner = owner;
+            InitializeServices();
+            Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(LoggedInOwner));
+            CalculateRating();
+        }
+
+        private void InitializeServices()
+        {
             _accommodationService = new AccommodationService();
             _accommodationReservationService = new AccommodationReservationService();
-            Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(LoggedInOwner));
+            _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService();
+            _ownerService = new OwnerService();
+        }
+
+        private void CalculateRating()
+        {
+            var ratings = GetRatings();
+
+            RatingsNumber = ratings.Count();
+            List<double> individualAverages = new List<double>();
+            foreach(var r in ratings)
+            {
+                individualAverages.Add((double)(r.Cleanliness+r.OwnershipEthics)/2);
+            }
+            AverageScore = (double)individualAverages.Sum(a => a)/RatingsNumber;
+
+            CheckSuperOwner();
+        }
+
+        private void CheckSuperOwner()
+        {
+            LoggedInOwner.NumberOfRatings = RatingsNumber;
+            LoggedInOwner.AverageRating = AverageScore;
+            if(RatingsNumber > 50 && AverageScore > 4.5)
+            {
+                isSuperOwner = true;
+            }
+            else
+            {
+                LoggedInOwner.SuperOwner = false;
+            }
+            _ownerService.Update(LoggedInOwner);
+        }
+
+        private List<AccommodationAndOwnerRating> GetRatings() {
+            var accommodationIds = Accommodations.Select(a => a.AccommodationId).ToList();
+            var accommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
+            var accommodationReservationsIds = accommodationReservations.Select(a => a.ReservationId).ToList();
+            return _accommodationAndOwnerRatingService.GetByReservationIds(accommodationReservationsIds);
         }
 
         public void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
@@ -57,12 +107,12 @@ namespace BookingApp.WPF.ViewModel.Owner
             var accommodationIds = accommodations.Select(a => a.AccommodationId).ToList();
             var ownerAccommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
 
-            var MissingRatingReservations = new List<AccommodationReservation>(
+            var missingRatingReservations = new List<AccommodationReservation>(
                  ownerAccommodationReservations.Where(reservation => (DateTime.Now - reservation.EndDate).TotalDays <= 5 &&
                 reservation.EndDate < DateTime.Now && reservation.IsRated == false)
              );
 
-            if (MissingRatingReservations.Any())
+            if (missingRatingReservations.Any())
             {
                 MessageBox.Show("You have recent unrated reservations",
                     "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -75,6 +125,29 @@ namespace BookingApp.WPF.ViewModel.Owner
             var ownerAccommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
             ViewRatings viewRatingsWindow = new ViewRatings(LoggedInOwner, ownerAccommodationReservations);
             viewRatingsWindow.Show();
+        }
+
+        internal void SuperTrophyButton(object sender, RoutedEventArgs e)
+        {
+            if (LoggedInOwner.SuperOwner)
+            {
+                MessageBox.Show($"You are already a Super owner\nNumber of ratings: {RatingsNumber}\nAverage Rating: {AverageScore:F2}",
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                if(isSuperOwner == false) {
+                   MessageBox.Show($"You do not meet the requirements to become a Super owner\nNumber of ratings: {RatingsNumber}\nAverage Rating: {AverageScore:F2}",
+                      "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    MessageBox.Show($"You have become a Super owner\nNumber of ratings: {RatingsNumber}\nAverage Rating: {AverageScore:F2}",
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    LoggedInOwner.SuperOwner = true;
+                    _ownerService.Update(LoggedInOwner);
+                }
+            }
         }
     }
 }

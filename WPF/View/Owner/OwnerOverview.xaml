@@ -66,6 +66,13 @@
                     <TextBlock Name="RatingsTxtBlock" Text="Ratings" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
+            <Separator/>
+            <Button Click="SuperTrophyButton">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../../Resources/Images/trophy.png" Width="20" Height="25"/>
+                    <TextBlock Name="SuperOwnertxtBlock" Text="SuperOwner" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
         </ToolBar>
 
     </Grid>

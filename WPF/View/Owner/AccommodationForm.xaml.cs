@@ -28,7 +28,7 @@ namespace BookingApp.WPF.View.Owner
     {
         public static AccommodationFormViewModel viewModel { get; set; }
 
-        public AccommodationForm(User owner)
+        public AccommodationForm(Domain.Model.Owner owner)
         {
             InitializeComponent();
             viewModel = new AccommodationFormViewModel(owner, this);

@@ -26,7 +26,7 @@ namespace BookingApp.WPF.View.Owner
     {
         public static OwnerOverviewViewModel viewModel { get; set; }
 
-        public OwnerOverview(User owner)
+        public OwnerOverview(Domain.Model.Owner owner)
         {
             InitializeComponent();
             viewModel = new OwnerOverviewViewModel(owner);
@@ -49,10 +49,14 @@ namespace BookingApp.WPF.View.Owner
         {
             viewModel.ShowViewAccommodation(sender, e);
         }
-
+        
         private void ShowRatingsButton(object sender, RoutedEventArgs e)
         {
             viewModel.ShowRatingsButton(sender, e);
+        }
+        private void SuperTrophyButton(object sender, RoutedEventArgs e)
+        {
+            viewModel.SuperTrophyButton(sender, e);
         }
     }
 }

@@ -9,6 +9,8 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using BookingApp.Application.UseCases;
+using Accessibility;
 
 namespace BookingApp.WPF.View
 {
@@ -19,6 +21,7 @@ namespace BookingApp.WPF.View
     {
 
         private readonly UserRepository _repository;
+        private readonly OwnerService _ownerService;
 
         private string _username;
         public string Username
@@ -46,6 +49,7 @@ namespace BookingApp.WPF.View
             InitializeComponent();
             DataContext = this;
             _repository = new UserRepository();
+            _ownerService = new OwnerService();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -58,7 +62,8 @@ namespace BookingApp.WPF.View
                     switch (user.Role)
                     {
                         case Role.OWNER:
-                            OwnerOverview ownerOverview = new OwnerOverview(user);
+                            Domain.Model.Owner owner = _ownerService.GetByUsername(Username);
+                            OwnerOverview ownerOverview = new OwnerOverview(owner);
                             ownerOverview.Show();
                             break;
                         case Role.GUEST:

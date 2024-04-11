@@ -47,5 +47,10 @@ namespace BookingApp.Application.UseCases
         {
             return _ratingRepository.GetByReservationId(id);
         }
+
+        public List<AccommodationAndOwnerRating> GetByReservationIds(List<int> accommodationReservationIds)
+        {
+            return _ratingRepository.GetByReservationIds(accommodationReservationIds);
+        }
     }
 }

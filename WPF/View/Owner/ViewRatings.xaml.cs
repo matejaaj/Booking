@@ -22,7 +22,7 @@ namespace BookingApp.WPF.View.Owner
     public partial class ViewRatings : Window
     {
         public static ViewRatingsViewModel viewModel { get; set; }
-        public ViewRatings(User loggedInOwner, List<AccommodationReservation> ownerAccommodationReservations)
+        public ViewRatings(Domain.Model.Owner loggedInOwner, List<AccommodationReservation> ownerAccommodationReservations)
         {
             viewModel = new ViewRatingsViewModel(loggedInOwner, ownerAccommodationReservations);
             DataContext = viewModel;

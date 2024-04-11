@@ -1,4 +1,5 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace BookingApp.Domain.RepositoryInterfaces
         public AccommodationAndOwnerRating Update(AccommodationAndOwnerRating accommodationAndOwnerRating);
         public AccommodationAndOwnerRating GetById(int id);
         public AccommodationAndOwnerRating GetByReservationId(int id);
+        public List<AccommodationAndOwnerRating> GetByReservationIds(List<int> accommodationReservationIds);
     }
 }

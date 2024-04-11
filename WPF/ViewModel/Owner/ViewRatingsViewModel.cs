@@ -27,13 +27,13 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
         public List<AccommodationReservation> AccommodationReservations { get; set; }
-        public User LoggedInOwner { get; set; }
+        public Domain.Model.Owner LoggedInOwner { get; set; }
         private static AccommodationReservationService _accommodationReservationService;
         private static UserService _userService;
         private static AccommodationAndOwnerRatingService _accommodationAndOwnerRatingService;
         private static AccommodationService _accommodationService;
 
-        public ViewRatingsViewModel(Domain.Model.User loggedInOwner, List<AccommodationReservation> ownerAccommodationReservations) 
+        public ViewRatingsViewModel(Domain.Model.Owner loggedInOwner, List<AccommodationReservation> ownerAccommodationReservations) 
         { 
             LoggedInOwner = loggedInOwner;
             InitializeServices();
@@ -53,21 +53,14 @@ namespace BookingApp.WPF.ViewModel.Owner
         private void Update()
         {
             Ratings.Clear();
-            MessageBox.Show($"KOJI KURAC", "Error", MessageBoxButton.OK);
-            if (AccommodationReservations.Count() == 0)
-            {
-                MessageBox.Show($"KOJI KURAC je ovo", "Error", MessageBoxButton.OK);
-            }
+            
             foreach (var a in AccommodationReservations)
             {
-                MessageBox.Show($"{a.EndDate}", "Error", MessageBoxButton.OK);
                 if (a.IsRated && a.IsAccommodationAndOwnerRated)
                 {
-                    MessageBox.Show($"{a.EndDate}", "Error", MessageBoxButton.OK);
                     var guest = _userService.GetById(a.GuestId);
                     var rating = _accommodationAndOwnerRatingService.GetByReservationId(a.ReservationId);
                     var accommodation = _accommodationService.GetById(a.AccommodationId);
-                    MessageBox.Show($"{guest.Username}, {rating.Cleanliness}, {accommodation.Name}", "Error", MessageBoxButton.OK);
                     var RatingDTO = new AccommodationRatingDTO(LoggedInOwner, guest, rating, accommodation);
                     Ratings.Add(RatingDTO);
                 }

@@ -75,5 +75,11 @@ namespace BookingApp.Repository
             _accommodationAndOwnerRating = _serializer.FromCSV(FilePath);
             return _accommodationAndOwnerRating.Find(a => a.AccommodationReservationId == id);
         }
+
+        public List<AccommodationAndOwnerRating> GetByReservationIds(List<int> accommodationReservationIds)
+        {
+            _accommodationAndOwnerRating = _serializer.FromCSV(FilePath);
+            return _accommodationAndOwnerRating.FindAll(a => accommodationReservationIds.Contains(a.AccommodationReservationId));
+        }
     }
 }
