@@ -22,17 +22,27 @@ namespace BookingApp.View.Tourist
     public partial class DriveReservationWindow : Window
     {
         private DriveReservationViewModel viewModel;
+        private Boolean isFastDrive;
 
         public DriveReservationWindow(User user)
         {
             InitializeComponent();
+            isFastDrive = false;
             viewModel = new DriveReservationViewModel(user);
             DataContext = viewModel;
+
         }
 
         private void btnReserve_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.Reserve();
+            viewModel.Reserve(isFastDrive);
+            this.Close();
+        }
+
+
+        private void btnReserveFastDrive_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.Reserve(isFastDrive);
             this.Close();
         }
 
@@ -46,5 +56,13 @@ namespace BookingApp.View.Tourist
         {
             viewModel.UpdateDriverList();
         }
+
+        private void Tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var tabControl = sender as TabControl;
+            var selectedItem = tabControl.SelectedItem as TabItem;
+            isFastDrive = selectedItem.Header.ToString() == "Brza voznja";
+        }
+
     }
 }

@@ -36,13 +36,13 @@
             <TextBox Name="txtName" Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
 
             <Label Content="Location" Grid.Row="1"/>
-            <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding locations}" SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Width="178" Margin="0,0,0,5"></ComboBox>
+            <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding Locations}" SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Width="178" Margin="0,0,0,5"></ComboBox>
 
             <Label Content="Description" Grid.Row="2"/>
             <TextBox Name="txtDescription" Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
             <Label Content="Language" Grid.Row="3"/>
-            <ComboBox Name="cmbLanguage" IsTextSearchEnabled="True" ItemsSource="{Binding languages}" SelectedItem="{Binding Path=SelectedLanguage, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Width="178" Margin="0,0,0,5"></ComboBox>
+            <ComboBox Name="cmbLanguage" IsTextSearchEnabled="True" ItemsSource="{Binding Languages}" SelectedItem="{Binding Path=SelectedLanguage, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Width="178" Margin="0,0,0,5"></ComboBox>
 
             <Label Content="Capacity" Grid.Row="4"/>
             <TextBox Name="txtCapacity" Text="{Binding Path=Capacity, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5"/>

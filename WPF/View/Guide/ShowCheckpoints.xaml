@@ -8,7 +8,7 @@
         Title="Checkpoints" Height="450" Width="400"
         WindowStartupLocation="CenterOwner">
     <Grid>
-        <ListView x:Name="CheckpointsListView" Margin="10" HorizontalAlignment="Center" Width="380">
+        <ListView x:Name="CheckpointsListView" Margin="10" HorizontalAlignment="Center" Width="380" ItemsSource="{Binding CheckpointNames}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Checkpoint Names" Width="150"/>

@@ -13,7 +13,7 @@
     </Window.Resources>
 
     <Grid>
-        <TabControl>
+        <TabControl SelectionChanged="Tab_SelectionChanged">
             <TabItem Header="Obicna voznja" Style="{StaticResource LargerFontStyle}">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
@@ -64,7 +64,51 @@
                     <Button x:Name="btnReserve" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Content="Rezerviši" Click="btnReserve_Click" Margin="20,20,20,20"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Brza voznja"></TabItem>
+            <TabItem Header="Brza voznja">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+
+                    <Label Content="Izaberite drzavu:" Grid.Row="0" Grid.Column="0" Margin="40,0,0,15"/>
+                    <ComboBox ItemsSource="{Binding FormViewModel.Countries}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding FormViewModel.SelectedCountry}"  SelectionChanged="Country_SelectionChanged" Grid.Row="0" Grid.Column="1" Margin="0,0,60,15"/>
+
+                    <Label Content="Izaberite grad:" Grid.Row="1" Grid.Column="0" Margin="40,0,0,15"/>
+                    <ComboBox ItemsSource="{Binding FormViewModel.Cities}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding FormViewModel.SelectedCity}" Grid.Row="1" Grid.Column="1" Margin="0,0,60,15"/>
+
+
+
+                    <Label Content="Izaberite ulicu polaska:" Grid.Row="2" Grid.Column="0" Margin="40,0,0,15"/>
+                    <TextBox Text="{Binding FormViewModel.StartAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="2" Grid.Column="1" Margin="0,0,60,15"/>
+
+                    <Label Content="Izaberite krajnju ulicu:" Grid.Row="3" Grid.Column="0" Margin="40,0,0,15"/>
+                    <TextBox Text="{Binding FormViewModel.EndAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="3" Grid.Column="1" Margin="0,0,60,15"/>
+
+                    <Label Content="Izaberite datum:" Grid.Row="4" Grid.Column="0" Margin="40,0,0,15"/>
+                    <DatePicker SelectedDate="{Binding FormViewModel.SelectedDate, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" Margin="0,0,60,15"/>
+
+                    <Label Content="Izaberite sate i minute" Grid.Row="5" Grid.Column="0" Margin="40,0,0,15"/>
+                    <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="0,0,60,15" HorizontalAlignment="Left">
+                        <ComboBox ItemsSource="{Binding FormViewModel.Hours}" SelectedItem="{Binding FormViewModel.SelectedHour}" Width="50"/>
+                        <TextBlock Text=":" VerticalAlignment="Center" Margin="5,0"/>
+                        <ComboBox ItemsSource="{Binding FormViewModel.Minutes}" SelectedItem="{Binding FormViewModel.SelectedMinute}" SelectionChanged="Minutes_SelectionChanged" Width="50"/>
+                    </StackPanel>
+                    <Button x:Name="btnReserveFastDrive" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Content="Rezerviši" Click="btnReserveFastDrive_Click" Margin="20,20,20,20"/>
+                </Grid>
+            </TabItem>
             <TabItem Header="Grupna voznja"></TabItem>
         </TabControl>
     </Grid>

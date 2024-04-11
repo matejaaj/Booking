@@ -1,4 +1,5 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.WPF.View.Tourist;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,25 +21,32 @@ namespace BookingApp.View.Tourist
     /// </summary>
     public partial class TouristMainWindow : Window
     {
-        User User { get; set; }
+        User _user;
 
         public TouristMainWindow(User user)
         {
-            User = user;
+            _user = user;
             InitializeComponent();
         }
 
         private void btnOpenToursOverview_Click(object sender, RoutedEventArgs e)
         {
-            ToursOverview toursOverview = new ToursOverview(User);
+            ToursOverview toursOverview = new ToursOverview(_user);
             toursOverview.Show();
             this.Close();
         }
 
         private void btnOpenRequestDrive_Click(object sender, RoutedEventArgs e)
         {
-            DriveReservationWindow requestDrive = new  DriveReservationWindow(User);
+            DriveReservationWindow requestDrive = new  DriveReservationWindow(_user);
             requestDrive.Show();
+            this.Close();
+        }
+
+        private void btnOpenMyTours_Click(object sender, RoutedEventArgs e)
+        {
+            MyToursWindow myToursWindow = new MyToursWindow(_user);
+            myToursWindow.Show();
             this.Close();
         }
     }

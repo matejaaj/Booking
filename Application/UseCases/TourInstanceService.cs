@@ -22,9 +22,14 @@ namespace BookingApp.Application.UseCases
             return _tourInstanceRepository.GetAll();
         }
 
-        public List<TourInstance> GetAllById(int tourId)
+        public List<TourInstance> GetAllByTourId(int tourId)
         {
-            return _tourInstanceRepository.GetAllById(tourId);
+            return _tourInstanceRepository.GetAllByTourId(tourId);
+        }
+
+        public TourInstance GetById(int tourInstanceId)
+        {
+            return _tourInstanceRepository.GetById(tourInstanceId);
         }
 
         public TourInstance GetByDateAndId(int tourId, DateTime date)
