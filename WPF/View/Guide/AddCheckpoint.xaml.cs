@@ -1,72 +1,33 @@
-﻿using BookingApp.Domain.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using BookingApp.Domain.Model;
+using BookingApp.WPF.ViewModel.Guide;
 
 namespace BookingApp.WPF.View.Guide
 {
-    /// <summary>
-    /// Interaction logic for AddCheckpoint.xaml
-    /// </summary>
-    public partial class AddCheckpoint : Window
+    public partial class AddCheckpoint : Window, INotifyPropertyChanged
     {
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private List<Checkpoint> _checkpoints;
-        private int _tourId;
+        private AddCheckpointViewModel viewModel;
+
         public AddCheckpoint(List<Checkpoint> checkpoints, int tourId)
         {
             InitializeComponent();
-            DataContext = this;
-            _tourId = tourId;
-            _checkpoints = checkpoints;
-        }
-
-        private string _name;
-        public string CheckpointName
-        {
-            get => _name;
-            set
-            {
-                if (value != _name)
-                {
-                    _name = value;
-                    OnPropertyChanged();
-                }
-            }
+            viewModel = new AddCheckpointViewModel(checkpoints, tourId);
+            DataContext = viewModel;
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(CheckpointName))
-            {
-                Checkpoint newCheckpoint = new Checkpoint(_name, _tourId);
-                _checkpoints.Add(newCheckpoint);
-
-                MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                MessageBox.Show("Not added", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-
+            viewModel.Confirm();
             Close();
         }
 

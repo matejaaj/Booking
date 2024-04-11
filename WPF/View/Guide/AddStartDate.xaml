@@ -20,13 +20,13 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="Start Date" Grid.Row="0" Grid.Column="0"/>
-        <DatePicker Name="startDatePicker" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5"/>
+        <DatePicker Name="startDatePicker" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" SelectedDate="{Binding StartDate}"/>
 
         <Label Content="Start Time" Grid.Row="1" Grid.Column="0"/>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,5,0,5">
-            <ComboBox Name="startHour" Width="60">
+            <ComboBox Name="startHour" Width="60" ItemsSource="{Binding StartHourItems}" SelectedItem="{Binding StartHourSelectedItem}">
             </ComboBox>
-            <ComboBox Name="startMinute" Width="60" Margin="5,0,0,0">
+            <ComboBox Name="startMinute" Width="60" Margin="5,0,0,0" ItemsSource="{Binding StartMinuteItems}" SelectedItem="{Binding StartMinuteSelectedItem}">
             </ComboBox>
         </StackPanel>
 

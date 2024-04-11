@@ -1,25 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using BookingApp.Domain.Model;
+using BookingApp.WPF.ViewModel.Guide;
 
 namespace BookingApp.WPF.View.Guide
 {
-    /// <summary>
-    /// Interaction logic for AddImage.xaml
-    /// </summary>
-    public partial class AddImage : Window
+    public partial class AddImage : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -27,46 +16,18 @@ namespace BookingApp.WPF.View.Guide
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private List<Domain.Model.Image> _images;
-        private int _entityId;
-        private ImageResourceType _imageResourceType;
-
-        private string _source;
-        public string Source
-        {
-            get => _source;
-            set
-            {
-                if (value != _source)
-                {
-                    _source = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        private AddImageViewModel viewModel;
 
         public AddImage(List<Domain.Model.Image> images, int entityId, ImageResourceType imageResourceType)
         {
             InitializeComponent();
-            DataContext = this;
-            _images = images;
-            _entityId = entityId;
-            _imageResourceType = imageResourceType;
+            viewModel = new AddImageViewModel(images, entityId, imageResourceType);
+            DataContext = viewModel;
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(Source))
-            {
-                Domain.Model.Image newImage = new BookingApp.Domain.Model.Image(_source, _entityId, _imageResourceType);
-                _images.Add(newImage);
-                MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                MessageBox.Show("Not added", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            
+            viewModel.Confirm();
             Close();
         }
 

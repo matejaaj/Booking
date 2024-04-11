@@ -5,14 +5,14 @@ using BookingApp.WPF.ViewModel.Guide;
 
 namespace BookingApp.WPF.View.Guide
 {
-    public partial class ShowImages : Window
+    public partial class ShowTourInstances : Window
     {
-        private ShowImagesViewModel viewModel;
+        private ShowTourInstancesViewModel viewModel;
 
-        public ShowImages(List<Domain.Model.Image> images)
+        public ShowTourInstances(List<TourInstance> instances)
         {
             InitializeComponent();
-            viewModel = new ShowImagesViewModel(images);
+            viewModel = new ShowTourInstancesViewModel(instances);
             DataContext = viewModel;
         }
     }

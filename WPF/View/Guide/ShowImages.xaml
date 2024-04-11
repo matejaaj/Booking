@@ -8,7 +8,7 @@
         Title="Added images" Height="450" Width="400"
         WindowStartupLocation="CenterOwner">
     <Grid>
-        <ListView x:Name="ImagesListView" Margin="10" HorizontalAlignment="Center" Width="380">
+        <ListView x:Name="ImagesListView" Margin="10" HorizontalAlignment="Center" Width="380" ItemsSource="{Binding ImagePaths}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Image Paths" Width="Auto"/>

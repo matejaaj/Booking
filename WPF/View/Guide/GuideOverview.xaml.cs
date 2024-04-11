@@ -11,30 +11,30 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BookingApp.WPF.ViewModel.Guide;
 
 namespace BookingApp.WPF.View.Guide
 {
-    /// <summary>
-    /// Interaction logic for GuideOverview.xaml
-    /// </summary>
     public partial class GuideOverview : Window
     {
+        private GuideOverviewViewModel viewModel;
+
         public GuideOverview()
         {
             InitializeComponent();
-            DataContext = this;
+            viewModel = new GuideOverviewViewModel();
+            DataContext = viewModel;
         }
+
         private void btnShowTourForm_Click(object sender, RoutedEventArgs e)
         {
-            TourForm tourForm = new TourForm();
-            tourForm.ShowDialog();
+            viewModel.ShowTourForm();
         }
 
         private void btnShowTodayTours_Click(object sender, RoutedEventArgs e)
         {
-            TodayToursOverview todayToursOverview = new TodayToursOverview();
-            todayToursOverview.ShowDialog();
+            viewModel.ShowTodayTours();
         }
     }
- 
 }
+
