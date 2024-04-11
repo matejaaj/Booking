@@ -17,7 +17,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
     {
         public User Tourist;
 
-        public DriveFromViewModel FormViewModel { get; private set; }
+        public DriveFormViewModel FormViewModel { get; private set; }
 
 
         private VehicleService _vehicleService;
@@ -30,7 +30,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public DriveReservationViewModel(User loggedUser)
         {
             Tourist = loggedUser;
-            FormViewModel = new DriveFromViewModel();
+
+            FormViewModel = new DriveFormViewModel();
             InitializeServices();
 
         }
@@ -59,7 +60,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             drivers = _driveReservationService.FilterAvailableDrivers(drivers, date);
             FormViewModel.FillDrivers(drivers);
         }
-        public void Reserve()
+        public void Reserve(bool isFastDrive)
         {
             DateTime departure = FormViewModel.CreateDateTimeFromSelections();
 
@@ -69,8 +70,16 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _detailedLocationService.Save(start);
             _detailedLocationService.Save(end);
 
-            DriveReservation reservation = new DriveReservation(start.Id, end.Id, departure, FormViewModel.SelectedDriver.Key, Tourist.Id, 2, 0,0);
-            _driveReservationService.Save(reservation);
+            if (isFastDrive)
+            {
+                DriveReservation reservation = new DriveReservation(start.Id, end.Id, departure, -1, Tourist.Id, 12, 0, 0);
+                _driveReservationService.Save(reservation);
+            } else
+            { 
+                DriveReservation reservation = new DriveReservation(start.Id, end.Id, departure, FormViewModel.SelectedDriver.Key, Tourist.Id, 2, 0, 0);
+                _driveReservationService.Save(reservation);
+            }
+
             MessageBox.Show("Reservation successful");
 
         }

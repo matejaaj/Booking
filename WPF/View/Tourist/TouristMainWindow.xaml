@@ -9,5 +9,6 @@
     <StackPanel>
         <Button Name="btnOpenToursOverview" Click="btnOpenToursOverview_Click">Open Tours Overview</Button>
         <Button Name="btnOpenRequestDrive" Click="btnOpenRequestDrive_Click">Open Request Drive</Button>
+        <Button Name="btnOpenMyTours" Click="btnOpenMyTours_Click">Open my tours</Button>
     </StackPanel>
 </Window>
