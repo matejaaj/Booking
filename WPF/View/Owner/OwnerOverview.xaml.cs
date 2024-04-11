@@ -49,5 +49,10 @@ namespace BookingApp.WPF.View.Owner
         {
             viewModel.ShowViewAccommodation(sender, e);
         }
+
+        private void ShowRatingsButton(object sender, RoutedEventArgs e)
+        {
+            viewModel.ShowRatingsButton(sender, e);
+        }
     }
 }

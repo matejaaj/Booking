@@ -41,22 +41,29 @@
         <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
             <Button Click="ShowCreateAccommodationForm">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/add.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/add.png" Width="20" Height="25"/>
                     <TextBlock Text="Create" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Click="ShowViewAccommodation">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/view.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/view.png" Width="20" Height="25"/>
                     <TextBlock Text="View" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button>
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../Resources/Images/delete.png" Width="20" Height="25"/>
+                    <Image Source="../../../Resources/Images/delete.png" Width="20" Height="25"/>
                     <TextBlock Name="DeleteTxtBlock" Text="Delete" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button Click="ShowRatingsButton">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../../../Resources/Images/ratings.png" Width="20" Height="25"/>
+                    <TextBlock Name="RatingsTxtBlock" Text="Ratings" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </ToolBar>

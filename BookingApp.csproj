@@ -12,6 +12,7 @@
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\ratings.png" />
     <None Remove="Resources\Images\view.png" />
   </ItemGroup>
 
@@ -34,6 +35,10 @@
 
   <ItemGroup>
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="24.2.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\ratings.png" />
   </ItemGroup>
 
 </Project>

@@ -68,5 +68,13 @@ namespace BookingApp.WPF.ViewModel.Owner
                     "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        public void ShowRatingsButton(object sender, RoutedEventArgs e)
+        {
+            var accommodationIds = Accommodations.Select(a => a.AccommodationId).ToList();
+            var ownerAccommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
+            ViewRatings viewRatingsWindow = new ViewRatings(LoggedInOwner, ownerAccommodationReservations);
+            viewRatingsWindow.Show();
+        }
     }
 }
