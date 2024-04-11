@@ -22,5 +22,11 @@ namespace BookingApp.WPF.ViewModel.Guide
             TodayToursOverview todayToursOverview = new TodayToursOverview();
             todayToursOverview.ShowDialog();
         }
+
+        public void ShowAllTours()
+        {
+            AllToursOverview allToursOverview = new AllToursOverview();
+            allToursOverview.ShowDialog();
+        }
     }
 }
