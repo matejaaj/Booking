@@ -1,4 +1,5 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class AccommodationAndOwnerRatingRepository
+    public class AccommodationAndOwnerRatingRepository : IAccommodationAndOwnerRatingRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationsandownersrating.csv";
         private readonly Serializer<AccommodationAndOwnerRating> _serializer;
@@ -61,6 +62,24 @@ namespace BookingApp.Repository
             _accommodationAndOwnerRating.Insert(index, accommodationAndOwnerRating);
             _serializer.ToCSV(FilePath, _accommodationAndOwnerRating);
             return accommodationAndOwnerRating;
+        }
+
+        public AccommodationAndOwnerRating GetById(int id)
+        {
+            _accommodationAndOwnerRating = _serializer.FromCSV(FilePath);
+            return _accommodationAndOwnerRating.Find(a => a.RatingId == id);
+        }
+
+        public AccommodationAndOwnerRating GetByReservationId(int id)
+        {
+            _accommodationAndOwnerRating = _serializer.FromCSV(FilePath);
+            return _accommodationAndOwnerRating.Find(a => a.AccommodationReservationId == id);
+        }
+
+        public List<AccommodationAndOwnerRating> GetByReservationIds(List<int> accommodationReservationIds)
+        {
+            _accommodationAndOwnerRating = _serializer.FromCSV(FilePath);
+            return _accommodationAndOwnerRating.FindAll(a => accommodationReservationIds.Contains(a.AccommodationReservationId));
         }
     }
 }

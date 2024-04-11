@@ -19,7 +19,7 @@ namespace BookingApp.WPF.ViewModel.Owner
     public class AccommodationFormViewModel : INotifyPropertyChanged
     {
         private Window _ownerWindow;
-        public User LoggedInOwner { get; set; }
+        public Domain.Model.Owner LoggedInOwner { get; set; }
 
         private readonly AccommodationService _accommodationService;
         private readonly LocationService _locationService;
@@ -133,7 +133,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public AccommodationFormViewModel(User owner, Window ownerWindow)
+        public AccommodationFormViewModel(Domain.Model.Owner owner, Window ownerWindow)
         {
             LoggedInOwner = owner;
             _accommodationService = new AccommodationService();
