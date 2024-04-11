@@ -69,6 +69,14 @@ namespace BookingApp.Repository
             }
             return tour;
         }
+
+        public Tour GetById(int tourId)
+        {
+            _tours = _serializer.FromCSV(FilePath);
+            return _tours.FirstOrDefault(tour => tour.Id == tourId);
+        }
+
+
     }
 
 

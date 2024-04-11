@@ -22,6 +22,15 @@ namespace BookingApp.Application.UseCases
             return _checkpointRepository.GetAll();
         }
 
+        public List<Checkpoint> GetAllByTourId(int tourId)
+        {
+            var allCheckpoints = GetAll();
+            var checkpointsForTour = allCheckpoints.Where(checkpoint => checkpoint.TourId == tourId).ToList();
+
+
+            return checkpointsForTour;
+        }
+
         public Checkpoint Save(Checkpoint checkpoint)
         {
             return _checkpointRepository.Save(checkpoint);

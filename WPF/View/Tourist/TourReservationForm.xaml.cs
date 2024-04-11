@@ -38,7 +38,7 @@ namespace BookingApp.View.Tourist
 
         private void FillDates()
         {
-            var tourInstances = _tourInstanceRepository.GetAllById(SelectedTour.Id);
+            var tourInstances = _tourInstanceRepository.GetAllByTourId(SelectedTour.Id);
             cmbStartTime.ItemsSource = tourInstances.Select(t => t.StartTime.ToString("g")).ToList();
             cmbNumberOfPeople.IsEnabled = false;
         }

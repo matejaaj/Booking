@@ -19,7 +19,7 @@
 
         <ScrollViewer Grid.Row="1"
                       Margin="0 20 0 0">
-            <ItemsControl ItemsSource="{Binding _tours}">
+            <ItemsControl ItemsSource="{Binding Tours}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border
@@ -43,7 +43,7 @@
                                 <TextBlock
                                     Grid.Row="1"
                                     Margin="0 10 0 0"
-                                    Text="{Binding Description}"
+                                    Text="{Binding Name}"
                                     TextWrapping="Wrap" />
                                 <TextBlock
                                     Grid.Row="2"
