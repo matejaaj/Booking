@@ -10,7 +10,9 @@ namespace BookingApp.Domain.RepositoryInterfaces
     public interface ITourInstanceRepository
     {
         List<TourInstance> GetAll();
-        List<TourInstance> GetAllById(int tourId);
+        List<TourInstance> GetAllByTourId(int tourId);
+
+        TourInstance GetById(int id);
         TourInstance GetByDateAndId(int tourId, DateTime date);
         TourInstance Save(TourInstance tourStartDate);
         void Delete(TourInstance tourStartDate);

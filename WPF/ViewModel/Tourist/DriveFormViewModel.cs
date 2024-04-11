@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
-    public class DriveFromViewModel
+    public class DriveFormViewModel
     {
         private ObservableCollection<KeyValuePair<int, string>> _countries;
         private ObservableCollection<KeyValuePair<int, string>> _cities;
@@ -179,7 +179,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
 
 
-        public DriveFromViewModel()
+        public DriveFormViewModel()
         {
             InitializeFields();
             FillCountries();

@@ -12,19 +12,6 @@ namespace BookingApp.DTO
     public class TourDTO : INotifyPropertyChanged
     {
         private int id { get; set; }
-
-        public int StudentId
-        {
-            get { return id; }
-            set { 
-                if(id != value)
-                {
-                    id = value;
-                    OnPropertyChanged("Id");
-                }
-            }
-        }
-
         private string name { get; set; }
         public string Name
         {

@@ -13,12 +13,12 @@ namespace BookingApp.Repository
     {
         private const string FilePath = "../../../Resources/Data/tourinstance.csv";
         private readonly Serializer<TourInstance> _serializer;
-        private List<TourInstance> _tourStartDates;
+        private List<TourInstance> _tourInstances;
 
         public TourInstanceRepository()
         {
             _serializer = new Serializer<TourInstance>();
-            _tourStartDates = _serializer.FromCSV(FilePath);
+            _tourInstances = _serializer.FromCSV(FilePath);
         }
 
         public List<TourInstance> GetAll()
@@ -26,12 +26,13 @@ namespace BookingApp.Repository
             return _serializer.FromCSV(FilePath);
         }
 
-        public List<TourInstance> GetAllById(int tourId)
+        public List<TourInstance> GetAllByTourId(int tourId)
         {
             var allTourStartDates = _serializer.FromCSV(FilePath);
             var filteredTourStartDates = allTourStartDates.Where(tsd => tsd.TourId == tourId).ToList();
             return filteredTourStartDates;
         }
+
 
         public TourInstance GetByDateAndId(int tourId, DateTime date)
         {
@@ -41,38 +42,44 @@ namespace BookingApp.Repository
             return matchingTourInstance;
         }
 
-        public TourInstance Save(TourInstance tourStartDate)
+        public TourInstance Save(TourInstance tourInstance)
         {
-            tourStartDate.Id = NextId();
-            _tourStartDates.Add(tourStartDate);
-            _serializer.ToCSV(FilePath, _tourStartDates);
-            return tourStartDate;
+            tourInstance.Id = NextId();
+            _tourInstances.Add(tourInstance);
+            _serializer.ToCSV(FilePath, _tourInstances);
+            return tourInstance;
         }
 
         public int NextId()
         {
-           if (_tourStartDates.Count < 1)
+           if (_tourInstances.Count < 1)
            {
                 return 1;
            }
-            return _tourStartDates.Max(tsd => tsd.Id) + 1;
+            return _tourInstances.Max(tsd => tsd.Id) + 1;
         }
 
         public void Delete(TourInstance tourStartDate)
         {
-            TourInstance founded = _tourStartDates.Find(tsd => tsd.Id == tourStartDate.Id);
-            _tourStartDates.Remove(founded);
-            _serializer.ToCSV(FilePath, _tourStartDates);
+            TourInstance founded = _tourInstances.Find(tsd => tsd.Id == tourStartDate.Id);
+            _tourInstances.Remove(founded);
+            _serializer.ToCSV(FilePath, _tourInstances);
         }
 
         public TourInstance Update(TourInstance tourStartDate)
         {
-            TourInstance current = _tourStartDates.Find(tsd => tsd.Id == tourStartDate.Id);
-            int index = _tourStartDates.IndexOf(current);
-            _tourStartDates.Remove(current);
-            _tourStartDates.Insert(index, tourStartDate);
-            _serializer.ToCSV(FilePath, _tourStartDates);
+            TourInstance current = _tourInstances.Find(tsd => tsd.Id == tourStartDate.Id);
+            int index = _tourInstances.IndexOf(current);
+            _tourInstances.Remove(current);
+            _tourInstances.Insert(index, tourStartDate);
+            _serializer.ToCSV(FilePath, _tourInstances);
             return tourStartDate;
         }
+
+        public TourInstance GetById(int id)
+        {
+            return _tourInstances.FirstOrDefault(tourInstance => tourInstance.Id == id);
+        }
+
     }
 }

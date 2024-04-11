@@ -22,6 +22,17 @@ namespace BookingApp.Application.UseCases
             return _tourGuestRepository.GetAll();
         }
 
+        public List<TourGuest> GetAllByTouristForTourInstance(int touristId, int tourInstanceId)
+        { 
+            var guestsForTourInstance = GetAllByTourInstanceId(tourInstanceId);
+
+
+            var guestsForTouristInTourInstance = guestsForTourInstance.Where(guest => guest.TouristId == touristId).ToList();
+
+            return guestsForTouristInTourInstance;
+        }
+
+
         public List<TourGuest> GetAllByTourInstanceId(int tourInstanceId)
         {
             return _tourGuestRepository.GetAllByTourInstanceId(tourInstanceId);

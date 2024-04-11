@@ -41,6 +41,11 @@ namespace BookingApp.Application.UseCases
         {
             return _tourRepository.NextId();
         }
+      
+        public Tour GetById(int id)
+        {
+            return _tourRepository.GetById(id);
+        }
     }
 
 }

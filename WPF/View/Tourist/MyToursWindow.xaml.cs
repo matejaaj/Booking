@@ -1,5 +1,8 @@
-﻿using System;
+﻿using BookingApp.Domain.Model;
+using BookingApp.WPF.ViewModel.Tourist;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,16 +17,13 @@ using System.Windows.Shapes;
 
 namespace BookingApp.WPF.View.Tourist
 {
-    /// <summary>
-    /// Interaction logic for FastDriveReservationForm.xaml
-    /// </summary>
-    public partial class FastDriveReservationForm : Window
+    public partial class MyToursWindow : Window
     {
-        public FastDriveReservationForm()
+        public MyToursWindow(User user)
         {
             InitializeComponent();
+            MyToursViewModel viewModel = new MyToursViewModel(user);
+            DataContext = viewModel;
         }
-
-
     }
 }
