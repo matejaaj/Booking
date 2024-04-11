@@ -51,16 +51,16 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-        private List<string> guestList = new List<string>();
-        public List<string> GuestList
+        private List<string> guests = new List<string>();
+        public List<string> Guests
         {
-            get => guestList;
+            get => guests;
             set
             {
-                if (guestList != value)
+                if (guests != value)
                 {
-                    guestList = value;
-                    OnPropertyChanged(nameof(GuestList));
+                    guests = value;
+                    OnPropertyChanged(nameof(Guests));
                 }
             }
         }

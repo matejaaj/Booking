@@ -49,7 +49,7 @@ namespace BookingApp.Domain.Model
             LocationId.ToString(),
             LanguageId.ToString(),
             MaximumCapacity.ToString(),
-            DurationHours.ToString("F2") // Assuming you want to format the duration to two decimal places
+            DurationHours.ToString("F2") 
         };
         }
     }

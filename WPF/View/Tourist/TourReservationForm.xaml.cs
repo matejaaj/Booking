@@ -1,4 +1,5 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.Model.BookingApp.Domain.Model;
 using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace BookingApp.View.Tourist
         public TourReservationRepository _tourReservationRepository { get; set; }
         public TourGuestRepository _tourGuestRepository { get; set; }
 
+        public VoucherRepository _voucherRepository { get; set; }
+
         public TourReservationForm(Tour selectedTour, User loggedUser)
         {
             TouristId = loggedUser.Id;
@@ -27,6 +30,26 @@ namespace BookingApp.View.Tourist
             InitializeComponent();
             InitializeRepositories();
             FillDates();
+            FillVouchers();
+        }
+
+        private void FillVouchers()
+        {
+            var vouchers = _voucherRepository.GetVouchersByTouristId(TouristId);
+
+            cmbVoucher.Items.Clear(); 
+
+            foreach (var voucher in vouchers)
+            {
+                var expiryDate = voucher.ExpiryDate.ToString("dd.MM.yyyy"); 
+                var item = new ComboBoxItem
+                {
+                    Content = $"važi do {expiryDate}", 
+                    Tag = voucher 
+                };
+
+                cmbVoucher.Items.Add(item); 
+            }
         }
 
         private void InitializeRepositories()
@@ -34,6 +57,7 @@ namespace BookingApp.View.Tourist
             _tourInstanceRepository = new TourInstanceRepository();
             _tourReservationRepository = new TourReservationRepository();
             _tourGuestRepository = new TourGuestRepository();
+            _voucherRepository = new VoucherRepository();
         }
 
         private void FillDates()
@@ -91,9 +115,20 @@ namespace BookingApp.View.Tourist
             var guests = GetGuestsFromInputFields();
 
             UpdateTourInstanceCapacity(NumberOfPeople);
+            CheckVoucherUsed();
             SaveTourReservation(guests);
 
             MessageBox.Show("Reservation successful");
+        }
+
+        private void CheckVoucherUsed()
+        {
+            if (cmbVoucher.SelectedItem is ComboBoxItem selectedItem && selectedItem.Tag is Voucher selectedVoucher)
+            {
+                _voucherRepository.Delete(selectedVoucher);
+
+                MessageBox.Show($"Voucher expiring on {selectedVoucher.ExpiryDate:dd.MM.yyyy} has been successfully used and deleted.");
+            }
         }
 
         private bool ConfirmAction(string message, string caption)

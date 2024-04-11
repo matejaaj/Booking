@@ -26,7 +26,8 @@ namespace BookingApp.Application
         { typeof(IDetailedLocationRepository), new DetailedLocationRepository() },
         { typeof(IAccommodationRepository), new AccommodationRepository() },
         { typeof(IAccommodationReservationRepository), new AccommodationReservationRepository() },
-        { typeof(IGuestRatingRepository), new GuestRatingRepository() }
+        { typeof(IGuestRatingRepository), new GuestRatingRepository() },
+        { typeof(IVoucherRepository), new VoucherRepository() }
     };
 
         public static T CreateInstance<T>()
