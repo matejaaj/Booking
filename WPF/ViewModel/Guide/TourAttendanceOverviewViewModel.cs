@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
-using BookingApp.Repository;
 
 namespace BookingApp.WPF.ViewModel.Guide
 {
@@ -11,13 +11,13 @@ namespace BookingApp.WPF.ViewModel.Guide
         public ObservableCollection<TourGuest> NotPresentTourists { get; set; }
         public TourGuest SelectedTourist { get; set; }
 
-        private readonly TourGuestRepository _tourGuestRepository;
+        private readonly TourGuestService _tourGuestService;
         private int _checkpointId;
 
         public TourAttendanceOverviewViewModel(int checkpointId, ObservableCollection<TourGuest> notPresentTourists)
         {
             _checkpointId = checkpointId;
-            _tourGuestRepository = new TourGuestRepository();
+            _tourGuestService = new TourGuestService();
             NotPresentTourists = notPresentTourists;
         }
 
@@ -30,7 +30,7 @@ namespace BookingApp.WPF.ViewModel.Guide
             else
             {
                 SelectedTourist.CheckpointId = _checkpointId;
-                _tourGuestRepository.Update(SelectedTourist);
+                _tourGuestService.Update(SelectedTourist);
                 NotPresentTourists.Remove(SelectedTourist);
             }
         }

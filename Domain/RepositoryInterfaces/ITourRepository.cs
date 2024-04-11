@@ -13,5 +13,6 @@ namespace BookingApp.Domain.RepositoryInterfaces
         Tour Save(Tour tour);
         void Delete(Tour tour);
         Tour Update(Tour tour);
+        int NextId();
     }
 }

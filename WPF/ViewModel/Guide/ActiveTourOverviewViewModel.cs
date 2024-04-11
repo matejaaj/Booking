@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
-using BookingApp.Repository;
 using BookingApp.WPF.View.Guide;
 
 namespace BookingApp.WPF.ViewModel.Guide
@@ -19,26 +19,28 @@ namespace BookingApp.WPF.ViewModel.Guide
         private List<TourGuest> tourGuests;
         private int _tourInstaceId;
 
-        private readonly TourGuestRepository _tourGuestRepository;
-        private readonly TourInstanceRepository _tourInstanceRepository;
-        private readonly CheckpointRepository _checkpointRepository;
+        private readonly TourGuestService _tourGuestService;
+        private readonly TourInstanceService _tourInstanceService;
+        private readonly CheckpointService _checkpointService;
 
-        public ActiveTourOverviewViewModel(int tourId, int tourInstanceId)
+        public ActiveTourOverviewViewModel(
+            int tourId,
+            int tourInstanceId)
         {
             _tourInstaceId = tourInstanceId;
-            _tourGuestRepository = new TourGuestRepository();
-            _tourInstanceRepository = new TourInstanceRepository();
-            _checkpointRepository = new CheckpointRepository();
-            LoadData();
-            InitializeCheckpoints(tourId);
-            InitializeTourGuests();
+            _tourGuestService = new TourGuestService();
+            _tourInstanceService = new TourInstanceService();
+            _checkpointService = new CheckpointService();
+            LoadData(tourId);
             ShowTourAttendanceOverview();
         }
 
-        private void LoadData()
+        private void LoadData(int tourId)
         {
-            allCheckpoints = _checkpointRepository.GetAll();
-            tourGuests = _tourGuestRepository.GetAll();
+            allCheckpoints = _checkpointService.GetAll();
+            tourGuests = _tourGuestService.GetAll();
+            InitializeCheckpoints(tourId);
+            InitializeTourGuests();
         }
 
         private void InitializeCheckpoints(int tourId)
@@ -87,18 +89,18 @@ namespace BookingApp.WPF.ViewModel.Guide
 
                 if (NotVisitedCheckpoints.Count() == 0)
                 {
-                    var finishedTour = _tourInstanceRepository.GetAll().Find(tour => tour.Id == _tourInstaceId);
+                    var finishedTour = _tourInstanceService.GetAll().Find(tour => tour.Id == _tourInstaceId);
                     finishedTour.IsCompleted = true;
-                    _tourInstanceRepository.Update(finishedTour);
+                    _tourInstanceService.Update(finishedTour);
                 }
             }
         }
 
         public void EndTour()
         {
-            var finishedTour = _tourInstanceRepository.GetAll().Find(tour => tour.Id == _tourInstaceId);
+            var finishedTour = _tourInstanceService.GetAll().Find(tour => tour.Id == _tourInstaceId);
             finishedTour.IsCompleted = true;
-            _tourInstanceRepository.Update(finishedTour);
+            _tourInstanceService.Update(finishedTour);
         }
     }
 }

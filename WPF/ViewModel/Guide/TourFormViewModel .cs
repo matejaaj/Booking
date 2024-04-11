@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Repository;
 
@@ -10,12 +11,12 @@ namespace BookingApp.WPF.ViewModel.Guide
 {
     public class TourFormViewModel : INotifyPropertyChanged
     {
-        private readonly TourRepository _tourRepository;
-        private readonly CheckpointRepository _checkpointRepository;
-        private readonly ImageRepository _imageRepository;
-        private readonly LocationRepository _locationRepository;
-        private readonly LanguageRepository _languageRepository;
-        private readonly TourInstanceRepository _tourStartDateRepository;
+        private readonly TourService _tourService;
+        private readonly CheckpointService _checkpointService;
+        private readonly ImageService _imageService;
+        private readonly LocationService _locationService;
+        private readonly LanguageService _languageService;
+        private readonly TourInstanceService _tourInstanceService;
 
         public List<Location> Locations { get; set; }
         public List<Language> Languages { get; set; }
@@ -27,17 +28,17 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         public TourFormViewModel()
         {
-            _tourRepository = new TourRepository();
-            _checkpointRepository = new CheckpointRepository();
-            _imageRepository = new ImageRepository();
-            _locationRepository = new LocationRepository();
-            _languageRepository = new LanguageRepository();
-            _tourStartDateRepository = new TourInstanceRepository();
+            _tourService = new TourService();
+            _checkpointService = new CheckpointService();
+            _imageService = new ImageService();
+            _locationService = new LocationService();
+            _languageService = new LanguageService();
+            _tourInstanceService = new TourInstanceService();
 
-            _tourId = _tourRepository.NextId();
+            _tourId = _tourService.NextId();
 
-            Languages = _languageRepository.GetAll();
-            Locations = _locationRepository.GetAll();
+            Languages = _languageService.GetAll();
+            Locations = _locationService.GetAll();
             Images = new List<Domain.Model.Image>();
             Checkpoints = new List<Checkpoint>();
             TourStartDates = new List<TourInstance>();
@@ -49,7 +50,6 @@ namespace BookingApp.WPF.ViewModel.Guide
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // Properties for data binding
         private string _tourName;
         public string TourName
         {
@@ -150,21 +150,21 @@ namespace BookingApp.WPF.ViewModel.Guide
             if (ValidateFields())
             {
                 Tour newTour = new Tour(_tourName, _description, _selectedLocation.Id, _selectedLanguage.languageId, _capacity, _durationHours);
-                _tourRepository.Save(newTour);
+                _tourService.Save(newTour); 
 
                 foreach (var image in Images)
                 {
-                    _imageRepository.Save(image);
+                    _imageService.Save(image); 
                 }
 
                 foreach (var checkpoint in Checkpoints)
                 {
-                    _checkpointRepository.Save(checkpoint);
+                    _checkpointService.Save(checkpoint);
                 }
 
                 foreach (var startDate in TourStartDates)
                 {
-                    _tourStartDateRepository.Save(startDate);
+                    _tourInstanceService.Save(startDate);
                 }
 
                 MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);

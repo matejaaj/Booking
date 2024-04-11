@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
-using BookingApp.Repository;
 using BookingApp.WPF.View.Guide;
 
 namespace BookingApp.WPF.ViewModel.Guide
@@ -13,15 +13,15 @@ namespace BookingApp.WPF.ViewModel.Guide
         public ObservableCollection<Tour> TodayTours { get; set; }
         public Tour SelectedTour { get; set; }
 
-        private readonly TourRepository _tourRepository;
-        private readonly TourInstanceRepository _tourInstanceRepository;
+        private readonly TourService _tourService;
+        private readonly TourInstanceService _tourInstanceService;
 
         private DateTime todayDate;
 
         public TodayToursOverviewViewModel()
         {
-            _tourRepository = new TourRepository();
-            _tourInstanceRepository = new TourInstanceRepository();
+            _tourService = new TourService();
+            _tourInstanceService = new TourInstanceService();
             TodayTours = new ObservableCollection<Tour>();
             todayDate = DateTime.Now;
 
@@ -30,8 +30,8 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         private void LoadTodayTours()
         {
-            var tours = _tourRepository.GetAll();
-            var tourInstances = _tourInstanceRepository.GetAll();
+            var tours = _tourService.GetAll();
+            var tourInstances = _tourInstanceService.GetAll();
 
             foreach (var tourInstance in tourInstances)
             {
@@ -52,10 +52,10 @@ namespace BookingApp.WPF.ViewModel.Guide
             }
             else
             {
-                var tourInstance = _tourInstanceRepository.GetAll()
-                    .FirstOrDefault(tour => tour.TourId == SelectedTour.Id &&
-                                             tour.StartTime.Date == todayDate.Date &&
-                                             !tour.IsCompleted);
+                var tourInstance = _tourInstanceService.GetAll()
+                    .FirstOrDefault(tourInstance => tourInstance.TourId == SelectedTour.Id &&
+                                                    tourInstance.StartTime.Date == todayDate.Date &&
+                                                    !tourInstance.IsCompleted);
 
                 if (tourInstance != null)
                 {
