@@ -149,9 +149,9 @@ namespace BookingApp.WPF.ViewModel.Driver
     }
     public class ReportItem
     {
-        public string YearMonth { get; set; } // Represents either a year or a month within a year
+        public string YearMonth { get; set; } 
         public int NumberOfRides { get; set; }
-        public double? AverageDuration { get; set; } // Consider the appropriate data type
-        public double AveragePrice { get; set; } // Consider the appropriate data type
+        public double? AverageDuration { get; set; } 
+        public double AveragePrice { get; set; } 
     }
 }

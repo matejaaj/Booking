@@ -279,8 +279,8 @@ namespace BookingApp.WPF.ViewModel.Driver
                 {
                     _vehicleRepository.Delete(vehicleToDelete);
                     MessageBox.Show("Vozilo je uspešno izbrisano.");
-                    UpdateVehicleCount(); // Osvježava prikaz ukupnog broja vozila
-                    TxtVehicleIdInput = ""; // Očisti tekstualno polje nakon brisanja
+                    UpdateVehicleCount(); 
+                    TxtVehicleIdInput = ""; 
                 }
                 else
                 {
