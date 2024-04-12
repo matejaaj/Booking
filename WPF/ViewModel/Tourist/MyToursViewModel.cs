@@ -30,10 +30,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         private void CreateViewModels()
         {
-            var tourReservations = _tourReservationService.GetAllByUserId(_tourist.Id);
-            var tourInstanceIds = tourReservations.Select(reservation => reservation.TourInstanceId).ToList();
-            var tourInstanceViewModels = new ObservableCollection<TourInstanceViewModel>();
-            foreach (var tourInstanceId in tourInstanceIds)
+            foreach (var tourInstanceId in GetTourInstanceIds())
             {
                 var tourInstance = _tourInstanceService.GetById(tourInstanceId);
                 var tour = _tourService.GetById(tourInstance.TourId);
@@ -42,6 +39,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
                 var viewModel = new TourInstanceViewModel
                 { 
+                    IsFinished = tourInstance.IsCompleted,
                     Guests = tourGuests,
                     Date = tourInstance.StartTime,
                     Name = tour.Name,
@@ -51,6 +49,13 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
                 Tours.Add(viewModel);
             }
+        }
+
+        private List<int> GetTourInstanceIds()
+        {
+            var tourReservations = _tourReservationService.GetAllByUserId(_tourist.Id);
+            var tourInstanceIds = tourReservations.Select(reservation => reservation.TourInstanceId).ToList();
+            return tourInstanceIds;
         }
 
         private void InitializeServices()
