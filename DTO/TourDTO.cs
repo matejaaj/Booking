@@ -1,4 +1,5 @@
-﻿using BookingApp.Domain.Model;
+﻿using BookingApp.Application.UseCases;
+using BookingApp.Domain.Model;
 using Syncfusion.UI.Xaml.Grid;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,10 @@ namespace BookingApp.DTO
 {
     public class TourDTO : INotifyPropertyChanged
     {
-        private int id { get; set; }
+        private readonly LocationService _locationService;
+        private readonly LanguageService _languageService;
+
+        public int Id { get; set; }
         private string name { get; set; }
         public string Name
         {
@@ -139,7 +143,10 @@ namespace BookingApp.DTO
 
         public TourDTO(Tour tour)
         {
-            id = tour.Id;
+            _locationService = new LocationService();
+            _languageService = new LanguageService();
+
+            Id = tour.Id;
             Name = tour.Name;
             Description = tour.Description;
             LocationId = tour.LocationId;
@@ -147,9 +154,11 @@ namespace BookingApp.DTO
             MaximumCapacity = tour.MaximumCapacity;
             DurationHours = tour.DurationHours;
 
-            Language = "not set";
-            Location = "not set";
+            Language language = _languageService.GetById(LanguageId);
+            Location location = _locationService.GetLocationById(LocationId);
 
+            Language = language.Name;
+            Location = location.City + " " + location.Country;
         }
 
         public Tour ToTour()

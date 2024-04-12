@@ -46,10 +46,10 @@
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button>
+            <Button Click="btnShowAllTours_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../Resources/Images/edit.png" Width="20" Height="25"/>
-                    <TextBlock Text="Update" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="All Tours" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>

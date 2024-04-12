@@ -35,6 +35,11 @@ namespace BookingApp.WPF.View.Guide
         {
             viewModel.ShowTodayTours();
         }
+
+        private void btnShowAllTours_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.ShowAllTours();
+        }
     }
 }
 
