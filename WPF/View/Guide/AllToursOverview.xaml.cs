@@ -18,7 +18,9 @@ namespace BookingApp.WPF.View.Guide
 
         private void btnCancelTour_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.CancelTour();
+            CancelTour cancelTourWindow = new CancelTour(_viewModel.SelectedTour.Id);
+            cancelTourWindow.Owner = this;
+            cancelTourWindow.Show();
         }
     }
 }

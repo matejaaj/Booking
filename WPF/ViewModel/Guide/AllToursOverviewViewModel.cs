@@ -74,10 +74,5 @@ namespace BookingApp.WPF.ViewModel.Guide
                 AllTours.Add(tourDTO);
             }
         }
-
-        public void CancelTour()
-        {
-            // dodaj
-        }
     }
 }
