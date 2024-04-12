@@ -1,0 +1,31 @@
+﻿<Window x:Class="BookingApp.WPF.View.Guest.RequestModification"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApp.WPF.View.Guest"
+        mc:Ignorable="d"
+        Title="RequestModification" Height="300" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="New Start Date:" Grid.Row="0" Margin="5"/>
+        <DatePicker x:Name="StartDatePicker" Grid.Row="1" Margin="5"/>
+
+        <Label Content="New End Date:" Grid.Row="2" Margin="5"/>
+        <DatePicker x:Name="EndDatePicker" Grid.Row="3" Margin="5"/>
+
+        <TextBlock x:Name="StatusTextBlock" Grid.Row="4" Margin="5"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5" Margin="5">
+            <Button Content="Send Request" Click="SendRequestButton_Click" Margin="5"/>
+            <Button Content="Cancel" Click="CancelButton_Click" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

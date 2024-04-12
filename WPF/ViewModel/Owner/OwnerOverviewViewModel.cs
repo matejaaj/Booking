@@ -74,7 +74,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         private List<AccommodationAndOwnerRating> GetRatings() {
             var accommodationIds = Accommodations.Select(a => a.AccommodationId).ToList();
             var accommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
-            var accommodationReservationsIds = accommodationReservations.Select(a => a.ReservationId).ToList();
+            var accommodationReservationsIds = accommodationReservations.Select(a => a.Id).ToList();
             return _accommodationAndOwnerRatingService.GetByReservationIds(accommodationReservationsIds);
         }
 
