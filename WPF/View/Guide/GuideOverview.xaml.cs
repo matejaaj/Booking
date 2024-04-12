@@ -40,6 +40,11 @@ namespace BookingApp.WPF.View.Guide
         {
             viewModel.ShowAllTours();
         }
+
+        private void btnStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.ShowStatistics();
+        }
     }
 }
 
