@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 public enum ImageResourceType
 {
-    ACCOMMODATION, TOUR, VEHICLE
+    ACCOMMODATION, TOUR, VEHICLE, TOUR_REVIEW
 }
 
 
