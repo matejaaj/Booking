@@ -28,5 +28,11 @@ namespace BookingApp.WPF.ViewModel.Guide
             AllToursOverview allToursOverview = new AllToursOverview();
             allToursOverview.ShowDialog();
         }
+
+        public void ShowStatistics()
+        {
+            Statistics statisticsWindow = new Statistics();
+            statisticsWindow.ShowDialog();
+        }
     }
 }

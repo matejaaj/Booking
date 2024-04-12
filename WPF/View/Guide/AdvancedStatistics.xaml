@@ -1,0 +1,39 @@
+﻿<Window x:Class="BookingApp.WPF.View.Guide.AdvancedStatistics"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
+        xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        mc:Ignorable="d"
+        Title="AdvancedStatistics" Height="450" Width="400">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Number of tourists under 18 years:" />
+                <TextBlock Text="{Binding TouristsUnder18}" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Number of tourists between 18 and 50 years:" />
+                <TextBlock Text="{Binding TouristsBetween18And50}" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Number of tourists over 50 years:" />
+                <TextBlock Text="{Binding TouristsOver50}" Margin="5,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <charting:Chart x:Name="PieChartTouristAgeGroups" Grid.Row="1">
+            <charting:PieSeries
+            Title="Age Groups"
+            ItemsSource="{Binding AgeGroups}"
+            IndependentValuePath="Key"
+            DependentValuePath="Value" />
+        </charting:Chart>
+    </Grid>
+</Window>
