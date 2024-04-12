@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.DTO;
@@ -103,14 +104,7 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         private int CalculateTotalTouristsForInstance(TourInstance instance)
         {
-            return _tourReservations
-                .Where(reservation => reservation.TourInstanceId == instance.Id)
-                .Sum(reservation => CountGuestsForReservation(reservation));
-        }
-
-        private int CountGuestsForReservation(TourReservation reservation)
-        {
-            return _tourGuests.Count(guest => guest.TourReservationId == reservation.Id);
+            return _tourGuests.Count(guest => guest.TourReservationId == instance.Id);
         }
 
     }
