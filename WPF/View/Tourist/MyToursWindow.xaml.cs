@@ -19,9 +19,12 @@ namespace BookingApp.WPF.View.Tourist
 {
     public partial class MyToursWindow : Window
     {
+        public User User { get; set; }
+
         public MyToursWindow(User user)
         {
             InitializeComponent();
+            User = user;
             MyToursViewModel viewModel = new MyToursViewModel(user);
             DataContext = viewModel;
         }
@@ -42,6 +45,17 @@ namespace BookingApp.WPF.View.Tourist
         {
             var button = sender as Button;
             var tour = button.Tag as TourInstanceViewModel;
+            if (tour != null)
+            {
+                if (!tour.IsFinished)
+                {
+                    MessageBox.Show("Tura nije gotova i dalje");
+                    return;
+                }
+
+                var reviewWindow = new ReviewTourWindow(tour, User.Id);
+                reviewWindow.Show();
+            }
             
         }
     }
