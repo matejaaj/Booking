@@ -45,6 +45,6 @@
         </ListView>
 
         <Button Grid.Row="4" Width="150" Content="Cancel Tour" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Click="btnCancelTour_Click"/>
-
+        <Button Grid.Row="4" Width="150" Content="Advanced Statistics" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Click="btnAdvancedStatistics_Click"/>
     </Grid>
 </Window>

@@ -22,5 +22,12 @@ namespace BookingApp.WPF.View.Guide
             cancelTourWindow.Owner = this;
             cancelTourWindow.Show();
         }
+
+        private void btnAdvancedStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            AdvancedStatistics advancedStatisticsWindow = new AdvancedStatistics(_viewModel.SelectedTour);
+            advancedStatisticsWindow.Owner = this;
+            advancedStatisticsWindow.Show();
+        }
     }
 }
