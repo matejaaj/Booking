@@ -51,7 +51,7 @@ namespace BookingApp.WPF.View.Guest
             int ownersCorrectness = (int)OwnersCorrectnessSlider.Value;
             string comment = CommentsTextBox.Text;
 
-            AccommodationAndOwnerRating newAccommodationAndOwnerRating = new AccommodationAndOwnerRating(_reservationRepository.ReservationId, cleanliness, ownersCorrectness, comment);
+            AccommodationAndOwnerRating newAccommodationAndOwnerRating = new AccommodationAndOwnerRating(_reservationRepository.Id, cleanliness, ownersCorrectness, comment);
             _accommodationAndOwnerRatingRepository.Save(newAccommodationAndOwnerRating);
             _reservationRepository.IsAccommodationAndOwnerRated = true;
             _accommodationReservationRepository.Update(_reservationRepository);

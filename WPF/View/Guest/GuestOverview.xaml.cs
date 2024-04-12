@@ -9,11 +9,14 @@ using System.Windows;
 using System.Windows.Controls;
 using Syncfusion.Windows.Shared;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 
 namespace BookingApp.WPF.View.Guest
 {
     public partial class GuestOverview : Window, INotifyPropertyChanged
     {
+        private AccommodationReservationRepository _accommodationReservationRepository = new AccommodationReservationRepository();
+        private ReservationModificationRequestRepository _reservationModificationRequestRepository = new ReservationModificationRequestRepository();
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public List<Location> locations { get; set; }
         public string SelectedLocation { get; set; }
@@ -35,7 +38,31 @@ namespace BookingApp.WPF.View.Guest
             ToggleTypeCommand = new DelegateCommand<string>(ToggleType);
             GuestsTextBox.Text = "0";
             DaysTextBox.Text = "0";
+
+            CheckReservationModificationRequests();
         }
+
+        private void CheckReservationModificationRequests()
+        {
+            // Dobavljanje svih rezervacija korisnika koji je trenutno prijavljen
+            var userReservations = _accommodationReservationRepository.GetByUser(LoggedInGuest);
+
+            // Iteracija kroz sve rezervacije korisnika
+            foreach (var reservation in userReservations)
+            {
+                // Dobavljanje zahteva za modifikaciju rezervacije za trenutnu rezervaciju
+                var modificationRequest = _reservationModificationRequestRepository.GetByReservationId(reservation.Id);
+
+                // Provera da li postoji zahtev za modifikaciju i da li je status promenjen
+                if (modificationRequest != null && modificationRequest.Status != ReservationModificationRequest.RequestStatus.PENDING)
+                {
+                    // Kreiranje notifikacije o promeni statusa rezervacije
+                    string message = $"Status of your reservation has been changed!.";
+                    MessageBox.Show(message, "Reservation Status Change", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+        }
+
         private void TypeToggleButton_Click(object sender, RoutedEventArgs e)
         {
             TypePopup.IsOpen = true;
@@ -113,12 +140,5 @@ namespace BookingApp.WPF.View.Guest
             reservationsWindow.Show();
         }
 
-/*        private List<AccommodationReservation> GetAllReservationsForGuest(User loggedInGuest)
-        {
-            AccommodationReservationRepository _accommodationReservationRepository = new AccommodationReservationRepository();
-            List<AccommodationReservation> accommodationReservations = _accommodationReservationRepository.GetByUser(loggedInGuest);
-
-
-        }*/
     }
 }

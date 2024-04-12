@@ -10,7 +10,7 @@ namespace BookingApp.Domain.Model
 {
     public class AccommodationReservation : ISerializable
     {
-        public int ReservationId { get; set; }
+        public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Days { get; set; }
@@ -36,13 +36,13 @@ namespace BookingApp.Domain.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { ReservationId.ToString(), StartDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"), Days.ToString(), GuestNumber.ToString(), AccommodationId.ToString(), GuestId.ToString(), IsRated.ToString(), IsAccommodationAndOwnerRated.ToString() };
+            string[] csvValues = { Id.ToString(), StartDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"), Days.ToString(), GuestNumber.ToString(), AccommodationId.ToString(), GuestId.ToString(), IsRated.ToString(), IsAccommodationAndOwnerRated.ToString() };
             return csvValues;
         }
 
         public void FromCSV(string[] values)
         {
-            ReservationId = Convert.ToInt32(values[0]);
+            Id = Convert.ToInt32(values[0]);
             DateTime startDate;
             if (DateTime.TryParseExact(values[1], "dd.MM.yyyy", null, System.Globalization.DateTimeStyles.None, out startDate))
             {
