@@ -1,5 +1,6 @@
 ﻿using BookingApp.Domain.Model;
 using BookingApp.Domain.Model.BookingApp.Domain.Model;
+using BookingApp.DTO;
 using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace BookingApp.View.Tourist
     public partial class TourReservationForm : Window
     {
         public int TouristId { get; set; }
-        public Tour SelectedTour { get; private set; }
+        public TourDTO SelectedTour { get; private set; }
         public int NumberOfPeople { get; set; }
 
         public TourInstance SelectedTourInstance { get; private set; }
@@ -22,7 +23,7 @@ namespace BookingApp.View.Tourist
 
         public VoucherRepository _voucherRepository { get; set; }
 
-        public TourReservationForm(Tour selectedTour, User loggedUser)
+        public TourReservationForm(TourDTO selectedTour, User loggedUser)
         {
             TouristId = loggedUser.Id;
             SelectedTour = selectedTour;

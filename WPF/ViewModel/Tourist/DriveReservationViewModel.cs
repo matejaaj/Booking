@@ -72,7 +72,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
             if (isFastDrive)
             {
-                DriveReservation reservation = new DriveReservation(start.Id, end.Id, departure, -1, Tourist.Id, 12, 0, 0);
+                DriveReservation reservation = new DriveReservation(start.Id, end.Id, departure, 0, Tourist.Id, 12, 0, 0);
                 _driveReservationService.Save(reservation);
             } else
             { 

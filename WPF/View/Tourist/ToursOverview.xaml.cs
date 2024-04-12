@@ -55,8 +55,6 @@ namespace BookingApp.View.Tourist
             foreach (Tour tour in _tourRepository.GetAll())
             {
                 TourDTO dto = new TourDTO(tour);
-                dto.Location = _locationRepository.GetLocationById(tour.LocationId).ToString();
-                dto.Language = _languageRepository.GetById(tour.LanguageId).ToString();
                 Tours.Add(dto);
             }
         }
@@ -70,7 +68,7 @@ namespace BookingApp.View.Tourist
             }
             else
             {
-                TourReservationForm tourReservationWindow = new TourReservationForm(SelectedTour.ToTour(), LoggedInUser);
+                TourReservationForm tourReservationWindow = new TourReservationForm(SelectedTour, LoggedInUser);
                 tourReservationWindow.Show();
             }
         }
