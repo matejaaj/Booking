@@ -98,7 +98,7 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         private bool ShouldIncludeInstance(TourInstance instance)
         {
-            return SelectedYear.Equals("All time") || instance.StartTime.Year.ToString().Equals(SelectedYear);
+            return (SelectedYear.Equals("All time") || instance.StartTime.Year.ToString().Equals(SelectedYear)) && instance.IsCompleted;
         }
 
         private int CalculateTotalTouristsForInstance(TourInstance instance)
