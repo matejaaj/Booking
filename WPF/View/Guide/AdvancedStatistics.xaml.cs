@@ -15,7 +15,7 @@ namespace BookingApp.WPF.View.Guide
         public AdvancedStatistics(TourDTO tourDTO)
         {
             InitializeComponent();
-            _viewModel = new AdvancedStatisticsViewModel(tourDTO.ToTour());
+            _viewModel = new AdvancedStatisticsViewModel(tourDTO);
             DataContext = _viewModel;
         }
     }
