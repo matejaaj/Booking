@@ -38,16 +38,15 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 var tourInstance = _tourInstanceService.GetById(tourInstanceId);
                 var tour = _tourService.GetById(tourInstance.TourId);
                 var checkpoints = _checkPointService.GetAllByTourId(tour.Id);
-                var tourGuests = _tourGuestService.GetAllByTouristForTourInstance(_tourist.Id, tourInstance.Id)
-                    .Select(guest => guest.Name)
-                    .ToList();
+                var tourGuests = _tourGuestService.GetAllByTouristForTourInstance(_tourist.Id, tourInstance.Id).ToList();
 
                 var viewModel = new TourInstanceViewModel
-                {
+                { 
                     Guests = tourGuests,
                     Date = tourInstance.StartTime,
                     Name = tour.Name,
-                    CheckpointNames = checkpoints.Select(cp => cp.Name).ToList() 
+                    CheckpointNames = checkpoints.Select(cp => cp.Name).ToList(),
+                    CurrentCheckpoint = tourInstance.CurrentCheckpoint,
                 };
 
                 Tours.Add(viewModel);

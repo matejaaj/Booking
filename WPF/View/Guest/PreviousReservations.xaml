@@ -10,12 +10,29 @@
         <ListBox x:Name="ReservationsListBox">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding AccommodationId}"/>
-                        <TextBlock Text="{Binding StartDate, StringFormat='Check-in: {0:dd.MM.yyyy}'}"/>
-                        <TextBlock Text="{Binding EndDate, StringFormat='Check-out: {0:dd.MM.yyyy}'}" />
-                        <Button Content="Rate" Click="RateButton_Click" Tag="{Binding}"></Button>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                            <TextBlock Text="{Binding AccommodationName}" Margin="0 0 0 5"/>
+                            <TextBlock Text="{Binding StartDate, StringFormat='Check-in: {0:dd.MM.yyyy}'}" Margin="0 0 0 5"/>
+                            <TextBlock Text="{Binding EndDate, StringFormat='Check-out: {0:dd.MM.yyyy}'}" Margin="0 0 0 5"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical" HorizontalAlignment="Center" Margin="0 0 100 0">
+                            <TextBlock Text="{Binding RequestStatusMessage}" HorizontalAlignment="Right" Margin="0 0 15 0"/>
+                            <TextBlock Text="{Binding OwnerComment}" HorizontalAlignment="Right" Margin="0 0 5 0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Grid.RowSpan="2" Orientation="Vertical" HorizontalAlignment="Right" Margin="530 0 0 0">
+                            <Button Content="Rate" Click="RateButton_Click" Tag="{Binding}" Margin="0 5 0 0"/>
+                            <Button Content="Request Modification" Click="RequestModificationButton_Click" Tag="{Binding}" Margin="0 5 0 0"/>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

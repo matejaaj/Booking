@@ -59,7 +59,7 @@ namespace BookingApp.WPF.ViewModel.Owner
                 if (a.IsRated && a.IsAccommodationAndOwnerRated)
                 {
                     var guest = _userService.GetById(a.GuestId);
-                    var rating = _accommodationAndOwnerRatingService.GetByReservationId(a.ReservationId);
+                    var rating = _accommodationAndOwnerRatingService.GetByReservationId(a.Id);
                     var accommodation = _accommodationService.GetById(a.AccommodationId);
                     var RatingDTO = new AccommodationRatingDTO(LoggedInOwner, guest, rating, accommodation);
                     Ratings.Add(RatingDTO);

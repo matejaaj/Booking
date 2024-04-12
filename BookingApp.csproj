@@ -45,4 +45,8 @@
     <Resource Include="Resources\Images\trophy.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="WPF\ViewModel\Guest\" />
+  </ItemGroup>
+
 </Project>

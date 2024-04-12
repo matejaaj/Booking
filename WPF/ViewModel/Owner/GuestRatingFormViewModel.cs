@@ -77,7 +77,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         {
             if (IsValid())
             {
-                GuestRating newGuestRating = new GuestRating(_reservation.ReservationId, Cleanliness, RulesRespect, Comment);
+                GuestRating newGuestRating = new GuestRating(_reservation.Id, Cleanliness, RulesRespect, Comment);
                 _guestRatingService.Save(newGuestRating);
                 _reservation.IsRated = true;
                 _accommodationReservationService.Update(_reservation);
