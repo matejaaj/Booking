@@ -58,7 +58,7 @@ namespace BookingApp.WPF.View.Driver
         {
             if (!string.IsNullOrEmpty(Source))
             {
-                Domain.Model.Image newImage = new BookingApp.Domain.Model.Image(_source, _vehicleId, _type);
+                Domain.Model.Image newImage = new BookingApp.Domain.Model.Image(_source, _vehicleId, _type, -1);
                 _images.Add(newImage);
                 MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
             }

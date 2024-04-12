@@ -95,7 +95,20 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+        private bool isFinished;
 
+        public bool IsFinished
+        {
+            get => isFinished;
+            set
+            {
+                if(isFinished != value)
+                {
+                    isFinished = value;
+                    OnPropertyChanged(nameof(IsFinished));
+                }
+            }
+        }
 
         public TourInstanceViewModel()
         {
