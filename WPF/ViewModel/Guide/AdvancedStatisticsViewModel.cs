@@ -98,8 +98,6 @@ namespace BookingApp.WPF.ViewModel.Guide
             TouristsUnder18 = CountGuestsByAge(relevantGuests, age => age < 18);
             TouristsBetween18And50 = CountGuestsByAge(relevantGuests, age => age >= 18 && age < 50);
             TouristsOver50 = CountGuestsByAge(relevantGuests, age => age >= 50);
-
-            MessageBox.Show(relevantGuests.Count().ToString() + " " + TouristsUnder18 + " " + TouristsBetween18And50 + " " + TouristsOver50);
         }
 
         private List<TourGuest> GetGuestsForTour(TourDTO tour)
@@ -110,7 +108,6 @@ namespace BookingApp.WPF.ViewModel.Guide
             {
                 if(instance.TourId == tour.Id && instance.IsCompleted)
                 {
-                    MessageBox.Show("Nasao je instancu");
                     foreach (var guest in _tourGuests)
                     {
                         if (guest.TourReservationId == instance.Id)
