@@ -102,24 +102,16 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         private List<TourGuest> GetGuestsForTour(TourDTO tour)
         {
-            List<TourGuest> guestsForTour = new List<TourGuest>();
+            var completedTourInstances = _tourInstances
+                .Where(instance => instance.TourId == tour.Id && instance.IsCompleted)
+                .Select(instance => instance.Id);
 
-            foreach (var instance in _tourInstances)
-            {
-                if(instance.TourId == tour.Id && instance.IsCompleted)
-                {
-                    foreach (var guest in _tourGuests)
-                    {
-                        if (guest.TourReservationId == instance.Id)
-                        {
-                            guestsForTour.Add(guest);
-                        }
-                    }
-                }
-            }
+            var guestsForTour = _tourGuests
+                .Where(guest => completedTourInstances.Contains(guest.TourReservationId))
+                .ToList();
+
             return guestsForTour;
         }
-
 
         private int CountGuestsByAge(IEnumerable<TourGuest> guests, Func<int, bool> agePredicate)
         {

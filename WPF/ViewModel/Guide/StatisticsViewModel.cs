@@ -16,12 +16,10 @@ namespace BookingApp.WPF.ViewModel.Guide
         private readonly List<Tour> _tours;
         private readonly List<TourInstance> _tourInstances;
         private readonly List<TourGuest> _tourGuests;
-        private readonly List<TourReservation> _tourReservations;
 
         private readonly TourInstanceService _tourInstanceService;
         private readonly TourService _tourService;
         private readonly TourGuestService _tourGuestService;
-        private readonly TourReservationService _tourReservationService;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -50,12 +48,10 @@ namespace BookingApp.WPF.ViewModel.Guide
             _tourGuestService = new TourGuestService();
             _tourService = new TourService();
             _tourInstanceService = new TourInstanceService();
-            _tourReservationService = new TourReservationService();
 
             _tours = _tourService.GetAll();
             _tourInstances = _tourInstanceService.GetAll();
             _tourGuests = _tourGuestService.GetAll();
-            _tourReservations = _tourReservationService.GetAll();
 
             Years = new List<object>();
             Years.Add("All time");
