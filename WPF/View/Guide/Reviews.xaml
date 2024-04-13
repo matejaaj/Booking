@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
-        Title="Reviews" Height="450" Width="800">
+        Title="Reviews" Height="450" Width="600">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <DataGrid ItemsSource="{Binding Reviews}"
+          SelectedItem="{Binding SelectedReview}"
+          IsReadOnly="True" SelectionMode="Single" 
+          AutoGenerateColumns="False" Height="200" HeadersVisibility="Column" FontSize="13" Width="600">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                    <DataGridTextColumn Header="Tour Guest" Binding="{Binding TourGuest}" Width="*"/>
+                    <DataGridTextColumn Header="Joind at" Binding="{Binding Checkpoint}" Width="*"/>
+                    <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="5">
+            <TextBlock Text="Review commnet:" FontWeight="Bold"/>
+            <TextBlock Text="{Binding SelectedReview.Comment}" TextWrapping="Wrap" Margin="5"/>
+        </StackPanel>
+
+        <Button Grid.Row="3" Width="150" Content="Report review" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Click="btnReportReview_Click"/>
     </Grid>
 </Window>

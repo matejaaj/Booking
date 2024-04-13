@@ -1,6 +1,7 @@
 ﻿using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.DTO;
+using BookingApp.WPF.View.Guide;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,7 +33,8 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         public void ShowReviews()
         {
-
+            Reviews reviewsWindow = new Reviews(SelectedInstance);
+            reviewsWindow.Show();
         }
     }
 }

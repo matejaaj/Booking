@@ -171,7 +171,7 @@ namespace BookingApp.DTO
             }
         }
 
-        public TourReview TourReview(TourReviewDTO reviewDTO)
+        public TourReview ToTourReview()
         {
             return new TourReview(Id, TouristId, TourGuestId, Rating, Comment, IsValid);
         }
