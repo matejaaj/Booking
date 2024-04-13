@@ -109,23 +109,21 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void ViewDrive_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedReservation != null)
+            if (!ValidateInput(() => SelectedReservation.DriveReservationStatusId == 2, "You can't delay reservation if it's not confirmed!"))
             {
-                if (SelectedReservation.DriveReservationStatusId != 2)
+                return;
+            }
+
+            ViewDrive vForm = new()
+            {
+                VM = 
                 {
-                    MessageBox.Show("You can't delay resevation if it's not confirmed!");
-                    return;
+                    reservation = SelectedReservation,
+                    Repo = _repository
                 }
-                ViewDrive vForm = new ViewDrive();
-                vForm.VM.reservation = SelectedReservation;
-                vForm.VM.ReservationConfirmed += DataGrid_Refresh;
-                vForm.VM.Repo = _repository;
-                vForm.Show();
-            }
-            else
-            {
-                MessageBox.Show("You haven't selected any route!");
-            }
+            };
+            vForm.VM.ReservationConfirmed += DataGrid_Refresh;
+            vForm.Show();
         }
 
         public void VehicleForm_VehicleAdded(object? sender, EventArgs e)
@@ -172,45 +170,47 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void ViewDrive_Respond(object? sender, EventArgs e)
         {
-            if (SelectedReservation != null)
+            if (!ValidateInput(() => SelectedReservation.DriveReservationStatusId == 1, "You can't confirm this one!"))
             {
-                if (SelectedReservation.DriveReservationStatusId == 1)
-                {
-                    RespondView rvForm = new RespondView(SelectedReservation, _repository);
-                    rvForm.VM.ReservationConfirmed += DataGrid_Refresh;
-                    rvForm.Show();
-                }
-                else
-                {
-                    MessageBox.Show("You can't confirm this one!");
-                }
+                return;
             }
-            else
+
+            RespondView rvForm = new RespondView(SelectedReservation, _repository);
+            rvForm.VM.ReservationConfirmed += DataGrid_Refresh;
+            rvForm.Show();
+        }
+
+        private bool ValidateInputForResponse()
+        {
+            if (SelectedReservation == null)
             {
                 MessageBox.Show("You haven't selected any reservation!");
+                return false;
             }
+
+            if (SelectedReservation.DriveReservationStatusId != 1)
+            {
+                MessageBox.Show("You can't confirm this one!");
+                return false;
+            }
+
+            return true;
         }
+
 
         public void ViewDrive_Cancel(object? sender, EventArgs e)
         {
-            if (SelectedReservation != null)
+            if (!ValidateInput(() => canCancel, "Still can't cancel!"))
             {
-                if (canCancel)
-                {
-                    SelectedReservation.DriveReservationStatusId = 8;
-                    _repository.Update(SelectedReservation);
-                    cancelTime.Stop();
-                    sec = 0;
-                    secTourist = 0;
-                    UpdateReservationList();
-                }
-                else
-                    MessageBox.Show("Still can't cancel!");
+                return;
             }
-            else
-            {
-                MessageBox.Show("You haven't selected any reservation!");
-            }
+            SelectedReservation.DriveReservationStatusId = 8;
+            _repository.Update(SelectedReservation);
+            cancelTime.Stop();
+            sec = 0;
+            secTourist = 0;
+            UpdateReservationList();
+                
         }
 
         public void CancelTime_Tick(object? sender, EventArgs e)
@@ -222,74 +222,71 @@ namespace BookingApp.WPF.ViewModel.Driver
             else
             {
                 secTourist++;
-                if (ConfirmedReservation.DelayMinutesTourist * 10 == secTourist)
-                {
-                    MessageBox.Show("Client hasn't showed up!");
-                    canCancel = true;
-                    ConfirmedReservation.DelayMinutesTourist = -1;
-                }
             }
 
-            if (sec == 10)
+            bool isClientNoShow = (ConfirmedReservation.DelayMinutesTourist == 0 && sec == 10) ||
+                                  (ConfirmedReservation.DelayMinutesTourist != 0 && ConfirmedReservation.DelayMinutesTourist * 10 == secTourist);
+
+            if (isClientNoShow)
             {
                 MessageBox.Show("Client hasn't showed up!");
                 canCancel = true;
+                ConfirmedReservation.DelayMinutesTourist = -1;
             }
         }
 
+
         public void FastDriveTimer_Tick(object? sender, EventArgs e)
         {
-            if(ConfirmedReservation != null)
+            if (ConfirmedReservation != null)
             {
                 return;
             }
-            ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(_repository.GetAll());
-            List<int> driversAtLocation;
-            foreach(DriveReservation dr in _reservations)
+
+            var fastReservations = _repository.GetAll()
+                .Where(dr => dr.DriveReservationStatusId == 12 &&
+                             _vehicleRepository.GetDriverIdsByLocationId(dr.PickupLocationId).Contains(DriverId))
+                .ToList();
+
+            if (!fastReservations.Any())
             {
-                if(dr.DriveReservationStatusId == 12)
+                return;
+            }
+
+            fastDriveTimer.Stop();
+            foreach (var dr in fastReservations)
+            {
+                MessageBoxResult result = MessageBox.Show($"Nova brza rezervacija je dostupna!\n{dr.DepartureTime}\nDa li je prihvatate?",
+                                                          "Brza voznja", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
                 {
-                    driversAtLocation = _vehicleRepository.GetDriverIdsByLocationId(dr.PickupLocationId);
-                    if (!driversAtLocation.Contains(DriverId)) return;
-                    fastDriveTimer.Stop();
-                    MessageBoxResult result = MessageBox.Show("Nova brza rezervacija je dostupna!\n" + dr.DepartureTime + "\nDa li je prihvatate?", "Brza voznja", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if(result == MessageBoxResult.Yes)
-                    {
-                        DriveReservations.Clear();
-                        dr.DriveReservationStatusId = 2;
-                        dr.DriverId = DriverId;
-                        _repository.Update(dr);
-                        UpdateReservationList();
-                        return;
-                    }
-                    else
-                    {
-                        fastDriveTimer.Start();
-                    }
+                    HandleFastReservationAcceptance(dr);
+                    return; 
                 }
             }
+            fastDriveTimer.Start();
         }
+
+        private void HandleFastReservationAcceptance(DriveReservation reservation)
+        {
+            DriveReservations.Clear();
+            reservation.DriveReservationStatusId = 2;
+            reservation.DriverId = DriverId;
+            _repository.Update(reservation);
+            UpdateReservationList();
+        }
+
         public void btnDeleteVehicle_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(TxtVehicleIdInput, out int vehicleId))
+            int.TryParse(TxtVehicleIdInput, out int vehicleId);
+            var allVehicles = _vehicleRepository.GetAll();
+            var vehicleToDelete = allVehicles.FirstOrDefault(v => v.VehicleId == vehicleId);
+            if (vehicleToDelete != null)
             {
-                var allVehicles = _vehicleRepository.GetAll();
-                var vehicleToDelete = allVehicles.FirstOrDefault(v => v.VehicleId == vehicleId);
-                if (vehicleToDelete != null)
-                {
-                    _vehicleRepository.Delete(vehicleToDelete);
-                    MessageBox.Show("Vozilo je uspešno izbrisano.");
-                    UpdateVehicleCount(); 
-                    TxtVehicleIdInput = ""; 
-                }
-                else
-                {
-                    MessageBox.Show("Vozilo sa unetim ID-om nije pronađeno.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Unesite validan ID vozila.");
+                _vehicleRepository.Delete(vehicleToDelete);
+                MessageBox.Show("Vozilo je uspešno izbrisano.");
+                UpdateVehicleCount(); 
+                TxtVehicleIdInput = ""; 
             }
         }
         public void txtVehicleIdInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -299,30 +296,40 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void btnDrive_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedReservation == null)
+            if (ValidateInput(() => SelectedReservation.DriveReservationStatusId != 2 
+                                    || SelectedReservation.DelayMinutesDriver != -1,
+                              "You don't have any confirmed reservation or you aren't at location!"))
             {
-                MessageBox.Show("You have to select ride!");
                 return;
             }
-            if (SelectedReservation.DriveReservationStatusId != 2)
-            {
-                MessageBox.Show("Yoy don't have any confirmed reservations!");
-                return;
-            }
-            if (SelectedReservation.DelayMinutesDriver != -1)
-            {
-                MessageBox.Show("You aren't at location!");
-                return;
-            }
+
             DriveOverview dForm = new DriveOverview(_repository);
             dForm.VM.Reservation = SelectedReservation;
             dForm.VM.Finished += VehicleForm_VehicleAdded;
             dForm.Show();
         }
+
         public void btnStats_Click(object sender, RoutedEventArgs e)
         {
             Stats sForm = new Stats(DriverId, _repository);
             sForm.Show();
+        }
+
+        private bool ValidateInput(Func<bool> condition, string errorMessage)
+        {
+            if (SelectedReservation == null)
+            {
+                MessageBox.Show("You haven't selected any reservation!");
+                return false;
+            }
+
+            if (!condition())
+            {
+                MessageBox.Show(errorMessage);
+                return false;
+            }
+
+            return true;
         }
     }
 }

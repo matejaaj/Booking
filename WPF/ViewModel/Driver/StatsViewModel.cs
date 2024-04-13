@@ -54,7 +54,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             ListReport = new ObservableCollection<ReportItem>();
         }
 
-        private void initList(TripRepository tripRepository, DriveReservationService driveReservationRepository, bool yearly, int yearSelected = 2024)
+        private void initList(bool yearly, int yearSelected = 2024)
         {
             var tripsDriver = tripRepository.GetAll()
                 .Where(t => driveReservationRepository.GetByDriver(driverId).Select(d => d.Id).Contains(t.DriveReservationId)
@@ -62,22 +62,17 @@ namespace BookingApp.WPF.ViewModel.Driver
                 .ToList();
             Reports.Clear();
             ListReport.Clear();
-            if (yearly)
+
+            IEnumerable<ReportItem> reports = yearly ? new[] { GenerateYearlyReport(tripsDriver, yearSelected) } : GenerateMonthlyReports(tripsDriver, yearSelected);
+
+            foreach (var report in reports)
             {
-                var yearReport = GenerateYearlyReport(tripsDriver, yearSelected);
-                Reports.Add(yearReport);
-                ListReport.Add(yearReport);
-            }
-            else
-            {
-                var monthlyReports = GenerateMonthlyReports(tripsDriver, yearSelected);
-                foreach (var report in monthlyReports)
-                {
-                    Reports.Add(report);
-                    ListReport.Add(report);
-                }
+                Reports.Add(report);
+                ListReport.Add(report);
             }
         }
+
+
 
         public ReportItem GenerateYearlyReport(List<Trip> tripsDriver, int year)
         {
@@ -105,19 +100,17 @@ namespace BookingApp.WPF.ViewModel.Driver
             {
                 var monthlyTrips = tripsDriver.Where(t => t.StartTime.Month == month).ToList();
                 var numberOfRides = monthlyTrips.Count;
-                var averageDuration = numberOfRides > 0 ? monthlyTrips.Average(t => (t.EndTime?.Subtract(t.StartTime))?.TotalMinutes ?? 0) : 0;
-                var averagePrice = numberOfRides > 0 ? monthlyTrips.Average(t => t.FinalPrice) : 0;
-
                 return new ReportItem
                 {
                     YearMonth = $"{year} - {month}",
                     NumberOfRides = numberOfRides,
-                    AverageDuration = averageDuration,
-                    AveragePrice = (double)averagePrice
+                    AverageDuration = monthlyTrips.Any() ? monthlyTrips.Average(t => (t.EndTime?.Subtract(t.StartTime))?.TotalMinutes ?? 0) : 0,
+                    AveragePrice = (double) (monthlyTrips.Any() ? monthlyTrips.Average(t => t.FinalPrice) : 0)
                 };
             })
             .Where(r => r.NumberOfRides > 0);
         }
+
 
 
 
@@ -130,20 +123,25 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void btnYearly_Click(object sender, RoutedEventArgs e)
         {
-            int y = 0;
-            if (Year != null && !Year.Equals("") && int.TryParse(Year, out y))
-                initList(tripRepository, driveReservationRepository, true, y);
-            else
-                initList(tripRepository, driveReservationRepository, true, DateTime.Now.Year);
+            initList(true, ParseYear());
         }
 
         public void btnMonthly_Click(object sender, RoutedEventArgs e)
         {
-            int y = 0;
-            if (Year != null && !Year.Equals("") && int.TryParse(Year, out y))
-                initList(tripRepository, driveReservationRepository, false, y);
-            else
+            int year = ParseYear();
+            if (year == 0)
+            {
                 MessageBox.Show("Not correct year entered!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            initList(false, year);
+        }
+
+        private int ParseYear()
+        {
+            if (int.TryParse(Year, out int year))
+                return year;
+            return 0; // return 0 when parsing fails
         }
 
     }
