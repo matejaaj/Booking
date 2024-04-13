@@ -18,7 +18,7 @@ namespace BookingApp.Domain.RepositoryInterfaces
         Voucher Save(Voucher voucher);
 
 
-        void Delete(Voucher voucher);
+        void Delete(int id);
 
 
         Voucher Update(Voucher voucher);

@@ -48,10 +48,10 @@ namespace BookingApp.Repository
             return voucher;
         }
 
-        public void Delete(Voucher voucher)
+        public void Delete(int id)
         {
             _vouchers = _serializer.FromCSV(FilePath);
-            Voucher found = _vouchers.Find(v => v.Id == voucher.Id);
+            Voucher found = _vouchers.Find(v => v.Id == id);
             if (found != null)
             {
                 _vouchers.Remove(found);
