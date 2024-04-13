@@ -85,5 +85,10 @@ namespace BookingApp.Repository
             _serializer.ToCSV(FilePath, _tourGuests);
             return tourGuest;
         }
+
+        public TourGuest GetById(int id)
+        {
+            return _tourGuests.FirstOrDefault(guest => guest.Id == id);
+        }
     }
 }
