@@ -13,6 +13,7 @@
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\ratings.png" />
+    <None Remove="Resources\Images\reschedule.png" />
     <None Remove="Resources\Images\trophy.png" />
     <None Remove="Resources\Images\view.png" />
   </ItemGroup>
@@ -42,6 +43,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\ratings.png" />
+    <Resource Include="Resources\Images\reschedule.png" />
     <Resource Include="Resources\Images\trophy.png" />
   </ItemGroup>
 

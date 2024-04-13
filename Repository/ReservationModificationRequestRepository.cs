@@ -68,5 +68,10 @@ namespace BookingApp.Repository
         {
             return _requests.FirstOrDefault(r => r.ReservationId == id);
         }
+
+        public List<ReservationModificationRequest> GetByReservationIds(List<int> reservationIds)
+        {
+            return _requests.FindAll(r => reservationIds.Contains(r.ReservationId));
+        }
     }
 }

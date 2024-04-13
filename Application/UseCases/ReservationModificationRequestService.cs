@@ -44,5 +44,10 @@ namespace BookingApp.Application.UseCases
         {
             return _requestRepository.GetByReservationId(id);
         }
+
+        public List<ReservationModificationRequest> GetByReservationIds(List<int> reservationIds)
+        {
+            return _requestRepository.GetByReservationIds(reservationIds);
+        }
     }
 }
