@@ -54,7 +54,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             {
                 string formattedDeparture = reservation.DepartureTime.ToString("f"); 
 
-                if (reservation.DriveReservationStatusId == 13) 
+                if (reservation.DriveReservationStatusId == 2) 
                 {
                     var driver = _userService.GetById(reservation.DriverId);
                     MessageBox.Show($"Your driver {driver.Username} has been assigned to your trip on {formattedDeparture}.");
