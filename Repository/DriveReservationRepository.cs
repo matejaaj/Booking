@@ -87,5 +87,23 @@ namespace BookingApp.Repository
             _driveReservations = _serializer.FromCSV(FilePath);
             return _driveReservations.FindAll(r => r.TouristId == touristId);
         }
+
+        public List<DriveReservation> GetByTouristAndStatus(int touristId, string status)
+        {
+            _driveReservations = _serializer.FromCSV(FilePath);  // Re-load or ensure data is up-to-date
+            var statusRepository = new DriveReservationStatusRepository(); // Assuming this repository exists
+            var statusId = statusRepository.GetAll().FirstOrDefault(s => s.Name == status)?.Id;
+
+            return _driveReservations.Where(r => r.TouristId == touristId && r.DriveReservationStatusId == statusId).ToList();
+        }
+
+        public List<DriveReservation> GetByTouristAndStatuses(int touristId, List<string> statuses)
+        {
+            _driveReservations = _serializer.FromCSV(FilePath);
+            var statusRepository = new DriveReservationStatusRepository();
+            var statusIds = statusRepository.GetAll().Where(s => statuses.Contains(s.Name)).Select(s => s.Id).ToList();
+
+            return _driveReservations.Where(r => r.TouristId == touristId && statusIds.Contains(r.DriveReservationStatusId)).ToList();
+        }
     }
 }

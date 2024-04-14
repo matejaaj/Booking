@@ -29,6 +29,7 @@ namespace BookingApp.View.Tourist
             InitializeComponent();
             isFastDrive = false;
             viewModel = new DriveReservationViewModel(user);
+            viewModel.CheckForDriverAssignment();
             DataContext = viewModel;
 
         }

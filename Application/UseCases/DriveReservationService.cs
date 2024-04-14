@@ -51,6 +51,16 @@ namespace BookingApp.Application.UseCases
         {
             return _driveReservationRepository.GetByTourist(touristId);
         }
+
+        public List<DriveReservation> GetByTouristAndStatus(int touristId, string status)
+        {
+            return _driveReservationRepository.GetByTouristAndStatus(touristId, status);
+        }
+
+        public List<DriveReservation> GetByTouristAndStatuses(int touristId, List<string> statuses)
+        {
+            return _driveReservationRepository.GetByTouristAndStatuses(touristId, statuses);
+        }
     }
 
 }
