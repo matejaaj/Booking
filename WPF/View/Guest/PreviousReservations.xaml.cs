@@ -34,15 +34,17 @@ namespace BookingApp.WPF.View.Guest
             List<ReservationDisplayDTO> reservationInfos = new List<ReservationDisplayDTO>();
             foreach (var reservation in reservations)
             {
-                Accommodation accommodation = _accommodationRepository.GetById(reservation.AccommodationId);
-                string accommodationName = accommodation != null ? accommodation.Name : "Unknown";
+                if (reservation.IsCancelled == false)
+                {
+                    Accommodation accommodation = _accommodationRepository.GetById(reservation.AccommodationId);
+                    string accommodationName = accommodation != null ? accommodation.Name : "Unknown";
 
-                // Dohvati zahtev za modifikaciju rezervacije ako postoji
-                ReservationModificationRequest modificationRequest = _reservationModificationRequestRepository.GetByReservationId(reservation.Id);
+                    ReservationModificationRequest modificationRequest = _reservationModificationRequestRepository.GetByReservationId(reservation.Id);
 
-                var reservationDto = new ReservationDisplayDTO(accommodationName, reservation.StartDate, reservation.EndDate, reservation,
-                                                                modificationRequest?.OwnerComment ?? "", modificationRequest?.Status.ToString() ?? "");
-                reservationInfos.Add(reservationDto);
+                    var reservationDto = new ReservationDisplayDTO(accommodationName, reservation.StartDate, reservation.EndDate, reservation,
+                                                                    modificationRequest?.OwnerComment ?? "", modificationRequest?.Status.ToString() ?? "");
+                    reservationInfos.Add(reservationDto);
+                }
             }
             return reservationInfos;
         }
@@ -73,8 +75,35 @@ namespace BookingApp.WPF.View.Guest
         {
             Button button = sender as Button;
             ReservationDisplayDTO reservationDto = button.Tag as ReservationDisplayDTO;
-            RequestModification requestModification = new RequestModification(reservationDto.Reservation);
-            requestModification.Show();
+            if (reservationDto.StartDate < DateTime.Now)
+            {
+                MessageBox.Show("Reservation has already started.");
+            }
+            else
+            {
+                RequestModification requestModification = new RequestModification(reservationDto.Reservation);
+                requestModification.Show();
+            }
         }
+
+        private void CancelReservationButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            ReservationDisplayDTO reservationDto = button.Tag as ReservationDisplayDTO;
+            Accommodation accommodation = _accommodationRepository.GetById(reservationDto.Reservation.AccommodationId);
+            int cancellationThreshold = accommodation.CancelThershold;
+            int daysUntilReservationStart = (int)(reservationDto.Reservation.StartDate - DateTime.Now).TotalDays;
+            if ((daysUntilReservationStart > 1 || daysUntilReservationStart > cancellationThreshold) && reservationDto.Reservation.IsCancelled == false)
+            {
+                reservationDto.Reservation.IsCancelled = true;
+                _accommodationReservationRepository.Update(reservationDto.Reservation);
+                MessageBox.Show("Reservation successfully canceled.");
+            }
+            else
+            {
+                MessageBox.Show("Cannot cancel reservation. The cancellation deadline has passed.");
+            }
+        }
+
     }
 }
