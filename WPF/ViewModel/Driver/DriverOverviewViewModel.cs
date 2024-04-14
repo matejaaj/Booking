@@ -132,11 +132,6 @@ namespace BookingApp.WPF.ViewModel.Driver
             UpdateReservationList();
         }
 
-        public void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         public void UpdateReservationList()
         {
             ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(_repository.GetByDriver(DriverId));
@@ -180,22 +175,6 @@ namespace BookingApp.WPF.ViewModel.Driver
             rvForm.Show();
         }
 
-        private bool ValidateInputForResponse()
-        {
-            if (SelectedReservation == null)
-            {
-                MessageBox.Show("You haven't selected any reservation!");
-                return false;
-            }
-
-            if (SelectedReservation.DriveReservationStatusId != 1)
-            {
-                MessageBox.Show("You can't confirm this one!");
-                return false;
-            }
-
-            return true;
-        }
 
 
         public void ViewDrive_Cancel(object? sender, EventArgs e)
@@ -289,15 +268,11 @@ namespace BookingApp.WPF.ViewModel.Driver
                 TxtVehicleIdInput = ""; 
             }
         }
-        public void txtVehicleIdInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
 
         public void btnDrive_Click(object sender, RoutedEventArgs e)
         {
-            if (ValidateInput(() => SelectedReservation.DriveReservationStatusId != 2 
-                                    || SelectedReservation.DelayMinutesDriver != -1,
+            if (!ValidateInput(() => !(SelectedReservation.DriveReservationStatusId != 2 
+                                    || SelectedReservation.DelayMinutesDriver != -1),
                               "You don't have any confirmed reservation or you aren't at location!"))
             {
                 return;
