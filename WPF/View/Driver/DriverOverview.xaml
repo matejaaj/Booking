@@ -28,8 +28,7 @@
         <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
             <DataGrid ItemsSource="{Binding DriveReservations}"
                       AutoGenerateColumns="False" Height="382" HeadersVisibility="Column" 
-                      FontSize="13" SelectionChanged="DataGrid_SelectionChanged"
-                      SelectedItem="{Binding SelectedReservation}"
+                      FontSize="13" SelectedItem="{Binding SelectedReservation}"
                       SelectionMode="Single" Width="800">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Pickup Location ID" Binding="{Binding PickupLocationId, Converter={StaticResource LocationConverterDriver}}" Width="2*"/>

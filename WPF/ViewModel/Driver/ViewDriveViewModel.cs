@@ -73,22 +73,23 @@ namespace BookingApp.WPF.ViewModel.Driver
         {
             if (!IsAtLocation)
             {
-                if (int.Parse(TxtDelayMinutes) < 0)
+                int delayMinutes = int.Parse(TxtDelayMinutes);
+                if (delayMinutes < 0)
                 {
                     MessageBox.Show("Can't put negative delay!");
                     return;
                 }
-                reservation.DelayMinutesDriver = int.Parse(TxtDelayMinutes);
-                Repo.Update(reservation);
-                ReservationConfirmed?.Invoke(this, EventArgs.Empty);
+                reservation.DelayMinutesDriver = delayMinutes;
             }
             else
             {
                 reservation.DelayMinutesDriver = -1;
-                Repo.Update(reservation);
-                ReservationConfirmed?.Invoke(this, EventArgs.Empty);
             }
+
+            Repo.Update(reservation);
+            ReservationConfirmed?.Invoke(this, EventArgs.Empty);
         }
+
 
         public void rbAtLocation_Checked(object sender, RoutedEventArgs e)
         {
