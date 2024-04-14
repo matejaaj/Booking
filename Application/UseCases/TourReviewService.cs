@@ -46,5 +46,11 @@ namespace BookingApp.Application.UseCases
         {
             return _tourReviewRepository.GetById(id);
         }
+
+        public bool HasUserReviewedTour(int userId, int tourInstanceId)
+        {
+            return _tourReviewRepository.HasUserReviewedTour(userId, tourInstanceId);
+        }
+
     }
 }

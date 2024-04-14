@@ -146,7 +146,7 @@ namespace BookingApp.DTO
         public TourReviewDTO(TourReview review)
         {
             Id = review.Id;
-            TourId = review.TourId;
+            TourId = review.TourInstanceId;
             TouristId = review.TouristId;
             TourGuestId = review.TourGuestId;
             Rating = review.Rating;

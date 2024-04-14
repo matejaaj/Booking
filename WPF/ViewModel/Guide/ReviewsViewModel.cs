@@ -44,7 +44,7 @@ namespace BookingApp.WPF.ViewModel.Guide
 
             foreach(var review in _tourReviewService.GetAll())
             {
-                if(review.TourId == instance.Id)
+                if(review.TourInstanceId == instance.Id)
                     Reviews.Add(new TourReviewDTO(review));
             }
         }

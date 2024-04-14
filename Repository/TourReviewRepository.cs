@@ -74,5 +74,11 @@ namespace BookingApp.Repository
             }
             return _tourReviews.Max(r => r.Id) + 1;
         }
+
+        public bool HasUserReviewedTour(int userId, int tourInstanceId)
+        {
+            return _tourReviews.Any(r => r.TouristId == userId && r.TourInstanceId == tourInstanceId);
+        }
+
     }
 }

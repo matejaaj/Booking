@@ -1,4 +1,5 @@
-﻿using BookingApp.Domain.Model;
+﻿using BookingApp.Application.UseCases;
+using BookingApp.Domain.Model;
 using BookingApp.WPF.ViewModel.Tourist;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,8 @@ namespace BookingApp.WPF.View.Tourist
 
         private void RateTour_Click(object sender, RoutedEventArgs e)
         {
+            TourReviewService _tourReviewService = new TourReviewService();
+
             var button = sender as Button;
             var tour = button.Tag as TourInstanceViewModel;
             if (tour != null)
@@ -53,10 +56,19 @@ namespace BookingApp.WPF.View.Tourist
                     return;
                 }
 
+                if (_tourReviewService.HasUserReviewedTour(User.Id, tour.Id))
+                {
+                    MessageBox.Show("Tura je već ocenjena");
+                    return;
+                }
+
                 var reviewWindow = new ReviewTourWindow(tour, User.Id);
                 reviewWindow.Show();
             }
-            
         }
+
+
+
+
     }
 }
