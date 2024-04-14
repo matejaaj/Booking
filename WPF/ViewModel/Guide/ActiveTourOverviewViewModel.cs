@@ -56,6 +56,10 @@ namespace BookingApp.WPF.ViewModel.Guide
             var firstCheckpoint = NotVisitedCheckpoints.First();
             VisitedCheckpoints.Add(firstCheckpoint);
             NotVisitedCheckpoints.Remove(firstCheckpoint);
+
+            var activeTour = _tourInstanceService.GetAll().Find(tour => tour.Id == _tourInstaceId);
+            activeTour.CurrentCheckpoint = firstCheckpoint.Name;
+            _tourInstanceService.Update(activeTour);
         }
 
         private void InitializeTourGuests()
@@ -81,11 +85,16 @@ namespace BookingApp.WPF.ViewModel.Guide
         {
             if (SelectedCheckpoint != null)
             {
+                string currentCheckpointName = SelectedCheckpoint.Name;
                 TourAttendanceOverview tourAttendanceOverview = new TourAttendanceOverview(SelectedCheckpoint.Id, NotPresentTourists);
                 tourAttendanceOverview.ShowDialog();
 
                 VisitedCheckpoints.Add(SelectedCheckpoint);
                 NotVisitedCheckpoints.Remove(SelectedCheckpoint);
+
+                var activeTour = _tourInstanceService.GetAll().Find(tour => tour.Id == _tourInstaceId);
+                activeTour.CurrentCheckpoint = currentCheckpointName;
+                _tourInstanceService.Update(activeTour);
 
                 if (NotVisitedCheckpoints.Count() == 0)
                 {
