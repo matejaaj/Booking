@@ -52,5 +52,10 @@ namespace BookingApp.Application.UseCases
         {
             return _accommodationReservationRepository.GetByAccommodationId(accommodationId);
         }
+
+        public AccommodationReservation GetByReservationId(int id)
+        {
+            return _accommodationReservationRepository.GetByReservationId(id);
+        }
     }
 }

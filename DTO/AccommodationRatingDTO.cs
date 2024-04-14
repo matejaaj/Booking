@@ -108,6 +108,7 @@ namespace BookingApp.DTO
 
         public AccommodationRatingDTO(User loggedInOwner, User guest, AccommodationAndOwnerRating rating, Accommodation accommodation)
         {
+            Id = rating.RatingId;
             Cleanliness = rating.Cleanliness;
             OwnerEthics = rating.OwnershipEthics;
             Comment = rating.Comment;

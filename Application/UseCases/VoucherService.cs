@@ -32,9 +32,9 @@ namespace BookingApp.Application.UseCases
             return _voucherRepository.Save(voucher);
         }
 
-        public void Delete(Voucher voucher)
+        public void Delete(int id)
         {
-            _voucherRepository.Delete(voucher);
+            _voucherRepository.Delete(id);
         }
 
         public Voucher Update(Voucher voucher)
@@ -42,7 +42,7 @@ namespace BookingApp.Application.UseCases
             return _voucherRepository.Update(voucher);
         }
 
-        public List<Voucher> GetVouchersByTourisId(int id)
+        public List<Voucher> GetVouchersByTouristId(int id)
         {
             return _voucherRepository.GetVouchersByTouristId(id);
         }

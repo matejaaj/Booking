@@ -45,6 +45,11 @@ namespace BookingApp.Application.UseCases
         {
             return _checkpointRepository.Update(checkpoint);
         }
+
+        public Checkpoint GetById(int id)
+        {
+            return _checkpointRepository.GetById(id);
+        }
     }
 
 }

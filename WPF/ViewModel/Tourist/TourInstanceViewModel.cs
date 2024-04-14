@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookingApp.Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -37,6 +38,21 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+        private string currentCheckpoint;
+
+        public string CurrentCheckpoint
+        {
+            get => currentCheckpoint;
+            set
+            {
+                if(currentCheckpoint != value)
+                {
+                    currentCheckpoint = value;
+                    OnPropertyChanged(nameof(CurrentCheckpoint));
+                }
+            }
+        }
+
         private DateTime date;
         public DateTime Date
         {
@@ -51,8 +67,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-        private List<string> guests = new List<string>();
-        public List<string> Guests
+        private List<TourGuest> guests = new List<TourGuest>();
+        public List<TourGuest> Guests
         {
             get => guests;
             set
@@ -75,6 +91,21 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 {
                     checkpointNames = value;
                     OnPropertyChanged(nameof(CheckpointNames));
+                }
+            }
+        }
+
+        private bool isFinished;
+
+        public bool IsFinished
+        {
+            get => isFinished;
+            set
+            {
+                if(isFinished != value)
+                {
+                    isFinished = value;
+                    OnPropertyChanged(nameof(IsFinished));
                 }
             }
         }

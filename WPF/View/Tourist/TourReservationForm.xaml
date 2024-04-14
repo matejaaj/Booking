@@ -12,25 +12,36 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ComboBox x:Name="cmbStartTime" SelectionChanged="CmbStartTime_SelectionChanged" Grid.Row="0" Margin="10"/>
-
-        <ComboBox x:Name="cmbNumberOfPeople" Grid.Row="1" Margin="10" SelectionChanged="CmbNumberOfPeople_SelectionChanged">
-            <ComboBoxItem Content="1"/>
-            <ComboBoxItem Content="2"/>
-            <ComboBoxItem Content="3"/>
-        </ComboBox>
+        <ComboBox ItemsSource="{Binding StartTimes}" DisplayMemberPath="Value" SelectedValuePath="Key"
+                  SelectedItem="{Binding SelectedStartTime}" Margin="10" Grid.Row="0"/>
 
 
+        <ComboBox ItemsSource="{Binding NumberOfPeopleOptions}" SelectedItem="{Binding NumberOfPeople, Mode=TwoWay}"
+                  Margin="10" Grid.Row="1"/>
 
-        <ScrollViewer Grid.Row="2" Margin="10">
-            <StackPanel x:Name="spPersonInputs" />
+
+        <ScrollViewer Margin="10" Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding GuestInputs}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5"/>
+                            <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5"/>
+                            <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ScrollViewer>
 
-        <ComboBox x:Name="cmbVoucher" Grid.Row="3" Margin="10"/>
 
-        <Button x:Name="btnSubmit" Content="Submit" Grid.Row="4" Margin="10" Click="BtnSubmit_Click"/>
+        <ComboBox ItemsSource="{Binding Vouchers}" DisplayMemberPath="Value" SelectedValuePath="Key"
+                  SelectedItem="{Binding SelectedVoucher}" Margin="10" Grid.Row="3"/>
+
+
+        <Button Content="Submit" Margin="10" Grid.Row="4" Click="BtnSubmit_Click"/>
     </Grid>
 </Window>

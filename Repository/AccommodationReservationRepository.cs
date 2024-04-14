@@ -80,7 +80,11 @@ namespace BookingApp.Repository
             return _accommodationReservation.Where(a => a.AccommodationId == accommodationId).ToList();
         }
 
-
+        public AccommodationReservation GetByReservationId(int id)
+        {
+            _accommodationReservation = _serializer.FromCSV(FilePath);
+            return _accommodationReservation.Find(a => a.Id == id);
+        }
     }
 
 }

@@ -35,7 +35,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             InitializeServices();
 
         }
-        public void InitializeServices()
+        private void InitializeServices()
         {
             _vehicleService = new VehicleService();
             _detailedLocationService = new DetailedLocationService();
@@ -43,6 +43,32 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _driveReservationService = new DriveReservationService();
             _userService = new UserService();
         }
+
+
+        public void CheckForDriverAssignment()
+        {
+            var statusesToCheck = new List<string> { "CONFIRMED_FAST", "FAST_RESERVATION" };
+            var reservations = _driveReservationService.GetByTouristAndStatuses(Tourist.Id, statusesToCheck);
+
+            foreach (var reservation in reservations)
+            {
+                string formattedDeparture = reservation.DepartureTime.ToString("f"); 
+
+                if (reservation.DriveReservationStatusId == 2) 
+                {
+                    var driver = _userService.GetById(reservation.DriverId);
+                    MessageBox.Show($"Your driver {driver.Username} has been assigned to your trip on {formattedDeparture}.");
+                }
+                else if (reservation.DriveReservationStatusId == 12) 
+                {
+                    MessageBox.Show($"A driver has not yet been found for your fast reservation scheduled for {formattedDeparture}.");
+                }
+            }
+        }
+
+
+
+
 
         public void FillCities()
         {

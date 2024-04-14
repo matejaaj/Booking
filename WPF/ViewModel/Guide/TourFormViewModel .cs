@@ -150,28 +150,41 @@ namespace BookingApp.WPF.ViewModel.Guide
             if (ValidateFields())
             {
                 Tour newTour = new Tour(_tourName, _description, _selectedLocation.Id, _selectedLanguage.languageId, _capacity, _durationHours);
-                _tourService.Save(newTour); 
+                _tourService.Save(newTour);
 
-                foreach (var image in Images)
-                {
-                    _imageService.Save(image); 
-                }
-
-                foreach (var checkpoint in Checkpoints)
-                {
-                    _checkpointService.Save(checkpoint);
-                }
-
-                foreach (var startDate in TourStartDates)
-                {
-                    _tourInstanceService.Save(startDate);
-                }
+                SaveImages();
+                SaveCheckpoints();
+                SaveStartDates();
 
                 MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
                 MessageBox.Show("Not added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void SaveImages()
+        {
+            foreach (var image in Images)
+            {
+                _imageService.Save(image);
+            }
+        }
+
+        private void SaveCheckpoints()
+        {
+            foreach (var checkpoint in Checkpoints)
+            {
+                _checkpointService.Save(checkpoint);
+            }
+        }
+
+        private void SaveStartDates()
+        {
+            foreach (var startDate in TourStartDates)
+            {
+                _tourInstanceService.Save(startDate);
             }
         }
     }

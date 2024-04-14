@@ -120,11 +120,12 @@ namespace BookingApp.WPF.ViewModel.Owner
             if (RecentReservationsListBox.SelectedItem != null)
             {
                 var selectedReservation = (AccommodationReservation)RecentReservationsListBox.SelectedItem;
-                if (!IsReservationRated(selectedReservation))
+                if (!selectedReservation.IsRated)
                 {
                     var guestRatingFormWindow = new GuestRatingForm(selectedReservation);
                     guestRatingFormWindow.Owner = owner;
                     guestRatingFormWindow.ShowDialog();
+                    FillReservations();
                 }
                 else
                 {

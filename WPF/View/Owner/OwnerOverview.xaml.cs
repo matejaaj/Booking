@@ -58,5 +58,10 @@ namespace BookingApp.WPF.View.Owner
         {
             viewModel.SuperTrophyButton(sender, e);
         }
+
+        private void ReschedulingButton(object sender, RoutedEventArgs e)
+        {
+            viewModel.ReschedulingButton(sender, e);
+        }
     }
 }

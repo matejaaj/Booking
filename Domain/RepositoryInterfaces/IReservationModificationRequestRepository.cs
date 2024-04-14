@@ -15,5 +15,6 @@ namespace BookingApp.Domain.RepositoryInterfaces
         ReservationModificationRequest Update(ReservationModificationRequest request);
         ReservationModificationRequest GetById(int id);
         ReservationModificationRequest GetByReservationId(int id);
+        List<ReservationModificationRequest> GetByReservationIds(List<int> reservationIds);
     }
 }

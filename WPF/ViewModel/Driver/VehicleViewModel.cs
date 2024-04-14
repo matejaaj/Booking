@@ -100,22 +100,14 @@ namespace BookingApp.WPF.ViewModel.Driver
             {
                 return;
             }
-            List<int> lista = new List<int>();
-            List<int> lokacija = new List<int>();
-            foreach (Language l in SelectedLanguages)
-            {
-                lista.Add(l.languageId);
-            }
-            foreach (Location location in SelectedLocations)
-            {
-                lokacija.Add(location.Id);
-            }
-            foreach (var img in images)
-            {
-                _imageRepository.Save(img);
-            }
-            Vehicle newVehicle = new Vehicle(lokacija, MaxPassengers, lista, _userId);
-            Vehicle savedVehicle = _repository.Save(newVehicle);
+
+            var lista = SelectedLanguages.Select(l => l.languageId).ToList();
+            var lokacija = SelectedLocations.Select(loc => loc.Id).ToList();
+
+            images.ForEach(img => _imageRepository.Save(img));
+
+            var newVehicle = new Vehicle(lokacija, MaxPassengers, lista, _userId);
+            var savedVehicle = _repository.Save(newVehicle);
             DriverOverview.VM.Vehicles.Add(savedVehicle);
             VehicleAdded?.Invoke(this, EventArgs.Empty);
         }

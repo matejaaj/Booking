@@ -54,10 +54,7 @@ namespace BookingApp.WPF.View.Driver
             VM.ViewDrive_Click(sender, e);
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            VM.DataGrid_SelectionChanged(sender, e);
-        }
+
 
         private void ViewDrive_Respond(object? sender, EventArgs e)
         {
@@ -66,10 +63,6 @@ namespace BookingApp.WPF.View.Driver
         private void ViewDrive_Cancel(object? sender, EventArgs e)
         {
             VM.ViewDrive_Cancel(sender, e);
-        }
-        private void txtVehicleIdInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            VM.txtVehicleIdInput_TextChanged(sender, e);
         }
 
         private void btnDrive_Click(object sender, RoutedEventArgs e)
