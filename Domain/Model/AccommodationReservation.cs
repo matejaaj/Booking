@@ -19,10 +19,11 @@ namespace BookingApp.Domain.Model
         public int GuestId { get; set; }
         public bool IsRated { get; set; }
         public bool IsAccommodationAndOwnerRated { get; set; }
+        public bool IsCancelled { get; set; }
         public AccommodationReservation()
         {
         }
-        public AccommodationReservation(DateTime startDate, DateTime endDate, int days, int guestNumber, int accommodationId, int guestId, bool isRated, bool isAccommodationAndOwnerRated)
+        public AccommodationReservation(DateTime startDate, DateTime endDate, int days, int guestNumber, int accommodationId, int guestId, bool isRated, bool isAccommodationAndOwnerRated, bool isCancelled)
         {
             StartDate = startDate;
             EndDate = endDate;
@@ -32,11 +33,12 @@ namespace BookingApp.Domain.Model
             GuestId = guestId;
             IsRated = isRated;
             IsAccommodationAndOwnerRated = isAccommodationAndOwnerRated;
+            IsCancelled = isCancelled;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), StartDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"), Days.ToString(), GuestNumber.ToString(), AccommodationId.ToString(), GuestId.ToString(), IsRated.ToString(), IsAccommodationAndOwnerRated.ToString() };
+            string[] csvValues = { Id.ToString(), StartDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"), Days.ToString(), GuestNumber.ToString(), AccommodationId.ToString(), GuestId.ToString(), IsRated.ToString(), IsAccommodationAndOwnerRated.ToString(), IsCancelled.ToString()};
             return csvValues;
         }
 
@@ -69,6 +71,7 @@ namespace BookingApp.Domain.Model
             GuestId = Convert.ToInt32(values[6]);
             IsRated = Convert.ToBoolean(values[7]);
             IsAccommodationAndOwnerRated = Convert.ToBoolean(values[8]);
+            IsCancelled = Convert.ToBoolean(values[9]);
         }
 
         public override string ToString()
