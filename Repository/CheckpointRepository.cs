@@ -67,6 +67,12 @@ namespace BookingApp.Repository
             }
             return checkpoint;
         }
+
+        public Checkpoint GetById(int id)
+        {
+            _checkpoints = _serializer.FromCSV(FilePath);
+            return _checkpoints.FirstOrDefault(checkpoint => checkpoint.Id == id);
+        }
     }
 
 }

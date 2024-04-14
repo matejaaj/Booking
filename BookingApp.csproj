@@ -13,6 +13,7 @@
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\ratings.png" />
+    <None Remove="Resources\Images\reschedule.png" />
     <None Remove="Resources\Images\trophy.png" />
     <None Remove="Resources\Images\view.png" />
   </ItemGroup>
@@ -35,12 +36,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="24.2.9" />
+    <PackageReference Include="WpfToolkit.DataVisualization" Version="3.5.50211.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Images\ratings.png" />
+    <Resource Include="Resources\Images\reschedule.png" />
     <Resource Include="Resources\Images\trophy.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="WPF\ViewModel\Guest\" />
   </ItemGroup>
 
 </Project>

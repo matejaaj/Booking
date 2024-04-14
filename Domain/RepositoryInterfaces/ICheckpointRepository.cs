@@ -13,5 +13,6 @@ namespace BookingApp.Domain.RepositoryInterfaces
         Checkpoint Save(Checkpoint checkpoint);
         void Delete(Checkpoint checkpoint);
         Checkpoint Update(Checkpoint checkpoint);
+        Checkpoint GetById(int id);
     }
 }

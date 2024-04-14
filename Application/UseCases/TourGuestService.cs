@@ -62,6 +62,11 @@ namespace BookingApp.Application.UseCases
         {
             return _tourGuestRepository.Update(tourGuest);
         }
+
+        public TourGuest GetById(int id)
+        {
+            return _tourGuestRepository.GetById(id);
+        }
     }
 
 }

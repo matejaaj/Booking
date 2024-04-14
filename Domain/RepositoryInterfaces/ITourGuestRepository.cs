@@ -12,6 +12,7 @@ namespace BookingApp.Domain.RepositoryInterfaces
         List<TourGuest> GetAll();
         List<TourGuest> GetAllByTourInstanceId(int tourInstanceId);
         List<TourGuest> GetAllByTouristId(int touristId);
+        TourGuest GetById(int id);
         TourGuest Save(TourGuest tourGuest);
         void SaveMultiple(List<TourGuest> tourGuests);
         void Delete(TourGuest tourGuest);

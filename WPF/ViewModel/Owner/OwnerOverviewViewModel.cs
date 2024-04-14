@@ -17,6 +17,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         public Domain.Model.Owner LoggedInOwner { get; set; }
         public bool isSuperOwner { get; set; }
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
+        public List<AccommodationReservation> OwnerAccommodationReservations { get; set; }  
         public Accommodation SelectedAccommodation { get; set; }
         private static AccommodationService _accommodationService;
         private static AccommodationReservationService _accommodationReservationService;
@@ -30,7 +31,14 @@ namespace BookingApp.WPF.ViewModel.Owner
             LoggedInOwner = owner;
             InitializeServices();
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(LoggedInOwner));
+            InitializeAccommodationReservaions();
             CalculateRating();
+        }
+
+        private void InitializeAccommodationReservaions()
+        {
+            var accommodationIds = Accommodations.Select(a => a.AccommodationId).ToList();
+            OwnerAccommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
         }
 
         private void InitializeServices()
@@ -72,9 +80,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         }
 
         private List<AccommodationAndOwnerRating> GetRatings() {
-            var accommodationIds = Accommodations.Select(a => a.AccommodationId).ToList();
-            var accommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
-            var accommodationReservationsIds = accommodationReservations.Select(a => a.ReservationId).ToList();
+            var accommodationReservationsIds = OwnerAccommodationReservations.Select(a => a.Id).ToList();
             return _accommodationAndOwnerRatingService.GetByReservationIds(accommodationReservationsIds);
         }
 
@@ -104,11 +110,8 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         public void NotifyMissingRatings(ObservableCollection<Accommodation> accommodations)
         {
-            var accommodationIds = accommodations.Select(a => a.AccommodationId).ToList();
-            var ownerAccommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
-
             var missingRatingReservations = new List<AccommodationReservation>(
-                 ownerAccommodationReservations.Where(reservation => (DateTime.Now - reservation.EndDate).TotalDays <= 5 &&
+                 OwnerAccommodationReservations.Where(reservation => (DateTime.Now - reservation.EndDate).TotalDays <= 5 &&
                 reservation.EndDate < DateTime.Now && reservation.IsRated == false)
              );
 
@@ -121,9 +124,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         public void ShowRatingsButton(object sender, RoutedEventArgs e)
         {
-            var accommodationIds = Accommodations.Select(a => a.AccommodationId).ToList();
-            var ownerAccommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
-            ViewRatings viewRatingsWindow = new ViewRatings(LoggedInOwner, ownerAccommodationReservations);
+            ViewRatings viewRatingsWindow = new ViewRatings(LoggedInOwner, OwnerAccommodationReservations);
             viewRatingsWindow.Show();
         }
 
@@ -148,6 +149,12 @@ namespace BookingApp.WPF.ViewModel.Owner
                     _ownerService.Update(LoggedInOwner);
                 }
             }
+        }
+
+        internal void ReschedulingButton(object sender, RoutedEventArgs e)
+        {
+            ReschedulingOverview reschedulingOverviewWindow = new ReschedulingOverview(OwnerAccommodationReservations);
+            reschedulingOverviewWindow.Show();  
         }
     }
 }

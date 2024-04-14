@@ -29,30 +29,50 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         public void CancelTour()
         {
-            if(SelectedInstance != null && !SelectedInstance.IsCompleted)
+            if (SelectedInstance == null || SelectedInstance.IsCompleted)
             {
-                if(SelectedInstance.StartTime > DateTime.Now.AddHours(48)) 
-                {
-                    List<TourReservation> allToursReservations = _tourReservationService.GetAll();
-                    foreach(var tourReservation in allToursReservations)
-                    {
-                        if(tourReservation.TourInstanceId == SelectedInstance.Id)
-                        {
-                            Voucher voucher = new Voucher(tourReservation.UserId, DateTime.Now.AddYears(1));
-                            _voucherService.Save(voucher);
-                        }
-                    }
-
-                    _tourInstanceService.Delete(SelectedInstance);
-
-                    MessageBox.Show("Succesfully canceled!");
-                }
-                else
-                {
-                    MessageBox.Show("You can cancel tour at least 48 hours before start time!");
-                }
+                return;
             }
 
+            if (IsCancellationAllowed())
+            {
+                CancelTourAndIssueVoucher();
+                MessageBox.Show("Successfully canceled!");
+            }
+            else
+            {
+                MessageBox.Show("You can cancel tour at least 48 hours before start time!");
+            }
         }
+
+        private bool IsCancellationAllowed()
+        {
+            return SelectedInstance.StartTime > DateTime.Now.AddHours(48);
+        }
+
+        private void CancelTourAndIssueVoucher()
+        {
+            IssueVouchersToTourParticipants();
+            _tourInstanceService.Delete(SelectedInstance);
+        }
+
+        private void IssueVouchersToTourParticipants()
+        {
+            List<TourReservation> allToursReservations = _tourReservationService.GetAll();
+            foreach (var tourReservation in allToursReservations)
+            {
+                if (tourReservation.TourInstanceId == SelectedInstance.Id)
+                {
+                    IssueVoucher(tourReservation.UserId);
+                }
+            }
+        }
+
+        private void IssueVoucher(int userId)
+        {
+            Voucher voucher = new Voucher(userId, DateTime.Now.AddYears(1));
+            _voucherService.Save(voucher);
+        }
+
     }
 }

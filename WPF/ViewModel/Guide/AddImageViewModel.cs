@@ -43,7 +43,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         {
             if (!string.IsNullOrEmpty(Source))
             {
-                Domain.Model.Image newImage = new Domain.Model.Image(_source, _entityId, _imageResourceType);
+                Domain.Model.Image newImage = new Domain.Model.Image(_source, _entityId, _imageResourceType, -1);
                 _images.Add(newImage);
                 MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
             }
