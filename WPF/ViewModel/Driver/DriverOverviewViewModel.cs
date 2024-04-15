@@ -109,7 +109,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void ViewDrive_Click(object sender, RoutedEventArgs e)
         {
-            if (!ValidateInput(() => SelectedReservation.DriveReservationStatusId == 2, "You can't delay reservation if it's not confirmed!"))
+            if (!ValidateInput(() => SelectedReservation.DriveReservationStatusId == 2 || SelectedReservation.DriveReservationStatusId == 13, "You can't delay reservation if it's not confirmed or not in the specific required status!"))
             {
                 return;
             }
@@ -139,7 +139,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             DriveReservations.Clear();
             foreach (DriveReservation reservation in _reservations)
             {
-                if (reservation.DriveReservationStatusId == 2)
+                if (reservation.DriveReservationStatusId == 2 || reservation.DriveReservationStatusId == 13)
                 {
                     DriveReservations.Clear();
                     ConfirmedReservation = reservation;
@@ -271,7 +271,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void btnDrive_Click(object sender, RoutedEventArgs e)
         {
-            if (!ValidateInput(() => !(SelectedReservation.DriveReservationStatusId != 2 
+            if (!ValidateInput(() => !(SelectedReservation.DriveReservationStatusId != 2 | SelectedReservation.DriveReservationStatusId != 13
                                     || SelectedReservation.DelayMinutesDriver != -1),
                               "You don't have any confirmed reservation or you aren't at location!"))
             {
