@@ -1,11 +1,12 @@
-﻿using BookingApp.Model;
+﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BookingApp.Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private const string FilePath = "../../../Resources/Data/users.csv";
 
@@ -30,6 +31,16 @@ namespace BookingApp.Repository
             _users = _serializer.FromCSV(FilePath);
             return _users.Where(user => ids.Contains(user.Id)).ToList();
         }
+        public List<User> GetAll()
+        {
+            _users = _serializer.FromCSV(FilePath);
+            return _users;
+        }
 
+        public User GetById(int id)
+        {
+            _users = _serializer.FromCSV(FilePath);
+            return _users.Find(u => u.Id == id);
+        }
     }
 }

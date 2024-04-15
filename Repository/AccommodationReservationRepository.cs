@@ -1,4 +1,5 @@
-﻿using BookingApp.Model;
+﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class AccommodationReservationRepository
+    public class AccommodationReservationRepository : IAccommodationReservationRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationReservations.csv";
         private readonly Serializer<AccommodationReservation> _serializer;
@@ -27,7 +28,7 @@ namespace BookingApp.Repository
 
         public AccommodationReservation Save(AccommodationReservation accommodationReservation)
         {
-            accommodationReservation.ReservationId = NextId();
+            accommodationReservation.Id = NextId();
             _accommodationReservation = _serializer.FromCSV(FilePath);
             _accommodationReservation.Add(accommodationReservation);
             _serializer.ToCSV(FilePath, _accommodationReservation);
@@ -41,13 +42,13 @@ namespace BookingApp.Repository
             {
                 return 1;
             }
-            return _accommodationReservation.Max(a => a.ReservationId) + 1;
+            return _accommodationReservation.Max(a => a.Id) + 1;
         }
 
         public void Delete(AccommodationReservation accommodationReservation)
         {
             _accommodationReservation = _serializer.FromCSV(FilePath);
-            AccommodationReservation founded = _accommodationReservation.Find(a => a.ReservationId == accommodationReservation.ReservationId);
+            AccommodationReservation founded = _accommodationReservation.Find(a => a.Id == accommodationReservation.Id);
             _accommodationReservation.Remove(founded);
             _serializer.ToCSV(FilePath, _accommodationReservation);
         }
@@ -55,7 +56,7 @@ namespace BookingApp.Repository
         public AccommodationReservation Update(AccommodationReservation accommodationReservation)
         {
             _accommodationReservation = _serializer.FromCSV(FilePath);
-            AccommodationReservation current = _accommodationReservation.Find(a => a.ReservationId == accommodationReservation.ReservationId);
+            AccommodationReservation current = _accommodationReservation.Find(a => a.Id == accommodationReservation.Id);
             int index = _accommodationReservation.IndexOf(current);
             _accommodationReservation.Remove(current);
             _accommodationReservation.Insert(index, accommodationReservation);
@@ -79,7 +80,11 @@ namespace BookingApp.Repository
             return _accommodationReservation.Where(a => a.AccommodationId == accommodationId).ToList();
         }
 
-
+        public AccommodationReservation GetByReservationId(int id)
+        {
+            _accommodationReservation = _serializer.FromCSV(FilePath);
+            return _accommodationReservation.Find(a => a.Id == id);
+        }
     }
 
 }

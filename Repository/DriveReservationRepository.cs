@@ -1,4 +1,5 @@
-﻿using BookingApp.Model;
+﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class DriveReservationRepository
+    public class DriveReservationRepository : IDriveReservationRepository
     {
         private const string FilePath = "../../../Resources/Data/drivereservation.csv";
         private readonly Serializer<DriveReservation> _serializer;
@@ -63,9 +64,21 @@ namespace BookingApp.Repository
             return driveReservation;
         }
 
+        public List<int> FilterAvailableDrivers(List<int> drivers, DateTime? targetStartTime)
+        {
+            var unavailableDrivers = GetAll()
+                                    .Where(reservation => reservation.DepartureTime == targetStartTime && drivers.Contains(reservation.DriverId))
+                                    .Select(reservation => reservation.DriverId)
+                                    .Distinct()
+                                    .ToList();
+
+            return drivers.Except(unavailableDrivers).ToList();
+        }
+
         public List<DriveReservation> GetByDriver(int driverId)
         {
             _driveReservations = _serializer.FromCSV(FilePath);
+            _driveReservations.ForEach(r => r.UpdateTourist());
             return _driveReservations.FindAll(r => r.DriverId == driverId);
         }
 
@@ -73,6 +86,24 @@ namespace BookingApp.Repository
         {
             _driveReservations = _serializer.FromCSV(FilePath);
             return _driveReservations.FindAll(r => r.TouristId == touristId);
+        }
+
+        public List<DriveReservation> GetByTouristAndStatus(int touristId, string status)
+        {
+            _driveReservations = _serializer.FromCSV(FilePath);  // Re-load or ensure data is up-to-date
+            var statusRepository = new DriveReservationStatusRepository(); // Assuming this repository exists
+            var statusId = statusRepository.GetAll().FirstOrDefault(s => s.Name == status)?.Id;
+
+            return _driveReservations.Where(r => r.TouristId == touristId && r.DriveReservationStatusId == statusId).ToList();
+        }
+
+        public List<DriveReservation> GetByTouristAndStatuses(int touristId, List<string> statuses)
+        {
+            _driveReservations = _serializer.FromCSV(FilePath);
+            var statusRepository = new DriveReservationStatusRepository();
+            var statusIds = statusRepository.GetAll().Where(s => statuses.Contains(s.Name)).Select(s => s.Id).ToList();
+
+            return _driveReservations.Where(r => r.TouristId == touristId && statusIds.Contains(r.DriveReservationStatusId)).ToList();
         }
     }
 }

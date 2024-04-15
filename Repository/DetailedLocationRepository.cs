@@ -1,4 +1,5 @@
-﻿using BookingApp.Model;
+﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class DetailedLocationRepository
+    public class DetailedLocationRepository : IDetailedLocationRepository
     {
         private const string FilePath = "../../../Resources/Data/detailedlocation.csv";
         private readonly Serializer<DetailedLocation> _serializer;
@@ -49,6 +50,19 @@ namespace BookingApp.Repository
             DetailedLocation founded = _detailedLocations.Find(l => l.Id == detailedLocation.Id);
             _detailedLocations.Remove(founded);
             _serializer.ToCSV(FilePath, _detailedLocations);
+        }
+
+        public List<string> GetAddressByCity(int cityId)
+        {
+            var addresses = GetAll()
+                .Where(detailedLocation => detailedLocation.LocationId == cityId)
+                .Select(detailedLocation => detailedLocation.Address)
+                .Distinct()
+                .OrderBy(address => address)
+                .ToList();
+
+
+            return addresses;
         }
 
         public DetailedLocation Update(DetailedLocation detailedLocation)

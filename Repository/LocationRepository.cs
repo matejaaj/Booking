@@ -1,4 +1,5 @@
-﻿using BookingApp.Model;
+﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class LocationRepository
+    public class LocationRepository : ILocationRepository
     {
         private const string FilePath = "../../../Resources/Data/locations.csv";
         private readonly Serializer<Location> _serializer;
@@ -18,6 +19,12 @@ namespace BookingApp.Repository
         {
             _serializer = new Serializer<Location>();
             _locations = _serializer.FromCSV(FilePath);
+        }
+
+        public int GetLocationIdByCity(string city)
+        {
+            var location = _locations.FirstOrDefault(l => l.City.Equals(city, StringComparison.OrdinalIgnoreCase));
+            return location?.Id ?? -1; 
         }
 
         public List<Location> GetAll()
@@ -61,6 +68,15 @@ namespace BookingApp.Repository
             _locations.Insert(index, location);
             _serializer.ToCSV(FilePath, _locations);
             return location;
+        }
+
+        public List<KeyValuePair<int, string>> GetCitiesByCountry(string country)
+        {
+            _locations = _serializer.FromCSV(FilePath);
+            return _locations
+                .Where(l => l.Country == country)
+                .Select(l => new KeyValuePair<int, string>(l.Id, l.City))
+                .ToList();
         }
 
         public Location GetLocationById(int locationId)

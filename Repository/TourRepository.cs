@@ -1,4 +1,5 @@
-﻿using BookingApp.Model;
+﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using BookingApp.Serializer;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class TourRepository
+    public class TourRepository : ITourRepository
     {
         private const string FilePath = "../../../Resources/Data/tours.csv";
         private readonly Serializer<Tour> _serializer;
@@ -68,6 +69,14 @@ namespace BookingApp.Repository
             }
             return tour;
         }
+
+        public Tour GetById(int tourId)
+        {
+            _tours = _serializer.FromCSV(FilePath);
+            return _tours.FirstOrDefault(tour => tour.Id == tourId);
+        }
+
+
     }
 
 

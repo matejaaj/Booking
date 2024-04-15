@@ -1,4 +1,5 @@
-﻿using BookingApp.Model;
+﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class CheckpointRepository
+    public class CheckpointRepository : ICheckpointRepository
     {
         private const string FilePath = "../../../Resources/Data/checkpoints.csv";
         private readonly Serializer<Checkpoint> _serializer;
@@ -65,6 +66,12 @@ namespace BookingApp.Repository
                 _serializer.ToCSV(FilePath, _checkpoints);
             }
             return checkpoint;
+        }
+
+        public Checkpoint GetById(int id)
+        {
+            _checkpoints = _serializer.FromCSV(FilePath);
+            return _checkpoints.FirstOrDefault(checkpoint => checkpoint.Id == id);
         }
     }
 
