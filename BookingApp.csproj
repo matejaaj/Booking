@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="24.2.9" />
     <PackageReference Include="WpfToolkit.DataVisualization" Version="3.5.50211.1" />
   </ItemGroup>
@@ -45,10 +46,6 @@
     <Resource Include="Resources\Images\ratings.png" />
     <Resource Include="Resources\Images\reschedule.png" />
     <Resource Include="Resources\Images\trophy.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="WPF\ViewModel\Guest\" />
   </ItemGroup>
 
 </Project>

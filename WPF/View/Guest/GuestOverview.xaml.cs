@@ -44,19 +44,14 @@ namespace BookingApp.WPF.View.Guest
 
         private void CheckReservationModificationRequests()
         {
-            // Dobavljanje svih rezervacija korisnika koji je trenutno prijavljen
             var userReservations = _accommodationReservationRepository.GetByUser(LoggedInGuest);
 
-            // Iteracija kroz sve rezervacije korisnika
             foreach (var reservation in userReservations)
             {
-                // Dobavljanje zahteva za modifikaciju rezervacije za trenutnu rezervaciju
                 var modificationRequest = _reservationModificationRequestRepository.GetByReservationId(reservation.Id);
 
-                // Provera da li postoji zahtev za modifikaciju i da li je status promenjen
                 if (modificationRequest != null && modificationRequest.Status != ReservationModificationRequest.RequestStatus.PENDING)
                 {
-                    // Kreiranje notifikacije o promeni statusa rezervacije
                     string message = $"Status of your reservation has been changed!.";
                     MessageBox.Show(message, "Reservation Status Change", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
