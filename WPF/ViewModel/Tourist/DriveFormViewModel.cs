@@ -179,6 +179,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
 
 
+
         public DriveFormViewModel()
         {
             InitializeFields();
@@ -186,9 +187,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             FillHours();
             FillMinutes();
         }
-
-
-
         private void InitializeFields()
         {
             _countries = new ObservableCollection<KeyValuePair<int, string>>();
@@ -198,19 +196,10 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _minutes = new ObservableCollection<string>();
             _selectedDate = DateTime.Today;
         }
-
-
         private void FillCountries()
         {
             LocationService _locationService = new LocationService();
-            List<Location> locations = _locationService.GetAll();
-            var countries = locations
-                .GroupBy(loc => loc.Country)
-                .Select(grp => grp.First())
-                .Select(loc => new KeyValuePair<int, string>(loc.Id, loc.Country))
-                .OrderBy(c => c.Value)
-                .ToList();
-
+            var countries = _locationService.GetAllCountries();
             Countries.Clear();
             foreach (var country in countries)
             {
@@ -221,12 +210,10 @@ namespace BookingApp.WPF.ViewModel.Tourist
         {
             Hours = new ObservableCollection<string>(Enumerable.Range(0, 24).Select(i => i.ToString("00")));
         }
-
         private void FillMinutes()
         {
             Minutes = new ObservableCollection<string>(new List<string> { "00", "15", "30", "45" });
         }
-
         public DateTime CreateDateTimeFromSelections()
         {
             if (SelectedMinute != null &&
@@ -245,7 +232,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 return DateTime.MinValue;
             }
         }
-
         public void FillDrivers(List<int> driverIds)
         {
             UserService _userService = new UserService();
