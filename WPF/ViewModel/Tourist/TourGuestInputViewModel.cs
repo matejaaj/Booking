@@ -29,7 +29,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             get => _age;
             set { _age = value; OnPropertyChanged(nameof(Age)); }
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {

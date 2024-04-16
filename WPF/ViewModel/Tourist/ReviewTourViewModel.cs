@@ -14,14 +14,14 @@ namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class ReviewTourViewModel
     {
-        public TourInstanceViewModel SelectedTourInstance { get; set; }
-
-        public ObservableCollection<ReviewTourFormViewModel> ReviewForms { get; set; }
-
         private TourReviewService _tourReviewService;
         private ImageService _imageService;
 
+
+        public TourInstanceViewModel SelectedTourInstance { get; set; }
         public int TouristId { get; set; }
+        public ObservableCollection<ReviewTourFormViewModel> ReviewForms { get; set; }
+
 
         public ReviewTourViewModel(TourInstanceViewModel tour, int touristId)
         {
@@ -32,7 +32,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             ReviewForms = new ObservableCollection<ReviewTourFormViewModel>();
             SetReviewForms();
         }
-
         private void SetReviewForms()
         {
             foreach (var guest in SelectedTourInstance.Guests.Where(g => g.CheckpointId != 0))
@@ -40,7 +39,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 ReviewForms.Add(new ReviewTourFormViewModel { Guest = guest });
             }
         }
-
         public void AddPicture(ReviewTourFormViewModel reviewTourFormViewModel)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -49,7 +47,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             if (openFileDialog.ShowDialog() == true)
             {
                 reviewTourFormViewModel.ImagePaths.Add(openFileDialog.FileName);
-
             }
         }
         public void RemovePicture(ReviewTourFormViewModel reviewForm, string imagePath)
@@ -59,7 +56,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 reviewForm.ImagePaths.Remove(imagePath);
             }
         }
-
         public void SaveReviews()
         {
             foreach (var reviewForm in ReviewForms)

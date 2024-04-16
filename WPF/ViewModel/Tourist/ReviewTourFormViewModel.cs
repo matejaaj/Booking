@@ -16,9 +16,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public TourGuest Guest { get; set; }
         public string Comment { get; set; }
         public ObservableCollection<string> ImagePaths { get; set; } = new ObservableCollection<string>();
-
         public List<int> Ratings { get; } = new List<int> { 1, 2, 3, 4, 5 };
-
         public int SelectedRating
         {
             get => _selectedRating;
@@ -33,7 +31,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
