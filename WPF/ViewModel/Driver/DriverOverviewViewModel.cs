@@ -249,7 +249,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         private void HandleFastReservationAcceptance(DriveReservation reservation)
         {
             DriveReservations.Clear();
-            reservation.DriveReservationStatusId = 2;
+            reservation.DriveReservationStatusId = 13;
             reservation.DriverId = DriverId;
             _repository.Update(reservation);
             UpdateReservationList();
