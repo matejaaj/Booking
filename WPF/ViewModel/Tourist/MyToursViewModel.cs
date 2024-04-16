@@ -27,7 +27,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             InitializeServices();
             CreateViewModels();
         }
-
         private void CreateViewModels()
         {
             foreach (var tourInstanceId in GetTourInstanceIds())
@@ -50,14 +49,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 Tours.Add(viewModel);
             }
         }
-
         private List<int> GetTourInstanceIds()
         {
             var tourReservations = _tourReservationService.GetAllByUserId(_tourist.Id);
             var tourInstanceIds = tourReservations.Select(reservation => reservation.TourInstanceId).ToList();
             return tourInstanceIds;
         }
-
         private void InitializeServices()
         {
             _tourService = new TourService();

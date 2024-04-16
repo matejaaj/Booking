@@ -52,5 +52,17 @@ namespace BookingApp.Application.UseCases
         {
             return _locationRepository.GetLocationById(locationId);
         }
+
+        public List<KeyValuePair<int, string>> GetAllCountries()
+        {
+            var locations = _locationRepository.GetAll();
+            var countries = locations
+                .GroupBy(loc => loc.Country)
+                .Select(grp => grp.First())
+                .Select(loc => new KeyValuePair<int, string>(loc.Id, loc.Country))
+                .OrderBy(c => c.Value)
+                .ToList();
+            return countries;
+        }
     }
 }

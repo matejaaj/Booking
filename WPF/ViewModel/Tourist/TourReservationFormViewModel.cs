@@ -34,6 +34,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public ObservableCollection<KeyValuePair<int, string>> Vouchers { get; set; } = new ObservableCollection<KeyValuePair<int, string>>();
         public ObservableCollection<TourGuestInputViewModel> GuestInputs { get; } = new ObservableCollection<TourGuestInputViewModel>();
 
+
         public KeyValuePair<int, string>? SelectedStartTime
         {
             get => _selectedStartTime;
@@ -66,6 +67,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
+
+
+
         public TourReservationFormViewModel(TourDTO selectedTour, User loggedUser)
         {
             _touristId = loggedUser.Id;
@@ -83,10 +87,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private void FillCollections()
         {
             FillStartTimes();
-            FillNumberOfPeopleOptions();
             FillVouchers();
         }
-
         private void FillStartTimes()
         {
             var tourInstances = _tourInstanceService.GetAllByTourId(_selectedTour.Id);
@@ -116,11 +118,18 @@ namespace BookingApp.WPF.ViewModel.Tourist
             {
                 var selectedId = _selectedStartTime.Value.Key;
                 _selectedTourInstance = _tourInstanceService.GetById(selectedId);
+                FillNumberOfPeopleOptions();
             }
         }
         private void CheckIfFull()
         {
-            if (_selectedTourInstance != null && NumberOfPeople > _selectedTourInstance.RemainingSlots)
+            if(_selectedTourInstance == null)
+            {
+                MessageBox.Show("Select time first");
+                return;
+            }
+
+            if (!_tourInstanceService.CheckAvailability(_selectedTourInstance.Id, NumberOfPeople))
             {
                 MessageBox.Show($"Insufficient spots available for the selected tour. Remaining spots for the selected date: {_selectedTourInstance.RemainingSlots}.");
                 NumberOfPeople = 0;
@@ -151,28 +160,22 @@ namespace BookingApp.WPF.ViewModel.Tourist
         {
             return GuestInputs.Select(guest => new TourGuest(guest.FirstName + " " + guest.LastName, guest.Age, _selectedTourInstance.Id, _touristId, 0)).ToList();
         }
-        public void UpdateTourCapacity()
+        public bool SaveGuests()
         {
-            if (_selectedTourInstance != null)
-            {
-                _selectedTourInstance.RemainingSlots -= NumberOfPeople;
-                _tourInstanceService.Update(_selectedTourInstance);
-            }
+            var guests = CollectGuestData();
+            if (!guests.Any()) return false;
+            _tourGuestService.SaveMultiple(guests);
+            return true;
         }
         public void SaveReservation()
         {
-            var guests = CollectGuestData();
-            if (guests.Any())
-            {
-                UpdateTourCapacity();
-                UseVoucher();
-                TourReservation tourReservation = new TourReservation(_selectedTourInstance.Id, _touristId);
-                _tourGuestService.SaveMultiple(guests);
-                _tourReservationService.Save(tourReservation);
-                MessageBox.Show("Reservation successful");
-            }
+            if (!SaveGuests()){ MessageBox.Show("Invalid guest input"); return; }
+            UseVoucher();
+            _tourInstanceService.ReserveSlots(_selectedTourInstance.Id, NumberOfPeople);
+            TourReservation tourReservation = new TourReservation(_selectedTourInstance.Id, _touristId);
+            _tourReservationService.Save(tourReservation);
+            MessageBox.Show("Reservation successful");
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {

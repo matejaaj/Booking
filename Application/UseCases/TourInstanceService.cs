@@ -51,6 +51,23 @@ namespace BookingApp.Application.UseCases
         {
             return _tourInstanceRepository.Update(tourInstance);
         }
+
+
+        public bool CheckAvailability(int tourInstanceId, int numberOfGuests)
+        {
+            var tourInstance = _tourInstanceRepository.GetById(tourInstanceId);
+            return tourInstance != null && numberOfGuests <= tourInstance.RemainingSlots;
+        }
+
+        public void ReserveSlots(int tourInstanceId, int numberOfGuests)
+        {
+            var tourInstance = _tourInstanceRepository.GetById(tourInstanceId);
+            if (tourInstance != null && numberOfGuests <= tourInstance.RemainingSlots)
+            {
+                tourInstance.RemainingSlots -= numberOfGuests;
+                _tourInstanceRepository.Update(tourInstance);
+            }
+        }
     }
 
 }
