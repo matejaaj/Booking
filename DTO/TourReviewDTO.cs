@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.DTO
 {
-    internal class TourReviewDTO : INotifyPropertyChanged
+    public class TourReviewDTO : INotifyPropertyChanged
     {
 
         private readonly TourGuestService _tourGuestService;

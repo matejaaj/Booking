@@ -1,5 +1,7 @@
 ﻿using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.DTO;
+using BookingApp.WPF.View.Guide;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,5 +54,22 @@ namespace BookingApp.Application.UseCases
             return _tourReviewRepository.HasUserReviewedTour(userId, tourInstanceId);
         }
 
+        public void ReportReview(int id)
+        {
+            TourReview newReview = GetById(id);
+            newReview.IsValid = false;
+            Update(newReview);
+        }
+
+        public List<TourReviewDTO> GetAllByTourInstanceId(int instanceId)
+        {
+            List<TourReviewDTO> reviews = new List<TourReviewDTO>();
+            foreach (var review in GetAll())
+            {
+                if (review.TourInstanceId == instanceId)
+                    reviews.Add(new TourReviewDTO(review));
+            }
+            return reviews;
+        }
     }
 }

@@ -26,7 +26,6 @@ namespace BookingApp.WPF.ViewModel.Guide
             _tourInstanceService = new TourInstanceService();
             TourInstances = new ObservableCollection<TourInstance>(_tourInstanceService.GetAllByTourId(tourId));
         }
-
         public void CancelTour()
         {
             if (SelectedInstance == null || SelectedInstance.IsCompleted)
@@ -44,7 +43,6 @@ namespace BookingApp.WPF.ViewModel.Guide
                 MessageBox.Show("You can cancel tour at least 48 hours before start time!");
             }
         }
-
         private bool IsCancellationAllowed()
         {
             return SelectedInstance.StartTime > DateTime.Now.AddHours(48);
