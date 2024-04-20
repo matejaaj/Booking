@@ -88,5 +88,22 @@ namespace BookingApp.Application.UseCases
             var tourGuests = _tourGuestService.GetAll();
             return tourGuests.Count(guest => guest.TourReservationId == instance.Id);
         }
+
+        public List<Tour> LoadTodayTours()
+        {
+            List<Tour> todayTours = new List<Tour>();
+
+            foreach (var tourInstance in _tourInstanceService.GetAll())
+            {
+                if (tourInstance.StartTime.Date == DateTime.Now.Date && !tourInstance.IsCompleted)
+                {
+                    var matchingTour = GetAll().FirstOrDefault(tour => tour.Id == tourInstance.TourId);
+                    if (matchingTour != null)
+                        todayTours.Add(matchingTour);
+                }
+            }
+
+            return todayTours;
+        }
     }
 }
