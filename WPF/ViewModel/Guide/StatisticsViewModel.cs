@@ -63,45 +63,8 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         public void Search()
         {
-            Tour mostVisitedTour = FindMostVisitedTour();
+            Tour mostVisitedTour = _tourService.FindMostVisited(SelectedYear);
             MostVisitedTour = new TourDTO(mostVisitedTour);
         }
-
-        private Tour FindMostVisitedTour()
-        {
-            int mostTourist = 0;
-            Tour mostVisitedTour = _tours[0];
-
-            foreach (var tour in _tours)
-            {
-                int currentTourTourists = CalculateTotalTouristsForTour(tour);
-                if (currentTourTourists > mostTourist)
-                {
-                    mostTourist = currentTourTourists;
-                    mostVisitedTour = tour;
-                }
-            }
-
-            return mostVisitedTour;
-        }
-
-        private int CalculateTotalTouristsForTour(Tour tour)
-        {
-            return _tourInstances
-                .Where(instance => ShouldIncludeInstance(instance))
-                .Where(instance => instance.TourId == tour.Id)
-                .Sum(instance => CalculateTotalTouristsForInstance(instance));
-        }
-
-        private bool ShouldIncludeInstance(TourInstance instance)
-        {
-            return (SelectedYear.Equals("All time") || instance.StartTime.Year.ToString().Equals(SelectedYear)) && instance.IsCompleted;
-        }
-
-        private int CalculateTotalTouristsForInstance(TourInstance instance)
-        {
-            return _tourGuests.Count(guest => guest.TourReservationId == instance.Id);
-        }
-
     }
 }
