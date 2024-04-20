@@ -36,7 +36,7 @@ namespace BookingApp.WPF.ViewModel.Guide
 
             if (IsCancellationAllowed())
             {
-                CancelTourAndIssueVoucher();
+                _tourInstanceService.CancelTour(SelectedInstance);
                 MessageBox.Show("Successfully canceled!");
             }
             else
@@ -49,30 +49,5 @@ namespace BookingApp.WPF.ViewModel.Guide
         {
             return SelectedInstance.StartTime > DateTime.Now.AddHours(48);
         }
-
-        private void CancelTourAndIssueVoucher()
-        {
-            IssueVouchersToTourParticipants();
-            _tourInstanceService.Delete(SelectedInstance);
-        }
-
-        private void IssueVouchersToTourParticipants()
-        {
-            List<TourReservation> allToursReservations = _tourReservationService.GetAll();
-            foreach (var tourReservation in allToursReservations)
-            {
-                if (tourReservation.TourInstanceId == SelectedInstance.Id)
-                {
-                    IssueVoucher(tourReservation.UserId);
-                }
-            }
-        }
-
-        private void IssueVoucher(int userId)
-        {
-            Voucher voucher = new Voucher(userId, DateTime.Now.AddYears(1));
-            _voucherService.Save(voucher);
-        }
-
     }
 }

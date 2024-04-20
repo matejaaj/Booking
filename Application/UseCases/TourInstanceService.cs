@@ -1,20 +1,25 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.Model.BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BookingApp.Application.UseCases
 {
     public class TourInstanceService
     {
         private readonly ITourInstanceRepository _tourInstanceRepository;
-
+        private readonly TourReservationService _tourReservationService;
+        private readonly VoucherService _voucherService;
         public TourInstanceService()
         {
             _tourInstanceRepository = Injector.CreateInstance<ITourInstanceRepository>();
+            _tourReservationService = new TourReservationService();
+            _voucherService = new VoucherService();
         }
 
         public List<TourInstance> GetAll()
@@ -67,6 +72,29 @@ namespace BookingApp.Application.UseCases
                 tourInstance.RemainingSlots -= numberOfGuests;
                 _tourInstanceRepository.Update(tourInstance);
             }
+        }
+
+        public void CancelTour(TourInstance SelectedInstance)
+        {
+            IssueVouchersToTourParticipants(SelectedInstance);
+            Delete(SelectedInstance);
+        }
+
+        private void IssueVouchersToTourParticipants(TourInstance SelectedInstance)
+        {
+            List<TourReservation> allToursReservations = _tourReservationService.GetAll();
+            foreach (var tourReservation in allToursReservations)
+            {
+                if (tourReservation.TourInstanceId == SelectedInstance.Id)
+                {
+                    IssueVoucher(tourReservation.UserId);
+                }
+            }
+        }
+        private void IssueVoucher(int userId)
+        {
+            Voucher voucher = new Voucher(userId, DateTime.Now.AddYears(1));
+            _voucherService.Save(voucher);
         }
     }
 
