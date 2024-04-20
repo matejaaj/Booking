@@ -96,6 +96,20 @@ namespace BookingApp.Application.UseCases
             Voucher voucher = new Voucher(userId, DateTime.Now.AddYears(1));
             _voucherService.Save(voucher);
         }
+
+        public void FinishTour(int id)
+        {
+            var finishedTour = GetById(id);
+            finishedTour.IsCompleted = true;
+            Update(finishedTour);
+        }
+
+        public void UpdateCheckpoint(int id, string checkpoint)
+        {
+            var tour = GetById(id);
+            tour.CurrentCheckpoint = checkpoint;
+            Update(tour);
+        }
     }
 
 }
