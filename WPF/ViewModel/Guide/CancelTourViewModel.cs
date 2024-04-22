@@ -23,7 +23,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         private readonly VoucherService _voucherService;
         public CancelTourViewModel(int tourId)
         {
-            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>());
+            _tourReservationService = new TourReservationService();
             _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
             _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService);
             TourInstances = new ObservableCollection<TourInstance>(_tourInstanceService.GetAllByTourId(tourId));

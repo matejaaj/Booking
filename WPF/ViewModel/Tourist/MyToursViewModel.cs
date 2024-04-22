@@ -22,6 +22,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourReservationService _tourReservationService;
         private CheckpointService _checkPointService;
         private VoucherService _voucherService;
+        private TourReviewService _tourReveiewService;
 
         public MyToursViewModel(User loggedUser)
         {
@@ -58,15 +59,21 @@ namespace BookingApp.WPF.ViewModel.Tourist
             var tourInstanceIds = tourReservations.Select(reservation => reservation.TourInstanceId).ToList();
             return tourInstanceIds;
         }
+
+        public bool CheckIfAlreadyReveiewed(int userId, int tourId)
+        {
+            return _tourReveiewService.HasUserReviewedTour(userId, tourId);
+        }
+
         private void InitializeServices()
         {
             _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
-            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>());
-            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService);
             _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
+            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService);
             _checkPointService = new CheckpointService(Injector.CreateInstance<ICheckpointRepository>(), _tourInstanceService);
             _tourService = new TourService(Injector.CreateInstance<ITourRepository>(), _tourGuestService, _tourInstanceService);
-
+            _tourReveiewService = new TourReviewService(Injector.CreateInstance<ITourReviewRepository>());
         }
     }
 }

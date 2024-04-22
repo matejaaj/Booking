@@ -11,16 +11,21 @@ namespace BookingApp.Application.UseCases
     public class TourReservationService
     {
         private readonly ITourReservationRepository _tourReservationRepository;
+        private readonly TourGuestService _tourGuestService;
+        private readonly VoucherService _voucherService;
+        private readonly TourInstanceService _tourInstanceService;
 
-        // Injector.CreateInstance<ITourReservationRepository>(); u poziv
 
         public TourReservationService()
         {
             _tourReservationRepository = Injector.CreateInstance<ITourReservationRepository>();
         }
-        public TourReservationService(ITourReservationRepository tourReservation)
+
+        public TourReservationService(ITourReservationRepository tourReservation, TourGuestService tourGuest, VoucherService voucher)
         {
             _tourReservationRepository = tourReservation;
+            _tourGuestService = tourGuest;
+            _voucherService = voucher;
         }
 
         public List<TourReservation> GetAll()
@@ -53,6 +58,18 @@ namespace BookingApp.Application.UseCases
             return _tourReservationRepository.Update(tourReservation);
         }
 
+        public void CreateTourReservation(List<TourGuest> tourGuests, int voucherId,  int tourInstanceId, int numberOfPeople, int touristId)
+        {
+            _tourGuestService.SaveMultiple(tourGuests);
+            _tourInstanceService.ReserveSlots(tourInstanceId, numberOfPeople);
+            if(voucherId != -1)
+            {
+                _voucherService.Delete(voucherId);
+            }
+            TourReservation reservation = new TourReservation(tourInstanceId, touristId);
+            Save(reservation);
+            return;
+        }
 
     }
 

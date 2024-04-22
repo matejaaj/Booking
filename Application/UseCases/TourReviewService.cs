@@ -19,6 +19,11 @@ namespace BookingApp.Application.UseCases
             _tourReviewRepository = Injector.CreateInstance<ITourReviewRepository>();
         }
 
+        public TourReviewService(ITourReviewRepository tourReviewRepository)
+        {
+            _tourReviewRepository = tourReviewRepository;
+        }
+
         public List<TourReview> GetAll()
         {
             return _tourReviewRepository.GetAll();

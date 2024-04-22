@@ -81,11 +81,11 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
         private void InitializeServices()
         {
+            VoucherService voucher = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
             _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
-            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>());
+            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
             _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService);
-
-            _tourGuestService = new TourGuestService();
 
         }
         private void FillCollections()
@@ -148,36 +148,27 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 GuestInputs.Add(new TourGuestInputViewModel());
             }
         }
-        public void UseVoucher()
-        {
-            if (SelectedVoucher.HasValue)
-            {
-                _voucherService.Delete(SelectedVoucher.Value.Key);
-                MessageBox.Show($"Voucher expiring on {SelectedVoucher.Value.Value} has been successfully used and deleted.");
-                SelectedVoucher = null;
-            }
-        }
+
         public List<TourGuest> CollectGuestData()
         {
             return GuestInputs.Select(guest => new TourGuest(guest.FirstName + " " + guest.LastName, guest.Age, _selectedTourInstance.Id, _touristId, 0)).ToList();
         }
-        public bool SaveGuests()
-        {
-            var guests = CollectGuestData();
-            if (!guests.Any()) return false;
-            _tourGuestService.SaveMultiple(guests);
-            return true;
-        }
 
-        //tourreseration service
         public void SaveReservation()
         {
-            if (!SaveGuests()){ MessageBox.Show("Invalid guest input"); return; }
-            UseVoucher();
-            _tourInstanceService.ReserveSlots(_selectedTourInstance.Id, NumberOfPeople);
-            TourReservation tourReservation = new TourReservation(_selectedTourInstance.Id, _touristId);
-            _tourReservationService.Save(tourReservation);
+            var guests = CollectGuestData();
+            if(!guests.Any()) return;
+
+            int voucherId = -1;
+            if (SelectedVoucher.HasValue)
+            {
+                voucherId = SelectedVoucher.Value.Key;
+                SelectedVoucher = null;
+            }
+
+            _tourReservationService.CreateTourReservation(guests, voucherId, _selectedTourInstance.Id, NumberOfPeople, _touristId);
             MessageBox.Show("Reservation successful");
+ 
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)

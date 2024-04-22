@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -26,12 +28,17 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public ReviewTourViewModel(TourInstanceViewModel tour, int touristId)
         {
             TouristId = touristId;
-            _tourReviewService = new TourReviewService();
-            _imageService = new ImageService();
             SelectedTourInstance = tour;
+
+            _tourReviewService = new TourReviewService(Injector.CreateInstance<ITourReviewRepository>());
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
+
             ReviewForms = new ObservableCollection<ReviewTourFormViewModel>();
             SetReviewForms();
         }
+
+
+
         private void SetReviewForms()
         {
             foreach (var guest in SelectedTourInstance.Guests.Where(g => g.CheckpointId != 0))
