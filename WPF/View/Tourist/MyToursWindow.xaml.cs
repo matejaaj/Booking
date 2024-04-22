@@ -41,7 +41,8 @@ namespace BookingApp.WPF.View.Tourist
             }
 
         }
-
+    
+        //prebaci u servis
         private void RateTour_Click(object sender, RoutedEventArgs e)
         {
             TourReviewService _tourReviewService = new TourReviewService();

@@ -13,11 +13,18 @@ namespace BookingApp.Application.UseCases
         private ITourRepository _tourRepository;
         private readonly TourGuestService _tourGuestService;
         private readonly TourInstanceService _tourInstanceService;
+
         public TourService()
         {
             _tourRepository = Injector.CreateInstance<ITourRepository>();
             _tourGuestService = new TourGuestService();
             _tourInstanceService = new TourInstanceService();
+        }
+        public TourService(ITourRepository tourRepository, TourGuestService tourGuest, TourInstanceService tourInstance)
+        {
+            _tourRepository = tourRepository;
+            _tourGuestService =  tourGuest;
+            _tourInstanceService = tourInstance;
         }
 
         public List<Tour> GetAll()

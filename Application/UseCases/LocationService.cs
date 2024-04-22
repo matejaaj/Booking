@@ -17,6 +17,10 @@ namespace BookingApp.Application.UseCases
             _locationRepository = Injector.CreateInstance<ILocationRepository>();
         }
 
+        public LocationService(ILocationRepository locationRepository)
+        {
+            _locationRepository = locationRepository;
+        }
 
         public int GetLocationIdByCity(string city)
         {

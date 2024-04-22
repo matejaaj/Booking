@@ -13,10 +13,17 @@ namespace BookingApp.Application.UseCases
     {
         private readonly ICheckpointRepository _checkpointRepository;
         private readonly TourInstanceService _tourInstanceService;
+
         public CheckpointService()
         {
             _checkpointRepository = Injector.CreateInstance<ICheckpointRepository>();
             _tourInstanceService = new TourInstanceService();
+        }
+
+        public CheckpointService(ICheckpointRepository checkpoint, TourInstanceService tourInstance)
+        {
+            _checkpointRepository = checkpoint;
+            _tourInstanceService = tourInstance;
         }
 
         public List<Checkpoint> GetAll()

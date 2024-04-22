@@ -17,6 +17,11 @@ namespace BookingApp.Application.UseCases
             _driveReservationRepository = Injector.CreateInstance<IDriveReservationRepository>();
         }
 
+        public DriveReservationService(IDriveReservationRepository driveReservationRepository)
+        {
+            _driveReservationRepository = driveReservationRepository;
+        }
+
         public List<DriveReservation> GetAll()
         {
             return _driveReservationRepository.GetAll();

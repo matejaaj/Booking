@@ -17,6 +17,11 @@ namespace BookingApp.Application.UseCases
             _vehicleRepository = Injector.CreateInstance<IVehicleRepository>();
         }
 
+        public VehicleService(IVehicleRepository vehicle)
+        {
+            _vehicleRepository = vehicle;
+        }
+
         public List<Vehicle> GetAll()
         {
             return _vehicleRepository.GetAll();

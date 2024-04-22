@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
@@ -37,11 +39,11 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
         private void InitializeServices()
         {
-            _vehicleService = new VehicleService();
-            _detailedLocationService = new DetailedLocationService();
-            _locationService = new LocationService();
-            _driveReservationService = new DriveReservationService();
-            _userService = new UserService();
+            _vehicleService = new VehicleService(Injector.CreateInstance<IVehicleRepository>());
+            _detailedLocationService = new DetailedLocationService(Injector.CreateInstance<IDetailedLocationRepository>());
+            _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            _driveReservationService = new DriveReservationService(Injector.CreateInstance<IDriveReservationRepository>());
+            _userService = new UserService(Injector.CreateInstance<IUserRepository>());
         }
 
         public void CheckForDriverAssignment()

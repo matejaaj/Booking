@@ -18,6 +18,11 @@ namespace BookingApp.Application.UseCases
             _userRepository = Injector.CreateInstance<IUserRepository>();
         }
 
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
         public List<User> GetAll()
         {
             return _userRepository.GetAll();

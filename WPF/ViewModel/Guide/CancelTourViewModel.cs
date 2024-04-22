@@ -1,6 +1,8 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.Model.BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,9 +23,9 @@ namespace BookingApp.WPF.ViewModel.Guide
         private readonly VoucherService _voucherService;
         public CancelTourViewModel(int tourId)
         {
-            _tourReservationService = new TourReservationService();
-            _voucherService = new VoucherService();
-            _tourInstanceService = new TourInstanceService();
+            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>());
+            _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService);
             TourInstances = new ObservableCollection<TourInstance>(_tourInstanceService.GetAllByTourId(tourId));
         }
         public void CancelTour()

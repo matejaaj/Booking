@@ -17,6 +17,11 @@ namespace BookingApp.Application.UseCases
             _detailedLocationRepository = Injector.CreateInstance<IDetailedLocationRepository>();
         }
 
+        public DetailedLocationService(IDetailedLocationRepository detailed)
+        {
+            _detailedLocationRepository = detailed;
+        }
+
         public List<DetailedLocation> GetAll()
         {
             return _detailedLocationRepository.GetAll();

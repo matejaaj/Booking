@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -234,7 +236,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
         public void FillDrivers(List<int> driverIds)
         {
-            UserService _userService = new UserService();
+            UserService _userService = new UserService(Injector.CreateInstance<IUserRepository>());
             var drivers = _userService.GetByIds(driverIds);
             Drivers.Clear();
             foreach (var driver in drivers)

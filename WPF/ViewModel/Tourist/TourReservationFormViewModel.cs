@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using System;
 using System.Collections.Generic;
@@ -79,10 +81,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
         private void InitializeServices()
         {
-            _tourInstanceService = new TourInstanceService();
-            _tourReservationService = new TourReservationService();
+            _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>());
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService);
+
             _tourGuestService = new TourGuestService();
-            _voucherService = new VoucherService();
+
         }
         private void FillCollections()
         {
@@ -114,12 +118,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
         private void OnStartTimeChanged()
         {
-            if (_selectedStartTime.HasValue)
-            {
-                var selectedId = _selectedStartTime.Value.Key;
-                _selectedTourInstance = _tourInstanceService.GetById(selectedId);
-                FillNumberOfPeopleOptions();
-            }
+            var selectedId = _selectedStartTime.Value.Key;
+            _selectedTourInstance = _tourInstanceService.GetById(selectedId);
+            FillNumberOfPeopleOptions();
         }
         private void CheckIfFull()
         {
@@ -167,6 +168,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _tourGuestService.SaveMultiple(guests);
             return true;
         }
+
+        //tourreseration service
         public void SaveReservation()
         {
             if (!SaveGuests()){ MessageBox.Show("Invalid guest input"); return; }

@@ -12,9 +12,15 @@ namespace BookingApp.Application.UseCases
     {
         private readonly ITourReservationRepository _tourReservationRepository;
 
+        // Injector.CreateInstance<ITourReservationRepository>(); u poziv
+
         public TourReservationService()
         {
             _tourReservationRepository = Injector.CreateInstance<ITourReservationRepository>();
+        }
+        public TourReservationService(ITourReservationRepository tourReservation)
+        {
+            _tourReservationRepository = tourReservation;
         }
 
         public List<TourReservation> GetAll()
@@ -46,6 +52,8 @@ namespace BookingApp.Application.UseCases
         {
             return _tourReservationRepository.Update(tourReservation);
         }
+
+
     }
 
 }

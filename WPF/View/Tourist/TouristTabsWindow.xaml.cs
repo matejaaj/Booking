@@ -37,18 +37,17 @@ namespace BookingApp.WPF.View.Tourist
         {
             if (e.OriginalSource is TabControl tabControl)
             {
-                // Uzmite trenutno selektovan TabItem
                 var selectedTab = tabControl.SelectedItem as TabItem;
 
                 switch (selectedTab.Header)
                 {
                     case "Ture":
-                        // Logika za 'Ture' tab
+
                         break;
                     case "Taksi":
-                        // Logika za 'Taksi' tab
+
                         break;
-                        // Dodajte case-ove za druge glavne tabove ako ih ima
+
                 }
             }
         }
