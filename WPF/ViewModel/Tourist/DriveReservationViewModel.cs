@@ -44,7 +44,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _userService = new UserService();
         }
 
-
         public void CheckForDriverAssignment()
         {
             var statusesToCheck = new List<string> { "CONFIRMED_FAST", "FAST_RESERVATION" };
@@ -65,11 +64,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
-
-
-
-
-
         public void FillCities()
         {
             var cities = _locationService.GetCitiesByCountry(FormViewModel.SelectedCountry.Value).ToList();
@@ -107,7 +101,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
 
             MessageBox.Show("Reservation successful");
-
         }
     }
 }
