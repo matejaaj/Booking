@@ -50,7 +50,7 @@ namespace BookingApp.LogicServices.Driver
 
         public static Boolean CheckForStatusUpdate(SuperDriverState superDriverState)
         {
-            if(superDriverState != null && superDriverState.NumberOfDrives >= 15) 
+            if (superDriverState != null && superDriverState.NumberOfDrives >= 15)
             {
                 DateTime dt = System.DateTime.Today;
                 superDriverState.IsSuper = 1;
@@ -65,10 +65,31 @@ namespace BookingApp.LogicServices.Driver
 
         public static bool IsReadyForBonus(int DriverId)
         {
-            SuperDriverState superDriverState = superDriverStateService.Get(DriverId);
-            if(superDriverState.IsSuper == 1 && superDriverState.StateOfPoints == 50) 
+            SuperDriverState? superDriverState = superDriverStateService.Get(DriverId);
+            if (superDriverState != null && superDriverState.IsSuper == 1 && superDriverState.StateOfPoints == 50)
                 return true;
             return false;
+        }
+
+        public static bool CanceledResevationByDriver(int DriverId)
+        {
+            bool res = false;
+            SuperDriverState? superDriverState = superDriverStateService.Get(DriverId);
+            if (superDriverState != null)
+            {
+                superDriverState.StateOfPoints -= 5;
+                if (superDriverState.StateOfPoints <= 0)
+                {
+                    superDriverState.NumberOfDrives = 0;
+                    superDriverState.IsSuper = 0;
+                    superDriverState.StateOfPoints = 0;
+                    superDriverState.DateOfGettingStatus = null;
+                    superDriverState.DateOfEndingOfStatus = null;
+                    res = true;
+                }
+                superDriverStateService.Update(superDriverState);
+            }
+            return res;
         }
     }
 }
