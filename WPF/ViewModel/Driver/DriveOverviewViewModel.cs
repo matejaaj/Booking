@@ -2,13 +2,8 @@
 using BookingApp.Domain.Model;
 using BookingApp.Repository;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -22,7 +17,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         public DriveReservation Reservation { get; set; }
         public DispatcherTimer Timer { get; set; }
         private TripRepository tripRepository { get; set; }
-        private DriveReservationService driveReservationRepository { get; set; }
+        private DriveReservationService driveReservationSerivce { get; set; }
         private Trip trip { get; set; }
 
         public DriveOverviewViewModel(DriveReservationService service)
@@ -35,7 +30,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             tripRepository = new TripRepository();
             trip = new Trip();
             trip.Status = TripStatus.DriverArrived;
-            driveReservationRepository = service;
+            driveReservationSerivce = service;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -103,7 +98,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             tripRepository.Save(trip);
             MessageBox.Show(String.Format("Total price for this ride is: {0}", Price), "Drive");
             Reservation.DriveReservationStatusId = 6;
-            driveReservationRepository.Update(Reservation);
+            driveReservationSerivce.Update(Reservation);
             Finished?.Invoke(this, EventArgs.Empty);
         }
 
