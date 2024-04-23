@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.LogicServices.Driver;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Driver;
 using System;
@@ -21,9 +22,9 @@ namespace BookingApp.WPF.ViewModel.Driver
         public static DriveReservation SelectedReservation { get; set; }
         public static bool canCancel { get; set; }
 
-        private readonly DriveReservationService _repository;
+        private readonly DriveReservationService driveReservationService;
         private readonly LocationRepository _locationRepository;
-        private readonly VehicleService _vehicleRepository;
+        private readonly VehicleService vehicleService;
 
         private DispatcherTimer cancelTime = new DispatcherTimer();
         private DispatcherTimer fastDriveTimer = new DispatcherTimer();
@@ -78,10 +79,10 @@ namespace BookingApp.WPF.ViewModel.Driver
         {
             DriverId = driver.Id;
             Vehicles = new ObservableCollection<Vehicle>();
-            _repository = new DriveReservationService();
-            DriveReservations = new ObservableCollection<DriveReservation>(_repository.GetByDriver(driver.Id));
+            driveReservationService = new DriveReservationService();
+            DriveReservations = new ObservableCollection<DriveReservation>(driveReservationService.GetByDriver(driver.Id));
             _locationRepository = new LocationRepository();
-            _vehicleRepository = new VehicleService();
+            vehicleService = new VehicleService();
             locations = _locationRepository.GetAll();
             canCancel = false;
             ConfirmedReservation = null;
@@ -96,7 +97,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void UpdateVehicleCount()
         {
-            var allVehicles = _vehicleRepository.GetAll();
+            var allVehicles = vehicleService.GetAll();
             TxtVehicleCount = $"Ukupno registrovanih vozila: {allVehicles.Count}";
         }
 
@@ -119,7 +120,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 VM = 
                 {
                     reservation = SelectedReservation,
-                    Repo = _repository
+                    Repo = driveReservationService
                 }
             };
             vForm.VM.ReservationConfirmed += DataGrid_Refresh;
@@ -134,7 +135,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void UpdateReservationList()
         {
-            ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(_repository.GetByDriver(DriverId));
+            ObservableCollection<DriveReservation> _reservations = new ObservableCollection<DriveReservation>(driveReservationService.GetByDriver(DriverId));
             _reservations = new ObservableCollection<DriveReservation>(_reservations.OrderBy(d => d.DriveReservationStatusId).ToList());
             DriveReservations.Clear();
             foreach (DriveReservation reservation in _reservations)
@@ -170,7 +171,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 return;
             }
 
-            RespondView rvForm = new RespondView(SelectedReservation, _repository);
+            RespondView rvForm = new RespondView(SelectedReservation, driveReservationService);
             rvForm.VM.ReservationConfirmed += DataGrid_Refresh;
             rvForm.Show();
         }
@@ -184,7 +185,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 return;
             }
             SelectedReservation.DriveReservationStatusId = 8;
-            _repository.Update(SelectedReservation);
+            driveReservationService.Update(SelectedReservation);
             cancelTime.Stop();
             sec = 0;
             secTourist = 0;
@@ -222,9 +223,9 @@ namespace BookingApp.WPF.ViewModel.Driver
                 return;
             }
 
-            var fastReservations = _repository.GetAll()
+            var fastReservations = driveReservationService.GetAll()
                 .Where(dr => dr.DriveReservationStatusId == 12 &&
-                             _vehicleRepository.GetDriverIdsByLocationId(dr.PickupLocationId).Contains(DriverId))
+                             vehicleService.GetDriverIdsByLocationId(dr.PickupLocationId).Contains(DriverId))
                 .ToList();
 
             if (!fastReservations.Any())
@@ -251,18 +252,22 @@ namespace BookingApp.WPF.ViewModel.Driver
             DriveReservations.Clear();
             reservation.DriveReservationStatusId = 13;
             reservation.DriverId = DriverId;
-            _repository.Update(reservation);
+            if (SuperDriverService.UpdateStateForDriver(DriverId))
+                MessageBox.Show("Congratulations!\nYou are now Super-Driver!","Super-Driver Notification", MessageBoxButton.OK);
+            if (SuperDriverService.IsReadyForBonus(DriverId))
+                MessageBox.Show("Congratulations!\nYou are now getting paid more!", "Super-Driver Notification", MessageBoxButton.OK);
+            driveReservationService.Update(reservation);
             UpdateReservationList();
         }
 
         public void btnDeleteVehicle_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(TxtVehicleIdInput, out int vehicleId);
-            var allVehicles = _vehicleRepository.GetAll();
+            var allVehicles = vehicleService.GetAll();
             var vehicleToDelete = allVehicles.FirstOrDefault(v => v.VehicleId == vehicleId);
             if (vehicleToDelete != null)
             {
-                _vehicleRepository.Delete(vehicleToDelete);
+                vehicleService.Delete(vehicleToDelete);
                 MessageBox.Show("Vozilo je uspešno izbrisano.");
                 UpdateVehicleCount(); 
                 TxtVehicleIdInput = ""; 
@@ -278,7 +283,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 return;
             }
 
-            DriveOverview dForm = new DriveOverview(_repository);
+            DriveOverview dForm = new DriveOverview(driveReservationService);
             dForm.VM.Reservation = SelectedReservation;
             dForm.VM.Finished += VehicleForm_VehicleAdded;
             dForm.Show();
@@ -286,7 +291,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void btnStats_Click(object sender, RoutedEventArgs e)
         {
-            Stats sForm = new Stats(DriverId, _repository);
+            Stats sForm = new Stats(DriverId, driveReservationService);
             sForm.Show();
         }
 
