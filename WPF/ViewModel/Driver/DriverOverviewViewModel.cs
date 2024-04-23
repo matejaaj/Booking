@@ -190,7 +190,8 @@ namespace BookingApp.WPF.ViewModel.Driver
             sec = 0;
             secTourist = 0;
             UpdateReservationList();
-                
+            if (SuperDriverService.CanceledResevationByDriver(DriverId))
+                MessageBox.Show("You just lost status of Super-Driver!", "Super-Driver Notification", MessageBoxButton.OK);
         }
 
         public void CancelTime_Tick(object? sender, EventArgs e)
