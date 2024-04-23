@@ -1,4 +1,5 @@
-﻿using BookingApp.Domain.Model;
+﻿using BookingApp.Application.UseCases;
+using BookingApp.Domain.Model;
 using BookingApp.WPF.ViewModel.Tourist;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,14 @@ namespace BookingApp.WPF.View.Tourist
     public partial class MyToursWindow : Window
     {
         public User User { get; set; }
+        public MyToursViewModel ViewModel { get; set; }
 
         public MyToursWindow(User user)
         {
             InitializeComponent();
             User = user;
-            MyToursViewModel viewModel = new MyToursViewModel(user);
-            DataContext = viewModel;
+            ViewModel = new MyToursViewModel(user);
+            DataContext = ViewModel;
         }
 
         private void MoreDetails_Click(object sender, RoutedEventArgs e)
@@ -40,7 +42,7 @@ namespace BookingApp.WPF.View.Tourist
             }
 
         }
-
+    
         private void RateTour_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -53,10 +55,19 @@ namespace BookingApp.WPF.View.Tourist
                     return;
                 }
 
+                if (ViewModel.CheckIfAlreadyReveiewed(User.Id, tour.Id))
+                {
+                    MessageBox.Show("Tura je već ocenjena");
+                    return;
+                }
+
                 var reviewWindow = new ReviewTourWindow(tour, User.Id);
                 reviewWindow.Show();
             }
-            
         }
+
+
+
+
     }
 }

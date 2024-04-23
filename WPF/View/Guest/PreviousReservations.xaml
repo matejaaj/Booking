@@ -31,6 +31,7 @@
                         <StackPanel Grid.Column="2" Grid.RowSpan="2" Orientation="Vertical" HorizontalAlignment="Right" Margin="530 0 0 0">
                             <Button Content="Rate" Click="RateButton_Click" Tag="{Binding}" Margin="0 5 0 0"/>
                             <Button Content="Request Modification" Click="RequestModificationButton_Click" Tag="{Binding}" Margin="0 5 0 0"/>
+                            <Button Content="Cancel Reservation" Click="CancelReservationButton_Click" Tag="{Binding}" Margin="0 5 0 0"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

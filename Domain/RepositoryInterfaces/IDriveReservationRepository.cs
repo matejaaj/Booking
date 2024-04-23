@@ -16,5 +16,7 @@ namespace BookingApp.Domain.RepositoryInterfaces
         List<int> FilterAvailableDrivers(List<int> drivers, DateTime? targetStartTime);
         List<DriveReservation> GetByDriver(int driverId);
         List<DriveReservation> GetByTourist(int touristId);
+        List<DriveReservation> GetByTouristAndStatus(int touristId, string status);
+        List<DriveReservation> GetByTouristAndStatuses(int touristId, List<string> statuses);
     }
 }

@@ -36,25 +36,16 @@ namespace BookingApp.WPF.ViewModel.Guide
                 }
             }
         }
-
         public ReviewsViewModel(TourInstance instance)
         {
             _tourReviewService = new TourReviewService();
-            Reviews = new ObservableCollection<TourReviewDTO>();
-
-            foreach(var review in _tourReviewService.GetAll())
-            {
-                if(review.TourId == instance.Id)
-                    Reviews.Add(new TourReviewDTO(review));
-            }
+            Reviews = new ObservableCollection<TourReviewDTO>(_tourReviewService.GetAllByTourInstanceId(instance.Id));
         }
         public void ReportReview()
         {
             if(SelectedReview != null)
             {
-                TourReview newReview = _tourReviewService.GetById(SelectedReview.Id);
-                newReview.IsValid = false;
-                _tourReviewService.Update(newReview);
+                _tourReviewService.ReportReview(SelectedReview.Id);
                 MessageBox.Show("Succesfully reported!");
             }
         }

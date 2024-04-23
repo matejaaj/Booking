@@ -22,7 +22,6 @@ namespace BookingApp.WPF.ViewModel.Guide
         {
             _tourService = new TourService();
             _tourInstanceService = new TourInstanceService();
-            TodayTours = new ObservableCollection<Tour>();
             todayDate = DateTime.Now;
 
             LoadTodayTours();
@@ -30,18 +29,7 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         private void LoadTodayTours()
         {
-            var tours = _tourService.GetAll();
-            var tourInstances = _tourInstanceService.GetAll();
-
-            foreach (var tourInstance in tourInstances)
-            {
-                if (tourInstance.StartTime.Date == todayDate.Date && !tourInstance.IsCompleted)
-                {
-                    var matchingTour = tours.FirstOrDefault(tour => tour.Id == tourInstance.TourId);
-                    if (matchingTour != null)
-                        TodayTours.Add(matchingTour);
-                }
-            }
+            TodayTours = new ObservableCollection<Tour>(_tourService.LoadTodayTours());
         }
 
         public void StartTour()
@@ -65,7 +53,6 @@ namespace BookingApp.WPF.ViewModel.Guide
                 }
             }
         }
-
         private void UpdateTodayTours()
         {
             TodayTours.Clear();

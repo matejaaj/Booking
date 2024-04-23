@@ -11,7 +11,7 @@ namespace BookingApp.Domain.Model
     public class TourReview : ISerializable
     {
         public int Id { get; set; }
-        public int TourId { get; set; }
+        public int TourInstanceId { get; set; }
         public int TouristId { get; set; }
         public int TourGuestId { get; set; }
         public int Rating { get; set; }
@@ -22,7 +22,7 @@ namespace BookingApp.Domain.Model
 
         public TourReview(int tourId, int touristId, int tourGuestId, int rating, string comment, bool isValid)
         {
-            TourId = tourId;
+            TourInstanceId = tourId;
             TouristId = touristId;
             TourGuestId = tourGuestId;
             Rating = rating;
@@ -33,7 +33,7 @@ namespace BookingApp.Domain.Model
         public void FromCSV(string[] values)
         {
             Id = int.Parse(values[0]);
-            TourId = int.Parse(values[1]);
+            TourInstanceId = int.Parse(values[1]);
             TouristId = int.Parse(values[2]);
             TourGuestId = int.Parse(values[3]);
             Rating = int.Parse(values[4]);
@@ -45,7 +45,7 @@ namespace BookingApp.Domain.Model
         {
             return new string[] {
                 Id.ToString(),
-                TourId.ToString(),
+                TourInstanceId.ToString(),
                 TouristId.ToString(),
                 TourGuestId.ToString(),
                 Rating.ToString(),

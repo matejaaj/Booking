@@ -10,7 +10,19 @@ namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class TourInstanceViewModel
     {
+        public TourInstanceViewModel()
+        {
+        }
+
         private int id;
+        private string name;
+        private string currentCheckpoint;
+        private DateTime date;
+        private List<TourGuest> guests = new List<TourGuest>();
+        private List<string> checkpointNames = new List<string>();
+        private bool isFinished;
+
+
         public int Id
         {
             get => id;
@@ -23,8 +35,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
-
-        private string name;
         public string Name
         {
             get => name;
@@ -37,23 +47,18 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
-
-        private string currentCheckpoint;
-
         public string CurrentCheckpoint
         {
             get => currentCheckpoint;
             set
             {
-                if(currentCheckpoint != value)
+                if (currentCheckpoint != value)
                 {
                     currentCheckpoint = value;
                     OnPropertyChanged(nameof(CurrentCheckpoint));
                 }
             }
         }
-
-        private DateTime date;
         public DateTime Date
         {
             get => date;
@@ -66,8 +71,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
-
-        private List<TourGuest> guests = new List<TourGuest>();
         public List<TourGuest> Guests
         {
             get => guests;
@@ -80,8 +83,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
-
-        private List<string> checkpointNames = new List<string>();
         public List<string> CheckpointNames
         {
             get => checkpointNames;
@@ -94,15 +95,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
-
-        private bool isFinished;
-
         public bool IsFinished
         {
             get => isFinished;
             set
             {
-                if(isFinished != value)
+                if (isFinished != value)
                 {
                     isFinished = value;
                     OnPropertyChanged(nameof(IsFinished));
@@ -110,17 +108,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-        public TourInstanceViewModel()
-        {
-
-        }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
 }

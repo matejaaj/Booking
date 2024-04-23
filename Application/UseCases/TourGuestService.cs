@@ -2,6 +2,7 @@
 using BookingApp.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,11 @@ namespace BookingApp.Application.UseCases
         public TourGuestService()
         {
             _tourGuestRepository = Injector.CreateInstance<ITourGuestRepository>();
+        }
+
+        public TourGuestService(ITourGuestRepository tourGuest)
+        {
+            _tourGuestRepository = tourGuest;
         }
 
         public List<TourGuest> GetAll()
@@ -66,6 +72,19 @@ namespace BookingApp.Application.UseCases
         public TourGuest GetById(int id)
         {
             return _tourGuestRepository.GetById(id);
+        }
+
+        public ObservableCollection<TourGuest> InitializeTourGuests(int tourInstanceId)
+        {
+            var guests = new ObservableCollection<TourGuest>();
+            foreach (var tourGuest in GetAll())
+            {
+                if (tourInstanceId == tourGuest.TourReservationId)
+                {
+                    guests.Add(tourGuest);
+                }
+            }
+            return guests;
         }
     }
 

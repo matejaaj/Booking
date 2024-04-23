@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -14,24 +16,28 @@ namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class ReviewTourViewModel
     {
-        public TourInstanceViewModel SelectedTourInstance { get; set; }
-
-        public ObservableCollection<ReviewTourFormViewModel> ReviewForms { get; set; }
-
         private TourReviewService _tourReviewService;
         private ImageService _imageService;
 
+
+        public TourInstanceViewModel SelectedTourInstance { get; set; }
         public int TouristId { get; set; }
+        public ObservableCollection<ReviewTourFormViewModel> ReviewForms { get; set; }
+
 
         public ReviewTourViewModel(TourInstanceViewModel tour, int touristId)
         {
             TouristId = touristId;
-            _tourReviewService = new TourReviewService();
-            _imageService = new ImageService();
             SelectedTourInstance = tour;
+
+            _tourReviewService = new TourReviewService(Injector.CreateInstance<ITourReviewRepository>());
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
+
             ReviewForms = new ObservableCollection<ReviewTourFormViewModel>();
             SetReviewForms();
         }
+
+
 
         private void SetReviewForms()
         {
@@ -40,7 +46,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 ReviewForms.Add(new ReviewTourFormViewModel { Guest = guest });
             }
         }
-
         public void AddPicture(ReviewTourFormViewModel reviewTourFormViewModel)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -49,7 +54,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             if (openFileDialog.ShowDialog() == true)
             {
                 reviewTourFormViewModel.ImagePaths.Add(openFileDialog.FileName);
-
             }
         }
         public void RemovePicture(ReviewTourFormViewModel reviewForm, string imagePath)
@@ -59,7 +63,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 reviewForm.ImagePaths.Remove(imagePath);
             }
         }
-
         public void SaveReviews()
         {
             foreach (var reviewForm in ReviewForms)

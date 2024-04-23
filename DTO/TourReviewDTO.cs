@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.DTO
 {
-    internal class TourReviewDTO : INotifyPropertyChanged
+    public class TourReviewDTO : INotifyPropertyChanged
     {
 
         private readonly TourGuestService _tourGuestService;
@@ -146,7 +146,7 @@ namespace BookingApp.DTO
         public TourReviewDTO(TourReview review)
         {
             Id = review.Id;
-            TourId = review.TourId;
+            TourId = review.TourInstanceId;
             TouristId = review.TouristId;
             TourGuestId = review.TourGuestId;
             Rating = review.Rating;

@@ -39,37 +39,13 @@ namespace BookingApp.WPF.ViewModel.Guide
         {
             allCheckpoints = _checkpointService.GetAll();
             tourGuests = _tourGuestService.GetAll();
-            InitializeCheckpoints(tourId);
-            InitializeTourGuests();
+
+            var checkpoints = _checkpointService.InitializeCheckpoints(tourId, _tourInstaceId);
+            NotVisitedCheckpoints = checkpoints.NotVisited;
+            VisitedCheckpoints = checkpoints.Visited;
+
+            NotPresentTourists = _tourGuestService.InitializeTourGuests(_tourInstaceId);
         }
-
-        private void InitializeCheckpoints(int tourId)
-        {
-            NotVisitedCheckpoints = new ObservableCollection<Checkpoint>();
-            VisitedCheckpoints = new ObservableCollection<Checkpoint>();
-            foreach (var checkpoint in allCheckpoints)
-            {
-                if (checkpoint.TourId == tourId)
-                    NotVisitedCheckpoints.Add(checkpoint);
-            }
-
-            var firstCheckpoint = NotVisitedCheckpoints.First();
-            VisitedCheckpoints.Add(firstCheckpoint);
-            NotVisitedCheckpoints.Remove(firstCheckpoint);
-        }
-
-        private void InitializeTourGuests()
-        {
-            NotPresentTourists = new ObservableCollection<TourGuest>();
-            foreach (var tourGuest in tourGuests)
-            {
-                if (_tourInstaceId == tourGuest.TourReservationId)
-                {
-                    NotPresentTourists.Add(tourGuest);
-                }
-            }
-        }
-
         private void ShowTourAttendanceOverview()
         {
             var firstCheckpointId = VisitedCheckpoints.First().Id;
@@ -81,26 +57,25 @@ namespace BookingApp.WPF.ViewModel.Guide
         {
             if (SelectedCheckpoint != null)
             {
+                string currentCheckpointName = SelectedCheckpoint.Name;
                 TourAttendanceOverview tourAttendanceOverview = new TourAttendanceOverview(SelectedCheckpoint.Id, NotPresentTourists);
                 tourAttendanceOverview.ShowDialog();
 
                 VisitedCheckpoints.Add(SelectedCheckpoint);
                 NotVisitedCheckpoints.Remove(SelectedCheckpoint);
 
+                _tourInstanceService.UpdateCheckpoint(_tourInstaceId, SelectedCheckpoint.ToString());
+
                 if (NotVisitedCheckpoints.Count() == 0)
                 {
-                    var finishedTour = _tourInstanceService.GetAll().Find(tour => tour.Id == _tourInstaceId);
-                    finishedTour.IsCompleted = true;
-                    _tourInstanceService.Update(finishedTour);
+                    _tourInstanceService.FinishTour(_tourInstaceId);
                 }
             }
         }
 
         public void EndTour()
         {
-            var finishedTour = _tourInstanceService.GetAll().Find(tour => tour.Id == _tourInstaceId);
-            finishedTour.IsCompleted = true;
-            _tourInstanceService.Update(finishedTour);
+            _tourInstanceService.FinishTour(_tourInstaceId);
         }
     }
 }

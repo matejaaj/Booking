@@ -49,5 +49,13 @@ namespace BookingApp.View.Tourist
             myToursWindow.Show();
             this.Close();
         }
+
+
+        private void btnOpenTabs_Click(object sender, RoutedEventArgs e)
+        {
+            TouristTabsWindow touristTabsWindow = new TouristTabsWindow(_user);
+            touristTabsWindow.Show();
+            this.Close();
+        }
     }
 }

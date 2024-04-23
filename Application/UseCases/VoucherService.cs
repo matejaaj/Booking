@@ -16,6 +16,10 @@ namespace BookingApp.Application.UseCases
         {
             _voucherRepository = Injector.CreateInstance<IVoucherRepository>();
         }
+        public VoucherService(IVoucherRepository voucher)
+        {
+            _voucherRepository = voucher;
+        }
 
         public List<Voucher> GetAll()
         {

@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
@@ -35,15 +37,35 @@ namespace BookingApp.WPF.ViewModel.Tourist
             InitializeServices();
 
         }
-        public void InitializeServices()
+        private void InitializeServices()
         {
-            _vehicleService = new VehicleService();
-            _detailedLocationService = new DetailedLocationService();
-            _locationService = new LocationService();
-            _driveReservationService = new DriveReservationService();
-            _userService = new UserService();
+            _vehicleService = new VehicleService(Injector.CreateInstance<IVehicleRepository>());
+            _detailedLocationService = new DetailedLocationService(Injector.CreateInstance<IDetailedLocationRepository>());
+            _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            _driveReservationService = new DriveReservationService(Injector.CreateInstance<IDriveReservationRepository>());
+            _userService = new UserService(Injector.CreateInstance<IUserRepository>());
         }
 
+        public void CheckForDriverAssignment()
+        {
+            var statusesToCheck = new List<string> { "CONFIRMED_FAST", "FAST_RESERVATION" };
+            var reservations = _driveReservationService.GetByTouristAndStatuses(Tourist.Id, statusesToCheck);
+
+            foreach (var reservation in reservations)
+            {
+                string formattedDeparture = reservation.DepartureTime.ToString("f"); 
+
+                if (reservation.DriveReservationStatusId == 13) 
+                {
+                    var driver = _userService.GetById(reservation.DriverId);
+                    MessageBox.Show($"Your driver {driver.Username} has been assigned to your trip on {formattedDeparture}.");
+                }
+                else if (reservation.DriveReservationStatusId == 12) 
+                {
+                    MessageBox.Show($"A driver has not yet been found for your fast reservation scheduled for {formattedDeparture}.");
+                }
+            }
+        }
         public void FillCities()
         {
             var cities = _locationService.GetCitiesByCountry(FormViewModel.SelectedCountry.Value).ToList();
@@ -81,7 +103,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
 
             MessageBox.Show("Reservation successful");
-
         }
     }
 }
