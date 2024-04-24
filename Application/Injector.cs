@@ -32,7 +32,8 @@ namespace BookingApp.Application
         { typeof(IVoucherRepository), new VoucherRepository() },
         { typeof(ITourReviewRepository), new TourReviewRepository() },
         { typeof(IReservationModificationRequestRepository), new ReservationModificationRequestRepository() },
-        { typeof(ISuperDriverStateRepository), new SuperDriverStateRepository() }
+        { typeof(IGroupDriveReservationRepository), new GroupDriveReservationRepository() },
+        { typeof(ISuperDriverStateRepository), new SuperDriverStateRepository() },
     };
         
         public static T CreateInstance<T>()

@@ -10,7 +10,7 @@ namespace BookingApp.Domain.Model
 {
     public class Language : ISerializable
     {
-        public int languageId;
+        public int Id;
 
         public string Name { get; set; }
 
@@ -24,13 +24,13 @@ namespace BookingApp.Domain.Model
 
         public void FromCSV(string[] values)
         {
-            languageId = Convert.ToInt32(values[0]);
+            Id = Convert.ToInt32(values[0]);
             Name = values[1];
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { languageId.ToString(), Name };
+            string[] csvValues = { Id.ToString(), Name };
             return csvValues;
         }
 

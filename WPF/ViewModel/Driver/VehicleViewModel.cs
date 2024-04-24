@@ -102,7 +102,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 return;
             }
 
-            var lista = SelectedLanguages.Select(l => l.languageId).ToList();
+            var lista = SelectedLanguages.Select(l => l.Id).ToList();
             var lokacija = SelectedLocations.Select(loc => loc.Id).ToList();
 
             images.ForEach(img => _imageRepository.Save(img));

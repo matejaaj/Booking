@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using BookingApp.Application.UseCases;
 using Accessibility;
+using BookingApp.WPF.View.Tourist;
 
 namespace BookingApp.WPF.View
 {

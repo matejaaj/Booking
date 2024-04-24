@@ -149,7 +149,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         {
             if (ValidateFields())
             {
-                Tour newTour = new Tour(_tourName, _description, _selectedLocation.Id, _selectedLanguage.languageId, _capacity, _durationHours);
+                Tour newTour = new Tour(_tourName, _description, _selectedLocation.Id, _selectedLanguage.Id, _capacity, _durationHours);
                 _tourService.Save(newTour);
 
                 SaveImages();

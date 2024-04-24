@@ -29,12 +29,12 @@ namespace BookingApp.Repository
         public Language GetById(int id)
         {
             _languages = _serializer.FromCSV(FilePath); 
-            return _languages.FirstOrDefault(l => l.languageId == id);
+            return _languages.FirstOrDefault(l => l.Id == id);
         }
 
         public Language Save(Language language)
         {
-            language.languageId = NextId();
+            language.Id = NextId();
             _languages = _serializer.FromCSV(FilePath);
             _languages.Add(language);
             _serializer.ToCSV(FilePath, _languages);
@@ -48,12 +48,12 @@ namespace BookingApp.Repository
             {
                 return 1;
             }
-            return _languages.Max(l => l.languageId) + 1;
+            return _languages.Max(l => l.Id) + 1;
         }
         public void Delete(Language language) 
         {
             _languages = _serializer.FromCSV(FilePath);
-            Language founded = _languages.Find(l => l.languageId == language.languageId);
+            Language founded = _languages.Find(l => l.Id == language.Id);
             _languages.Remove(founded);
             _serializer.ToCSV(FilePath, _languages);
         
@@ -62,7 +62,7 @@ namespace BookingApp.Repository
         public Language Update(Language language)
         {
             _languages = _serializer.FromCSV(FilePath);
-            Language current = _languages.Find(l => l.languageId == language.languageId);
+            Language current = _languages.Find(l => l.Id == language.Id);
             int index = _languages.IndexOf(current);
             _languages.Remove(current);
             _languages.Insert(index, language);

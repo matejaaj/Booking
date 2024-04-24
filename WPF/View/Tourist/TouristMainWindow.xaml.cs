@@ -13,8 +13,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BookingApp.View.Tourist;
 
-namespace BookingApp.View.Tourist
+namespace BookingApp.WPF.View.Tourist
 {
     /// <summary>
     /// Interaction logic for TouristMainWindow.xaml

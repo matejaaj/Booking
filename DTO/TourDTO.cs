@@ -7,6 +7,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookingApp.Application;
+using BookingApp.Domain.RepositoryInterfaces;
 
 namespace BookingApp.DTO
 {
@@ -144,7 +146,7 @@ namespace BookingApp.DTO
         public TourDTO(Tour tour)
         {
             _locationService = new LocationService();
-            _languageService = new LanguageService();
+            _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
 
             Id = tour.Id;
             Name = tour.Name;
