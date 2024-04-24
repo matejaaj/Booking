@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using BookingApp.WPF.View.Guide;
 using System;
@@ -17,10 +19,11 @@ namespace BookingApp.WPF.ViewModel.Guide
         public ObservableCollection<TourInstance> TourInstances { get; set; }
         private List<TourInstance> allTourInstances;
         public TourInstance SelectedInstance { get; set; }
-        private readonly TourInstanceService _tourInstanceService;
+        private  TourInstanceService _tourInstanceService;
         public ShowReviewsViewModel(TourDTO tourDTO)
         {
-            _tourInstanceService = new TourInstanceService();
+            InitializeServices();
+
             allTourInstances = _tourInstanceService.GetAllByTourId(tourDTO.Id);
             TourInstances = new ObservableCollection<TourInstance>();
 
@@ -35,6 +38,14 @@ namespace BookingApp.WPF.ViewModel.Guide
         {
             Reviews reviewsWindow = new Reviews(SelectedInstance);
             reviewsWindow.Show();
+        }
+
+        private void InitializeServices()
+        {
+            var _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            var _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
+            var _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
         }
     }
 }

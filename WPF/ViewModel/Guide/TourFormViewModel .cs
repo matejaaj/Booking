@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using BookingApp.Application;
 using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 
 namespace BookingApp.WPF.ViewModel.Guide
 {
     public class TourFormViewModel : INotifyPropertyChanged
     {
-        private readonly TourService _tourService;
-        private readonly CheckpointService _checkpointService;
-        private readonly ImageService _imageService;
-        private readonly LocationService _locationService;
-        private readonly LanguageService _languageService;
-        private readonly TourInstanceService _tourInstanceService;
+        private  TourService _tourService;
+        private  CheckpointService _checkpointService;
+        private  ImageService _imageService;
+        private  LocationService _locationService;
+        private  LanguageService _languageService;
+        private  TourInstanceService _tourInstanceService;
 
         public List<Location> Locations { get; set; }
         public List<Language> Languages { get; set; }
@@ -28,15 +30,9 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         public TourFormViewModel()
         {
-            _tourService = new TourService();
-            _checkpointService = new CheckpointService();
-            _imageService = new ImageService();
-            _locationService = new LocationService();
-            _languageService = new LanguageService();
-            _tourInstanceService = new TourInstanceService();
+            InitializeServices();
 
             _tourId = _tourService.NextId();
-
             Languages = _languageService.GetAll();
             Locations = _locationService.GetAll();
             Images = new List<Domain.Model.Image>();
@@ -186,6 +182,19 @@ namespace BookingApp.WPF.ViewModel.Guide
             {
                 _tourInstanceService.Save(startDate);
             }
+        }
+
+        private void InitializeServices()
+        {
+            var _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            var _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
+            var _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
+            _checkpointService = new CheckpointService(Injector.CreateInstance<ICheckpointRepository>(), _tourInstanceService);
+            _tourService = new TourService(Injector.CreateInstance<ITourRepository>(), _tourGuestService, _tourInstanceService);
+            _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
+            _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
         }
     }
 }

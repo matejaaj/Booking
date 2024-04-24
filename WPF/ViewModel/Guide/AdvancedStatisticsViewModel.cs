@@ -10,6 +10,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
+using BookingApp.Application;
+using BookingApp.Domain.RepositoryInterfaces;
 
 namespace BookingApp.WPF.ViewModel.Guide
 {
@@ -17,12 +19,7 @@ namespace BookingApp.WPF.ViewModel.Guide
     {
         public ObservableCollection<KeyValuePair<string, int>> AgeGroups { get; set; }
 
-        private readonly List<TourInstance> _tourInstances;
-        private readonly List<TourGuest> _tourGuests;
-
-        private readonly TourInstanceService _tourInstanceService;
-        private readonly TourGuestService _tourGuestService;
-
+        private  TourInstanceService _tourInstanceService;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -79,45 +76,22 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         public AdvancedStatisticsViewModel(TourDTO tour)
         {
-            _tourGuestService = new TourGuestService();
-            _tourInstanceService = new TourInstanceService();
-
-            _tourInstances = _tourInstanceService.GetAll();
-            _tourGuests = _tourGuestService.GetAll();
+            InitializeServices();
 
             AgeGroups = new ObservableCollection<KeyValuePair<string, int>>();
 
-            GetStatistics(tour);
+            LoadStatistics(tour);
             LoadChartData();
         }
 
-        private void GetStatistics(TourDTO tour)
+        public void LoadStatistics(TourDTO tour)
         {
-            var relevantGuests = GetGuestsForTour(tour);
+            var statistics = _tourInstanceService.GetStatistics(tour.Id);
 
-            TouristsUnder18 = CountGuestsByAge(relevantGuests, age => age < 18);
-            TouristsBetween18And50 = CountGuestsByAge(relevantGuests, age => age >= 18 && age < 50);
-            TouristsOver50 = CountGuestsByAge(relevantGuests, age => age >= 50);
+            TouristsUnder18 = statistics.TouristsUnder18;
+            TouristsBetween18And50 = statistics.TouristsBetween18And50;
+            TouristsOver50 = statistics.TouristsOver50;
         }
-
-        private List<TourGuest> GetGuestsForTour(TourDTO tour)
-        {
-            var completedTourInstances = _tourInstances
-                .Where(instance => instance.TourId == tour.Id && instance.IsCompleted)
-                .Select(instance => instance.Id);
-
-            var guestsForTour = _tourGuests
-                .Where(guest => completedTourInstances.Contains(guest.TourReservationId))
-                .ToList();
-
-            return guestsForTour;
-        }
-
-        private int CountGuestsByAge(IEnumerable<TourGuest> guests, Func<int, bool> agePredicate)
-        {
-            return guests.Count(guest => agePredicate(guest.Age));
-        }
-
 
         private void LoadChartData()
         {
@@ -128,6 +102,14 @@ namespace BookingApp.WPF.ViewModel.Guide
             AgeGroups.Add(new KeyValuePair<string, int>("Over 50", TouristsOver50));
 
             Debug.WriteLine("Chart data loaded");
+        }
+
+        private void InitializeServices()
+        {
+            var _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            var _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
+            var _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
         }
 
     }

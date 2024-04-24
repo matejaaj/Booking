@@ -2,8 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using BookingApp.Application;
 using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.WPF.View.Guide;
 
 namespace BookingApp.WPF.ViewModel.Guide
@@ -15,31 +17,24 @@ namespace BookingApp.WPF.ViewModel.Guide
         public ObservableCollection<TourGuest> NotPresentTourists { get; set; }
         public Checkpoint SelectedCheckpoint { get; set; }
 
-        private List<Checkpoint> allCheckpoints;
-        private List<TourGuest> tourGuests;
         private int _tourInstaceId;
 
-        private readonly TourGuestService _tourGuestService;
-        private readonly TourInstanceService _tourInstanceService;
-        private readonly CheckpointService _checkpointService;
+        private TourInstanceService _tourInstanceService;
+        private TourGuestService _tourGuestService;
+        private CheckpointService _checkpointService;
 
         public ActiveTourOverviewViewModel(
             int tourId,
             int tourInstanceId)
         {
             _tourInstaceId = tourInstanceId;
-            _tourGuestService = new TourGuestService();
-            _tourInstanceService = new TourInstanceService();
-            _checkpointService = new CheckpointService();
+            InitializeServices();
             LoadData(tourId);
             ShowTourAttendanceOverview();
         }
 
         private void LoadData(int tourId)
         {
-            allCheckpoints = _checkpointService.GetAll();
-            tourGuests = _tourGuestService.GetAll();
-
             var checkpoints = _checkpointService.InitializeCheckpoints(tourId, _tourInstaceId);
             NotVisitedCheckpoints = checkpoints.NotVisited;
             VisitedCheckpoints = checkpoints.Visited;
@@ -76,6 +71,15 @@ namespace BookingApp.WPF.ViewModel.Guide
         public void EndTour()
         {
             _tourInstanceService.FinishTour(_tourInstaceId);
+        }
+
+        private void InitializeServices()
+        {
+            var _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
+            var _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
+            _checkpointService = new CheckpointService(Injector.CreateInstance<ICheckpointRepository>(), _tourInstanceService);
         }
     }
 }

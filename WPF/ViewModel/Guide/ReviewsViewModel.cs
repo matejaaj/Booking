@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using System;
 using System.Collections.Generic;
@@ -38,8 +40,14 @@ namespace BookingApp.WPF.ViewModel.Guide
         }
         public ReviewsViewModel(TourInstance instance)
         {
-            _tourReviewService = new TourReviewService();
-            Reviews = new ObservableCollection<TourReviewDTO>(_tourReviewService.GetAllByTourInstanceId(instance.Id));
+            _tourReviewService = new TourReviewService(Injector.CreateInstance<ITourReviewRepository>());
+            var reviewsList = _tourReviewService.GetAllByTourInstanceId(instance.Id);
+            Reviews = new ObservableCollection<TourReviewDTO>();
+
+            foreach(var review in reviewsList)
+            {
+                Reviews.Add(new TourReviewDTO(review));
+            }
         }
         public void ReportReview()
         {

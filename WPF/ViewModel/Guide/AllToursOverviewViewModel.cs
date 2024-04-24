@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BookingApp.Domain.Model;
 using System.ComponentModel;
+using BookingApp.Application;
+using BookingApp.Domain.RepositoryInterfaces;
 
 namespace BookingApp.WPF.ViewModel.Guide
 {
     internal class AllToursOverviewViewModel : INotifyPropertyChanged
     {
-
-        private List<Tour> _tours;
         public ObservableCollection<TourDTO> AllTours { get; set; }
         public ObservableCollection<Checkpoint> SelectedTourCheckpoints { get; set; }
 
-        private readonly TourService _tourService;
-        private readonly CheckpointService _checkpointService;
+        private  TourService _tourService;
+        private  CheckpointService _checkpointService;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -52,11 +52,9 @@ namespace BookingApp.WPF.ViewModel.Guide
             }
         }
 
-
         public AllToursOverviewViewModel() 
         {
-            _tourService = new TourService();
-            _checkpointService = new CheckpointService();
+            InitializeServices();
 
             AllTours = new ObservableCollection<TourDTO>();
             SelectedTourCheckpoints = new ObservableCollection<Checkpoint>();
@@ -66,13 +64,23 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         private void LoadTours()
         {
-            _tours = _tourService.GetAll();
+            var tours = _tourService.GetAll();
 
-            foreach(var tour in _tours)
+            foreach(var tour in tours)
             {
                 TourDTO tourDTO = new TourDTO(tour);
                 AllTours.Add(tourDTO);
             }
+        }
+
+        private void InitializeServices()
+        {
+            var _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            var _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
+            var _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
+            var _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
+            _checkpointService = new CheckpointService(Injector.CreateInstance<ICheckpointRepository>(), _tourInstanceService);
+            _tourService = new TourService(Injector.CreateInstance<ITourRepository>(), _tourGuestService, _tourInstanceService);
         }
     }
 }
