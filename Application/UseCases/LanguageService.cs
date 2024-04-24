@@ -22,10 +22,6 @@ namespace BookingApp.Application.UseCases
             _languageRepository = Injector.CreateInstance<ILanguageRepository>();
         }
 
-        public LanguageService(ILanguageRepository languageRepository)
-        {
-            _languageRepository = languageRepository;
-        }
 
         public List<Language> GetAll()
         {
