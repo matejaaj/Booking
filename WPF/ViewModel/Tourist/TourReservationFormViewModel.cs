@@ -82,10 +82,10 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private void InitializeServices()
         {
             VoucherService voucher = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
-            _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
             _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
             _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
-            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService);
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
 
         }
         private void FillCollections()

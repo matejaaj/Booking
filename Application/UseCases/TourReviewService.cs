@@ -66,13 +66,13 @@ namespace BookingApp.Application.UseCases
             Update(newReview);
         }
 
-        public List<TourReviewDTO> GetAllByTourInstanceId(int instanceId)
+        public List<TourReview> GetAllByTourInstanceId(int instanceId)
         {
-            List<TourReviewDTO> reviews = new List<TourReviewDTO>();
+            List<TourReview> reviews = new List<TourReview>();
             foreach (var review in GetAll())
             {
                 if (review.TourInstanceId == instanceId)
-                    reviews.Add(new TourReviewDTO(review));
+                    reviews.Add(review);
             }
             return reviews;
         }

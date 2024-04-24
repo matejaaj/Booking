@@ -4,11 +4,7 @@ using BookingApp.Domain.Model;
 using BookingApp.Domain.Model.BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace BookingApp.WPF.ViewModel.Guide
@@ -18,14 +14,12 @@ namespace BookingApp.WPF.ViewModel.Guide
         public ObservableCollection<TourInstance> TourInstances { get; set; }
         public TourInstance SelectedInstance { get; set; }
 
-        private readonly TourInstanceService _tourInstanceService;
-        private readonly TourReservationService _tourReservationService;
-        private readonly VoucherService _voucherService;
+        private  TourInstanceService _tourInstanceService;
+        private  TourReservationService _tourReservationService;
+        private  VoucherService _voucherService;
         public CancelTourViewModel(int tourId)
         {
-            _tourReservationService = new TourReservationService();
-            _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
-            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService);
+            InitializeServices();
             TourInstances = new ObservableCollection<TourInstance>(_tourInstanceService.GetAllByTourId(tourId));
         }
         public void CancelTour()
@@ -48,6 +42,14 @@ namespace BookingApp.WPF.ViewModel.Guide
         private bool IsCancellationAllowed()
         {
             return SelectedInstance.StartTime > DateTime.Now.AddHours(48);
+        }
+
+        private void InitializeServices()
+        {
+            _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
+            var _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
+            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
         }
     }
 }

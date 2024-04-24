@@ -1,6 +1,7 @@
 ﻿using BookingApp.Domain.Model;
 using BookingApp.Domain.Model.BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace BookingApp.Application.UseCases
         private readonly ITourInstanceRepository _tourInstanceRepository;
         private readonly TourReservationService _tourReservationService;
         private readonly VoucherService _voucherService;
+        private readonly TourGuestService _tourGuestService;
 
         public TourInstanceService()
         {
@@ -23,11 +25,12 @@ namespace BookingApp.Application.UseCases
             _voucherService = new VoucherService();
         }
 
-        public TourInstanceService(ITourInstanceRepository tourInstance, TourReservationService tourReservation, VoucherService voucher)
+        public TourInstanceService(ITourInstanceRepository tourInstance, TourReservationService tourReservation, VoucherService voucher, TourGuestService tourGuest)
         {
             _tourInstanceRepository = tourInstance;
             _tourReservationService = tourReservation;
             _voucherService = voucher;
+            _tourGuestService = tourGuest;
         }
 
         public List<TourInstance> GetAll()
@@ -117,6 +120,45 @@ namespace BookingApp.Application.UseCases
             var tour = GetById(id);
             tour.CurrentCheckpoint = checkpoint;
             Update(tour);
+        }
+
+        public (int TouristsUnder18, int TouristsBetween18And50, int TouristsOver50) GetStatistics(int tourId)
+        {
+            var guests = GetGuestsForTour(tourId);
+
+            int touristsUnder18 = CountGuestsByAge(guests, age => age < 18);
+            int touristsBetween18And50 = CountGuestsByAge(guests, age => age >= 18 && age < 50);
+            int touristsOver50 = CountGuestsByAge(guests, age => age >= 50);
+
+            return (touristsUnder18, touristsBetween18And50, touristsOver50);
+        }
+
+        private List<TourGuest> GetGuestsForTour(int tourId)
+        {
+            var completedTourInstances = GetAll()
+                .Where(instance => instance.TourId == tourId && instance.IsCompleted)
+                .Select(instance => instance.Id);
+
+            var guestsForTour = _tourGuestService.GetAll()
+                .Where(guest => completedTourInstances.Contains(guest.TourReservationId))
+                .ToList();
+
+            return guestsForTour;
+        }
+
+        private int CountGuestsByAge(IEnumerable<TourGuest> guests, Func<int, bool> agePredicate)
+        {
+            return guests.Count(guest => agePredicate(guest.Age));
+        }
+
+        public TourInstance GetCurrentTourInstance(int tourId)
+        {
+            var todayDate = DateTime.Now.Date;
+            var tourInstance = GetAll()
+                .FirstOrDefault(instance => instance.TourId == tourId &&
+                                            instance.StartTime.Date == todayDate &&
+                                            !instance.IsCompleted);
+            return tourInstance;
         }
     }
 
