@@ -9,6 +9,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookingApp.Domain.Model.BookingApp.Domain.Model;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
@@ -23,13 +24,22 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourReservationService _tourReservationService;
         private CheckpointService _checkPointService;
         private VoucherService _voucherService;
-        private TourReviewService _tourReveiewService;
+        private TourReviewService _tourReviewService;
 
-        public MyToursViewModel(User loggedUser)
+        public MyToursViewModel(User loggedUser, TourService tourService, TourInstanceService tourInstanceService, CheckpointService checkpointService, ImageService imageService, LocationService locationService, LanguageService languageService, TourGuestService tourGuestService, TourReservationService tourReservationService, VoucherService voucherService, TourReviewService tourReviewService)
         {
+            _tourService = tourService;
+            _tourInstanceService = tourInstanceService;
+            _tourGuestService = tourGuestService;
+            _tourReservationService = tourReservationService;
+            _checkPointService = checkpointService;
+            _voucherService = voucherService;
+            _tourReviewService = _tourReviewService;
+
+
             Tourist = loggedUser;
             Tours = new ObservableCollection<TourInstanceViewModel>();
-            InitializeServices();
+
             CreateViewModels();
         }
         private void CreateViewModels()
@@ -64,18 +74,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public bool CheckIfAlreadyReviewed(int userId, int tourId)
         {
-            return _tourReveiewService.HasUserReviewedTour(userId, tourId);
+            return _tourReviewService.HasUserReviewedTour(userId, tourId);
         }
 
-        private void InitializeServices()
-        {
-            _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
-            _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
-            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
-            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
-            _checkPointService = new CheckpointService(Injector.CreateInstance<ICheckpointRepository>(), _tourInstanceService);
-            _tourService = new TourService(Injector.CreateInstance<ITourRepository>(), _tourGuestService, _tourInstanceService);
-            _tourReveiewService = new TourReviewService(Injector.CreateInstance<ITourReviewRepository>());
-        }
     }
 }

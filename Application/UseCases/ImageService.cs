@@ -41,6 +41,11 @@ namespace BookingApp.Application.UseCases
         {
             return _imageRepository.Update(image);
         }
+
+        public List<Image> GetImagesByEntityAndType(int entityId, ImageResourceType type)
+        {
+            return _imageRepository.GetAll().Where(img => img.EntityId == entityId && img.Type == type).ToList();
+        }
     }
 
 }

@@ -24,8 +24,11 @@ namespace BookingApp.WPF.View.Tourist
     {
         public TouristTabsWindow(User user)
         {
+
+
             InitializeComponent();
             TouristTabsViewModel viewModel = new TouristTabsViewModel(user);
+
             DataContext = viewModel;
         }
     }

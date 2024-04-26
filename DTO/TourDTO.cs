@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookingApp.Application;
 using BookingApp.Domain.RepositoryInterfaces;
+using Syncfusion.Windows.Shared;
 
 namespace BookingApp.DTO
 {
@@ -18,115 +19,161 @@ namespace BookingApp.DTO
         private readonly LanguageService _languageService;
 
         public int Id { get; set; }
-        private string name { get; set; }
+        private string _name { get; set; }
         public string Name
         {
-            get { return name; }
+            get { return _name; }
             set
             {
-                if(name != value)
+                if(_name != value)
                 {
-                    name = value;
+                    _name = value;
                     OnPropertyChanged("Name");
                 }
             }
         }
 
-        private string description { get; set; }
+        private string _description { get; set; }
         public string Description
         {
-            get { return description; }
+            get { return _description; }
             set
             {
-                if (description != value)
+                if (_description != value)
                 {
-                    description = value;
+                    _description = value;
                     OnPropertyChanged("Description");
                 }
             }
         }
 
-        private int locationId;
+        private int _locationId;
         public int LocationId
         {
-            get { return locationId; }
+            get { return _locationId; }
             set
             {
-                if (locationId != value)
+                if (_locationId != value)
                 {
-                    locationId = value;
+                    _locationId = value;
                     OnPropertyChanged("LocationId");
                 }
             }
         }
 
-        private int languageId;
+        private int _languageId;
         public int LanguageId
         {
-            get { return languageId; }
+            get { return _languageId; }
             set
             {
-                if (languageId != value)
+                if (_languageId != value)
                 {
-                    languageId = value;
+                    _languageId = value;
                     OnPropertyChanged("LanguageId");
                 }
             }
         }
 
-        private int maximumCapacity;
+        private int _maximumCapacity;
         public int MaximumCapacity
         {
-            get { return maximumCapacity; }
+            get { return _maximumCapacity; }
             set
             {
-                if (maximumCapacity != value)
+                if (_maximumCapacity != value)
                 {
-                    maximumCapacity = value;
+                    _maximumCapacity = value;
                     OnPropertyChanged("MaximumCapacity");
                 }
             }
         }
 
-        private float durationHours;
+        private float _durationHours;
         public float DurationHours
         {
-            get { return durationHours; }
+            get { return _durationHours; }
             set
             {
-                if (durationHours != value)
+                if (_durationHours != value)
                 {
-                    durationHours = value;
+                    _durationHours = value;
                     OnPropertyChanged("DurationHours");
                 }
             }
         }
-        private string location;
+        private string _location;
         public string Location
         {
-            get { return location; }
+            get { return _location; }
             set
             {
-                if (location != value)
+                if (_location != value)
                 {
-                    location = value;
+                    _location = value;
                     OnPropertyChanged("Location");
                 }
             }
         }
-        private string language;
+        private string _language;
         public string Language
         {
-            get { return language; }
+            get { return _language; }
             set
             {
-                if (language != value)
+                if (_language != value)
                 {
-                    language = value;
+                    _language = value;
                     OnPropertyChanged("Language");
                 }
             }
         }
+
+        private List<Image> _images;
+
+        public List<Image> Images
+        {
+            get { return _images; }
+            set
+            {
+                if (_images != value)
+                {
+                    _images = value;
+                    OnPropertyChanged("Images");
+                }
+            }
+        }
+
+        private List<Checkpoint> _checkpoints;
+
+        public List<Checkpoint> Checkpoints
+        {
+            get { return _checkpoints; }
+            set
+            {
+                if (_checkpoints != value)
+                {
+                    _checkpoints = value;
+                    OnPropertyChanged("Checkpoints");
+                }
+            }
+        }
+
+        private List<DateTime> _dates;
+
+        public List<DateTime> Dates
+        {
+            get { return _dates; }
+            set
+            {
+                if (_dates != value)
+                {
+                    _dates = value;
+                    OnPropertyChanged("Dates");
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string name)
         {
@@ -165,7 +212,7 @@ namespace BookingApp.DTO
 
         public Tour ToTour()
         {
-            return new Tour(name, description, locationId, languageId, maximumCapacity, durationHours);
+            return new Tour(_name, _description, _locationId, _languageId, _maximumCapacity, _durationHours);
         }
 
 

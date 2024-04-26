@@ -24,7 +24,8 @@
             <TabItem Header="Ture" Style="{StaticResource TabStyle}">
                 <TabControl>
                     <TabItem Header="Sve ture">
-
+                        <control:AllToursControl DataContext="{Binding ToursMainViewModel.AllToursViewModel}"
+                                                 Tourist="{Binding Tourist}"/>
                     </TabItem>
                     <TabItem Header="Moje ture">
                         <control:MyToursControl DataContext="{Binding ToursMainViewModel.MyToursViewModel}"

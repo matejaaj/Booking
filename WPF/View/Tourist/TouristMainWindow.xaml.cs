@@ -46,9 +46,9 @@ namespace BookingApp.WPF.View.Tourist
 
         private void btnOpenMyTours_Click(object sender, RoutedEventArgs e)
         {
-            MyToursWindow myToursWindow = new MyToursWindow(_user);
+/*            MyToursWindow myToursWindow = new MyToursWindow(_user);
             myToursWindow.Show();
-            this.Close();
+            this.Close();*/
         }
 
 

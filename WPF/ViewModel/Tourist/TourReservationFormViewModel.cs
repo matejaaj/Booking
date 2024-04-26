@@ -12,11 +12,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using BookingApp.Domain.Factories;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class TourReservationFormViewModel : INotifyPropertyChanged
     {
+        private TourReservationFactory _tourReservationFactory;
+
         private int _touristId;
         private TourInstance _selectedTourInstance;
         private TourDTO _selectedTour;
@@ -84,9 +87,10 @@ namespace BookingApp.WPF.ViewModel.Tourist
             VoucherService voucher = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
             _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
             _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
-            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
+            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>());
             _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
 
+            _tourReservationFactory = new TourReservationFactory(_tourGuestService, _tourInstanceService, _voucherService, _tourReservationService);
         }
         private void FillCollections()
         {
@@ -166,7 +170,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 SelectedVoucher = null;
             }
 
-            _tourReservationService.CreateTourReservation(guests, voucherId, _selectedTourInstance.Id, NumberOfPeople, _touristId);
+            _tourReservationFactory.CreateTourReservation(guests, voucherId, _selectedTourInstance.Id, NumberOfPeople, _touristId);
             MessageBox.Show("Reservation successful");
  
         }

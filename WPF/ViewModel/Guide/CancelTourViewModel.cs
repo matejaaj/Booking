@@ -48,7 +48,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         {
             _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
             var _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
-            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>(), _tourGuestService, _voucherService);
+            _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>());
             _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
         }
     }
