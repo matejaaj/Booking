@@ -11,19 +11,14 @@ namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class FastDriveFormViewModel : BaseDriveFormViewModel
     {
-        private VehicleService _vehicleService;
         private DetailedLocationService _detailedLocationService;
-        private LocationService _locationService;
         private DriveReservationService _driveReservationService;
-        private UserService _userService;
         private User _tourist;
 
-        public FastDriveFormViewModel(User user, UserService userService, VehicleService vehicleService, DetailedLocationService detailedLocationService, LocationService locationService, DriveReservationService driveReservationService)
+        public FastDriveFormViewModel(User user, DetailedLocationService detailedLocationService, DriveReservationService driveReservationService)
         {
-            _userService = userService;
-            _vehicleService = vehicleService;
             _detailedLocationService = detailedLocationService;
-            _locationService = locationService;
+
             _driveReservationService = driveReservationService;
             _tourist = user;
         }

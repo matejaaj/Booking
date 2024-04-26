@@ -17,12 +17,13 @@ namespace BookingApp.Domain.Model
         public DateTime DepartureTime { get; set; }
         public int TouristId { get; set; }
 
+        public int StatusId { get; set; }
         public GroupDriveReservation()
         {
 
         }
 
-        public GroupDriveReservation(int numberOfPeople, int languageId, int pickupLocationId, int dropoffLocationId, DateTime departureTime, int touristId)
+        public GroupDriveReservation(int numberOfPeople, int languageId, int pickupLocationId, int dropoffLocationId, DateTime departureTime, int touristId, int statusId)
         {
             NumberOfPeople = numberOfPeople;
             LanguageId = languageId;
@@ -30,6 +31,8 @@ namespace BookingApp.Domain.Model
             DropoffLocationid = dropoffLocationId;
             DepartureTime = departureTime;
             TouristId = touristId;
+
+            StatusId = statusId;
         }
 
 
@@ -42,6 +45,7 @@ namespace BookingApp.Domain.Model
             DropoffLocationid = Convert.ToInt32(values[4]);
             DepartureTime = DateTime.Parse(values[5]);
             TouristId = Convert.ToInt32(values[6]);
+            StatusId = Convert.ToInt32(values[7]);
         }
 
 
@@ -49,13 +53,14 @@ namespace BookingApp.Domain.Model
         {
             return new string[]
             {
-        Id.ToString(),
-        NumberOfPeople.ToString(),
-        LanguageId.ToString(),
-        PickupLocationId.ToString(),
-        DropoffLocationid.ToString(),
-        DepartureTime.ToString(), 
-        TouristId.ToString()
+                Id.ToString(),
+                NumberOfPeople.ToString(),
+                LanguageId.ToString(),
+                PickupLocationId.ToString(),
+                DropoffLocationid.ToString(),
+                DepartureTime.ToString(), 
+                TouristId.ToString(),
+                StatusId.ToString()
             };
         }
 

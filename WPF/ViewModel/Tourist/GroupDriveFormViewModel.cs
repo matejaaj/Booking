@@ -25,10 +25,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-
         private ObservableCollection<KeyValuePair<int, string>> _languages = new ObservableCollection<KeyValuePair<int, string>>();
-        private KeyValuePair<int, string> _selectedLanguage;
-
         public ObservableCollection<KeyValuePair<int, string>> Languages
         {
             get { return _languages; }
@@ -41,7 +38,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
-
+        private KeyValuePair<int, string> _selectedLanguage;
         public KeyValuePair<int, string> SelectedLanguage
         {
             get { return _selectedLanguage; }
@@ -55,33 +52,27 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-        private VehicleService _vehicleService;
+
+
         private DetailedLocationService _detailedLocationService;
-        private LocationService _locationService;
         private DriveReservationService _driveReservationService;
-        private UserService _userService;
         private User _tourist;
         private LanguageService _languageService;
         private GroupDriveReservationService _groupDriveReservationService;
 
-        public GroupDriveFormViewModel(User user, UserService userService, VehicleService vehicleService, DetailedLocationService detailedLocationService, LocationService locationService, DriveReservationService driveReservationService)
+        public GroupDriveFormViewModel(User user, DetailedLocationService detailedLocationService)
         {
-            _userService = userService;
-            _vehicleService = vehicleService;
+            _tourist = user;
             _detailedLocationService = detailedLocationService;
-            _locationService = locationService;
-            _driveReservationService = driveReservationService;
             _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
             _groupDriveReservationService = new GroupDriveReservationService(Injector.CreateInstance<IGroupDriveReservationRepository>());
-            _tourist = user;
 
             FillLanguages();
         }
 
         private void FillLanguages()
         {
-            var languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
-            var languages = languageService.GetAll();
+            var languages = _languageService.GetAll();
             Languages.Clear();
             foreach (var language in languages)
             {
@@ -91,7 +82,18 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public void ReserveGroupDrive()
         {
+            DateTime departure = CreateDateTimeFromSelections();
 
+            DetailedLocation start = new DetailedLocation(SelectedCountry.Key, StartAddress);
+            DetailedLocation end = new DetailedLocation(SelectedCountry.Key, EndAddress);
+
+            _detailedLocationService.Save(start);
+            _detailedLocationService.Save(end);
+
+            GroupDriveReservation reservation = new GroupDriveReservation(NumberOfPeople, SelectedLanguage.Key,
+                start.Id, end.Id, departure, _tourist.Id, 14);
+
+            _groupDriveReservationService.Save(reservation);
         }
 
     }
