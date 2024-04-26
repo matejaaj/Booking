@@ -129,9 +129,9 @@ namespace BookingApp.DTO
             }
         }
 
-        private List<Image> _images;
+        private List<string> _images;
 
-        public List<Image> Images
+        public List<string> Images
         {
             get { return _images; }
             set
