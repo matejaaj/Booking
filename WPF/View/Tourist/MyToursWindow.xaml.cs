@@ -55,7 +55,7 @@ namespace BookingApp.WPF.View.Tourist
                     return;
                 }
 
-                if (ViewModel.CheckIfAlreadyReveiewed(User.Id, tour.Id))
+                if (ViewModel.CheckIfAlreadyReviewed(User.Id, tour.Id))
                 {
                     MessageBox.Show("Tura je već ocenjena");
                     return;
@@ -65,9 +65,5 @@ namespace BookingApp.WPF.View.Tourist
                 reviewWindow.Show();
             }
         }
-
-
-
-
     }
 }

@@ -5,6 +5,7 @@ using BookingApp.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
     public class MyToursViewModel
     {
         public ObservableCollection<TourInstanceViewModel> Tours { get; set; }
-        private User _tourist;
+        public User Tourist { get; }
 
         private TourService _tourService;
         private TourInstanceService _tourInstanceService;
@@ -26,7 +27,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public MyToursViewModel(User loggedUser)
         {
-            _tourist = loggedUser;
+            Tourist = loggedUser;
             Tours = new ObservableCollection<TourInstanceViewModel>();
             InitializeServices();
             CreateViewModels();
@@ -38,10 +39,11 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 var tourInstance = _tourInstanceService.GetById(tourInstanceId);
                 var tour = _tourService.GetById(tourInstance.TourId);
                 var checkpoints = _checkPointService.GetAllByTourId(tour.Id);
-                var tourGuests = _tourGuestService.GetAllByTouristForTourInstance(_tourist.Id, tourInstance.Id).ToList();
+                var tourGuests = _tourGuestService.GetAllByTouristForTourInstance(Tourist.Id, tourInstance.Id).ToList();
 
                 var viewModel = new TourInstanceViewModel
                 { 
+                    Id = tourInstanceId,
                     IsFinished = tourInstance.IsCompleted,
                     Guests = tourGuests,
                     Date = tourInstance.StartTime,
@@ -55,12 +57,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
         private List<int> GetMyTourInstanceIds()
         {
-            var tourReservations = _tourReservationService.GetAllByUserId(_tourist.Id);
+            var tourReservations = _tourReservationService.GetAllByUserId(Tourist.Id);
             var tourInstanceIds = tourReservations.Select(reservation => reservation.TourInstanceId).ToList();
             return tourInstanceIds;
         }
 
-        public bool CheckIfAlreadyReveiewed(int userId, int tourId)
+        public bool CheckIfAlreadyReviewed(int userId, int tourId)
         {
             return _tourReveiewService.HasUserReviewedTour(userId, tourId);
         }
