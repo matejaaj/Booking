@@ -18,6 +18,7 @@ namespace BookingApp.WPF.ViewModel.Driver
     public class DriverOverviewViewModel : INotifyPropertyChanged
     {
         public List<Location> locations { get; set; }
+        public GroupDriveService groupDriveService { get; set; }
 
         public static DriveReservation SelectedReservation { get; set; }
         public static bool canCancel { get; set; }
@@ -80,6 +81,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             DriverId = driver.Id;
             Vehicles = new ObservableCollection<Vehicle>();
             driveReservationService = new DriveReservationService();
+            groupDriveService = new GroupDriveService(DriverId, DataGrid_Refresh);
             DriveReservations = new ObservableCollection<DriveReservation>(driveReservationService.GetByDriver(driver.Id));
             _locationRepository = new LocationRepository();
             vehicleService = new VehicleService();
