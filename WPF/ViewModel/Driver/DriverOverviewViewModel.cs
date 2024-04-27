@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 
 namespace BookingApp.WPF.ViewModel.Driver
@@ -103,11 +104,11 @@ namespace BookingApp.WPF.ViewModel.Driver
             TxtVehicleCount = $"Ukupno registrovanih vozila: {allVehicles.Count}";
         }
 
-        public void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
+        public void ShowCreateVehicleForm(object sender, RoutedEventArgs e, Page owner)
         {
             VehicleForm vehicleForm = new VehicleForm(DriverId);
             vehicleForm.VM.VehicleAdded += VehicleForm_VehicleAdded;
-            vehicleForm.Show();
+            owner.NavigationService.Navigate(vehicleForm);
         }
 
         public void ViewDrive_Click(object sender, RoutedEventArgs e)

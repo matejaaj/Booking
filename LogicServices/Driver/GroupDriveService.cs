@@ -19,14 +19,16 @@ namespace BookingApp.LogicServices.Driver
         private static readonly DriveReservationService driveReservationService = new DriveReservationService();
         private readonly DispatcherTimer timer;
         public event EventHandler eventHandler;
+        private static readonly object lokot = new object();
         private int driverId { get; set; }
+        private HashSet<int> assignedDrivers = new HashSet<int>();
 
         public GroupDriveService(int DriverID, EventHandler e)
         {
             this.driverId = DriverID;
             this.timer = new DispatcherTimer();
             this.eventHandler += e;
-            timer.Interval = System.TimeSpan.Parse("00:00:05");
+            timer.Interval = System.TimeSpan.Parse("00:00:10");
             timer.Tick += TimerTick;
             StartChecking();
         }
@@ -39,35 +41,73 @@ namespace BookingApp.LogicServices.Driver
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void TimerTick(object? sender, EventArgs e)
         {
-            List<GroupDriveReservation> groups = groupDriveReservationService.GetAll();
-            foreach (GroupDriveReservation g in groups.ToList())
+            lock (lokot)
             {
+
                 timer.Stop();
-                int driver = FindDriver(g);
-                if (driver == -1)
+                var groups = groupDriveReservationService.GetAll().ToList();
+                List<GroupDriveReservation> toUpdate = new List<GroupDriveReservation>();
+                List<GroupDriveReservation> toDelete = new List<GroupDriveReservation>();
+
+                for (int i = 0; i < groups.Count; i++)
                 {
-                    timer.Start();
-                    return;
+                    GroupDriveReservation g = groups[i];
+                    int driver = FindDriver(g);
+                    if (driver == -1 || assignedDrivers.Contains(driver))
+                        continue;  // Skip this group as no driver is found
+                    ProccesReservationCreation(g, driver);
+
+                    if (g.NumberOfPeople > 0)
+                        toUpdate.Add(g);
+                    else
+                    {
+                        toDelete.Add(g);
+                        i++;
+                    }
+
+                    eventHandler?.Invoke(this, EventArgs.Empty);
+                    MessageBox.Show("You have new group drive!\nSee it in your list of reservations!", "Group drive notification", MessageBoxButton.OK);
                 }
-                DriveReservation driveReservation = new DriveReservation();
-                driveReservation.DropoffLocationid = g.DropoffLocationid;
-                driveReservation.PickupLocationId = g.PickupLocationId;
-                driveReservation.DriveReservationStatusId = g.StatusId;
-                driveReservation.TouristId = g.TouristId;
-                driveReservation.DriverId = driver;
-                driveReservation.DepartureTime = g.DepartureTime;
-                driveReservation.UpdateTourist();
-                driveReservationService.Save(driveReservation);
-                eventHandler?.Invoke(this, EventArgs.Empty);
-                MessageBox.Show("You have new group drive!\nSee it in your list of reservations!", "Group drive notification", MessageBoxButton.OK);
+
+                ProccesDataUpdate(toUpdate, toDelete);
+
                 timer.Start();
+
             }
+        }
+
+        private static void ProccesDataUpdate(List<GroupDriveReservation> toUpdate, List<GroupDriveReservation> toDelete)
+        {
+            foreach (var group in toUpdate)
+            {
+                groupDriveReservationService.Update(group);
+            }
+            toDelete.ForEach(groupDriveReservationService.Delete);
+        }
+
+        private void ProccesReservationCreation(GroupDriveReservation g, int driver)
+        {
+            assignedDrivers.Add(driver);
+
+            DriveReservation driveReservation = new DriveReservation
+            {
+                DropoffLocationid = g.DropoffLocationid,
+                PickupLocationId = g.PickupLocationId,
+                DriveReservationStatusId = g.StatusId,
+                TouristId = g.TouristId,
+                DriverId = driver,
+                DepartureTime = g.DepartureTime
+            };
+
+            driveReservation.UpdateTourist();
+            driveReservationService.Save(driveReservation);
         }
 
         private int FindDriver(GroupDriveReservation g)
         {
-            int driver = -1;
-            List<Vehicle> vehicles = vehicleService.GetAll().Where(v => v.DriverId == this.driverId).ToList();
+            var vehicles = vehicleService.GetAll()
+                .Where(v => v.DriverId == this.driverId && !assignedDrivers.Contains(v.DriverId)).ToList();
+
             foreach (Vehicle v in vehicles)
             {
                 if (v.LocationId.Contains(g.PickupLocationId) && v.LanguageId.Contains(g.LanguageId))
@@ -76,10 +116,10 @@ namespace BookingApp.LogicServices.Driver
                     return v.DriverId;
                 }
             }
-            return driver;
+            return -1;
         }
 
-        
+
         private void DeleteResevation(GroupDriveReservation g, Vehicle v)
         {
             g.NumberOfPeople -= v.MaxPassengers;

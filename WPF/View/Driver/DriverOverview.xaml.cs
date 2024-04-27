@@ -25,7 +25,7 @@ namespace BookingApp.WPF.View.Driver
     /// <summary>
     /// Interaction logic for DriverOverview.xaml
     /// </summary>
-    public partial class DriverOverview : Window
+    public partial class DriverOverview : Page
     {
         public static DriverOverviewViewModel VM{ get; set; }
 
@@ -77,7 +77,7 @@ namespace BookingApp.WPF.View.Driver
 
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
-            VM.ShowCreateVehicleForm(sender, e);
+            VM.ShowCreateVehicleForm(sender, e, this);
         }
 
     }
