@@ -211,6 +211,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public DateTime CreateDateTimeFromSelections()
         {
+            DateTime date;
             if (SelectedMinute != null &&
                 SelectedHour != null &&
                 SelectedDate != null)
@@ -219,7 +220,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 var hour = int.Parse(SelectedHour);
                 var minute = int.Parse(SelectedMinute);
 
-                return new DateTime(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, hour, minute, 0);
+                date = new DateTime(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, hour, minute, 0);
+                return date;
             }
             else
             {

@@ -38,8 +38,8 @@
             </TabItem>
             <TabItem Header="Taksi" Style="{StaticResource TabStyle}">
                 <TabControl>
-
                     <TabItem Header="Moje vožnje">
+                        <control:DriveReservationControl DataContext="{Binding DriveMainViewModel}"/>
                     </TabItem>
                 </TabControl>
             </TabItem>

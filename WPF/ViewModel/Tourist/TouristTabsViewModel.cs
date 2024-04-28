@@ -29,6 +29,10 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourReservationService _tourReservationService;
         private TourReviewService _tourReviewService;
         private VoucherService _voucherService;
+        private DriveReservationService _driveReservationService;
+        private UserService _userService;
+        private DetailedLocationService _detailedLocationService;
+
 
         public TouristTabsViewModel(User loggedUser)
         {
@@ -38,7 +42,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             InitializeServices();
 
             ToursMainViewModel = new ToursMainTabViewModel(loggedUser, _tourService, _tourInstanceService, _checkpointService, _imageService,  _locationService, _languageService, _tourGuestService, _tourReservationService, _tourReviewService, _voucherService);
-            DriveMainViewModel = new DriveMainTabViewModel();
+            DriveMainViewModel = new DriveMainTabViewModel(loggedUser, _driveReservationService, _userService, _detailedLocationService);
 
         }
 
@@ -54,6 +58,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
             _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
             _tourReviewService = new TourReviewService(Injector.CreateInstance<ITourReviewRepository>());
+            _driveReservationService =
+                new DriveReservationService(Injector.CreateInstance<IDriveReservationRepository>());
+            _detailedLocationService =
+                new DetailedLocationService(Injector.CreateInstance<IDetailedLocationRepository>());
+            _userService = new UserService(Injector.CreateInstance<IUserRepository>());
+
         }
     }
 }

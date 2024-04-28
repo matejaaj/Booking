@@ -90,8 +90,8 @@ namespace BookingApp.Repository
 
         public List<DriveReservation> GetByTouristAndStatus(int touristId, string status)
         {
-            _driveReservations = _serializer.FromCSV(FilePath);  // Re-load or ensure data is up-to-date
-            var statusRepository = new DriveReservationStatusRepository(); // Assuming this repository exists
+            _driveReservations = _serializer.FromCSV(FilePath);
+            var statusRepository = new DriveReservationStatusRepository(); 
             var statusId = statusRepository.GetAll().FirstOrDefault(s => s.Name == status)?.Id;
 
             return _driveReservations.Where(r => r.TouristId == touristId && r.DriveReservationStatusId == statusId).ToList();

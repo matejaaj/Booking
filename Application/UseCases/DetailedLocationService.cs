@@ -47,7 +47,7 @@ namespace BookingApp.Application.UseCases
             return _detailedLocationRepository.Update(detailedLocation);
         }
 
-        public DetailedLocation GetDetailedLocationById(int id)
+        public DetailedLocation GetById(int id)
         {
             return _detailedLocationRepository.GetDetailedLocationById(id);
         }

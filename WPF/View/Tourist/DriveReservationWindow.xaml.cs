@@ -19,12 +19,12 @@ namespace BookingApp.WPF.View.Tourist
 
     public partial class DriveReservationWindow : Window
     {
-        private DriveReservationViewModel _viewModel;
+        private DriveReservationFormViewModel _viewModel;
 
         public DriveReservationWindow(User user)
         {
             InitializeComponent();
-            _viewModel = new DriveReservationViewModel(user);
+            _viewModel = new DriveReservationFormViewModel(user);
             DataContext = _viewModel;
         }
     }
