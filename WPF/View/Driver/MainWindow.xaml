@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View"
         mc:Ignorable="d"
-        Title="DriverOverview" Height="550" Width="1024">
+        Title="CityConnect Firma" Height="550" Width="936">
     <Grid>
         <DockPanel>
             <StatusBar DockPanel.Dock="Bottom">

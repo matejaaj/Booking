@@ -11,9 +11,11 @@
     <None Remove="Resources\Images\car.png" />
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\carReg.png" />
+    <None Remove="Resources\Images\check.png" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\goBack.png" />
+    <None Remove="Resources\Images\Map.jpg" />
     <None Remove="Resources\Images\menu.png" />
     <None Remove="Resources\Images\menuBar.png" />
     <None Remove="Resources\Images\notifications.png" />
@@ -56,7 +58,9 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\carReg.png" />
+    <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\goBack.png" />
+    <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
     <Resource Include="Resources\Images\notifications.png" />
     <Resource Include="Resources\Images\ratings.png" />

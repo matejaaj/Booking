@@ -85,12 +85,10 @@ namespace BookingApp.WPF.View.Driver
         {
             if (SideMenu.Visibility == Visibility.Collapsed)
             {
-                // Ako nije, prikazujemo ga
                 SideMenu.Visibility = Visibility.Visible;
             }
             else
             {
-                // Ako jeste, sakrivamo ga
                 SideMenu.Visibility = Visibility.Collapsed;
             }
         }
