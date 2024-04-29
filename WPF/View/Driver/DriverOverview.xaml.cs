@@ -16,6 +16,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -78,6 +79,24 @@ namespace BookingApp.WPF.View.Driver
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
             VM.ShowCreateVehicleForm(sender, e, this);
+        }
+
+        private void ShowMenuBar(object sender, RoutedEventArgs e)
+        {
+            if (SideMenu.Visibility == Visibility.Collapsed)
+            {
+                // Ako nije, prikazujemo ga
+                SideMenu.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                // Ako jeste, sakrivamo ga
+                SideMenu.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void HideMenuBar(object sender, RoutedEventArgs e)
+        {
+            SideMenu.Visibility = Visibility.Collapsed;
         }
 
     }

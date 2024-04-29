@@ -5,27 +5,101 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
         mc:Ignorable="d"
-        Title="DriverOverview" Height="447" Width="980">
+        Title="CityConnect Firma" Height="550" Width="1024">
     <Page.Resources>
         <local:LocationConverterDriver x:Key="LocationConverterDriver" />
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FF333333"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <!-- Dodajte bilo koje druge settere koji su vam potrebni -->
+        </Style>
     </Page.Resources>
-    
+
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="55*"/>
-            <ColumnDefinition Width="55*"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="238*"/>
+            <ColumnDefinition Width="253*"/>
+            <ColumnDefinition Width="38*"/>
+            <ColumnDefinition Width="376*"/>
+            <ColumnDefinition Width="75*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
+        <Canvas x:Name="SideMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="#333333">
+            <StackPanel Width="250" Background="#FFA9A9A9" VerticalAlignment="Top">
+                <!-- Dugme za zatvaranje menija sa strelicom levo -->
+                <Button Click="HideMenuBar" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" HorizontalAlignment="Stretch" Height="39">
+                    <DockPanel>
+                        <Image Source="../../../Resources/Images/goBack.png" Width="20" Height="20" DockPanel.Dock="Left"/>
+                        <TextBlock Text="CityConnect" FontWeight="Bold" FontSize="18" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    </DockPanel>
+                </Button>
 
-        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+                <!-- Profilna slika, ime korisnika i dugme za odjavu -->
+                <StackPanel Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                    <Image Source="../../../Resources/Images/userProfile.png" Height="80" Width="100" Margin="0,0,0,5"/>
+                    <TextBlock Text="Ime korisnika" Foreground="Black" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+                </StackPanel>
+
+                <!-- Dugme za odjavu -->
+                <Button Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+
+                <!-- Ostale stavke menija -->
+                <Button Click="ShowCreateVehicleForm" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/carReg.png" Width="25" Height="25"/>
+                        <TextBlock Text="Vehicle Registration" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="btnStats_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/stats.png" Width="25" Height="25"/>
+                        <TextBlock Text="Statistics" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/notifications.png" Width="25" Height="25"/>
+                        <TextBlock Text="Notifications" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/vacations.png" Width="25" Height="25"/>
+                        <TextBlock Text="Vacation Requests" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/reports.png" Width="25" Height="25"/>
+                        <TextBlock Text="Vacation Reports" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/userData.png" Width="25" Height="25"/>
+                        <TextBlock Text="Personal Data" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,57,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/tutorial.png" Width="25" Height="25"/>
+                        <TextBlock Text="Tutorijal" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Canvas>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Margin="75,0,0,0">
             <DataGrid ItemsSource="{Binding DriveReservations}"
                       AutoGenerateColumns="False" Height="382" HeadersVisibility="Column" 
                       FontSize="13" SelectedItem="{Binding SelectedReservation}"
@@ -40,18 +114,19 @@
                     <DataGridTextColumn Header="Delay Minutes Tourist" Binding="{Binding DelayMinutesTourist}" Width="2*"/>
                 </DataGrid.Columns>
             </DataGrid>
-
-            <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" >
-                <TextBlock x:Name="txtVehicleCount" FontSize="16" Margin="5"/>
-            </StackPanel>
-
         </StackPanel>
-
-        <ToolBar Grid.Row="0" Grid.ColumnSpan="4">
-            <Button Click="ShowCreateVehicleForm">
+        
+        <ToolBar Grid.Row="0" Grid.ColumnSpan="5" Background="#FFA9A9A9">
+            <Button Click="ShowMenuBar">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../../Resources/Images/add.png" Width="20" Height="25"/>
-                    <TextBlock Text="Register Vehicle" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <Image Source="../../../Resources/Images/menuBar.png" Width="20" Height="25"/>
+                    <TextBlock Text="CityConnect" 
+                        FontSize="20" 
+                        FontWeight="Bold" 
+                        Foreground="Black"
+                        VerticalAlignment="Center" 
+                        Margin="10,0,0,0" 
+                        FontFamily="Arial"/>
                 </StackPanel>
             </Button>
             <Separator/>
@@ -80,25 +155,24 @@
             <Button x:Name="btnDeleteVehicle" Click="btnDeleteVehicle_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../../Resources/Images/delete.png" Width="20" Height="25"/>
-                    <TextBlock Text="Dismiss Vehicle" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="Dismiss" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button x:Name="btnDrive" Click="btnDrive_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../../Resources/Images/car.png" Width="20" Height="25"/>
                     <TextBlock Text="Drive overview" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button x:Name="btnStats" Click="btnStats_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../../../Resources/Images/car.png" Width="20" Height="25"/>
                     <TextBlock Text="Stats" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </ToolBar>
         <Frame Name="MainNavigationFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
+    
 </Page>
     
