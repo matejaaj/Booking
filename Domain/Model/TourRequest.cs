@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookingApp.Serializer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Domain.Model
 {
-    public class TourRequest
+    public class TourRequest : ISerializable
     {
         public int Id { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public int LocationId { get; set; }
         public int LanguageId { get; set; }
         public int Capacity { get; set; }
@@ -28,6 +29,11 @@ namespace BookingApp.Domain.Model
             ToDate = toDate;
             IsAccepted = false;
             AcceptedDate = DateTime.Now;
+        }
+
+        public TourRequest()
+        {
+
         }
 
         public void FromCSV(string[] values)
