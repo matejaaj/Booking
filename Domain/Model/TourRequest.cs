@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Domain.Model
 {
+    public enum TourRequestStatus
+    {
+        PENDING, ACCEPTED, CANCELED
+    }
     public class TourRequest : ISerializable
     {
         public int Id { get; set; }
@@ -17,7 +21,7 @@ namespace BookingApp.Domain.Model
         public DateTime FromDate {  get; set; }
         public DateTime ToDate { get; set; }
         public DateTime AcceptedDate { get; set; }
-        public bool IsAccepted { get; set; }
+        public TourRequestStatus IsAccepted { get; set; }
 
         public TourRequest(string description, int locationId, int languageId, int capacity, DateTime fromDate, DateTime toDate) 
         {
@@ -27,7 +31,7 @@ namespace BookingApp.Domain.Model
             Capacity = capacity;
             FromDate = fromDate;
             ToDate = toDate;
-            IsAccepted = false;
+            IsAccepted = TourRequestStatus.PENDING;
             AcceptedDate = DateTime.Now;
         }
 
@@ -46,7 +50,7 @@ namespace BookingApp.Domain.Model
             FromDate = DateTime.Parse(values[5]);
             ToDate = DateTime.Parse(values[6]);
             AcceptedDate = DateTime.Parse(values[7]);
-            IsAccepted = bool.Parse(values[8]);
+            IsAccepted = (TourRequestStatus)Enum.Parse(typeof(TourRequestStatus), values[8]);
         }
 
         public string[] ToCSV()
