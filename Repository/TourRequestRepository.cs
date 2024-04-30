@@ -11,7 +11,7 @@ namespace BookingApp.Repository
 {
     public class TourRequestRepository : ITourRequestRepository
     {
-        private const string FilePath = "../../../Resources/Data/tourRequests.csv";
+        private const string FilePath = "../../../Resources/Data/tourRequest.csv";
         private readonly Serializer<TourRequest> _serializer;
         private List<TourRequest> _tourRequests;
 
