@@ -14,7 +14,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
     public class DriveMainTabViewModel
     {
         public ObservableCollection<DriveReservationViewModel> Reservations { get; private set; }
-        public DriveReservationViewModel SelectedReservation { get; set; }
+        public DriveReservation SelectedReservation { get; private set; }
 
 
         private User _user;
@@ -62,24 +62,23 @@ namespace BookingApp.WPF.ViewModel.Tourist
             UpdateView();
         }
 
-        public bool CheckIfMarked(DriveReservationViewModel reservationViewModel)
+        public bool CheckIfMarked()
         {
-            var reservation = _driveReservationService.GetById(reservationViewModel.DriveReservationId);
-            var driverId = reservation.DriverId;
-            return _driverReportService.ReportExists(reservationViewModel.DriveReservationId, _user.Id, driverId);
+            var driverId = SelectedReservation.DriverId;
+            return _driverReportService.ReportExists(SelectedReservation.Id, _user.Id, driverId);
         }
 
         public bool CheckIfDriverArrived(DriveReservationViewModel reservationViewModel)
         {
-            var reservation = _driveReservationService.GetById(reservationViewModel.DriveReservationId);
-            return reservation.DriveReservationStatusId == 4;
+            SelectedReservation = _driveReservationService.GetById(reservationViewModel.DriveReservationId);
+            return SelectedReservation.DriveReservationStatusId == 4;
         }
 
-        public void MarkDriverAsUnreliable(DriveReservationViewModel reservationViewModel)
+        public void MarkDriverAsUnreliable()
         {
-            var driverId = _driveReservationService.GetById(reservationViewModel.DriveReservationId).DriverId;
+            var driverId = SelectedReservation.DriverId;
             DateTime time = DateTime.Now;
-            DriverUnreliableReport report = new DriverUnreliableReport(_user.Id, driverId, reservationViewModel.DriveReservationId, time);
+            DriverUnreliableReport report = new DriverUnreliableReport(_user.Id, driverId, SelectedReservation.Id, time);
             _driverReportService.Save(report);
         }
 

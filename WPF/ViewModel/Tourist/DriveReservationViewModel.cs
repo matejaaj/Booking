@@ -135,7 +135,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         }
 
-        public bool CanMarkDriverUnreliable()
+        public bool CheckTimeDifference()
         {
 
             if (DelayDriver == 0)
