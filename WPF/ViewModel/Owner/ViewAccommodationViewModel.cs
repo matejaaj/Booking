@@ -74,46 +74,21 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void FillReservations()
         {
-            var allReservations = _accommodationReservationService.GetAll();
-
             RecentAccommodationReservations = new ObservableCollection<AccommodationReservation>(
-                allReservations.Where(reservation => IsReservationRecent(reservation, Accommodation))
-            );
+                _accommodationReservationService.GetRecentReservations(Accommodation));
 
             PastAccommodationReservations = new ObservableCollection<AccommodationReservation>(
-                allReservations.Where(reservation => IsReservationPast(reservation, Accommodation))
-            );
-
+                _accommodationReservationService.GetPastReservations(Accommodation));
 
             OtherAccommodationReservations = new ObservableCollection<AccommodationReservation>(
-                allReservations.Where(reservation => IsReservationOther(reservation, Accommodation))
-            );
-        }
-        private bool IsReservationRecent(AccommodationReservation reservation, Accommodation accommodation)
-        {
-            return (DateTime.Now - reservation.EndDate).TotalDays <= 5 &&
-                reservation.EndDate < DateTime.Now &&
-                reservation.AccommodationId == Accommodation.AccommodationId;
+                _accommodationReservationService.GetOtherReservations(Accommodation));
         }
 
-        private bool IsReservationRated(AccommodationReservation accommodationReservation)
+/*        private bool IsReservationRated(AccommodationReservation accommodationReservation)
         {
             var selectedAccommodationRating = _guestRatings.Find(rating => accommodationReservation.AccommodationId == rating.GuestRatingId);
             return !(selectedAccommodationRating == null);
-        }
-
-        private bool IsReservationPast(AccommodationReservation reservation, Accommodation accommodation)
-        {
-            return (DateTime.Now - reservation.EndDate).TotalDays > 5 &&
-                reservation.EndDate < DateTime.Now &&
-                reservation.AccommodationId == accommodation.AccommodationId;
-        }
-
-        private bool IsReservationOther(AccommodationReservation reservation, Accommodation accommodation)
-        {
-            return reservation.EndDate >= DateTime.Now &&
-                reservation.AccommodationId == accommodation?.AccommodationId;
-        }
+        }*/
 
         public void RecentReservationsListBox_SelectionChanged(object sender, Window owner, ListBox RecentReservationsListBox)
         {

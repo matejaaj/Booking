@@ -43,8 +43,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             InitializeServices();
             Requests = new ObservableCollection<ReschedulingRequestDTO>();
             AccommodationReservations = ownerAccommodationReservations;
-            AccommodationReservationsIds = AccommodationReservations.Select(a => a.Id).ToList();
-            ReservationModificationRequests = _reservationModificationRequestService.GetByReservationIds(AccommodationReservationsIds);
+            ReservationModificationRequests = _reservationModificationRequestService.GetByReservationIds(AccommodationReservations);
             Update();
         }
 
@@ -156,22 +155,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private bool IsReserved(DateTime startDate, DateTime endDate, DateTime oldStartDate, DateTime oldEndDate)
         {
-            foreach (var reservation in AccommodationReservations)
-            {
-                if (((startDate <= reservation.EndDate && endDate >= reservation.StartDate) ||
-                    (startDate >= reservation.StartDate && endDate <= reservation.EndDate)) 
-                    && !isOldReservation(reservation, oldStartDate, oldEndDate))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool isOldReservation(AccommodationReservation reservation, DateTime oldStartDate, DateTime oldEndDate)
-        {
-            return (reservation.StartDate == oldStartDate && reservation.EndDate == oldEndDate);
+            return _accommodationReservationService.IsDateReserved(startDate, endDate, oldStartDate, oldEndDate, AccommodationReservations);
         }
     }
 }

@@ -3,6 +3,7 @@ using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookingApp.Application.UseCases
 {
@@ -48,6 +49,11 @@ namespace BookingApp.Application.UseCases
         public List<ReservationModificationRequest> GetByReservationIds(List<int> reservationIds)
         {
             return _requestRepository.GetByReservationIds(reservationIds);
+        }
+
+        internal List<ReservationModificationRequest> GetByReservationIds(List<AccommodationReservation> accommodationReservations)
+        {
+            return _requestRepository.GetByReservationIds(accommodationReservations.Select(a => a.Id).ToList());
         }
     }
 }
