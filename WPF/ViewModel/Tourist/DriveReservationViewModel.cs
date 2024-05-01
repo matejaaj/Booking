@@ -134,5 +134,17 @@ namespace BookingApp.WPF.ViewModel.Tourist
         {
 
         }
+
+        public bool CanMarkDriverUnreliable()
+        {
+
+            if (DelayDriver == 0)
+            {
+                return (DateTime.Now - Time).TotalMinutes > 10;
+            }
+
+            return false;  
+        }
+
     }
 }
