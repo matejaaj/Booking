@@ -151,7 +151,7 @@
                                 <!-- Mapa -->
                                 <Image Grid.Column="1" Source="../../../Resources/Images/Map.jpg" Height="150"  Margin="10" VerticalAlignment="Bottom"/>
                                 <!-- Dugme za akciju -->
-                                <Button Grid.Column="2" Click="ViewDrive_Respond" Margin="10" VerticalAlignment="Center" Visibility="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged}">
+                                <Button Grid.Column="2" Click="ViewDrive_Respond" Margin="10" VerticalAlignment="Center" Visibility="{Binding DataContext.IsVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="../../../Resources/Images/check.png" Width="20" Height="25"/>
                                         <TextBlock Text="Accept Ride" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
@@ -178,7 +178,7 @@
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button Click="ViewDrive_Click">
+            <Button Click="ViewDrive_Click" Visibility="{Binding IsNotVisible, UpdateSourceTrigger=PropertyChanged}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../../../Resources/Images/view.png" Width="20" Height="25"/>
                     <TextBlock Text="Delay" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />

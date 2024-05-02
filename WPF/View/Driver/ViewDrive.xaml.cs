@@ -23,7 +23,7 @@ namespace BookingApp.WPF.View.Driver
     /// <summary>
     /// Interaction logic for ViewDrive.xaml
     /// </summary>
-    public partial class ViewDrive : Window
+    public partial class ViewDrive : Page
     {
         public ViewDriveViewModel VM { get; set; }
 
@@ -45,7 +45,7 @@ namespace BookingApp.WPF.View.Driver
         {
             VM.Confirm_Click(sender, e);
             
-            Close();
+            NavigationService.GoBack();
         }
 
         private void rbAtLocation_Checked(object sender, RoutedEventArgs e)

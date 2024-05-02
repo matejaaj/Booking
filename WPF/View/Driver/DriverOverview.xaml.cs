@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -52,7 +53,7 @@ namespace BookingApp.WPF.View.Driver
 
         private void ViewDrive_Click(object sender, RoutedEventArgs e)
         {
-            VM.ViewDrive_Click(sender, e);
+            VM.ViewDrive_Click(sender, e, this);
         }
 
 
@@ -96,6 +97,5 @@ namespace BookingApp.WPF.View.Driver
         {
             SideMenu.Visibility = Visibility.Collapsed;
         }
-
     }
 }

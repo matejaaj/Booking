@@ -1,4 +1,6 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.Events;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.LogicServices.Driver;
 using BookingApp.Repository;
@@ -18,6 +20,8 @@ namespace BookingApp.WPF.ViewModel.Driver
 {
     public class DriverOverviewViewModel : INotifyPropertyChanged
     {
+        public static IEventAggregator EventAggregator { get; } = new SimpleEventAggregator();
+
         public List<Location> locations { get; set; }
         public GroupDriveService groupDriveService { get; set; }
 
@@ -39,7 +43,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             {
                 confirmedReservation = value;
                 OnPropertyChanged(nameof(ConfirmedReservation));
-                IsVisible = confirmedReservation == null;
+                IsVisible = ConfirmedReservation == null ? Visibility.Visible : Visibility.Collapsed;
             }
         }
         private int sec = 0;
@@ -88,13 +92,32 @@ namespace BookingApp.WPF.ViewModel.Driver
             }
         }
 
-        private bool isVisible;
-        public bool IsVisible
+        private Visibility isVisible;
+        public Visibility IsVisible
         {
             get { return isVisible; }
             set
             {
                 isVisible = value;
+                OnPropertyChanged(); // Notify the view of the change
+                if (IsVisible.Equals(Visibility.Visible))
+                {
+                    IsNotVisible = Visibility.Collapsed;
+                }
+                else
+                {
+                    IsNotVisible = Visibility.Visible;
+                }
+            }
+        }
+
+        private Visibility isNotVisible;
+        public Visibility IsNotVisible
+        {
+            get { return isNotVisible; }
+            set
+            {
+                isNotVisible = value;
                 OnPropertyChanged(); // Notify the view of the change
             }
         }
@@ -121,7 +144,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             fastDriveTimer.Interval = System.TimeSpan.Parse("00:00:05");
             fastDriveTimer.Tick += FastDriveTimer_Tick;
             fastDriveTimer.Start();
-            IsVisible = ConfirmedReservation == null;
+            IsVisible = ConfirmedReservation == null ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public void UpdateVehicleCount()
@@ -137,7 +160,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             owner.NavigationService.Navigate(vehicleForm);
         }
 
-        public void ViewDrive_Click(object sender, RoutedEventArgs e)
+        public void ViewDrive_Click(object sender, RoutedEventArgs e, Page owner)
         {
             if (!ValidateInput(() => SelectedReservation.DriveReservationStatusId == 2 || SelectedReservation.DriveReservationStatusId == 13, "You can't delay reservation if it's not confirmed or not in the specific required status!"))
             {
@@ -153,7 +176,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 }
             };
             vForm.VM.ReservationConfirmed += DataGrid_Refresh;
-            vForm.Show();
+            owner.NavigationService.Navigate(vForm);
         }
 
         public void VehicleForm_VehicleAdded(object? sender, EventArgs e)
@@ -174,11 +197,27 @@ namespace BookingApp.WPF.ViewModel.Driver
                     DriveReservations.Clear();
                     ConfirmedReservation = reservation;
                     DriveReservations.Add(reservation);
-                    IsVisible = ConfirmedReservation == null;
+                    IsVisible = ConfirmedReservation == null ? Visibility.Visible : Visibility.Collapsed;
+                    if (IsVisible.Equals(Visibility.Visible))
+                    {
+                        IsNotVisible = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        IsNotVisible = Visibility.Visible;
+                    }
                     return;
                 }
                 DriveReservations.Add(reservation);
-                IsVisible = ConfirmedReservation == null;
+                IsVisible = ConfirmedReservation == null ? Visibility.Visible : Visibility.Collapsed;
+                if (IsVisible.Equals(Visibility.Visible))
+                {
+                    IsNotVisible = Visibility.Collapsed;
+                }
+                else
+                {
+                    IsNotVisible = Visibility.Visible;
+                }
             }
         }
 
@@ -204,7 +243,6 @@ namespace BookingApp.WPF.ViewModel.Driver
             {
                 return;
             }
-
             SelectedReservation.DriveReservationStatusId = 2;
             driveReservationService.Update(SelectedReservation);
             DataGrid_Refresh(sender, e);
@@ -223,6 +261,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             cancelTime.Stop();
             sec = 0;
             secTourist = 0;
+            ConfirmedReservation = null;
             UpdateReservationList();
             if (SuperDriverService.CanceledResevationByDriver(DriverId))
                 MessageBox.Show("You just lost status of Super-Driver!", "Super-Driver Notification", MessageBoxButton.OK);
@@ -334,13 +373,13 @@ namespace BookingApp.WPF.ViewModel.Driver
         {
             if (SelectedReservation == null)
             {
-                MessageBox.Show("You haven't selected any reservation!");
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("You haven't selected any reservation!"));
                 return false;
             }
 
             if (!condition())
             {
-                MessageBox.Show(errorMessage);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent(errorMessage));
                 return false;
             }
 
