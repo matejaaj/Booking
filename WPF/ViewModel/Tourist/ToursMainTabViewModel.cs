@@ -26,6 +26,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public MyToursViewModel MyToursViewModel { get;  }
         public AllToursViewModel AllToursViewModel { get;  }
 
+        public TourRequestsViewModel TourRequestsViewModel { get; }
+
         public ToursMainTabViewModel(User loggedUser, TourService tourService, TourInstanceService tourInstanceService, CheckpointService checkpointService, ImageService imageService, LocationService locationService, LanguageService languageService, TourGuestService tourGuestService, TourReservationService tourReservationService, TourReviewService tourReviewService, VoucherService _voucherService)
         {
             _tourService = tourService;
@@ -41,6 +43,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
             MyToursViewModel = new MyToursViewModel(loggedUser, tourService, tourInstanceService, checkpointService, imageService, locationService, languageService, tourGuestService, tourReservationService, _voucherService, tourReviewService);
             AllToursViewModel = new AllToursViewModel(loggedUser, tourService, tourInstanceService, checkpointService, imageService, locationService, languageService, tourGuestService, tourReservationService, _voucherService);
+            TourRequestsViewModel = new TourRequestsViewModel(_locationService, languageService);
         }
         
     }

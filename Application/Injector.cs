@@ -37,7 +37,6 @@ namespace BookingApp.Application
         { typeof(ITourRequestSegmentRepository), new TourRequestSegmentRepository()},
         { typeof(IPrivateTourGuestRepository), new PrivateTourGuestRepository()},
         { typeof(ITourRequestRepository), new TourRequestRepository() },
-        { typeof(ISuperDriverStateRepository), new SuperDriverStateRepository() },
         { typeof(IDriverUnreliableReportRepository), new DriverUnreliableReportRepository() },
     };
         
