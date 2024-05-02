@@ -24,7 +24,8 @@ namespace BookingApp.Domain.Model
 
         public DriveReservation()
         {
-
+            DelayMinutesDriver = 0;
+            DelayMinutesTourist = 0;
         }
 
         public User Tourist { get; set; }
