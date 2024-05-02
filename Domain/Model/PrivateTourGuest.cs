@@ -10,17 +10,19 @@ namespace BookingApp.Domain.Model
     public class PrivateTourGuest : ISerializable
     {
         public int Id { get; set; }
+        public int TourRequestId { get; set }
         public string Name { get; set; }
         public int Age { get; set; }
         public int TouristId { get; set; }
         public PrivateTourGuest() { }
 
-        public PrivateTourGuest(int id, string name, int age, int touristId)
+        public PrivateTourGuest(int id, string name, int age, int touristId, int tourRequestId)
         {
             Id = id;
             Name = name;
             Age = age;
             TouristId = touristId;
+            TourRequestId = tourRequestId;
         }
         public void FromCSV(string[] values)
         {
@@ -28,6 +30,7 @@ namespace BookingApp.Domain.Model
             Name = values[1];
             Age = int.Parse(values[2]);
             TouristId = int.Parse(values[3]);
+            TourRequestId = int.Parse(values[4]);
         }
         public string[] ToCSV()
         {
@@ -35,7 +38,8 @@ namespace BookingApp.Domain.Model
                 Id.ToString(),
                 Name,
                 Age.ToString(),
-                TouristId.ToString()
+                TouristId.ToString(),
+                TourRequestId.ToString()
             };
         }
     }
