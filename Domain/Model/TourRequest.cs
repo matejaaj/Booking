@@ -19,12 +19,15 @@ namespace BookingApp.Domain.Model
         public int TouristId { get; set; }
         public TourRequestStatus IsAccepted { get; set; }
 
+        public bool IsComplex { get; set; }
+
         public TourRequest() { }
-        public TourRequest(int id, int touristId)
+        public TourRequest(int id, int touristId, bool isComplex)
         {
             Id = id;
             TouristId = touristId;
             IsAccepted = TourRequestStatus.PENDING;
+            IsComplex = isComplex;
         }
 
         public string[] ToCSV()
@@ -33,6 +36,7 @@ namespace BookingApp.Domain.Model
                 Id.ToString(),
                 TouristId.ToString(),
                 IsAccepted.ToString(),
+                IsComplex.ToString(),
             };
         }
 
@@ -41,6 +45,7 @@ namespace BookingApp.Domain.Model
             Id = int.Parse(values[0]);
             TouristId = int.Parse(values[1]);
             IsAccepted = (TourRequestStatus)Enum.Parse(typeof(TourRequestStatus), values[2]);
+            IsComplex = bool.Parse(values[3]);
         }
     }
 }
