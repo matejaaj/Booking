@@ -10,10 +10,10 @@ namespace BookingApp.Domain.RepositoryInterfaces
     public interface ITourRequestSegmentRepository
     {
         List<TourRequestSegment> GetAll();
-        TourRequestSegment GetById(int reviewId);
-        TourRequestSegment Save(TourRequestSegment review);
-        void Delete(TourRequestSegment review);
-        TourRequestSegment Update(TourRequestSegment review);
+        TourRequestSegment GetById(int requestId);
+        TourRequestSegment Save(TourRequestSegment request);
+        void Delete(TourRequestSegment request);
+        TourRequestSegment Update(TourRequestSegment request);
         int NextId();
     }
 }

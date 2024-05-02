@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Repository
 {
-    public class TourRequestSegmentRepository : ITourRequestSegmentRepository
+    public class TourRequestRepository : ITourRequestRepository
     {
-        private const string FilePath = "../../../Resources/Data/tourRequestSegment.csv";
-        private readonly Serializer<TourRequestSegment> _serializer;
-        private List<TourRequestSegment> _tourRequests;
+        private const string FilePath = "../../../Resources/Data/tourRequest.csv";
+        private readonly Serializer<TourRequest> _serializer;
+        private List<TourRequest> _tourRequests;
 
-        public TourRequestSegmentRepository()
+        public TourRequestRepository()
         {
-            _serializer = new Serializer<TourRequestSegment>();
+            _serializer = new Serializer<TourRequest>();
             _tourRequests = _serializer.FromCSV(FilePath);
         }
 
-        public List<TourRequestSegment> GetAll()
+        public List<TourRequest> GetAll()
         {
             return _serializer.FromCSV(FilePath);
         }
 
-        public TourRequestSegment Save(TourRequestSegment tourRequest)
+        public TourRequest Save(TourRequest tourRequest)
         {
             tourRequest.Id = NextId();
             _tourRequests = _serializer.FromCSV(FilePath);
@@ -45,10 +45,10 @@ namespace BookingApp.Repository
             return _tourRequests.Max(tr => tr.Id) + 1;
         }
 
-        public void Delete(TourRequestSegment tourRequest)
+        public void Delete(TourRequest tourRequest)
         {
             _tourRequests = _serializer.FromCSV(FilePath);
-            TourRequestSegment found = _tourRequests.Find(tr => tr.Id == tourRequest.Id);
+            TourRequest found = _tourRequests.Find(tr => tr.Id == tourRequest.Id);
             if (found != null)
             {
                 _tourRequests.Remove(found);
@@ -56,10 +56,10 @@ namespace BookingApp.Repository
             }
         }
 
-        public TourRequestSegment Update(TourRequestSegment tourRequest)
+        public TourRequest Update(TourRequest tourRequest)
         {
             _tourRequests = _serializer.FromCSV(FilePath);
-            TourRequestSegment current = _tourRequests.Find(tr => tr.Id == tourRequest.Id);
+            TourRequest current = _tourRequests.Find(tr => tr.Id == tourRequest.Id);
             if (current != null)
             {
                 int index = _tourRequests.IndexOf(current);
@@ -69,7 +69,7 @@ namespace BookingApp.Repository
             return tourRequest;
         }
 
-        public TourRequestSegment GetById(int tourRequestId)
+        public TourRequest GetById(int tourRequestId)
         {
             _tourRequests = _serializer.FromCSV(FilePath);
             return _tourRequests.FirstOrDefault(tr => tr.Id == tourRequestId);
