@@ -25,7 +25,7 @@ namespace BookingApp.WPF.View.Driver
     /// <summary>
     /// Interaction logic for Stats.xaml
     /// </summary>
-    public partial class Stats : Window
+    public partial class Stats : Page
     {
         public StatsViewModel VM { get; set; }
         public Stats(int driverId, DriveReservationService service)
@@ -56,7 +56,7 @@ namespace BookingApp.WPF.View.Driver
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            NavigationService.GoBack();
         }
     }
 }

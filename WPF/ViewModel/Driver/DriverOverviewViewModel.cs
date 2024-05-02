@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 
 namespace BookingApp.WPF.ViewModel.Driver
@@ -18,9 +19,10 @@ namespace BookingApp.WPF.ViewModel.Driver
     public class DriverOverviewViewModel : INotifyPropertyChanged
     {
         public List<Location> locations { get; set; }
+        public GroupDriveService groupDriveService { get; set; }
 
-        public static DriveReservation SelectedReservation { get; set; }
-        public static bool canCancel { get; set; }
+        public DriveReservation SelectedReservation { get; set; }
+        public bool canCancel { get; set; }
 
         private readonly DriveReservationService driveReservationService;
         private readonly LocationRepository _locationRepository;
@@ -28,7 +30,18 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         private DispatcherTimer cancelTime = new DispatcherTimer();
         private DispatcherTimer fastDriveTimer = new DispatcherTimer();
-        private DriveReservation? ConfirmedReservation { get; set; }
+
+        private DriveReservation? confirmedReservation;
+        public DriveReservation? ConfirmedReservation
+        {
+            get { return confirmedReservation; }
+            set
+            {
+                confirmedReservation = value;
+                OnPropertyChanged(nameof(ConfirmedReservation));
+                IsVisible = confirmedReservation == null;
+            }
+        }
         private int sec = 0;
         private int secTourist = 0;
 
@@ -75,11 +88,26 @@ namespace BookingApp.WPF.ViewModel.Driver
             }
         }
 
+        private bool isVisible;
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set
+            {
+                isVisible = value;
+                OnPropertyChanged(); // Notify the view of the change
+            }
+        }
+
+        public User Korisnik { get; set; }
+
         public DriverOverviewViewModel(User driver)
         {
             DriverId = driver.Id;
+            Korisnik = driver;
             Vehicles = new ObservableCollection<Vehicle>();
             driveReservationService = new DriveReservationService();
+            groupDriveService = new GroupDriveService(DriverId, DataGrid_Refresh);
             DriveReservations = new ObservableCollection<DriveReservation>(driveReservationService.GetByDriver(driver.Id));
             _locationRepository = new LocationRepository();
             vehicleService = new VehicleService();
@@ -93,6 +121,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             fastDriveTimer.Interval = System.TimeSpan.Parse("00:00:05");
             fastDriveTimer.Tick += FastDriveTimer_Tick;
             fastDriveTimer.Start();
+            IsVisible = ConfirmedReservation == null;
         }
 
         public void UpdateVehicleCount()
@@ -101,11 +130,11 @@ namespace BookingApp.WPF.ViewModel.Driver
             TxtVehicleCount = $"Ukupno registrovanih vozila: {allVehicles.Count}";
         }
 
-        public void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
+        public void ShowCreateVehicleForm(object sender, RoutedEventArgs e, Page owner)
         {
             VehicleForm vehicleForm = new VehicleForm(DriverId);
             vehicleForm.VM.VehicleAdded += VehicleForm_VehicleAdded;
-            vehicleForm.Show();
+            owner.NavigationService.Navigate(vehicleForm);
         }
 
         public void ViewDrive_Click(object sender, RoutedEventArgs e)
@@ -140,14 +169,16 @@ namespace BookingApp.WPF.ViewModel.Driver
             DriveReservations.Clear();
             foreach (DriveReservation reservation in _reservations)
             {
-                if (reservation.DriveReservationStatusId == 2 || reservation.DriveReservationStatusId == 13)
+                if (reservation.DriveReservationStatusId == 2 || reservation.DriveReservationStatusId == 13 || reservation.DriveReservationStatusId == 4)
                 {
                     DriveReservations.Clear();
                     ConfirmedReservation = reservation;
                     DriveReservations.Add(reservation);
+                    IsVisible = ConfirmedReservation == null;
                     return;
                 }
                 DriveReservations.Add(reservation);
+                IsVisible = ConfirmedReservation == null;
             }
         }
 
@@ -159,6 +190,9 @@ namespace BookingApp.WPF.ViewModel.Driver
                 cancelTime.Stop();
                 sec = 0;
                 secTourist = 0;
+                ConfirmedReservation.DriveReservationStatusId = 4;
+                ConfirmedReservation.UpdateTourist();
+                driveReservationService.Update(ConfirmedReservation);
                 cancelTime.Start();
             }
             canCancel = false;
@@ -171,9 +205,9 @@ namespace BookingApp.WPF.ViewModel.Driver
                 return;
             }
 
-            RespondView rvForm = new RespondView(SelectedReservation, driveReservationService);
-            rvForm.VM.ReservationConfirmed += DataGrid_Refresh;
-            rvForm.Show();
+            SelectedReservation.DriveReservationStatusId = 2;
+            driveReservationService.Update(SelectedReservation);
+            DataGrid_Refresh(sender, e);
         }
 
 
@@ -275,9 +309,9 @@ namespace BookingApp.WPF.ViewModel.Driver
             }
         }
 
-        public void btnDrive_Click(object sender, RoutedEventArgs e)
+        public void btnDrive_Click(object sender, RoutedEventArgs e, Page owner)
         {
-            if (!ValidateInput(() => !(SelectedReservation.DriveReservationStatusId != 2 | SelectedReservation.DriveReservationStatusId != 13
+            if (!ValidateInput(() => !(SelectedReservation.DriveReservationStatusId != 4
                                     || SelectedReservation.DelayMinutesDriver != -1),
                               "You don't have any confirmed reservation or you aren't at location!"))
             {
@@ -287,13 +321,13 @@ namespace BookingApp.WPF.ViewModel.Driver
             DriveOverview dForm = new DriveOverview(driveReservationService);
             dForm.VM.Reservation = SelectedReservation;
             dForm.VM.Finished += VehicleForm_VehicleAdded;
-            dForm.Show();
+            owner.NavigationService.Navigate(dForm);
         }
 
-        public void btnStats_Click(object sender, RoutedEventArgs e)
+        public void btnStats_Click(object sender, RoutedEventArgs e, Page owner)
         {
             Stats sForm = new Stats(DriverId, driveReservationService);
-            sForm.Show();
+            owner.NavigationService.Navigate(sForm);
         }
 
         private bool ValidateInput(Func<bool> condition, string errorMessage)

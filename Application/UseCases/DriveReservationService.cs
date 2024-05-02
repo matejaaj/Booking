@@ -73,6 +73,13 @@ namespace BookingApp.Application.UseCases
         {
             return GetAll().Where(reservation => reservation.DriveReservationStatusId != 6 && reservation.TouristId == id).ToList();
         }
+
+        public DriveReservation GetById(int id)
+        {
+            return _driveReservationRepository.GetById(id);
+        }
+
+
     }
 
 }

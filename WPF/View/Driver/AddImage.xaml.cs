@@ -19,7 +19,7 @@ namespace BookingApp.WPF.View.Driver
     /// <summary>
     /// Interaction logic for AddImage.xaml
     /// </summary>
-    public partial class AddImage : Window
+    public partial class AddImage : Page
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -67,12 +67,12 @@ namespace BookingApp.WPF.View.Driver
                 MessageBox.Show("Not added", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
-            Close();
+            NavigationService.GoBack();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            NavigationService.GoBack();
         }
     }
 }

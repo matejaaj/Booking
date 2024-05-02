@@ -25,7 +25,7 @@ namespace BookingApp.WPF.View.Driver
     /// <summary>
     /// Interaction logic for VehicleForm.xaml
     /// </summary>
-    public partial class VehicleForm : Window
+    public partial class VehicleForm : Page
     {
         public VehicleViewModel VM {  get; set; }
         public VehicleForm(int userId)
@@ -39,12 +39,12 @@ namespace BookingApp.WPF.View.Driver
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             VM.btnConfirm_Click(sender, e);
-            Close();
+            NavigationService.GoBack();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            NavigationService.GoBack();
         }
 
         private void btnAddImage_Click(object sender, RoutedEventArgs e)

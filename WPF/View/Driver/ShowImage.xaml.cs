@@ -17,7 +17,7 @@ namespace BookingApp.WPF.View.Driver
     /// <summary>
     /// Interaction logic for ShowImage.xaml
     /// </summary>
-    public partial class ShowImage : Window
+    public partial class ShowImage : Page
     {
         public List<string> ImagePaths { get; set; }
         public ShowImage(List<Domain.Model.Image> images)
@@ -32,6 +32,11 @@ namespace BookingApp.WPF.View.Driver
             }
 
             ImagesListView.ItemsSource = ImagePaths;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

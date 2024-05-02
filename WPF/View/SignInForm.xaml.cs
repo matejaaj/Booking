@@ -80,8 +80,8 @@ namespace BookingApp.WPF.View
                             touristMainWindow.Show();
                             break;
                         case Role.DRIVER:
-                            DriverOverview driverOverview = new DriverOverview(user);
-                            driverOverview.Show();
+                            MainWindow mainDriverWindow = new MainWindow(user);
+                            mainDriverWindow.Show();
                             break;
                         default:
                             break;
