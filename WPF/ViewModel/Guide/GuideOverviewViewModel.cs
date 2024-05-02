@@ -34,5 +34,11 @@ namespace BookingApp.WPF.ViewModel.Guide
             Statistics statisticsWindow = new Statistics();
             statisticsWindow.ShowDialog();
         }
+
+        public void ShowRequests()
+        {
+            TourRequests tourRequestsWindw = new TourRequests();
+            tourRequestsWindw.ShowDialog();
+        }
     }
 }

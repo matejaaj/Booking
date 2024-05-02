@@ -45,6 +45,11 @@ namespace BookingApp.WPF.View.Guide
         {
             viewModel.ShowStatistics();
         }
+
+        private void btnRequests_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.ShowRequests();
+        }
     }
 }
 
