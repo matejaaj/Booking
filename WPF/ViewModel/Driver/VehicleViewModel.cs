@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using AddImage = BookingApp.WPF.View.Driver.AddImage;
 
@@ -117,17 +118,16 @@ namespace BookingApp.WPF.ViewModel.Driver
         {
         }
 
-        public void btnAddImage_Click(object sender, RoutedEventArgs e, Window owner)
+        public void btnAddImage_Click(object sender, RoutedEventArgs e, Page owner)
         {
             AddImage addImageWindow = new AddImage(images, _vehicleId, ImageResourceType.VEHICLE);
-            addImageWindow.ShowDialog();
+            owner.NavigationService.Navigate(addImageWindow);
         }
 
-        public void btnShowImages_Click(object sender, RoutedEventArgs e, Window owner)
+        public void btnShowImages_Click(object sender, RoutedEventArgs e, Page owner)
         {
-            ShowImages showImagesWindow = new ShowImages(images);
-            showImagesWindow.Owner = owner;
-            showImagesWindow.ShowDialog();
+            ShowImage showImagesWindow = new ShowImage(images);
+            owner.NavigationService.Navigate(showImagesWindow);
         }
 
         public bool ValidateInputs()

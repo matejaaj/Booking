@@ -25,7 +25,7 @@ namespace BookingApp.WPF.View.Driver
     /// <summary>
     /// Interaction logic for DriveOverview.xaml
     /// </summary>
-    public partial class DriveOverview : Window
+    public partial class DriveOverview : Page
     {
         public DriveOverviewViewModel VM {  get; set; }
         public DriveOverview(DriveReservationService service)
@@ -43,13 +43,13 @@ namespace BookingApp.WPF.View.Driver
 
         private void btnCancel(object sender, RoutedEventArgs e)
         {
-            Close();
+            NavigationService.GoBack();
         }
 
         private void btnFinish(object sender, RoutedEventArgs e)
         {
             VM.btnFinish(sender, e);
-            Close();
+            NavigationService.GoBack();
         }
 
     }

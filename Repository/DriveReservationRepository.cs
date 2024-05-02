@@ -105,5 +105,11 @@ namespace BookingApp.Repository
 
             return _driveReservations.Where(r => r.TouristId == touristId && statusIds.Contains(r.DriveReservationStatusId)).ToList();
         }
+
+        public DriveReservation GetById(int id)
+        {
+            _driveReservations = _serializer.FromCSV(FilePath);  // Reload the data
+            return _driveReservations.FirstOrDefault(r => r.Id == id);
+        }
     }
 }

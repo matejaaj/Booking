@@ -16,6 +16,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -25,7 +26,7 @@ namespace BookingApp.WPF.View.Driver
     /// <summary>
     /// Interaction logic for DriverOverview.xaml
     /// </summary>
-    public partial class DriverOverview : Window
+    public partial class DriverOverview : Page
     {
         public static DriverOverviewViewModel VM{ get; set; }
 
@@ -67,17 +68,33 @@ namespace BookingApp.WPF.View.Driver
 
         private void btnDrive_Click(object sender, RoutedEventArgs e)
         {
-            VM.btnDrive_Click(sender, e);   
+            VM.btnDrive_Click(sender, e, this);   
         }
 
         private void btnStats_Click(object sender, RoutedEventArgs e)
         {
-            VM.btnStats_Click(sender, e);   
+            VM.btnStats_Click(sender, e, this);   
         }
 
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
-            VM.ShowCreateVehicleForm(sender, e);
+            VM.ShowCreateVehicleForm(sender, e, this);
+        }
+
+        private void ShowMenuBar(object sender, RoutedEventArgs e)
+        {
+            if (SideMenu.Visibility == Visibility.Collapsed)
+            {
+                SideMenu.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SideMenu.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void HideMenuBar(object sender, RoutedEventArgs e)
+        {
+            SideMenu.Visibility = Visibility.Collapsed;
         }
 
     }

@@ -32,6 +32,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private DriveReservationService _driveReservationService;
         private UserService _userService;
         private DetailedLocationService _detailedLocationService;
+        private DriverUnreliableReportService _driverUnreliableReportService;
 
 
         public TouristTabsViewModel(User loggedUser)
@@ -42,7 +43,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             InitializeServices();
 
             ToursMainViewModel = new ToursMainTabViewModel(loggedUser, _tourService, _tourInstanceService, _checkpointService, _imageService,  _locationService, _languageService, _tourGuestService, _tourReservationService, _tourReviewService, _voucherService);
-            DriveMainViewModel = new DriveMainTabViewModel(loggedUser, _driveReservationService, _userService, _detailedLocationService);
+            DriveMainViewModel = new DriveMainTabViewModel(loggedUser, _driveReservationService, _userService, _detailedLocationService, _driverUnreliableReportService);
 
         }
 
@@ -63,6 +64,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _detailedLocationService =
                 new DetailedLocationService(Injector.CreateInstance<IDetailedLocationRepository>());
             _userService = new UserService(Injector.CreateInstance<IUserRepository>());
+            _driverUnreliableReportService =
+                new DriverUnreliableReportService(Injector.CreateInstance<IDriverUnreliableReportRepository>());
 
         }
     }
