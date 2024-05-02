@@ -14,7 +14,8 @@ namespace BookingApp.WPF.ViewModel.Owner
 {
     public class OwnerOverviewViewModel
     {
-        public Domain.Model.Owner LoggedInOwner { get; set; }
+        public string PageName { get; set; }
+    public Domain.Model.Owner LoggedInOwner { get; set; }
         public bool isSuperOwner { get; set; }
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public List<AccommodationReservation> OwnerAccommodationReservations { get; set; }  
@@ -33,6 +34,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(LoggedInOwner));
             InitializeAccommodationReservaions();
             CalculateRating();
+            PageName = "Accommodations";
         }
 
         private void InitializeAccommodationReservaions()

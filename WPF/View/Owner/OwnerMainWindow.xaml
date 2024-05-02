@@ -1,0 +1,87 @@
+﻿<Window x:Class="BookingApp.WPF.View.Owner.OwnerMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApp.WPF.View.Owner"
+        mc:Ignorable="d"
+        Title="OwnerMainWindow" Height="750" Width="430">
+    <Grid>
+        <Canvas x:Name="SideMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="Transparent">
+            <StackPanel Width="250" Background="#FFA9A9A9" VerticalAlignment="Top">
+                <!-- Dugme za zatvaranje menija sa strelicom levo -->
+                <Button Click="HideMenuBar" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" HorizontalAlignment="Stretch" Height="39">
+                    <DockPanel>
+                        <Image Source="../../../Resources/Images/goBack.png" Width="20" Height="20" DockPanel.Dock="Left"/>
+                        <TextBlock Text="CityConnect" FontWeight="Bold" FontSize="18" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    </DockPanel>
+                </Button>
+
+                <!-- Profilna slika, ime korisnika i dugme za odjavu -->
+                <StackPanel Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                    <Image Source="../../../Resources/Images/userProfile.png" Height="80" Width="100" Margin="0,0,0,5"/>
+                    <TextBlock Text="{Binding Korisnik.Username}" Foreground="Black" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+                </StackPanel>
+
+                <!-- Dugme za odjavu -->
+                <Button Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+
+                <!-- Ostale stavke menija -->
+                <Button Click="Button_Click" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/carReg.png" Width="25" Height="25"/>
+                        <TextBlock Text="Vehicle Registration" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="Button_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/stats.png" Width="25" Height="25"/>
+                        <TextBlock Text="Statistics" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/notifications.png" Width="25" Height="25"/>
+                        <TextBlock Text="Notifications" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/vacations.png" Width="25" Height="25"/>
+                        <TextBlock Text="Vacation Requests" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/reports.png" Width="25" Height="25"/>
+                        <TextBlock Text="Vacation Reports" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/userData.png" Width="25" Height="25"/>
+                        <TextBlock Text="Personal Data" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Margin="5,57,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/tutorial.png" Width="25" Height="25"/>
+                        <TextBlock Text="Tutorijal" FontSize="16" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Canvas>
+
+        <!-- Action bar at the top -->
+        <Grid Background="LightGray" Height="50" VerticalAlignment="Top">
+            <Button Click="ShowMenuBar" Content="&#x2630;" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="20"/>
+            <TextBlock Text="{Binding PageName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="48,0,0,0"/>
+            <Button Content="Button" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+        </Grid>
+
+        <!-- Rest of the screen is a Frame -->
+        <Frame Name="MainFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,50,0,0"
+               NavigationUIVisibility="Hidden"
+               Source="AccommodationsPage.xaml"/>
+    </Grid>
+</Window>
