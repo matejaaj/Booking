@@ -18,5 +18,6 @@ namespace BookingApp.Domain.RepositoryInterfaces
         List<DriveReservation> GetByTourist(int touristId);
         List<DriveReservation> GetByTouristAndStatus(int touristId, string status);
         List<DriveReservation> GetByTouristAndStatuses(int touristId, List<string> statuses);
+        DriveReservation GetById(int id);
     }
 }

@@ -17,6 +17,8 @@ namespace BookingApp.Application.UseCases
             _driveReservationRepository = Injector.CreateInstance<IDriveReservationRepository>();
         }
 
+
+
         public DriveReservationService(IDriveReservationRepository driveReservationRepository)
         {
             _driveReservationRepository = driveReservationRepository;
@@ -66,6 +68,18 @@ namespace BookingApp.Application.UseCases
         {
             return _driveReservationRepository.GetByTouristAndStatuses(touristId, statuses);
         }
+
+        public List<DriveReservation> GetActiveReservationsForUser(int id)
+        {
+            return GetAll().Where(reservation => reservation.DriveReservationStatusId != 6 && reservation.TouristId == id).ToList();
+        }
+
+        public DriveReservation GetById(int id)
+        {
+            return _driveReservationRepository.GetById(id);
+        }
+
+
     }
 
 }
