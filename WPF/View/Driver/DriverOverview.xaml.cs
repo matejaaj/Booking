@@ -68,12 +68,12 @@ namespace BookingApp.WPF.View.Driver
 
         private void btnDrive_Click(object sender, RoutedEventArgs e)
         {
-            VM.btnDrive_Click(sender, e);   
+            VM.btnDrive_Click(sender, e, this);   
         }
 
         private void btnStats_Click(object sender, RoutedEventArgs e)
         {
-            VM.btnStats_Click(sender, e);   
+            VM.btnStats_Click(sender, e, this);   
         }
 
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)

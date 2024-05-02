@@ -126,9 +126,8 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void btnShowImages_Click(object sender, RoutedEventArgs e, Page owner)
         {
-            ShowImages showImagesWindow = new ShowImages(images);
-            //showImagesWindow.Owner = owner;
-            showImagesWindow.ShowDialog();
+            ShowImage showImagesWindow = new ShowImage(images);
+            owner.NavigationService.Navigate(showImagesWindow);
         }
 
         public bool ValidateInputs()

@@ -45,7 +45,7 @@
                 <!-- Profilna slika, ime korisnika i dugme za odjavu -->
                 <StackPanel Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
                     <Image Source="../../../Resources/Images/userProfile.png" Height="80" Width="100" Margin="0,0,0,5"/>
-                    <TextBlock Text="Ime korisnika" Foreground="Black" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+                    <TextBlock Text="{Binding Korisnik.Username}" Foreground="Black" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="5,5,0,5"/>
                 </StackPanel>
 
                 <!-- Dugme za odjavu -->
@@ -100,7 +100,8 @@
             <ListView ItemsSource="{Binding DriveReservations}" 
                     Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}" 
                     Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}" 
-                    SelectionMode="Single">
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedReservation}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -150,7 +151,7 @@
                                 <!-- Mapa -->
                                 <Image Grid.Column="1" Source="../../../Resources/Images/Map.jpg" Height="150"  Margin="10" VerticalAlignment="Bottom"/>
                                 <!-- Dugme za akciju -->
-                                <Button Grid.Column="2" Click="ViewDrive_Respond" Margin="10" VerticalAlignment="Center">
+                                <Button Grid.Column="2" Click="ViewDrive_Respond" Margin="10" VerticalAlignment="Center" Visibility="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="../../../Resources/Images/check.png" Width="20" Height="25"/>
                                         <TextBlock Text="Accept Ride" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
