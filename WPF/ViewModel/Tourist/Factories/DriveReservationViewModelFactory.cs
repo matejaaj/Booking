@@ -44,7 +44,7 @@ namespace BookingApp.WPF.ViewModel.Tourist.Factories
                     EndAddress = _detailedLocationService.GetById(reservation.DropoffLocationid).Address,
                     DelayDriver = reservation.DelayMinutesDriver,
                     DelayTourist = reservation.DelayMinutesTourist,
-                    Status = GetReservationStatus(reservation.DriveReservationStatusId, reservation.DelayMinutesDriver)
+                    Status = GetReservationStatus(reservation.DriveReservationStatusId, reservation.DelayMinutesDriver, reservation.DelayMinutesTourist)
 
                 };
 
@@ -55,14 +55,20 @@ namespace BookingApp.WPF.ViewModel.Tourist.Factories
         }
 
 
-        private string GetReservationStatus(int reservationStatusId, double delayDriver)
+        private string GetReservationStatus(int reservationStatusId, double delayDriver, double delayTourist)
         {
-            string status;
+            string status = "";
             if (delayDriver != 0)
             {
                 status = $"Vozac kasni {delayDriver} minuta";
                 
             }
+
+            if (delayTourist != 0)
+            {
+                status += $"Turista kasni {delayTourist} minuta";
+            }
+
             else
             {
                 switch (reservationStatusId)
