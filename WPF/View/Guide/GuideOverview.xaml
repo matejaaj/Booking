@@ -59,6 +59,12 @@
                     <TextBlock Text="Statistics" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
+            <Separator/>
+            <Button Click="btnRequests_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Requests" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
         </ToolBar>
 
     </Grid>

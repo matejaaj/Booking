@@ -208,7 +208,7 @@ namespace BookingApp.DTO
             AcceptedDate = tourRequest.AcceptedDate;
             TourRequestId = tourRequest.TourRequestId;
         }
-        public TourRequestSegment ToTour()
+        public TourRequestSegment ToRequest()
         {
             return new TourRequestSegment(TourRequestId, Description, LocationId, LanguageId, Capacity, FromDate, ToDate);
         }

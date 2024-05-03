@@ -1,5 +1,6 @@
 ﻿using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
+using Syncfusion.UI.Xaml.TreeGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,19 @@ namespace BookingApp.Application.UseCases
         public TourRequestSegment Update(TourRequestSegment tourRequest)
         {
             return _tourRequestSegmentRepository.Update(tourRequest);
+        }
+
+        public TourRequestSegment GetByRequestId(int id)
+        {
+            return _tourRequestSegmentRepository.GetAll().FirstOrDefault(request => request.TourRequestId == id);
+        }
+
+        public void MarkAsAccepted(TourRequestSegment tourRequest)
+        {
+            var request = _tourRequestSegmentRepository.GetById(tourRequest.Id);
+            request.IsAccepted = TourRequestStatus.ACCEPTED;
+            request.AcceptedDate = tourRequest.AcceptedDate;
+            Update(request);
         }
     }
 }
