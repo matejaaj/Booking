@@ -1,13 +1,11 @@
-﻿using BookingApp.Application.UseCases;
-using BookingApp.Domain.Model;
-using BookingApp.Domain.RepositoryInterfaces;
+﻿using BookingApp.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookingApp.Domain.Factories
+namespace BookingApp.Application.UseCases.Factories
 {
     public class TourReservationFactory
     {
@@ -26,16 +24,16 @@ namespace BookingApp.Domain.Factories
 
         public void CreateTourReservation(List<TourGuest> tourGuests, int voucherId, int tourInstanceId, int numberOfPeople, int touristId)
         {
-            _tourGuestService.SaveMultiple(tourGuests); 
-            _tourInstanceService.ReserveSlots(tourInstanceId, numberOfPeople);  
+            _tourGuestService.SaveMultiple(tourGuests);
+            _tourInstanceService.ReserveSlots(tourInstanceId, numberOfPeople);
 
             if (voucherId != -1)
             {
-                _voucherService.Delete(voucherId);  
+                _voucherService.Delete(voucherId);
             }
 
             TourReservation reservation = new TourReservation(tourInstanceId, touristId);
-            _tourReservationService.Save(reservation); 
+            _tourReservationService.Save(reservation);
         }
     }
 }

@@ -33,7 +33,9 @@
                     </TabItem>
 
                     <TabItem Header="Zahtev ture">
+                        <control:TourRequestsControl DataContext="{Binding ToursMainViewModel.TourRequestsViewModel}"/>
                     </TabItem>
+
                 </TabControl>
             </TabItem>
             <TabItem Header="Taksi" Style="{StaticResource TabStyle}">
