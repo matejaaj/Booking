@@ -160,6 +160,18 @@ namespace BookingApp.Application.UseCases
                                             !instance.IsCompleted);
             return tourInstance;
         }
+
+        public int GetEarliestYear()
+        {
+            int earliest = DateTime.Now.Year;
+
+            foreach(var instance in GetAll())
+            {
+                if(instance.StartTime.Year < earliest)
+                    earliest = instance.StartTime.Year;
+            }
+            return earliest;
+        }
     }
 
 }
