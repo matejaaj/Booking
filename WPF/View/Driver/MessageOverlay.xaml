@@ -6,10 +6,21 @@
              xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border Width="300" Height="200" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="10">
-        <StackPanel>
-            <TextBlock x:Name="MessageText" Text="Your message here" Margin="10" HorizontalAlignment="Center" FontWeight="Bold"/>
-            <Button Content="OK" HorizontalAlignment="Right" Margin="10" Width="80" Click="OkButton_Click"/>
-        </StackPanel>
+    <Border Width="300" Height="200" Background="#FFD3D3D3" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Error" Margin="10" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+
+            <TextBlock Grid.Row="1" x:Name="MessageText" Text="Your error message here" Margin="10" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="OK" Margin="10" Width="80" Click="OkButton_Click"/>
+            </StackPanel>
+        </Grid>
     </Border>
 </UserControl>
