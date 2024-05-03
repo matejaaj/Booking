@@ -20,7 +20,7 @@
                         <ComboBox SelectedIndex="0" Width="100" HorizontalAlignment="Right" ItemsSource="{Binding Years}" SelectedItem="{Binding Path=SelectedYear, UpdateSourceTrigger=PropertyChanged}">
                         </ComboBox>
                     </StackPanel>
-                    <Button Content="Search" Margin="5" Width="100" HorizontalAlignment="Right" Click="btnSearch_Click"/>
+                    <Button Content="Search" Margin="5" Width="100" HorizontalAlignment="Right" Click="btnSearchTours_Click"/>
                     <StackPanel Margin="5">
                         <TextBlock FontWeight="Bold" Text="Tour Name:"/>
                         <TextBlock Text="{Binding MostVisitedTour.Name}" />
@@ -35,9 +35,36 @@
                     </StackPanel>
                     <TextBlock Text="Description:" FontWeight="Bold"/>
                     <TextBlock Text="{Binding MostVisitedTour.Description}" TextWrapping="Wrap" Margin="5" Height="100"/>
-                    
-                    
-                    
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Margin="5">
+            <GroupBox Header="REQUESTS" FontWeight="Bold">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Location:"/>
+                        <ComboBox Width="150" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}">
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Language:"/>
+                        <ComboBox Width="150" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}">
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Year:"/>
+                        <ComboBox Width="150" ItemsSource="{Binding Years}" SelectedItem="{Binding SelectedYear}">
+                        </ComboBox>
+                    </StackPanel>
+                    <Button Content="Search" Margin="5" Width="100" HorizontalAlignment="Right" Click="btnSearchRequests_Click"/>
+                    <Label Content="Number of requests through years:" FontWeight="Bold" Margin="5"/>
+                    <!-- Placeholder for chart/graph. Implement as needed. -->
+                    <Canvas Background="Gray" Height="129" Margin="5">
+                        <!-- This Canvas simulates the space for a chart. Replace with your chart control. -->
+                    </Canvas>
+                    <Label Content="Number of requests in selected year:" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="{Binding NumberOfRequestsInSelectedYear}" Background="LightGray" Margin="5" Padding="5"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>

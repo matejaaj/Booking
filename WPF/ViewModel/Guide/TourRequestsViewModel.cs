@@ -53,8 +53,9 @@ namespace BookingApp.WPF.ViewModel.Guide
             {
                 DateRange = $"From {_selectedRequest.FromDate.ToString("dd.MM.yyyy")} to {_selectedRequest.ToDate.ToString("dd.MM.yyyy")}";
                 OnPropertyChanged("DateRange");
+                SelectedDate = SelectedRequest.FromDate;
             }
-            SelectedDate = SelectedRequest.FromDate;
+            
         }
 
         private DateTime _selectedFirstDate;

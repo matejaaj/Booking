@@ -15,7 +15,12 @@ namespace BookingApp.WPF.ViewModel.Guide
 {
     internal class StatisticsViewModel : INotifyPropertyChanged
     {
-        private  TourService _tourService;
+        private TourService _tourService;
+        private LanguageService _languageService;
+        private LocationService _locationService;
+        private TourInstanceService _tourInstanceService;
+        public List<Location> Locations { get; set; }
+        public List<Language> Languages { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -35,25 +40,58 @@ namespace BookingApp.WPF.ViewModel.Guide
                 }
             }
         }
-        public List<object> Years { get; set; }
-        public object SelectedYear { get; set; }
 
+        private Location _selectedLocation;
+        public Location SelectedLocation
+        {
+            get => _selectedLocation;
+            set
+            {
+                if (_selectedLocation != value)
+                {
+                    _selectedLocation = value;
+                    OnPropertyChanged("SelectedLocation");
+                }
+            }
+        }
+
+        private Language _selectedLanguage;
+        public Language SelectedLanguage
+        {
+            get => _selectedLanguage;
+            set
+            {
+                if (_selectedLanguage != value)
+                {
+                    _selectedLanguage = value;
+                    OnPropertyChanged("SelectedLanguage");
+                }
+            }
+        }
+        public List<object> TourYears { get; set; }
+        public object SelectedTourYear { get; set; }
+
+        public List<object> RequestYears { get; set; }
+        public object SelectedRequestYear { get; set; }
 
         public StatisticsViewModel()
         {
             InitializeServices();
 
-            Years = new List<object>();
-            Years.Add("All time");
-            for (int i = 0; i < 20; i++)
+            TourYears = new List<object>();
+            TourYears.Add("All time");
+            for (int i = DateTime.Now.Year; i >= _tourInstanceService.GetEarliestYear(); i--)
             {
-                Years.Add((DateTime.Now.Year - i).ToString());
+                TourYears.Add((i).ToString());
             }
+
+            Languages = _languageService.GetAll();
+            Locations = _locationService.GetAll();
         }
 
-        public void Search()
+        public void SearchTours()
         {
-            Tour mostVisitedTour = _tourService.FindMostVisited(SelectedYear);
+            Tour mostVisitedTour = _tourService.FindMostVisited(SelectedTourYear);
             MostVisitedTour = new TourDTO(mostVisitedTour);
         }
 
@@ -62,8 +100,10 @@ namespace BookingApp.WPF.ViewModel.Guide
             var _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
             var _tourGuestService = new TourGuestService(Injector.CreateInstance<ITourGuestRepository>());
             var _tourReservationService = new TourReservationService(Injector.CreateInstance<ITourReservationRepository>());
-            var _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
+            _tourInstanceService = new TourInstanceService(Injector.CreateInstance<ITourInstanceRepository>(), _tourReservationService, _voucherService, _tourGuestService);
             _tourService = new TourService(Injector.CreateInstance<ITourRepository>(), _tourGuestService, _tourInstanceService);
+            _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
+            _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
         }
     }
 }
