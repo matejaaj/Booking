@@ -72,5 +72,10 @@ namespace BookingApp.WPF.View.Guide
             addImageWindow.Owner = this;
             addImageWindow.ShowDialog();
         }
+
+        private void btnRecomended_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.FindBest();
+        }
     }
 }

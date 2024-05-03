@@ -30,19 +30,20 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Label Content="Name" Grid.Row="0"/>
             <TextBox Name="txtName" Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
 
             <Label Content="Location" Grid.Row="1"/>
-            <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding Locations}" SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Width="178" Margin="0,0,0,5"></ComboBox>
+            <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding Locations}" SelectedItem="{Binding Path=SelectedLocation, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Width="178" Margin="0,0,0,5"></ComboBox>
 
             <Label Content="Description" Grid.Row="2"/>
             <TextBox Name="txtDescription" Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
             <Label Content="Language" Grid.Row="3"/>
-            <ComboBox Name="cmbLanguage" IsTextSearchEnabled="True" ItemsSource="{Binding Languages}" SelectedItem="{Binding Path=SelectedLanguage, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Width="178" Margin="0,0,0,5"></ComboBox>
+            <ComboBox Name="cmbLanguage" IsTextSearchEnabled="True" ItemsSource="{Binding Languages}" SelectedItem="{Binding Path=SelectedLanguage, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Width="178" Margin="0,0,0,5"></ComboBox>
 
             <Label Content="Capacity" Grid.Row="4"/>
             <TextBox Name="txtCapacity" Text="{Binding Path=Capacity, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5"/>
@@ -62,7 +63,7 @@
             <Button x:Name="btnAddImage" Grid.Row="8" Grid.Column="1" Content="Add image" HorizontalAlignment="Left" Margin="30,5,0,10" Width="110" Click="btnAddImage_Click"></Button>
             <Button x:Name="btnShowImages" Grid.Row="8" Content="Show Images" Grid.Column="1" HorizontalAlignment="Left" Margin="150,5,0,10" Width="110" Click="btnShowImages_Click"/>
 
-
+            <Button Click="btnRecomended_Click" Grid.Row="9" Content="Recomended" Grid.Column="1" HorizontalAlignment="Right" Margin="30,10,30,10" Width="100" Height="30"></Button>
         </Grid>
 
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">

@@ -141,5 +141,31 @@ namespace BookingApp.Application.UseCases
 
                 return (requestsPerMonth, totalRequests);
         }
+
+        public (int, int) FindBest()
+        {
+            DateTime oneYearAgo = DateTime.Now.AddYears(-1);
+            List<TourRequestSegment> requests = GetAll().Where(request => request.FromDate >= oneYearAgo).ToList();
+
+            Dictionary<int, int> languageCounts = new Dictionary<int, int>();
+            Dictionary<int, int> locationCounts = new Dictionary<int, int>();
+
+            foreach (var request in requests)
+            {
+                if (languageCounts.ContainsKey(request.LanguageId))
+                    languageCounts[request.LanguageId]++;
+                else
+                    languageCounts[request.LanguageId] = 1;
+
+                if (locationCounts.ContainsKey(request.LocationId))
+                    locationCounts[request.LocationId]++;
+                else
+                    locationCounts[request.LocationId] = 1;
+            }
+            int mostFrequentLanguageId = languageCounts.OrderByDescending(pair => pair.Value).First().Key;
+            int mostFrequentLocationId = locationCounts.OrderByDescending(pair => pair.Value).First().Key;
+
+            return (mostFrequentLanguageId, mostFrequentLocationId);
+        }
     }
 }
