@@ -54,7 +54,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         private void FillCountries()
         {
-            LocationService _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
             var countries = _locationService.GetAllCountries();
             Countries.Clear();
             foreach (var country in countries)
