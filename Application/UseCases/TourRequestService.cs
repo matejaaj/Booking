@@ -17,10 +17,6 @@ namespace BookingApp.Application.UseCases
             _tourRequestRepository = tourRequestRepository;
         }
 
-        public TourRequestService()
-        {
-            _tourRequestRepository = Injector.CreateInstance<ITourRequestRepository>();
-        }
 
         public List<TourRequest> GetAll()
         {

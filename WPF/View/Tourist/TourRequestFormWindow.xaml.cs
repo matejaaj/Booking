@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BookingApp.Application.UseCases;
+using BookingApp.Domain.Model;
 using BookingApp.WPF.ViewModel.Tourist;
 
 namespace BookingApp.WPF.View.Tourist
@@ -23,10 +24,10 @@ namespace BookingApp.WPF.View.Tourist
     {
         public TourRequestFormViewModel ViewModel { get; set; }
 
-        public TourRequestFormWindow(LocationService location, LanguageService language)
+        public TourRequestFormWindow(User user, LocationService location, LanguageService language, TourRequestService request, TourRequestSegmentService segment, PrivateTourGuestService tourGuest)
         {
             InitializeComponent();
-            ViewModel = new TourRequestFormViewModel(location, language);
+            ViewModel = new TourRequestFormViewModel(user, location, language, request, segment, tourGuest);
             DataContext = ViewModel;
         }
 

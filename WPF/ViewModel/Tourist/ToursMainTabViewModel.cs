@@ -21,6 +21,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourReservationService _tourReservationService;
         private TourReviewService _tourReviewService;
         private VoucherService _voucherService;
+        private TourRequestService _tourRequestService;
+        private TourRequestSegmentService _tourRequestSegmentService;
+        private PrivateTourGuestService _privateTourGuestService;
 
 
         public MyToursViewModel MyToursViewModel { get;  }
@@ -28,7 +31,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public TourRequestsViewModel TourRequestsViewModel { get; }
 
-        public ToursMainTabViewModel(User loggedUser, TourService tourService, TourInstanceService tourInstanceService, CheckpointService checkpointService, ImageService imageService, LocationService locationService, LanguageService languageService, TourGuestService tourGuestService, TourReservationService tourReservationService, TourReviewService tourReviewService, VoucherService _voucherService)
+        public ToursMainTabViewModel(User loggedUser, TourService tourService, TourInstanceService tourInstanceService, CheckpointService checkpointService, ImageService imageService, LocationService locationService, LanguageService languageService, TourGuestService tourGuestService, TourReservationService tourReservationService, TourReviewService tourReviewService, VoucherService _voucherService, TourRequestService request, TourRequestSegmentService segment, PrivateTourGuestService privateguest )
         {
             _tourService = tourService;
             _tourInstanceService = tourInstanceService;
@@ -39,11 +42,14 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _tourGuestService = tourGuestService;
             _tourReservationService = tourReservationService;
             _tourReviewService = tourReviewService;
+            _tourRequestService = request;
+            _tourRequestSegmentService = segment;
+            _privateTourGuestService = privateguest;
 
 
             MyToursViewModel = new MyToursViewModel(loggedUser, tourService, tourInstanceService, checkpointService, imageService, locationService, languageService, tourGuestService, tourReservationService, _voucherService, tourReviewService);
             AllToursViewModel = new AllToursViewModel(loggedUser, tourService, tourInstanceService, checkpointService, imageService, locationService, languageService, tourGuestService, tourReservationService, _voucherService);
-            TourRequestsViewModel = new TourRequestsViewModel(_locationService, languageService);
+            TourRequestsViewModel = new TourRequestsViewModel(loggedUser,_locationService, languageService, _tourRequestService, _tourRequestSegmentService, _privateTourGuestService);
         }
         
     }

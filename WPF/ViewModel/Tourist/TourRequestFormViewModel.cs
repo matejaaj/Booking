@@ -8,30 +8,48 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookingApp.Application.UseCases.Factories;
+using BookingApp.Domain.Model;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
-    public class TourRequestFormViewModel : INotifyPropertyChanged
+    public class TourRequestFormViewModel
     {
-        public ObservableCollection<TourRequestSegmentViewModel> TourSegments { get; set; }
-        public ObservableCollection<KeyValuePair<int, string>> Countries { get; private set; }
-        public ObservableCollection<KeyValuePair<int, string>> Languages { get; private set; }
+        private User _user;
+        public ObservableCollection<TourRequestSegmentViewModel> TourSegments { get; set; } =
+            new ObservableCollection<TourRequestSegmentViewModel>();
+
+        public ObservableCollection<KeyValuePair<int, string>> Countries { get; private set; } =
+            new ObservableCollection<KeyValuePair<int, string>>();
+        public ObservableCollection<KeyValuePair<int, string>> Languages { get; private set; } = new ObservableCollection<KeyValuePair<int, string>>();
 
         private LocationService _locationService;
         private LanguageService _languageService;
 
-        public TourRequestFormViewModel(LocationService locationService, LanguageService languageService)
+        private TourRequestService _tourRequestService;
+        private TourRequestSegmentService _tourRequestSegmentService;
+        private PrivateTourGuestService _privateTourGuestService;
+
+        private TourRequestFactory _tourRequestFactory;
+
+        public TourRequestFormViewModel(User loggedUser, LocationService locationService, LanguageService languageService, TourRequestService tourRequestService, TourRequestSegmentService tourRequestSegmentService, PrivateTourGuestService privateTourGuestService)
         {
+            _user =  loggedUser;
             _locationService = locationService;
             _languageService = languageService;
+            _tourRequestService = tourRequestService;
+            _tourRequestSegmentService = tourRequestSegmentService;
+            _privateTourGuestService = privateTourGuestService;
+            _tourRequestFactory =
+                new TourRequestFactory(tourRequestService, tourRequestSegmentService, privateTourGuestService);
 
-            Countries = new ObservableCollection<KeyValuePair<int, string>>();
-            Languages = new ObservableCollection<KeyValuePair<int, string>>();
+            InitialieFields();
+        }
 
+        private void InitialieFields()
+        {
             FillCountries();
             FillLanguages();
-
-            TourSegments = new ObservableCollection<TourRequestSegmentViewModel>();
             AddSegment();
         }
 
@@ -78,19 +96,29 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-
         public void Submit()
         {
-            
+            bool isComplexRequest = TourSegments.Count != 1;
+            var request = new TourRequest(_user.Id, isComplexRequest);
+            _tourRequestService.Save(request);
+
+            var tourSegments = new List<TourRequestSegment>();
+
+            foreach (var segment in TourSegments)
+            {
+                var tourSegment = new TourRequestSegment(request.Id, segment.Description, segment.SelectedCity.Key,
+                    segment.SelectedLanguage.Key, segment.NumberOfPeople, segment.FromDate, segment.ToDate);
+
+                _tourRequestSegmentService.Save(tourSegment);
+
+
+                foreach (var guest in segment.GuestInputs)
+                {
+                    var privateGuest = new PrivateTourGuest(guest.FirstName + " " + guest.LastName, guest.Age, _user.Id,
+                        tourSegment.Id);
+                    _privateTourGuestService.Save(privateGuest);
+                }
+            }
         }
-
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
     }
 }

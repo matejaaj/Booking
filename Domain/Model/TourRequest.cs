@@ -18,9 +18,8 @@ namespace BookingApp.Domain.Model
         public bool IsComplex { get; set; }
 
         public TourRequest() { }
-        public TourRequest(int id, int touristId, bool isComplex)
+        public TourRequest(int touristId, bool isComplex)
         {
-            Id = id;
             TouristId = touristId;
             IsAccepted = TourRequestStatus.PENDING;
             IsComplex = isComplex;
