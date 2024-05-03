@@ -26,7 +26,7 @@ namespace BookingApp.WPF.View.Guide
 
         private void btnSearchRequests_Click(object sender, RoutedEventArgs e)
         {
-
+            _viewModel.SearchRequests();
         }
     }
 }

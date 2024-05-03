@@ -19,8 +19,20 @@ namespace BookingApp.WPF.ViewModel.Guide
         private LanguageService _languageService;
         private LocationService _locationService;
         private TourInstanceService _tourInstanceService;
+        private TourRequestSegmentService _tourRequestSegmentService;
         public List<Location> Locations { get; set; }
         public List<Language> Languages { get; set; }
+
+        private Dictionary<string, int> _yearlyOrMonthlyVisits;
+        public Dictionary<string, int> YearlyOrMonthlyVisits
+        {
+            get => _yearlyOrMonthlyVisits;
+            set
+            {
+                _yearlyOrMonthlyVisits = value;
+                OnPropertyChanged(nameof(YearlyOrMonthlyVisits));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -55,6 +67,20 @@ namespace BookingApp.WPF.ViewModel.Guide
             }
         }
 
+        private int _numberOfRequestsInSelectedYear;
+        public int NumberOfRequestsInSelectedYear
+        {
+            get => _numberOfRequestsInSelectedYear;
+            set
+            {
+                if(_numberOfRequestsInSelectedYear != value)
+                {
+                    _numberOfRequestsInSelectedYear = value;
+                    OnPropertyChanged(nameof(NumberOfRequestsInSelectedYear));
+                }
+            }
+        }
+
         private Language _selectedLanguage;
         public Language SelectedLanguage
         {
@@ -77,13 +103,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         public StatisticsViewModel()
         {
             InitializeServices();
-
-            TourYears = new List<object>();
-            TourYears.Add("All time");
-            for (int i = DateTime.Now.Year; i >= _tourInstanceService.GetEarliestYear(); i--)
-            {
-                TourYears.Add((i).ToString());
-            }
+            InitializeYears();
 
             Languages = _languageService.GetAll();
             Locations = _locationService.GetAll();
@@ -95,6 +115,38 @@ namespace BookingApp.WPF.ViewModel.Guide
             MostVisitedTour = new TourDTO(mostVisitedTour);
         }
 
+        public void SearchRequests()
+        {
+            if(SelectedRequestYear == null || SelectedRequestYear.Equals("AllTime"))
+            {   
+                var requestsPerYear = _tourRequestSegmentService.GetTotalRequestsPerYear(RequestYears, SelectedLanguage, SelectedLocation);
+                YearlyOrMonthlyVisits = requestsPerYear;
+            }
+            else
+            {
+                var requestsPerYear = _tourRequestSegmentService.GetTotalRequestsPerMonth(int.Parse(SelectedRequestYear.ToString()), SelectedLanguage, SelectedLocation);
+                YearlyOrMonthlyVisits = requestsPerYear.Item1;
+                NumberOfRequestsInSelectedYear = requestsPerYear.Item2;
+            }
+        }
+
+        public void InitializeYears()
+        {
+            TourYears = new List<object>();
+            TourYears.Add("All time");
+            for (int i = DateTime.Now.Year; i >= _tourInstanceService.GetEarliestYear(); i--)
+            {
+                TourYears.Add((i).ToString());
+            }
+
+            RequestYears = new List<object>();
+            RequestYears.Add("AllTime");
+            for (int i = DateTime.Now.Year; i >= _tourRequestSegmentService.GetEarliestYear(); i--)
+            {
+                RequestYears.Add((i).ToString());
+            }
+        }
+
         private void InitializeServices()
         {
             var _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
@@ -104,6 +156,7 @@ namespace BookingApp.WPF.ViewModel.Guide
             _tourService = new TourService(Injector.CreateInstance<ITourRepository>(), _tourGuestService, _tourInstanceService);
             _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
             _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            _tourRequestSegmentService = new TourRequestSegmentService(Injector.CreateInstance<ITourRequestSegmentRepository>());
         }
     }
 }
