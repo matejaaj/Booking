@@ -56,11 +56,35 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+
         public void AddSegment()
         {
-            var segment = new TourRequestSegmentViewModel(_locationService, Countries, Languages);
-            TourSegments.Add(segment);
+            foreach (var segment in TourSegments)
+            {
+                segment.IsExpanded = false;
+            }
+
+            var newSegment = new TourRequestSegmentViewModel(_locationService, Countries, Languages);
+            newSegment.IsExpanded = true;  
+            TourSegments.Add(newSegment);
         }
+
+
+        public void RemoveSegment(TourRequestSegmentViewModel segment)
+        {
+            if (TourSegments.Count > 1)
+            {
+                TourSegments.Remove(segment);
+            }
+        }
+
+
+        public void Submit()
+        {
+            
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -68,9 +92,5 @@ namespace BookingApp.WPF.ViewModel.Tourist
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Submit()
-        {
-            
-        }
     }
 }

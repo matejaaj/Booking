@@ -6,68 +6,95 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
         Title="TourRequestFormWindow" Height="800" Width="600">
-    <StackPanel Margin="10">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10">
+            <ItemsControl ItemsSource="{Binding TourSegments}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <DockPanel>
+                                <Button Content="Remove" Margin="5" DockPanel.Dock="Right"
+                                        HorizontalAlignment="Right"
+                                        Click="RemoveSegment_Click" Width="auto" Height="30"
+                                        />
+                                <Expander Header="Tour Segment" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="5">
+                                    <StackPanel Margin="10">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
 
-        <ItemsControl ItemsSource="{Binding TourSegments}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Expander Header="Tour Segment" IsExpanded="True" Margin="5">
-                        <StackPanel Margin="10">
-                            <Label Content="Country:"/>
-                            <ComboBox ItemsSource="{Binding Countries}"
-                                      DisplayMemberPath="Value"
-                                      SelectedValuePath="Key"
-                                      SelectedItem="{Binding SelectedCountry}"
-                                      Margin="5" Width="250" />
+                                            <Label Content="Country:" Grid.Row="0" Grid.Column="0"/>
+                                            <ComboBox ItemsSource="{Binding Countries}"
+                                                      DisplayMemberPath="Value"
+                                                      SelectedValuePath="Key"
+                                                      SelectedItem="{Binding SelectedCountry}"
+                                                      Margin="5" Width="Auto" Grid.Row="0" Grid.Column="1"/>
 
-                            <Label Content="City:"/>
-                            <ComboBox ItemsSource="{Binding Cities}"
-                                      DisplayMemberPath="Value"
-                                      SelectedValuePath="Key"
-                                      SelectedItem="{Binding SelectedCity}"
-                                      Margin="5" Width="250" />
+                                            <Label Content="City:" Grid.Row="1" Grid.Column="0"/>
+                                            <ComboBox ItemsSource="{Binding Cities}"
+                                                      DisplayMemberPath="Value"
+                                                      SelectedValuePath="Key"
+                                                      SelectedItem="{Binding SelectedCity}"
+                                                      Margin="5" Width="Auto" Grid.Row="1" Grid.Column="1"/>
 
-                            <Label Content="Language:"/>
-                            <ComboBox ItemsSource="{Binding Languages}"
-                                      DisplayMemberPath="Value"
-                                      SelectedValuePath="Key"
-                                      SelectedItem="{Binding SelectedLanguage}"
-                                      Margin="5" Width="250" />
+                                            <Label Content="Language:" Grid.Row="2" Grid.Column="0"/>
+                                            <ComboBox ItemsSource="{Binding Languages}"
+                                                      DisplayMemberPath="Value"
+                                                      SelectedValuePath="Key"
+                                                      SelectedItem="{Binding SelectedLanguage}"
+                                                      Margin="5" Width="Auto" Grid.Row="2" Grid.Column="1"/>
 
-                            <Label Content="Description:"/>
-                            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
-                                     Margin="5" Height="80" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                            <Label Content="Description:" Grid.Row="3" Grid.Column="0"/>
+                                            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                                                     Margin="5" Height="80" TextWrapping="Wrap"
+                                                     VerticalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="1"/>
+                                        </Grid>
 
-                            <Label Content="Number of People:"/>
-                            <ComboBox ItemsSource="{Binding NumberOfPeopleOptions}"
-                                      SelectedItem="{Binding NumberOfPeople}"
-                                      Margin="5" Width="250" />
-
-                            <Label Content="From Date:"/>
-                            <DatePicker SelectedDate="{Binding FromDate}" Margin="5" />
-
-                            <Label Content="To Date:"/>
-                            <DatePicker SelectedDate="{Binding ToDate}" Margin="5" />
-
-                            <Label Content="Guest Details:"/>
-                            <ItemsControl ItemsSource="{Binding GuestInputs}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" Margin="5">
-                                            <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5"/>
-                                            <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5"/>
-                                            <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="5"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="From Date:"/>
+                                            <DatePicker SelectedDate="{Binding FromDate}" Margin="5" />
+                                            <Label Content="To Date:"/>
+                                            <DatePicker SelectedDate="{Binding ToDate}" Margin="5" />
                                         </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
-                    </Expander>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
 
-        <Button Content="Add Segment" Margin="5" Click="AddSegment_Click"/>
-        <Button Content="Submit" Margin="5" Click="Submit_Click"/>
-    </StackPanel>
+                                        <Label Content="Number of People:"/>
+                                        <ComboBox ItemsSource="{Binding NumberOfPeopleOptions}"
+                                                  SelectedItem="{Binding NumberOfPeople}"
+                                                  Margin="5" Width="Auto" />
+
+                                        <Label Content="Guest Details:"/>
+                                        <ItemsControl ItemsSource="{Binding GuestInputs}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                                        <Label Content="First Name:" Width="80"/>
+                                                        <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5"/>
+                                                        <Label Content="Last Name:" Width="80"/>
+                                                        <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5"/>
+                                                        <Label Content="Age:" Width="30"/>
+                                                        <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="5"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </Expander>
+                            </DockPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Button Content="Add Segment" Margin="5" Click="AddSegment_Click"/>
+            <Button Content="Submit" Margin="5" Click="Submit_Click"/>
+        </StackPanel>
+    </ScrollViewer>
 </Window>

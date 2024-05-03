@@ -173,12 +173,30 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+        private bool _isExpanded;
+
+        public bool IsExpanded
+        {
+            get => _isExpanded;
+            set
+            {
+                if (_isExpanded != value)
+                {
+                    _isExpanded = value;
+                    OnPropertyChanged(nameof(IsExpanded));
+                }
+            }
+        }
 
         public TourRequestSegmentViewModel(LocationService location, ObservableCollection<KeyValuePair<int, string>> countries, ObservableCollection<KeyValuePair<int, string>> languages)
         {
             _locationService = location;
             Countries = countries;
             Languages = languages;
+
+            _fromDate = DateTime.Now;
+            _toDate = DateTime.Now;
+
             FillNumberOfPeopleOptions();
         }
 
