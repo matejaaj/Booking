@@ -30,7 +30,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourRequestSegmentService _tourRequestSegmentService;
         private PrivateTourGuestService _privateTourGuestService;
 
-        private TourRequestFactory _tourRequestFactory;
+        
 
         public TourRequestFormViewModel(User loggedUser, LocationService locationService, LanguageService languageService, TourRequestService tourRequestService, TourRequestSegmentService tourRequestSegmentService, PrivateTourGuestService privateTourGuestService)
         {
@@ -40,8 +40,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _tourRequestService = tourRequestService;
             _tourRequestSegmentService = tourRequestSegmentService;
             _privateTourGuestService = privateTourGuestService;
-            _tourRequestFactory =
-                new TourRequestFactory(tourRequestService, tourRequestSegmentService, privateTourGuestService);
+
 
             InitialieFields();
         }
