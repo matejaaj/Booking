@@ -5,17 +5,19 @@ using BookingApp.WPF.View.Owner;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
-    public class OwnerOverviewViewModel
+    public class OwnerOverviewViewModel : INotifyPropertyChanged
     {
         public string PageName { get; set; }
-    public Domain.Model.Owner LoggedInOwner { get; set; }
+        public Domain.Model.Owner LoggedInOwner { get; set; }
         public bool isSuperOwner { get; set; }
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public List<AccommodationReservation> OwnerAccommodationReservations { get; set; }  
@@ -35,6 +37,12 @@ namespace BookingApp.WPF.ViewModel.Owner
             InitializeAccommodationReservaions();
             CalculateRating();
             PageName = "Accommodations";
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void InitializeAccommodationReservaions()
@@ -83,16 +91,16 @@ namespace BookingApp.WPF.ViewModel.Owner
             accommodationForm.Show();
         }
 
-        public void ShowViewAccommodation(object sender, RoutedEventArgs e)
+        public ViewAccommodationPage ShowViewAccommodation(object sender, RoutedEventArgs e)
         {
             if (SelectedAccommodation == null)
             {
                 MessageBox.Show("Please choose an accommodation to view!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
             }
             else
             {
-                ViewAccommodation viewAccommodationWindow = new ViewAccommodation(SelectedAccommodation);
-                viewAccommodationWindow.Show();
+                return new ViewAccommodationPage(SelectedAccommodation);
             }
         }
 
@@ -114,7 +122,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         public void ShowRatingsButton(object sender, RoutedEventArgs e)
         {
-            ViewRatings viewRatingsWindow = new ViewRatings(LoggedInOwner, OwnerAccommodationReservations);
+            ViewRatings viewRatingsWindow = new ViewRatings(LoggedInOwner);
             viewRatingsWindow.Show();
         }
 

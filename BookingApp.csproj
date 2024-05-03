@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\babinobrdo.jpg" />
     <None Remove="Resources\Images\car.png" />
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\carReg.png" />
@@ -57,6 +58,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\babinobrdo.jpg" />
     <Resource Include="Resources\Images\carReg.png" />
     <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\goBack.png" />

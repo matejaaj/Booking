@@ -18,23 +18,21 @@ using System.Windows.Shapes;
 namespace BookingApp.WPF.View.Owner
 {
     /// <summary>
-    /// Interaction logic for AccommodationsPage.xaml
+    /// Interaction logic for ViewAccommodationPage.xaml
     /// </summary>
-    public partial class AccommodationsPage : Page
+    public partial class ViewAccommodationPage : Page
     {
-        public static OwnerOverviewViewModel viewModel { get; set; }
-        public AccommodationsPage(Domain.Model.Owner owner)
+        public static ViewAccommodationViewModel viewModel { get; set; }
+        public ViewAccommodationPage(Accommodation accommodation)
         {
             InitializeComponent();
-            viewModel = new OwnerOverviewViewModel(owner);
+            viewModel = new ViewAccommodationViewModel(accommodation);
             DataContext = viewModel;
         }
 
-        private void AccommodationsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void RecentReservationsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-             
-            ViewAccommodationPage page = viewModel.ShowViewAccommodation(sender, e);
-            this.NavigationService.Navigate(page);
+            viewModel.RecentReservationsListBox_SelectionChanged(sender, RecentReservationsListBox);
         }
     }
 }

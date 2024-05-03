@@ -27,13 +27,13 @@
                 <Button Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
 
                 <!-- Ostale stavke menija -->
-                <Button Click="Button_Click" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Click="ShowRatings_Click" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/carReg.png" Width="25" Height="25"/>
                         <TextBlock Text="Vehicle Registration" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Click="Button_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Click="ShowAccommodations_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/stats.png" Width="25" Height="25"/>
                         <TextBlock Text="Statistics" FontSize="16" Margin="5,0,0,0"/>

@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.DTO;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Owner;
 using System;
@@ -22,8 +23,8 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static GuestRatingService _guestRatingService;
         private List<GuestRating> _guestRatings;
 
-        private ObservableCollection<AccommodationReservation> _recentAccommodationReservations;
-        public ObservableCollection<AccommodationReservation> RecentAccommodationReservations
+        private ObservableCollection<BookingDTO> _recentAccommodationReservations;
+        public ObservableCollection<BookingDTO> RecentAccommodationReservations
         {
             get { return _recentAccommodationReservations; }
             set
@@ -33,8 +34,8 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        private ObservableCollection<AccommodationReservation> _pastAccommodationReservations;
-        public ObservableCollection<AccommodationReservation> PastAccommodationReservations
+        private ObservableCollection<BookingDTO> _pastAccommodationReservations;
+        public ObservableCollection<BookingDTO> PastAccommodationReservations
         {
             get { return _pastAccommodationReservations; }
             set
@@ -44,8 +45,8 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        private ObservableCollection<AccommodationReservation> _otherAccommodationReservations;
-        public ObservableCollection<AccommodationReservation> OtherAccommodationReservations
+        private ObservableCollection<BookingDTO> _otherAccommodationReservations;
+        public ObservableCollection<BookingDTO> OtherAccommodationReservations
         {
             get { return _otherAccommodationReservations; }
             set
@@ -74,13 +75,13 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void FillReservations()
         {
-            RecentAccommodationReservations = new ObservableCollection<AccommodationReservation>(
+            RecentAccommodationReservations = new ObservableCollection<BookingDTO>(
                 _accommodationReservationService.GetRecentReservations(Accommodation));
 
-            PastAccommodationReservations = new ObservableCollection<AccommodationReservation>(
+            PastAccommodationReservations = new ObservableCollection<BookingDTO>(
                 _accommodationReservationService.GetPastReservations(Accommodation));
 
-            OtherAccommodationReservations = new ObservableCollection<AccommodationReservation>(
+            OtherAccommodationReservations = new ObservableCollection<BookingDTO>(
                 _accommodationReservationService.GetOtherReservations(Accommodation));
         }
 
@@ -90,15 +91,16 @@ namespace BookingApp.WPF.ViewModel.Owner
             return !(selectedAccommodationRating == null);
         }*/
 
-        public void RecentReservationsListBox_SelectionChanged(object sender, Window owner, ListBox RecentReservationsListBox)
+        public void RecentReservationsListBox_SelectionChanged(object sender, ListBox RecentReservationsListBox)
         {
             if (RecentReservationsListBox.SelectedItem != null)
             {
-                var selectedReservation = (AccommodationReservation)RecentReservationsListBox.SelectedItem;
-                if (!selectedReservation.IsRated)
+                var selectedReservation = (BookingDTO)RecentReservationsListBox.SelectedItem;
+                if (selectedReservation.IsRated.Equals("Not Rated"))
                 {
-                    var guestRatingFormWindow = new GuestRatingForm(selectedReservation);
-                    guestRatingFormWindow.Owner = owner;
+                    var reservation = _accommodationReservationService.GetByReservationId(selectedReservation.Id);
+                    var guestRatingFormWindow = new GuestRatingForm(reservation);
+                    //guestRatingFormWindow.Owner = owner;
                     guestRatingFormWindow.ShowDialog();
                     FillReservations();
                 }

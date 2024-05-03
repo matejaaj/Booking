@@ -1,5 +1,6 @@
 ﻿using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.DTO;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,16 @@ namespace BookingApp.Application.UseCases
     public class AccommodationReservationService
     {
         private readonly IAccommodationReservationRepository _accommodationReservationRepository;
+        private AccommodationService accommodationService;
 
         public AccommodationReservationService()
         {
+            _accommodationReservationRepository = Injector.CreateInstance<IAccommodationReservationRepository>();
+        }
+
+        public AccommodationReservationService(AccommodationService accommodationService)
+        {
+            this.accommodationService = accommodationService;
             _accommodationReservationRepository = Injector.CreateInstance<IAccommodationReservationRepository>();
         }
 
@@ -73,10 +81,18 @@ namespace BookingApp.Application.UseCases
             reservation.EndDate < DateTime.Now && reservation.IsRated == false).ToList();
         }
 
-        public IEnumerable<AccommodationReservation> GetRecentReservations(Accommodation accommodation)
+        public IEnumerable<BookingDTO> GetRecentReservations(Accommodation accommodation)
         {
+            var bookings = new List<BookingDTO>();
             var allReservations = GetByAccommodation(accommodation);
-            return allReservations.Where(reservation => IsReservationRecent(reservation, accommodation));
+            foreach(var reservation in allReservations)
+            {
+                if (IsReservationRecent(reservation, accommodation))
+                {
+                    bookings.Add(new BookingDTO(reservation));
+                }
+            }
+            return bookings;
         }
 
         private bool IsReservationRecent(AccommodationReservation reservation, Accommodation accommodation)
@@ -91,10 +107,18 @@ namespace BookingApp.Application.UseCases
             return GetByAccommodationId(accommodation.AccommodationId);
         }
 
-        public IEnumerable<AccommodationReservation> GetPastReservations(Accommodation accommodation)
+        public IEnumerable<BookingDTO> GetPastReservations(Accommodation accommodation)
         {
+            var bookings = new List<BookingDTO>();
             var allReservations = GetByAccommodation(accommodation);
-            return allReservations.Where(reservation => IsReservationPast(reservation, accommodation));
+            foreach (var reservation in allReservations)
+            {
+                if (IsReservationPast(reservation, accommodation))
+                {
+                    bookings.Add(new BookingDTO(reservation));
+                }
+            }
+            return bookings;
         }
 
         private bool IsReservationPast(AccommodationReservation reservation, Accommodation accommodation)
@@ -110,10 +134,18 @@ namespace BookingApp.Application.UseCases
                 reservation.AccommodationId == accommodation?.AccommodationId;
         }
 
-        public IEnumerable<AccommodationReservation> GetOtherReservations(Accommodation accommodation)
+        public IEnumerable<BookingDTO> GetOtherReservations(Accommodation accommodation)
         {
+            var bookings = new List<BookingDTO>();
             var allReservations = GetByAccommodation(accommodation);
-            return allReservations.Where(reservation => IsReservationOther(reservation, accommodation));
+            foreach (var reservation in allReservations)
+            {
+                if (IsReservationOther(reservation, accommodation))
+                {
+                    bookings.Add(new BookingDTO(reservation));
+                }
+            }
+            return bookings;
         }
 
         internal bool IsDateReserved(DateTime startDate, DateTime endDate, DateTime oldStartDate, DateTime oldEndDate, List<AccommodationReservation> accommodationReservations)
@@ -134,6 +166,13 @@ namespace BookingApp.Application.UseCases
         private bool isOldReservation(AccommodationReservation reservation, DateTime oldStartDate, DateTime oldEndDate)
         {
             return (reservation.StartDate == oldStartDate && reservation.EndDate == oldEndDate);
+        }
+
+        internal List<AccommodationReservation> GetByOwner(Owner loggedInOwner)
+        {
+            var accommodations = accommodationService.GetByUser(loggedInOwner);
+            var accommodationIds = accommodations.Select(a => a.AccommodationId).ToList();
+            return _accommodationReservationRepository.GetByAccommodationIds(accommodationIds);
         }
     }
 }
