@@ -8,8 +8,8 @@ namespace BookingApp.Domain.Model
 {
     public class TourRequestStat
     {
-        public int CountAccepted { get; }
-        public int CountRejected { get; }
+        public int AcceptedCount { get; }
+        public int RejectedCount { get; }
 
         public int Year { get;  }
 
@@ -18,10 +18,10 @@ namespace BookingApp.Domain.Model
 
         }
 
-        public TourRequestStat(int countAccepted, int countRejected, int year)
+        public TourRequestStat(int acceptedCount, int rejectedCount, int year)
         {
-            CountAccepted = countAccepted;
-            CountRejected = countRejected;
+            AcceptedCount = acceptedCount;
+            RejectedCount = rejectedCount;
             Year = year;
         }
     }

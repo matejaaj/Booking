@@ -32,10 +32,15 @@ namespace BookingApp.WPF.View.Tourist.UserControls
         private void OpenTourRequestForm_Click(object sender, RoutedEventArgs e)
         {
             var viewModel = this.DataContext as TourRequestsViewModel;
+            viewModel.OpenFormWindow();
 
-            viewModel.OpenWindow();
+        }
 
 
+        private void OpenRequestStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            var viewModel = this.DataContext as TourRequestsViewModel;
+            viewModel.OpenStatisticsWindow();
         }
     }
 }

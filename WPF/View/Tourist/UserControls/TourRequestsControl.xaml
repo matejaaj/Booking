@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Content="Open Tour Request Form" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Click="OpenTourRequestForm_Click"/>
+        <Button Content="Zatrazi turu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="180" Click="OpenTourRequestForm_Click"/>
+        <Button Content="Statistika zahteva" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,10,0,0" Width="180" Click="OpenRequestStatistics_Click"/>
     </Grid>
 </UserControl>
