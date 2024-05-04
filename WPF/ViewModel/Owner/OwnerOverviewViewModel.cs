@@ -85,9 +85,10 @@ namespace BookingApp.WPF.ViewModel.Owner
             return _accommodationAndOwnerRatingService.GetByReservations(OwnerAccommodationReservations);
         }
 
-        public void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
+        public void NewAccommodation_Click(object sender, RoutedEventArgs e, AccommodationsPage accommodationsPage)
         {
             AccommodationForm accommodationForm = new AccommodationForm(LoggedInOwner);
+            accommodationForm.Owner = Window.GetWindow(accommodationsPage);
             accommodationForm.Show();
         }
 
@@ -151,8 +152,17 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         internal void ReschedulingButton(object sender, RoutedEventArgs e)
         {
-            ReschedulingOverview reschedulingOverviewWindow = new ReschedulingOverview(OwnerAccommodationReservations);
+            ReschedulingOverview reschedulingOverviewWindow = new ReschedulingOverview(LoggedInOwner);
             reschedulingOverviewWindow.Show();  
+        }
+
+        internal void AccommodationsListView_SelectionChanged(object sender, SelectionChangedEventArgs e, AccommodationsPage accommodationsPage)
+        {
+            ViewAccommodationPage page = ShowViewAccommodation(sender, e);
+            if (page != null)
+            {
+                accommodationsPage.NavigationService.Navigate(page);
+            }
         }
     }
 }

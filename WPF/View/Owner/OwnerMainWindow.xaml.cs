@@ -57,6 +57,21 @@ namespace BookingApp.WPF.View.Owner
             MainFrame.Navigate(new AccommodationsPage(LoggedInOwner));
             SideMenu.Visibility = Visibility.Collapsed;
         }
+
+        private void ShowRescheduling_Click(object sender, RoutedEventArgs e)
+        {
+            PageName = "Rescheduling Requests";
+            MainFrame.Navigate(new ReschedulingOverviewPage(LoggedInOwner));
+            SideMenu.Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowRenovations_Click(object sender, RoutedEventArgs e)
+        {
+            PageName = "Renovations";
+            MainFrame.Navigate(new ViewRenovationsPage(LoggedInOwner));
+            SideMenu.Visibility = Visibility.Collapsed;
+        }
+
         private void ShowMenuBar(object sender, RoutedEventArgs e)
         {
             if (SideMenu.Visibility == Visibility.Collapsed)

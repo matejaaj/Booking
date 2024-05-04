@@ -42,7 +42,7 @@ namespace BookingApp.WPF.View.Owner
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
         {
-            viewModel.ShowCreateAccommodationForm(sender, e);
+            //viewModel.ShowCreateAccommodationForm(sender, e);
         }
 
         private void ShowViewAccommodation(object sender, RoutedEventArgs e)

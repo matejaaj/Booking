@@ -111,5 +111,11 @@ namespace BookingApp.WPF.ViewModel.Owner
                 }
             }
         }
+
+        internal void RenovateAccommodation_Click(object sender, RoutedEventArgs e, ViewAccommodationPage viewAccommodationPage)
+        {
+            RenovationSchedulingPage page = new RenovationSchedulingPage(Accommodation);
+            viewAccommodationPage.NavigationService.Navigate(page);
+        }
     }
 }

@@ -34,5 +34,10 @@ namespace BookingApp.WPF.View.Owner
         {
             viewModel.RecentReservationsListBox_SelectionChanged(sender, RecentReservationsListBox);
         }
+
+        private void RenovateAccommodation_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.RenovateAccommodation_Click(sender, e, this);
+        }
     }
 }

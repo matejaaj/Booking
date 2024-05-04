@@ -12,7 +12,20 @@
         <guest:LocationConverter x:Key="LocationConverter" />
     </Page.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Click="NewAccommodation_Click" Margin="5,5,5,5" Width="185">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../../../Resources/Images/add.png" Width="25" Height="25"/>
+                <TextBlock Text="Add Accommodation" FontSize="16" Margin="5,0,0,0"/>
+            </StackPanel>
+        </Button>
+        
         <ListView
+            Grid.Row="1"
             x:Name="AccommodationsListView"
             Margin="10,0,10,20"
             Background="Transparent"

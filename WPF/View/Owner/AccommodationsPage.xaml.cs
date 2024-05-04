@@ -32,9 +32,12 @@ namespace BookingApp.WPF.View.Owner
 
         private void AccommodationsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-             
-            ViewAccommodationPage page = viewModel.ShowViewAccommodation(sender, e);
-            this.NavigationService.Navigate(page);
+            viewModel.AccommodationsListView_SelectionChanged(sender, e, this);
+        }
+
+        private void NewAccommodation_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.NewAccommodation_Click(sender, e, this);
         }
     }
 }

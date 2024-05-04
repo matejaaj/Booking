@@ -38,21 +38,21 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static UserService _userService;
         private static AccommodationService _accommodationService;
 
-        public ReschedulingOverviewViewModel(List<Domain.Model.AccommodationReservation> ownerAccommodationReservations)
+        public ReschedulingOverviewViewModel(Domain.Model.Owner loggedInOwner)
         {
             InitializeServices();
             Requests = new ObservableCollection<ReschedulingRequestDTO>();
-            AccommodationReservations = ownerAccommodationReservations;
+            AccommodationReservations = _accommodationReservationService.GetByOwner(loggedInOwner);
             ReservationModificationRequests = _reservationModificationRequestService.GetByReservationIds(AccommodationReservations);
             Update();
         }
 
         private void InitializeServices()
         {
-            _reservationModificationRequestService = new ReservationModificationRequestService();
-            _accommodationReservationService = new AccommodationReservationService();
             _userService = new UserService();
             _accommodationService = new AccommodationService();
+            _accommodationReservationService = new AccommodationReservationService(_accommodationService);
+            _reservationModificationRequestService = new ReservationModificationRequestService();
         }
 
         private void Update()

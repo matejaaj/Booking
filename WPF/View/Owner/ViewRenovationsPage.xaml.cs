@@ -11,31 +11,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BookingApp.WPF.View.Owner
 {
     /// <summary>
-    /// Interaction logic for ReschedulingOverview.xaml
+    /// Interaction logic for ViewRenovationsPage.xaml
     /// </summary>
-    public partial class ReschedulingOverview : Window
+    public partial class ViewRenovationsPage : Page
     {
-        public static ReschedulingOverviewViewModel viewModel;
-        public ReschedulingOverview(Domain.Model.Owner owner)
+        public static ViewRenovationsViewModel viewModel { get; set; }
+        public ViewRenovationsPage(Domain.Model.Owner loggedInOwner)
         {
             InitializeComponent();
-            viewModel = new ReschedulingOverviewViewModel(owner);
+            viewModel = new ViewRenovationsViewModel(loggedInOwner);
             DataContext = viewModel;
         }
 
-        private void btnApprove_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.btnApprove_Click(sender, e);
-        }
-
-        private void btnReject_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.btnReject_Click(sender, e);
+            viewModel.CancelButton_Click(sender, e);
         }
     }
 }
