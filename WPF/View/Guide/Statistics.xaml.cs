@@ -19,9 +19,14 @@ namespace BookingApp.WPF.View.Guide
             DataContext = _viewModel;
         }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        private void btnSearchTours_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Search();
+            _viewModel.SearchTours();
+        }
+
+        private void btnSearchRequests_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SearchRequests();
         }
     }
 }

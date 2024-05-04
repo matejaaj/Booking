@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using BookingApp.Application;
@@ -19,6 +20,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         private  LocationService _locationService;
         private  LanguageService _languageService;
         private  TourInstanceService _tourInstanceService;
+        private  TourRequestSegmentService _tourRequestSegmentService;
 
         public List<Location> Locations { get; set; }
         public List<Language> Languages { get; set; }
@@ -69,7 +71,7 @@ namespace BookingApp.WPF.ViewModel.Guide
                 if (_selectedLocation != value)
                 {
                     _selectedLocation = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SelectedLocation));
                 }
             }
         }
@@ -97,7 +99,7 @@ namespace BookingApp.WPF.ViewModel.Guide
                 if (_selectedLanguage != value)
                 {
                     _selectedLanguage = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SelectedLanguage));
                 }
             }
         }
@@ -184,6 +186,16 @@ namespace BookingApp.WPF.ViewModel.Guide
             }
         }
 
+        public void FindBest()
+        {
+            var best = _tourRequestSegmentService.FindBest();
+            int languageId = best.Item1;
+            int locationId = best.Item2;
+
+            SelectedLanguage = Languages.FirstOrDefault(l => l.Id == languageId);
+            SelectedLocation = Locations.FirstOrDefault(l => l.Id == locationId);
+        }
+
         private void InitializeServices()
         {
             var _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
@@ -195,6 +207,7 @@ namespace BookingApp.WPF.ViewModel.Guide
             _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
             _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
             _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
+            _tourRequestSegmentService = new TourRequestSegmentService(Injector.CreateInstance<ITourRequestSegmentRepository>());
         }
     }
 }
