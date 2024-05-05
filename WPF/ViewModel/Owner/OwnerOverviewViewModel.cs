@@ -121,12 +121,6 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        public void ShowRatingsButton(object sender, RoutedEventArgs e)
-        {
-            ViewRatings viewRatingsWindow = new ViewRatings(LoggedInOwner);
-            viewRatingsWindow.Show();
-        }
-
         internal void SuperTrophyButton(object sender, RoutedEventArgs e)
         {
             if (LoggedInOwner.SuperOwner)
@@ -148,12 +142,6 @@ namespace BookingApp.WPF.ViewModel.Owner
                     _ownerService.Update(LoggedInOwner);
                 }
             }
-        }
-
-        internal void ReschedulingButton(object sender, RoutedEventArgs e)
-        {
-            ReschedulingOverview reschedulingOverviewWindow = new ReschedulingOverview(LoggedInOwner);
-            reschedulingOverviewWindow.Show();  
         }
 
         internal void AccommodationsListView_SelectionChanged(object sender, SelectionChangedEventArgs e, AccommodationsPage accommodationsPage)

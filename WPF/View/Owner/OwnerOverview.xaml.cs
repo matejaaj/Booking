@@ -52,7 +52,7 @@ namespace BookingApp.WPF.View.Owner
         
         private void ShowRatingsButton(object sender, RoutedEventArgs e)
         {
-            viewModel.ShowRatingsButton(sender, e);
+            //viewModel.ShowRatingsButton(sender, e);
         }
         private void SuperTrophyButton(object sender, RoutedEventArgs e)
         {
@@ -61,7 +61,7 @@ namespace BookingApp.WPF.View.Owner
 
         private void ReschedulingButton(object sender, RoutedEventArgs e)
         {
-            viewModel.ReschedulingButton(sender, e);
+           // viewModel.ReschedulingButton(sender, e);
         }
     }
 }

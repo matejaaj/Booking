@@ -7,77 +7,95 @@
         mc:Ignorable="d"
         Title="OwnerMainWindow" Height="750" Width="430">
     <Grid>
-        <Canvas x:Name="SideMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="Transparent">
-            <StackPanel Width="250" Background="#FFA9A9A9" VerticalAlignment="Top">
+        <Canvas VerticalAlignment="Stretch" x:Name="SideMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="Transparent">
+            <Grid Width="250" Height="700" Background="#FFA9A9A9">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
                 <!-- Dugme za zatvaranje menija sa strelicom levo -->
-                <Button Click="HideMenuBar" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" HorizontalAlignment="Stretch" Height="39">
+                <Button Grid.Row="0" Click="HideMenuBar" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" Height="39">
                     <DockPanel>
                         <Image Source="../../../Resources/Images/goBack.png" Width="20" Height="20" DockPanel.Dock="Left"/>
-                        <TextBlock Text="CityConnect" FontWeight="Bold" FontSize="18" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Accommodation Management" FontWeight="Bold" FontSize="12" Margin="10,0,0,0" VerticalAlignment="Center"/>
                     </DockPanel>
                 </Button>
 
                 <!-- Profilna slika, ime korisnika i dugme za odjavu -->
-                <StackPanel Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
-                    <Image Source="../../../Resources/Images/userProfile.png" Height="80" Width="100" Margin="0,0,0,5"/>
-                    <TextBlock Text="{Binding Korisnik.Username}" Foreground="Black" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+                <StackPanel Grid.Row="1" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                    <Image Source="../../../Resources/Images/userProfile.png" Height="125" Width="125" Margin="0,0,0,5"/>
+                    <TextBlock Text="{Binding LoggedInOwner.Username}" Foreground="Black" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="5,0,0,5"/>
                 </StackPanel>
 
                 <!-- Dugme za odjavu -->
-                <Button Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+                <Button Grid.Row="2" Click="LogOutButton_Click" Content="Log out" FontSize="15" Width="75" HorizontalAlignment="Center" Margin="5,5,0,20"/>
 
                 <!-- Ostale stavke menija -->
-                <Button Click="ShowRatings_Click" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Grid.Row="3" Click="ShowRatings_Click" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/carReg.png" Width="25" Height="25"/>
-                        <TextBlock Text="Vehicle Registration" FontSize="16" Margin="5,0,0,0"/>
+                        <Image Source="../../../Resources/Images/ratings.png" Width="25" Height="25"/>
+                        <TextBlock Text="Ratings" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Click="ShowAccommodations_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Grid.Row="4" Click="ShowAccommodations_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/stats.png" Width="25" Height="25"/>
-                        <TextBlock Text="Statistics" FontSize="16" Margin="5,0,0,0"/>
+                        <Image Source="../../../Resources/Images/accommodations.png" Width="25" Height="25"/>
+                        <TextBlock Text="Accommodations" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Click="ShowRescheduling_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Grid.Row="5" Click="ShowRescheduling_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/notifications.png" Width="25" Height="25"/>
-                        <TextBlock Text="Notifications" FontSize="16" Margin="5,0,0,0"/>
+                        <Image Source="../../../Resources/Images/reschedule.png" Width="25" Height="25"/>
+                        <TextBlock Text="Reschedulings" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Click="ShowRenovations_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Grid.Row="6" Click="ShowRenovations_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/vacations.png" Width="25" Height="25"/>
-                        <TextBlock Text="Vacation Requests" FontSize="16" Margin="5,0,0,0"/>
+                        <Image Source="../../../Resources/Images/renovation.png" Width="25" Height="25"/>
+                        <TextBlock Text="Renovations" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Click="SuperOwner_Click" Grid.Row="7" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/reports.png" Width="25" Height="25"/>
-                        <TextBlock Text="Vacation Reports" FontSize="16" Margin="5,0,0,0"/>
+                        <Image Source="../../../Resources/Images/superowner.png" Width="25" Height="25"/>
+                        <TextBlock Text="Super-Owner" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                <Button Grid.Row="8" Padding="5" Margin="5,0,0,20" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/userData.png" Width="25" Height="25"/>
-                        <TextBlock Text="Personal Data" FontSize="16" Margin="5,0,0,0"/>
+                        <Image Source="../../../Resources/Images/forum.png" Width="25" Height="25"/>
+                        <TextBlock Text="Forum" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Padding="5" Margin="5,57,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                <Button Grid.Row="9 " VerticalAlignment="Bottom" Padding="5" Margin="5,45,0,5" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/tutorial.png" Width="25" Height="25"/>
-                        <TextBlock Text="Tutorijal" FontSize="16" Margin="5,0,0,0"/>
+                        <Image Source="../../../Resources/Images/statistics.png" Width="25" Height="25"/>
+                        <TextBlock Text="Generate Statistics" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-            </StackPanel>
+            </Grid>
         </Canvas>
 
         <!-- Action bar at the top -->
         <Grid Background="LightGray" Height="50" VerticalAlignment="Top">
             <Button Click="ShowMenuBar" Content="&#x2630;" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="20"/>
             <TextBlock Text="{Binding PageName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="48,0,0,0"/>
-            <Button Content="Button" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+            <Button Content="Button" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,50,0"/>
+
+            <!-- Icon on the right side -->
+            <Image x:Name="iconImage" Source="../../../Resources/Images/accommodations.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
         </Grid>
+
 
         <!-- Rest of the screen is a Frame -->
         <Frame Name="MainFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,50,0,0"

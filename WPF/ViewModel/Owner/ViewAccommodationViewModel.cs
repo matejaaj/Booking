@@ -91,7 +91,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             return !(selectedAccommodationRating == null);
         }*/
 
-        public void RecentReservationsListBox_SelectionChanged(object sender, ListBox RecentReservationsListBox)
+        public void RecentReservationsListBox_SelectionChanged(object sender, ListBox RecentReservationsListBox, ViewAccommodationPage viewAccommodationPage)
         {
             if (RecentReservationsListBox.SelectedItem != null)
             {
@@ -100,7 +100,7 @@ namespace BookingApp.WPF.ViewModel.Owner
                 {
                     var reservation = _accommodationReservationService.GetByReservationId(selectedReservation.Id);
                     var guestRatingFormWindow = new GuestRatingForm(reservation);
-                    //guestRatingFormWindow.Owner = owner;
+                    guestRatingFormWindow.Owner = Window.GetWindow(viewAccommodationPage);
                     guestRatingFormWindow.ShowDialog();
                     FillReservations();
                 }

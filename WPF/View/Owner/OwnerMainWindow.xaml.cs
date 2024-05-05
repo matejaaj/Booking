@@ -34,13 +34,16 @@ namespace BookingApp.WPF.View.Owner
                 OnPropertyChanged(nameof(PageName));
             }
         }
+
+        public static MainWindowViewModel viewModel { get; set; }
+
         public OwnerMainWindow(Domain.Model.Owner owner)
         {
             InitializeComponent();
-            DataContext = this;
             LoggedInOwner = owner;
             PageName = "Accommodations";
             MainFrame.Navigate(new AccommodationsPage(owner));
+            DataContext = this;
         }
 
         private void ShowRatings_Click(object sender, RoutedEventArgs e)
@@ -99,6 +102,20 @@ namespace BookingApp.WPF.View.Owner
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            SignInForm signInForm = new SignInForm();
+            signInForm.Show();
+            this.Close();
+        }
+
+        private void SuperOwner_Click(object sender, RoutedEventArgs e)
+        {
+            PageName = "Super-Owner";
+            MainFrame.Navigate(new SuperOwnerPage(LoggedInOwner));
+            SideMenu.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -100,6 +100,21 @@ namespace BookingApp.DTO
             }
         }
 
+        private string timeSpan { get; set; }
+
+        public string TimeSpan
+        {
+            get { return timeSpan; }
+            set
+            {
+                if (timeSpan != value)
+                {
+                    timeSpan = value;
+                    OnPropertyChanged("TimeSpan");
+                }
+            }
+        }
+
         public BookingDTO(AccommodationReservation reservation)
         {
             Id = reservation.Id;
@@ -115,6 +130,7 @@ namespace BookingApp.DTO
             {
                 IsRated = "Not Rated";
             }
+            TimeSpan = StartDate + " - " + EndDate;
         }
 
         public override string ToString()

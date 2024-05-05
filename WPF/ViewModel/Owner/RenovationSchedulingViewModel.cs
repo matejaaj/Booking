@@ -121,17 +121,34 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         internal void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ValidateFields())
+            if (!ValidateFields())
+            {
+                MessageBox.Show("Please enter dates and a duration estimate",
+                 "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (areDatesPast())
+            {
+                MessageBox.Show("Please enter a future date",
+                 "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
             {
                 FreeDates.Clear();
                 FindAvailableDates();
             }
+            
+        }
+
+        private bool areDatesPast()
+        {
+            if (StartDate < DateTime.Today || EndDate < DateTime.Today)
+            {
+                return true;
+            }
             else
             {
-                MessageBox.Show("Please enter dates and a duration estimate",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
-            
         }
 
         private bool ValidateFields()
