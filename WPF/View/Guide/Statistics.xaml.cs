@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using BookingApp.WPF.ViewModel.Guide;
+using System.Windows.Controls;
 
 namespace BookingApp.WPF.View.Guide
 {
-    public partial class Statistics : Window
+    public partial class Statistics : Page
     {
         private readonly StatisticsViewModel _viewModel;
 

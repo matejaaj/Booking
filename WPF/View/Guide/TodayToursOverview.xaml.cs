@@ -2,10 +2,11 @@
 using BookingApp.Domain.Model;
 using BookingApp.Repository;
 using BookingApp.WPF.ViewModel.Guide;
+using System.Windows.Controls;
 
 namespace BookingApp.WPF.View.Guide
 {
-    public partial class TodayToursOverview : Window
+    public partial class TodayToursOverview : Page
     {
         private readonly TodayToursOverviewViewModel _viewModel;
 

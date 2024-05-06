@@ -14,31 +14,31 @@ namespace BookingApp.WPF.ViewModel.Guide
         public void ShowTourForm()
         {
             TourForm tourForm = new TourForm();
-            tourForm.ShowDialog();
+            //tourForm.ShowDialog();
         }
 
         public void ShowTodayTours()
         {
             TodayToursOverview todayToursOverview = new TodayToursOverview();
-            todayToursOverview.ShowDialog();
+            //todayToursOverview.ShowDialog();
         }
 
         public void ShowAllTours()
         {
             AllToursOverview allToursOverview = new AllToursOverview();
-            allToursOverview.ShowDialog();
+            //allToursOverview.ShowDialog();
         }
 
         public void ShowStatistics()
         {
             Statistics statisticsWindow = new Statistics();
-            statisticsWindow.ShowDialog();
+            //statisticsWindow.ShowDialog();
         }
 
         public void ShowRequests()
         {
             TourRequests tourRequestsWindw = new TourRequests();
-            tourRequestsWindw.ShowDialog();
+            //tourRequestsWindw.ShowDialog();
         }
     }
 }

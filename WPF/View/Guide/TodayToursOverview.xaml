@@ -1,4 +1,4 @@
-﻿<Window x:Class="BookingApp.WPF.View.Guide.TodayToursOverview"
+﻿<Page x:Class="BookingApp.WPF.View.Guide.TodayToursOverview"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -44,4 +44,4 @@
             </Button>
         </ToolBar>
     </Grid>
-</Window>
+</Page>

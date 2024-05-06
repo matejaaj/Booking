@@ -12,13 +12,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Controls;
 
 namespace BookingApp.WPF.View.Guide
 {
     /// <summary>
     /// Interaction logic for TourRequests.xaml
     /// </summary>
-    public partial class TourRequests : Window
+    public partial class TourRequests : Page
     {
         private readonly TourRequestsViewModel _viewModel;
 

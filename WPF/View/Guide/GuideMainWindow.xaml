@@ -1,0 +1,24 @@
+﻿<Window x:Class="BookingApp.WPF.View.Guide.GuideMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Guide Overview" Height="600" Width="1080">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Background="#F0F0F0">
+            <Label Content="Tony Parker (user)" FontSize="16" Padding="10" FontWeight="Bold" Background="#E0E0E0" HorizontalContentAlignment="Center"/>
+            <Button Content="Home (F1)" Padding="10" Margin="5"/>
+            <Button Content="Create tour (F2)" Padding="10" Margin="5" Click="CreateTourPage"/>
+            <Button Content="All tours (F3)" Padding="10" Margin="5" Click="AllToursPage"/>
+            <Button Content="Today tours (F4)" Padding="10" Margin="5" Click="TodayToursPage"/>
+            <Button Content="Requests (F5)" Padding="10" Margin="5" Click="RequestsPage"/>
+            <Button Content="Statistics (F6)" Padding="10" Margin="5" Click="ShowStatisticsPage"/>
+            <Button Content="Super guide (F7)" Padding="10" Margin="5"/>
+        </StackPanel>
+
+        <Frame Grid.Column="1" Name="ContentFrame" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>
