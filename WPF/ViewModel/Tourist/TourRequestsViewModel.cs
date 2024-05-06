@@ -31,11 +31,17 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _user = user;
         }
 
-        public void OpenWindow()
+        public void OpenFormWindow()
         {
             var tourRequestFormWindow = new TourRequestFormWindow(_user, _locationService, _languageService, _tourRequestService, _tourSegmentService, _tourGuestService);
             tourRequestFormWindow.Show();
         }
-        
+
+        public void OpenStatisticsWindow()
+        {
+            var tourRequestStatsWindow =
+                new TourRequestStatisticsWindow(_user, _tourRequestService, _tourSegmentService);
+            tourRequestStatsWindow.Show();
+        }
     }
 }

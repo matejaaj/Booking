@@ -47,5 +47,10 @@ namespace BookingApp.Application.UseCases
         {
             return _tourRequestRepository.GetAll().Where(request => request.IsComplex == false).ToList();
         }
+
+        public List<TourRequest> GetSimpleRequestsForUser(int userId)
+        {
+            return GetSimpleRequests().Where(request => request.TouristId == userId).ToList();
+        }
     }
 }
