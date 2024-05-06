@@ -5,13 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
         mc:Ignorable="d"
-        Title="ViewDrive" Height="200" Width="450">
+        Title="ViewDrive" Height="250" Width="450">
     <Grid>
-        <StackPanel Margin="20">
-            <RadioButton x:Name="rbAtLocation" Content="At the location" IsChecked="{Binding SelectedAtLocation, UpdateSourceTrigger=PropertyChanged}" Checked="rbAtLocation_Checked" />
-            <RadioButton x:Name="rbDelayed" Content="Delayed" IsChecked="{Binding SelectedDelayed, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="View Drive" FontSize="24" FontWeight="Bold" Margin="10,10,10,10"/>
+
+       
+        <StackPanel Margin="20" VerticalAlignment="Center">
+
+            <RadioButton x:Name="rbAtLocation" Content="At the location" IsChecked="{Binding SelectedAtLocation, UpdateSourceTrigger=PropertyChanged}" Checked="rbAtLocation_Checked" Margin="0,10"/>
+
+            <RadioButton x:Name="rbDelayed" Content="Delayed" IsChecked="{Binding SelectedDelayed, UpdateSourceTrigger=PropertyChanged}" Margin="0,10"/>
+
+
             <TextBox x:Name="txtDelayMinutes" Margin="0,10" IsEnabled="{Binding IsChecked, ElementName=rbDelayed}" Text="{Binding TxtDelayMinutes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+            
             <Button Content="Confirm" Margin="0,10" Click="Confirm_Click"/>
         </StackPanel>
     </Grid>
+
 </Page>

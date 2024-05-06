@@ -9,19 +9,20 @@
     <Grid>
         <TabPanel Panel.ZIndex="10">
 
-            <ToolBar Grid.Row="0" Grid.ColumnSpan="5" Background="#FFA9A9A9" Margin="0,0,-12,0" Height="41" VerticalAlignment="Bottom">
+            <ToolBar Grid.Row="0" Grid.ColumnSpan="5" Background="#FFA9A9A9"  Margin="0,0,-12,0" Height="41" VerticalAlignment="Bottom">
                 <Button Click="ShowMenuBar">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/menuBar.png" Width="20" Height="25"/>
-                        <TextBlock Text="CityConnect" 
-                             FontSize="20" 
-                             FontWeight="Bold" 
-                             Foreground="Black"
-                             VerticalAlignment="Center" 
-                             Margin="10,0,0,0" 
-                             FontFamily="Arial"/>
+                        
                     </StackPanel>
                 </Button>
+                <TextBlock Text="CityConnect" 
+                            FontSize="20" 
+                            FontWeight="Bold" 
+                            Foreground="Black"
+                            VerticalAlignment="Center" 
+                            Margin="10,0,0,0" 
+                            FontFamily="Arial"/>
                 <Separator Visibility="Hidden" />
                 <Button Click="ViewDrive_Click" Visibility="{Binding IsNotVisible, UpdateSourceTrigger=PropertyChanged}" >
                     <StackPanel Orientation="Horizontal">
@@ -56,7 +57,7 @@
             </ToolBar>
         </TabPanel>
 
-        <Canvas x:Name="SideMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="Transparent">
+        <Canvas x:Name="SideMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="Transparent"  MouseLeave="SideMenu_MouseLeave">
             <StackPanel Width="250" Background="#FFA9A9A9" VerticalAlignment="Top">
                 <Button Click="HideMenuBar" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" HorizontalAlignment="Stretch" Height="39">
                     <DockPanel>

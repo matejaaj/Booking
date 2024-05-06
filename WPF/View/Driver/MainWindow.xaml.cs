@@ -122,5 +122,10 @@ namespace BookingApp.WPF.View.Driver
         {
             MainNavigationFrame.NavigationService.Navigate(new DriverOverview(driver));
         }
+        private void SideMenu_MouseLeave(object sender, MouseEventArgs e)
+        {
+            SideMenu.Visibility = Visibility.Collapsed;
+        }
+
     }
 }

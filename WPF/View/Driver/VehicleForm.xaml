@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <!-- GroupBox for Vehicle Registration -->
-        <GroupBox Header="Vehicle Registration" FontWeight="DemiBold" Grid.Row="1" Margin="10" FontSize="16">
+        <GroupBox Header="Vehicle Registration" FontWeight="DemiBold" Grid.Row="1" Margin="10,0,10,10" FontSize="18">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
@@ -33,21 +33,21 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Locations ComboBox -->
-                <Label Content="Location" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                
+                <Label Content="Location:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
                 <Syncfusion:ComboBoxAdv AllowMultiSelect="True" Grid.Column="1" ItemsSource="{Binding locations}" SelectedItems="{Binding SelectedLocations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DefaultText="Locations" Height="30" Margin="22,9,498,11"/>
 
-                <!-- Passenger Capacity TextBox -->
-                <Label Content="Passenger Capacity" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                
+                <Label Content="Passenger Capacity:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox x:Name="txtMax" Text="{Binding MaxPassengers, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Height="30" Margin="0,9,452,11" Grid.Row="1"/>
 
-                <!-- Languages ComboBox -->
-                <Label Content="Language" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                
+                <Label Content="Language:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
                 <Syncfusion:ComboBoxAdv AllowMultiSelect="True" Grid.Column="1" ItemsSource="{Binding languages}" SelectedItems="{Binding SelectedLanguages, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DefaultText="Languages" Height="30" Margin="22,11,498,9" Grid.Row="2"/>
 
-                <!-- Image Buttons and Labels -->
-                <Label Content="Images" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Margin="0,39,22,0"/>
-                <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="161,0,0,0">
+                
+                <Label Content="Images:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Margin="0,39,22,0"/>
+                <StackPanel Grid.Row="3" Orientation="Vertical" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="161,0,0,0">
                     <Button x:Name="btnAddImage" HorizontalAlignment="Left" Margin="10,20,10,0" Width="82" Click="btnAddImage_Click">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -60,15 +60,47 @@
                                 </Setter>
                             </Style>
                         </Button.Style>
-                        <Image Source="../../../Resources/Images/addIm.png" Width="60" Height="65"/>
+                        <Image Source="../../../Resources/Images/addIm.png" Height="65" Margin="-98,0,69,0"/>
                     </Button>
-
+                </StackPanel>
+                <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10,5,227,2" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                    <Image Source="../../../Resources/Images/insertImage.png" Width="180" Height="175"/>
+                    <Image Source="../../../Resources/Images/insertImage.png" Width="180" Height="175"/>
+                    <Image Source="../../../Resources/Images/insertImage.png" Width="180" Height="153"/>
+                    <Image Source="../../../Resources/Images/insertImage.png" Width="90" Height="103"/>
                 </StackPanel>
 
-                <!-- Buttons for confirm and cancel -->
                 <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20">
-                    <Button Content="Cancel" Click="btnCancel_Click" Margin="0,0,10,0" Width="90" Height="35" FontSize="14"/>
-                    <Button Content="Confirm" Click="btnConfirm_Click" Width="90" Height="35" FontSize="14"/>
+                    <Button Content="Cancel" Click="btnCancel_Click" Margin="0,0,10,0" Width="90" Height="35" FontSize="14">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="LightGray"/>
+                                <Setter Property="BorderBrush" Value="Gray"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="DarkGray"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="Confirm" Click="btnConfirm_Click" Width="90" Height="35" FontSize="14">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="BorderBrush" Value="DarkBlue"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Blue"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
             </Grid>
         </GroupBox>

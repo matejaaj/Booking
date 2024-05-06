@@ -15,12 +15,15 @@
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\carReg.png" />
     <None Remove="Resources\Images\check.png" />
+    <None Remove="Resources\Images\clock.png" />
     <None Remove="Resources\Images\delay.png" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\destination.png" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\goBack.png" />
     <None Remove="Resources\Images\home.png" />
+    <None Remove="Resources\Images\insertImage.png" />
+    <None Remove="Resources\Images\location.png" />
     <None Remove="Resources\Images\Map.jpg" />
     <None Remove="Resources\Images\menu.png" />
     <None Remove="Resources\Images\menuBar.png" />
@@ -33,7 +36,6 @@
     <None Remove="Resources\Images\stats.png" />
     <None Remove="Resources\Images\status.png" />
     <None Remove="Resources\Images\taxi.png" />
-    <None Remove="Resources\Images\taxiCar.jpg" />
     <None Remove="Resources\Images\time.png" />
     <None Remove="Resources\Images\trophy.png" />
     <None Remove="Resources\Images\turista.png" />
@@ -73,10 +75,13 @@
     <Resource Include="Resources\Images\cancel.png" />
     <Resource Include="Resources\Images\carReg.png" />
     <Resource Include="Resources\Images\check.png" />
+    <Resource Include="Resources\Images\clock.png" />
     <Resource Include="Resources\Images\delay.png" />
     <Resource Include="Resources\Images\destination.png" />
     <Resource Include="Resources\Images\goBack.png" />
     <Resource Include="Resources\Images\home.png" />
+    <Resource Include="Resources\Images\insertImage.png" />
+    <Resource Include="Resources\Images\location.png" />
     <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
     <Resource Include="Resources\Images\notifications.png" />
@@ -87,7 +92,6 @@
     <Resource Include="Resources\Images\stats.png" />
     <Resource Include="Resources\Images\status.png" />
     <Resource Include="Resources\Images\taxi.png" />
-    <Resource Include="Resources\Images\taxiCar.jpg" />
     <Resource Include="Resources\Images\time.png" />
     <Resource Include="Resources\Images\trophy.png" />
     <Resource Include="Resources\Images\turista.png" />
