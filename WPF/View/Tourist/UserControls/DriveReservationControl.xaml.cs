@@ -22,7 +22,14 @@ namespace BookingApp.WPF.View.Tourist.UserControls
     /// </summary>
     public partial class DriveReservationControl : UserControl
     {
+        public static readonly DependencyProperty TouristProperty = DependencyProperty.Register(
+            "Tourist", typeof(User), typeof(DriveReservationControl), new PropertyMetadata(null));
 
+        public User Tourist
+        {
+            get { return (User)GetValue(TouristProperty); }
+            set { SetValue(TouristProperty, value); }
+        }
 
 
         public DriveReservationControl()
@@ -90,7 +97,6 @@ namespace BookingApp.WPF.View.Tourist.UserControls
                     return;
                 }
 
-
                 viewModel.MarkDriverAsUnreliable();
                 MessageBox.Show("Driver has been marked as unreliable.");
             }
@@ -100,7 +106,12 @@ namespace BookingApp.WPF.View.Tourist.UserControls
 
         private void ResserveDrive_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+
+            if (DataContext is DriveMainTabViewModel viewModel)
+            {
+                viewModel.OpenReservationWindos();
+            }
+
         }
     }
 }

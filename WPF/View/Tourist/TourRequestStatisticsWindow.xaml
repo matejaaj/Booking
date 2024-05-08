@@ -6,7 +6,8 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
-        Title="TourRequestStatisticsWindow" Height="450" Width="450">
+        Title="Statistika zahteva" Height="450" Width="450"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Label Content="Izaberite godinu:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,12,0,0"/>
 

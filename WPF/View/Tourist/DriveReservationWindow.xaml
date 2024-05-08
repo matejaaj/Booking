@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         xmlns:controls="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
         mc:Ignorable="d"
-        Title="RequestDriveWindow" Height="600" Width="500">
+        Title="RequestDriveWindow" Height="600" Width="500"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Control" x:Key="LargerFontStyle">
             <Setter Property="FontSize" Value="16"/>

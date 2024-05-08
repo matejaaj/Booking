@@ -34,7 +34,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _tourReservationService = tourReservationService;
             _checkPointService = checkpointService;
             _voucherService = voucherService;
-            _tourReviewService = _tourReviewService;
+            _tourReviewService = tourReviewService;
 
 
             Tourist = loggedUser;

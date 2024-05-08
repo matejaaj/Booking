@@ -64,11 +64,6 @@ namespace BookingApp.WPF.ViewModel.Tourist.Factories
                 
             }
 
-            if (delayTourist != 0)
-            {
-                status += $"Turista kasni {delayTourist} minuta";
-            }
-
             else
             {
                 switch (reservationStatusId)
@@ -89,7 +84,7 @@ namespace BookingApp.WPF.ViewModel.Tourist.Factories
                         status = "Prihvacena voznja";
                         break;
                     default:
-                        status = "Status Unknown";  
+                        status = "Nepoznat";  
                         break;
                 }
             }
