@@ -7,13 +7,19 @@
         mc:Ignorable="d"
         Title="CityConnect Firma" Height="550" Width="936">
     <Grid>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="Auto"/>
+
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <TabPanel Panel.ZIndex="10">
 
-            <ToolBar Grid.Row="0" Grid.ColumnSpan="5" Background="#FFA9A9A9"  Margin="0,0,-12,0" Height="41" VerticalAlignment="Bottom">
+            <ToolBar  Background="#FFA9A9A9"  Margin="0,0,-12,-3" Height="44" VerticalAlignment="Bottom">
                 <Button Click="ShowMenuBar">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/menuBar.png" Width="20" Height="25"/>
-                        
+
                     </StackPanel>
                 </Button>
                 <TextBlock Text="CityConnect" 

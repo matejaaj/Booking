@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <!-- GroupBox for Vehicle Registration -->
-        <GroupBox Header="Vehicle Registration" FontWeight="DemiBold" Grid.Row="1" Margin="10,0,10,10" FontSize="18">
+        <GroupBox Header="Vehicle Registration" FontWeight="DemiBold" Margin="10,0,10,10" FontSize="18" Grid.RowSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
@@ -33,19 +33,19 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                
+
                 <Label Content="Location:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
                 <Syncfusion:ComboBoxAdv AllowMultiSelect="True" Grid.Column="1" ItemsSource="{Binding locations}" SelectedItems="{Binding SelectedLocations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DefaultText="Locations" Height="30" Margin="22,9,498,11"/>
 
-                
+
                 <Label Content="Passenger Capacity:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox x:Name="txtMax" Text="{Binding MaxPassengers, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Height="30" Margin="0,9,452,11" Grid.Row="1"/>
 
-                
+
                 <Label Content="Language:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
                 <Syncfusion:ComboBoxAdv AllowMultiSelect="True" Grid.Column="1" ItemsSource="{Binding languages}" SelectedItems="{Binding SelectedLanguages, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DefaultText="Languages" Height="30" Margin="22,11,498,9" Grid.Row="2"/>
 
-                
+
                 <Label Content="Images:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Margin="0,39,22,0"/>
                 <StackPanel Grid.Row="3" Orientation="Vertical" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="161,0,0,0">
                     <Button x:Name="btnAddImage" HorizontalAlignment="Left" Margin="10,20,10,0" Width="82" Click="btnAddImage_Click">

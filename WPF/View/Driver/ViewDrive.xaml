@@ -5,22 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
         mc:Ignorable="d"
-        Title="ViewDrive" Height="250" Width="450">
+        Title="ViewDrive" Height="550" Width="936">
     <Grid>
-        <TextBlock Text="View Drive" FontSize="24" FontWeight="Bold" Margin="10,10,10,10"/>
+        <!-- Header Section -->
+        <TextBlock Text="View Drive" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"
+                   Margin="10,10,10,0"/>
 
-       
+        <!-- Main Content Section -->
         <StackPanel Margin="20" VerticalAlignment="Center">
+            <!-- Radio Buttons for Drive Status -->
+            <RadioButton x:Name="rbAtLocation" 
+                         IsChecked="{Binding SelectedAtLocation, UpdateSourceTrigger=PropertyChanged}"
+                         Checked="rbAtLocation_Checked" 
+                         Margin="0,10">
+                <StackPanel Orientation="Horizontal">
+                    <Image  Source="../../../Resources/Images/destination.png"  Width="20" Height="25"/>
+                    <TextBlock Text="At the location" Margin="15,0,0,0"/>
+                </StackPanel>
+            </RadioButton>
 
-            <RadioButton x:Name="rbAtLocation" Content="At the location" IsChecked="{Binding SelectedAtLocation, UpdateSourceTrigger=PropertyChanged}" Checked="rbAtLocation_Checked" Margin="0,10"/>
+            <RadioButton x:Name="rbDelayed" 
+                         IsChecked="{Binding SelectedDelayed, UpdateSourceTrigger=PropertyChanged}" 
+                         Margin="0,10">
+                <StackPanel Orientation="Horizontal">
+                    <Image  Source="../../../Resources/Images/time.png" Width="20" Height="25"/>
+                    <TextBlock Text="Delayed" Margin="15,0,0,0"/>
+                </StackPanel>
+            </RadioButton>
 
-            <RadioButton x:Name="rbDelayed" Content="Delayed" IsChecked="{Binding SelectedDelayed, UpdateSourceTrigger=PropertyChanged}" Margin="0,10"/>
+            <!-- Delay Minutes Input -->
+            <TextBox x:Name="txtDelayMinutes" 
+                     Margin="0,10" 
+                     IsEnabled="{Binding IsChecked, ElementName=rbDelayed}"
+                     Text="{Binding TxtDelayMinutes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
-
-            <TextBox x:Name="txtDelayMinutes" Margin="0,10" IsEnabled="{Binding IsChecked, ElementName=rbDelayed}" Text="{Binding TxtDelayMinutes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-
-            
-            <Button Content="Confirm" Margin="0,10" Click="Confirm_Click"/>
+            <!-- Confirmation Button -->
+            <Button Content="Confirm" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,10" 
+                    Click="Confirm_Click" Width="199"/>
         </StackPanel>
     </Grid>
 
