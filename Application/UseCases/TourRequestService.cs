@@ -17,10 +17,6 @@ namespace BookingApp.Application.UseCases
             _tourRequestRepository = tourRequestRepository;
         }
 
-        public TourRequestService()
-        {
-            _tourRequestRepository = Injector.CreateInstance<ITourRequestRepository>();
-        }
 
         public List<TourRequest> GetAll()
         {
@@ -45,6 +41,16 @@ namespace BookingApp.Application.UseCases
         public TourRequest Update(TourRequest tourRequest)
         {
             return _tourRequestRepository.Update(tourRequest);
+        }
+
+        public List<TourRequest> GetSimpleRequests()
+        {
+            return _tourRequestRepository.GetAll().Where(request => request.IsComplex == false).ToList();
+        }
+
+        public List<TourRequest> GetSimpleRequestsForUser(int userId)
+        {
+            return GetSimpleRequests().Where(request => request.TouristId == userId).ToList();
         }
     }
 }

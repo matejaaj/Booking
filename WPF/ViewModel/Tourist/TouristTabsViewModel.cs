@@ -33,6 +33,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private UserService _userService;
         private DetailedLocationService _detailedLocationService;
         private DriverUnreliableReportService _driverUnreliableReportService;
+        private TourRequestService _tourRequestService;
+        private TourRequestSegmentService _tourRequestSegmentService;
+        private PrivateTourGuestService _privateTourGuestService;
 
 
         public TouristTabsViewModel(User loggedUser)
@@ -42,7 +45,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
             InitializeServices();
 
-            ToursMainViewModel = new ToursMainTabViewModel(loggedUser, _tourService, _tourInstanceService, _checkpointService, _imageService,  _locationService, _languageService, _tourGuestService, _tourReservationService, _tourReviewService, _voucherService);
+            ToursMainViewModel = new ToursMainTabViewModel(loggedUser, _tourService, _tourInstanceService, _checkpointService, _imageService,  _locationService, _languageService, _tourGuestService, _tourReservationService, _tourReviewService, _voucherService, _tourRequestService, _tourRequestSegmentService, _privateTourGuestService);
             DriveMainViewModel = new DriveMainTabViewModel(loggedUser, _driveReservationService, _userService, _detailedLocationService, _driverUnreliableReportService);
 
         }
@@ -66,6 +69,11 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _userService = new UserService(Injector.CreateInstance<IUserRepository>());
             _driverUnreliableReportService =
                 new DriverUnreliableReportService(Injector.CreateInstance<IDriverUnreliableReportRepository>());
+            _tourRequestService = new TourRequestService(Injector.CreateInstance<ITourRequestRepository>());
+            _tourRequestSegmentService =
+                new TourRequestSegmentService(Injector.CreateInstance<ITourRequestSegmentRepository>());
+            _privateTourGuestService =
+                new PrivateTourGuestService(Injector.CreateInstance<IPrivateTourGuestRepository>());
 
         }
     }

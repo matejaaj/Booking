@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using BookingApp.Domain.Factories;
+using BookingApp.Application.UseCases.Factories;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
