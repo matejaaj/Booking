@@ -28,12 +28,21 @@ namespace BookingApp.WPF.View.Driver
         private MainWindowViewModel VM {  get; set; }
         private Page currentPage { get; set; }
         private User driver;
+        public bool? DialogOverlayResult {  get; set; }
+
         public MainWindow(User user)
         {
             driver = user;
             InitializeComponent();
+            System.Windows.Application.Current.MainWindow = this;
+            DialogOverlayResult = false;
             MainNavigationFrame.Navigate(new DriverOverview(user));
-            EventAggregator.Subscribe<ShowMessageEvent>(e => MessageOverlay.Show(e.Message));
+            EventAggregator.Subscribe<ShowMessageEvent>(e => MessageOverlay.Show(e.Message, e.Title));
+            EventAggregator.Subscribe<ShowDialogEvent>(e =>
+            {
+                MessageOverlay.DialogResultReceived += HandeDialogResult;
+                MessageOverlay.ShowDialog(e.Message, e.Title);
+            });
             EventAggregator.Subscribe<MenuItemsEvent>(e => ChangeVisibility(e.Visibility));
             VM = new MainWindowViewModel(user);
             DataContext = VM;
@@ -43,6 +52,11 @@ namespace BookingApp.WPF.View.Driver
         {
             BtnDrive.Visibility = visibility;
             VM.ChangeVisibility(visibility);
+        }
+
+        private void HandeDialogResult(bool result)
+        {
+            DialogOverlayResult = result;
         }
 
         private void ShowMenuBar(object sender, RoutedEventArgs e)
@@ -56,6 +70,7 @@ namespace BookingApp.WPF.View.Driver
                 SideMenu.Visibility = Visibility.Collapsed;
             }
         }
+
         private void HideMenuBar(object sender, RoutedEventArgs e)
         {
             SideMenu.Visibility = Visibility.Collapsed;

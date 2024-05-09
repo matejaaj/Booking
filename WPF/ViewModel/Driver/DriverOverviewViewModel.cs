@@ -218,7 +218,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void ViewDrive_Respond(object? sender, EventArgs e)
         {
-            if (!ValidateInput(() => SelectedReservation.DriveReservationStatusId == 1, "You can't confirm this one!"))
+            if (!ValidateInput(() => (SelectedReservation.DriveReservationStatusId == 1 || SelectedReservation.DriveReservationStatusId == 14), "You can't confirm this one!"))
             {
                 return;
             }
@@ -243,7 +243,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             ConfirmedReservation = null;
             UpdateReservationList();
             if (SuperDriverService.CanceledResevationByDriver(DriverId))
-                MessageBox.Show("You just lost status of Super-Driver!", "Super-Driver Notification", MessageBoxButton.OK);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("You just lost status of Super-Driver!", "Notification"));
         }
 
         public void CancelTime_Tick(object? sender, EventArgs e)
@@ -262,7 +262,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
             if (isClientNoShow)
             {
-                MessageBox.Show("Client hasn't showed up!");
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Client hasn't showed up!", "Notification"));
                 canCancel = true;
                 ConfirmedReservation.DelayMinutesTourist = -1;
             }
@@ -290,11 +290,14 @@ namespace BookingApp.WPF.ViewModel.Driver
             fastDriveTimer.Stop();
             foreach (var dr in fastReservations)
             {
-                MessageBoxResult result = MessageBox.Show($"Nova brza rezervacija je dostupna!\n{dr.DepartureTime}\nDa li je prihvatate?",
-                                                          "Brza voznja", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+                bool? result = ((MainWindow)System.Windows.Application.Current.MainWindow).DialogOverlayResult;
+                if(result.HasValue && !result.Value)
+                    MainWindow.EventAggregator.Publish(new ShowDialogEvent($"Nova brza rezervacija je dostupna!\n{dr.DepartureTime}\nDa li je prihvatate?", "Notifaction"));
+
+                if (result.HasValue && result.Value)
                 {
                     HandleFastReservationAcceptance(dr);
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).DialogOverlayResult = false;
                     return;
                 }
             }
@@ -307,9 +310,9 @@ namespace BookingApp.WPF.ViewModel.Driver
             reservation.DriveReservationStatusId = 13;
             reservation.DriverId = DriverId;
             if (SuperDriverService.UpdateStateForDriver(DriverId))
-                MessageBox.Show("Congratulations!\nYou are now Super-Driver!", "Super-Driver Notification", MessageBoxButton.OK);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Congratulations!\nYou are now Super-Driver!", "Notification"));
             if (SuperDriverService.IsReadyForBonus(DriverId))
-                MessageBox.Show("Congratulations!\nYou are now getting paid more!", "Super-Driver Notification", MessageBoxButton.OK);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Congratulations!\nYou are now getting paid more!", "Notification"));
             driveReservationService.Update(reservation);
             UpdateReservationList();
         }
@@ -348,13 +351,13 @@ namespace BookingApp.WPF.ViewModel.Driver
         {
             if (SelectedReservation == null)
             {
-                MainWindow.EventAggregator.Publish(new ShowMessageEvent("You haven't selected any reservation!"));
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("You haven't selected any reservation!", "Error" ));
                 return false;
             }
 
             if (!condition())
             {
-                MainWindow.EventAggregator.Publish(new ShowMessageEvent(errorMessage));
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent(errorMessage, "Error"));
                 return false;
             }
 

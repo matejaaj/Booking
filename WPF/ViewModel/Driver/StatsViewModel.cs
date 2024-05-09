@@ -1,4 +1,5 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application.Events;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Driver;
@@ -145,7 +146,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             int year = ParseYear();
             if (year == 0)
             {
-                MessageBox.Show("Not correct year entered!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Not correct year entered!", "Error"));
                 return;
             }
             initList(false, year);

@@ -10,5 +10,9 @@ namespace BookingApp.Application
     {
         void Subscribe<TEventData>(Action<TEventData> action);
         void Publish<TEventData>(TEventData eventData);
+
+        Task PublishAsync<TEventData>(TEventData eventData);
+
+        void SubscribeAsync<TEventData>(Action<TEventData> action);
     }
 }

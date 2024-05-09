@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookingApp.Application.Events;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -60,11 +61,11 @@ namespace BookingApp.WPF.View.Driver
             {
                 Domain.Model.Image newImage = new BookingApp.Domain.Model.Image(_source, _vehicleId, _type, -1);
                 _images.Add(newImage);
-                MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Successfully added.", "Notification"));
             }
             else
             {
-                MessageBox.Show("Not added", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Not added", "Error"));
             }
 
             NavigationService.GoBack();

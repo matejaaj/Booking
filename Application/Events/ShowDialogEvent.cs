@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Application.Events
 {
-    public class ShowMessageEvent
+    class ShowDialogEvent
     {
         public string Message { get; }
         public string Title { get; }
-        public ShowMessageEvent(string message, string tile)
+        public ShowDialogEvent(string message, string tittle)
         {
             Message = message;
-            Title = tile;
+            Title = tittle;
         }
     }
 }

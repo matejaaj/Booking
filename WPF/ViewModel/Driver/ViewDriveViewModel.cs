@@ -1,6 +1,8 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application.Events;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.WPF.View.Driver;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -76,7 +78,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 int delayMinutes = int.Parse(TxtDelayMinutes);
                 if (delayMinutes < 0)
                 {
-                    MessageBox.Show("Can't put negative delay!");
+                    MainWindow.EventAggregator.Publish(new ShowMessageEvent("Can't put negative delay!", "Error"));
                     return;
                 }
                 reservation.DelayMinutesDriver = delayMinutes;
