@@ -1,4 +1,5 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application.Events;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Driver;
@@ -23,6 +24,19 @@ namespace BookingApp.WPF.ViewModel.Driver
         private readonly DriveReservationService driveReservationRepository;
         private int driverId;
 
+        private string _displayMode = "Statistics";
+        public string DisplayMode
+        {
+            get { return _displayMode; }
+            set
+            {
+                if (_displayMode != value)
+                {
+                    _displayMode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public string Year
         {
             get { return _year; }
@@ -124,6 +138,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         public void btnYearly_Click(object sender, RoutedEventArgs e)
         {
             initList(true, ParseYear());
+            DisplayMode = "Yearly Statistics";
         }
 
         public void btnMonthly_Click(object sender, RoutedEventArgs e)
@@ -131,10 +146,11 @@ namespace BookingApp.WPF.ViewModel.Driver
             int year = ParseYear();
             if (year == 0)
             {
-                MessageBox.Show("Not correct year entered!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Not correct year entered!", "Error"));
                 return;
             }
             initList(false, year);
+            DisplayMode = "Monthly Statistics";
         }
 
         private int ParseYear()
