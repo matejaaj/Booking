@@ -235,6 +235,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             {
                 return;
             }
+
             SelectedReservation.DriveReservationStatusId = 8;
             driveReservationService.Update(SelectedReservation);
             cancelTime.Stop();
