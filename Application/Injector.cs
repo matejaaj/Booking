@@ -38,6 +38,7 @@ namespace BookingApp.Application
         { typeof(IPrivateTourGuestRepository), new PrivateTourGuestRepository()},
         { typeof(ITourRequestRepository), new TourRequestRepository() },
         { typeof(IDriverUnreliableReportRepository), new DriverUnreliableReportRepository() },
+        { typeof(IRenovationRepository), new RenovationRepository() },
     };
         
         public static T CreateInstance<T>()

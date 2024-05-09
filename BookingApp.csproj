@@ -8,12 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\accommodations.png" />
+    <None Remove="Resources\Images\babinobrdo.jpg" />
     <None Remove="Resources\Images\car.png" />
     <None Remove="Resources\Images\add.png" />
     <None Remove="Resources\Images\carReg.png" />
     <None Remove="Resources\Images\check.png" />
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\forum.png" />
     <None Remove="Resources\Images\goBack.png" />
     <None Remove="Resources\Images\Map.jpg" />
     <None Remove="Resources\Images\menu.png" />
@@ -21,15 +24,20 @@
     <None Remove="Resources\Images\notifications.png" />
     <None Remove="Resources\Images\ratings.png" />
     <None Remove="Resources\Images\regCar.png" />
+    <None Remove="Resources\Images\renovation.png" />
     <None Remove="Resources\Images\reports.png" />
     <None Remove="Resources\Images\reschedule.png" />
+    <None Remove="Resources\Images\statistics.png" />
     <None Remove="Resources\Images\stats.png" />
+    <None Remove="Resources\Images\superhero.png" />
+    <None Remove="Resources\Images\superowner.png" />
     <None Remove="Resources\Images\trophy.png" />
     <None Remove="Resources\Images\tutorial.png" />
     <None Remove="Resources\Images\userData.png" />
     <None Remove="Resources\Images\userProfile.png" />
     <None Remove="Resources\Images\vacations.png" />
     <None Remove="Resources\Images\view.png" />
+    <None Remove="Resources\Images\zuruckgehen.png" />
   </ItemGroup>
 
   
@@ -57,21 +65,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\accommodations.png" />
+    <Resource Include="Resources\Images\babinobrdo.jpg" />
     <Resource Include="Resources\Images\carReg.png" />
     <Resource Include="Resources\Images\check.png" />
+    <Resource Include="Resources\Images\forum.png" />
     <Resource Include="Resources\Images\goBack.png" />
     <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
     <Resource Include="Resources\Images\notifications.png" />
     <Resource Include="Resources\Images\ratings.png" />
+    <Resource Include="Resources\Images\renovation.png" />
     <Resource Include="Resources\Images\reports.png" />
     <Resource Include="Resources\Images\reschedule.png" />
+    <Resource Include="Resources\Images\statistics.png" />
     <Resource Include="Resources\Images\stats.png" />
+    <Resource Include="Resources\Images\superhero.png" />
+    <Resource Include="Resources\Images\superowner.png" />
     <Resource Include="Resources\Images\trophy.png" />
     <Resource Include="Resources\Images\tutorial.png" />
     <Resource Include="Resources\Images\userData.png" />
     <Resource Include="Resources\Images\userProfile.png" />
     <Resource Include="Resources\Images\vacations.png" />
+    <Resource Include="Resources\Images\zuruckgehen.png" />
   </ItemGroup>
 
 </Project>

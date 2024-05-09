@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.DTO;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Owner;
 using System;
@@ -22,8 +23,8 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static GuestRatingService _guestRatingService;
         private List<GuestRating> _guestRatings;
 
-        private ObservableCollection<AccommodationReservation> _recentAccommodationReservations;
-        public ObservableCollection<AccommodationReservation> RecentAccommodationReservations
+        private ObservableCollection<BookingDTO> _recentAccommodationReservations;
+        public ObservableCollection<BookingDTO> RecentAccommodationReservations
         {
             get { return _recentAccommodationReservations; }
             set
@@ -33,8 +34,8 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        private ObservableCollection<AccommodationReservation> _pastAccommodationReservations;
-        public ObservableCollection<AccommodationReservation> PastAccommodationReservations
+        private ObservableCollection<BookingDTO> _pastAccommodationReservations;
+        public ObservableCollection<BookingDTO> PastAccommodationReservations
         {
             get { return _pastAccommodationReservations; }
             set
@@ -44,8 +45,8 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        private ObservableCollection<AccommodationReservation> _otherAccommodationReservations;
-        public ObservableCollection<AccommodationReservation> OtherAccommodationReservations
+        private ObservableCollection<BookingDTO> _otherAccommodationReservations;
+        public ObservableCollection<BookingDTO> OtherAccommodationReservations
         {
             get { return _otherAccommodationReservations; }
             set
@@ -74,56 +75,32 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void FillReservations()
         {
-            var allReservations = _accommodationReservationService.GetAll();
+            RecentAccommodationReservations = new ObservableCollection<BookingDTO>(
+                _accommodationReservationService.GetRecentReservations(Accommodation));
 
-            RecentAccommodationReservations = new ObservableCollection<AccommodationReservation>(
-                allReservations.Where(reservation => IsReservationRecent(reservation, Accommodation))
-            );
+            PastAccommodationReservations = new ObservableCollection<BookingDTO>(
+                _accommodationReservationService.GetPastReservations(Accommodation));
 
-            PastAccommodationReservations = new ObservableCollection<AccommodationReservation>(
-                allReservations.Where(reservation => IsReservationPast(reservation, Accommodation))
-            );
-
-
-            OtherAccommodationReservations = new ObservableCollection<AccommodationReservation>(
-                allReservations.Where(reservation => IsReservationOther(reservation, Accommodation))
-            );
-        }
-        private bool IsReservationRecent(AccommodationReservation reservation, Accommodation accommodation)
-        {
-            return (DateTime.Now - reservation.EndDate).TotalDays <= 5 &&
-                reservation.EndDate < DateTime.Now &&
-                reservation.AccommodationId == Accommodation.AccommodationId;
+            OtherAccommodationReservations = new ObservableCollection<BookingDTO>(
+                _accommodationReservationService.GetOtherReservations(Accommodation));
         }
 
-        private bool IsReservationRated(AccommodationReservation accommodationReservation)
+/*        private bool IsReservationRated(AccommodationReservation accommodationReservation)
         {
             var selectedAccommodationRating = _guestRatings.Find(rating => accommodationReservation.AccommodationId == rating.GuestRatingId);
             return !(selectedAccommodationRating == null);
-        }
+        }*/
 
-        private bool IsReservationPast(AccommodationReservation reservation, Accommodation accommodation)
-        {
-            return (DateTime.Now - reservation.EndDate).TotalDays > 5 &&
-                reservation.EndDate < DateTime.Now &&
-                reservation.AccommodationId == accommodation.AccommodationId;
-        }
-
-        private bool IsReservationOther(AccommodationReservation reservation, Accommodation accommodation)
-        {
-            return reservation.EndDate >= DateTime.Now &&
-                reservation.AccommodationId == accommodation?.AccommodationId;
-        }
-
-        public void RecentReservationsListBox_SelectionChanged(object sender, Window owner, ListBox RecentReservationsListBox)
+        public void RecentReservationsListBox_SelectionChanged(object sender, ListBox RecentReservationsListBox, ViewAccommodationPage viewAccommodationPage)
         {
             if (RecentReservationsListBox.SelectedItem != null)
             {
-                var selectedReservation = (AccommodationReservation)RecentReservationsListBox.SelectedItem;
-                if (!selectedReservation.IsRated)
+                var selectedReservation = (BookingDTO)RecentReservationsListBox.SelectedItem;
+                if (selectedReservation.IsRated.Equals("Not Rated"))
                 {
-                    var guestRatingFormWindow = new GuestRatingForm(selectedReservation);
-                    guestRatingFormWindow.Owner = owner;
+                    var reservation = _accommodationReservationService.GetByReservationId(selectedReservation.Id);
+                    var guestRatingFormWindow = new GuestRatingForm(reservation);
+                    guestRatingFormWindow.Owner = Window.GetWindow(viewAccommodationPage);
                     guestRatingFormWindow.ShowDialog();
                     FillReservations();
                 }
@@ -133,6 +110,18 @@ namespace BookingApp.WPF.ViewModel.Owner
                           "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        internal void RenovateAccommodation_Click(object sender, RoutedEventArgs e, ViewAccommodationPage viewAccommodationPage)
+        {
+            RenovationSchedulingPage page = new RenovationSchedulingPage(Accommodation);
+            viewAccommodationPage.NavigationService.Navigate(page);
+        }
+
+        internal void Statistics_Click(object sender, RoutedEventArgs e, ViewAccommodationPage viewAccommodationPage)
+        {
+            AccommodationStatsPage page = new AccommodationStatsPage(Accommodation);
+            viewAccommodationPage.NavigationService.Navigate(page);
         }
     }
 }

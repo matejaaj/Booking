@@ -33,21 +33,22 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static AccommodationAndOwnerRatingService _accommodationAndOwnerRatingService;
         private static AccommodationService _accommodationService;
 
-        public ViewRatingsViewModel(Domain.Model.Owner loggedInOwner, List<AccommodationReservation> ownerAccommodationReservations) 
+        public ViewRatingsViewModel(Domain.Model.Owner loggedInOwner) 
         { 
             LoggedInOwner = loggedInOwner;
             InitializeServices();
             Ratings = new ObservableCollection<AccommodationRatingDTO>();
-            AccommodationReservations = ownerAccommodationReservations;
+            AccommodationReservations = _accommodationReservationService.GetByOwner(loggedInOwner);
+           // AccommodationReservations = ownerAccommodationReservations;
             Update();
         }
 
         private void InitializeServices()
         {
-            _accommodationReservationService = new AccommodationReservationService();
             _userService = new UserService();
             _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService();
-            _accommodationService = new AccommodationService(); 
+            _accommodationService = new AccommodationService();
+            _accommodationReservationService = new AccommodationReservationService(_accommodationService);
         }
 
         private void Update()
