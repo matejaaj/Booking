@@ -46,6 +46,17 @@ namespace BookingApp.Application.UseCases
             return _requestRepository.GetByReservationId(id);
         }
 
+        public List<ReservationModificationRequest> GetAllWithReservationId(int id)
+        {
+            return _requestRepository.GetAllWithReservationId(id);
+        }
+
+        public List<ReservationModificationRequest> GetAllAcceptedWithReservationId(int id)
+        {
+            var requests = _requestRepository.GetAllWithReservationId(id);
+            return requests.FindAll(r => r.Status == ReservationModificationRequest.RequestStatus.APPROVED);
+        }
+
         public List<ReservationModificationRequest> GetByReservationIds(List<int> reservationIds)
         {
             return _requestRepository.GetByReservationIds(reservationIds);

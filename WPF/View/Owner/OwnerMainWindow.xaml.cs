@@ -117,5 +117,13 @@ namespace BookingApp.WPF.View.Owner
             MainFrame.Navigate(new SuperOwnerPage(LoggedInOwner));
             SideMenu.Visibility = Visibility.Collapsed;
         }
+
+        private void GoBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.CanGoBack)
+            {
+                MainFrame.GoBack();
+            }
+        }
     }
 }

@@ -39,5 +39,10 @@ namespace BookingApp.WPF.View.Owner
         {
             viewModel.RenovateAccommodation_Click(sender, e, this);
         }
+
+        private void Statistics_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.Statistics_Click(sender, e, this);
+        }
     }
 }

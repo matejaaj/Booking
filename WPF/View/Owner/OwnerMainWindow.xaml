@@ -90,7 +90,9 @@
         <Grid Background="LightGray" Height="50" VerticalAlignment="Top">
             <Button Click="ShowMenuBar" Content="&#x2630;" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="20"/>
             <TextBlock Text="{Binding PageName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="48,0,0,0"/>
-            <Button Content="Button" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,50,0"/>
+            <Button Click="GoBackButton_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,50,0" BorderThickness="0" Background="Transparent">
+                <Image Source="../../../Resources/Images/zuruckgehen.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            </Button>
 
             <!-- Icon on the right side -->
             <Image x:Name="iconImage" Source="../../../Resources/Images/accommodations.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>

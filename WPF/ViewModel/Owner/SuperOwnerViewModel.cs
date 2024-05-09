@@ -71,10 +71,8 @@ namespace BookingApp.WPF.ViewModel.Owner
         private void CalculateRating()
         {
             RatingsNumber = GetRatings().Count();
-            MessageBox.Show($"{RatingsNumber} is gay");
             var individualAverages = _accommodationAndOwnerRatingService.CalculateIndividualAverages(GetRatings());
             AverageScore = _accommodationAndOwnerRatingService.CalculateAverageScore(individualAverages, RatingsNumber);
-            MessageBox.Show($"{AverageScore} is gay");
             CheckSuperOwner();
         }
 

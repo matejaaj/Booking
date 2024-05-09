@@ -37,6 +37,7 @@
     <None Remove="Resources\Images\userProfile.png" />
     <None Remove="Resources\Images\vacations.png" />
     <None Remove="Resources\Images\view.png" />
+    <None Remove="Resources\Images\zuruckgehen.png" />
   </ItemGroup>
 
   
@@ -86,6 +87,7 @@
     <Resource Include="Resources\Images\userData.png" />
     <Resource Include="Resources\Images\userProfile.png" />
     <Resource Include="Resources\Images\vacations.png" />
+    <Resource Include="Resources\Images\zuruckgehen.png" />
   </ItemGroup>
 
 </Project>

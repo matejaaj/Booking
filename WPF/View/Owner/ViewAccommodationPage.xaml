@@ -93,7 +93,7 @@
             </Border>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Statistics" Style="{StaticResource RoundedButton}" Margin="0,0,10,0"/>
+                <Button Click="Statistics_Click" Content="Statistics" Style="{StaticResource RoundedButton}" Margin="0,0,10,0"/>
                 <Button Click="RenovateAccommodation_Click" Content="Renovate" Style="{StaticResource RoundedButton}" Margin="10,0,0,0"/>
             </StackPanel>
 
