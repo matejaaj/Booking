@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
-        Title="DelayInputDialog" Height="150" Width="300">
+        Title="Kasnjenje" Height="150" Width="300"
+        WindowStartupLocation="CenterScreen">
     <StackPanel Margin="10">
         <Label>Enter delay in minutes:</Label>
         <TextBox x:Name="DelayTextBox"/>

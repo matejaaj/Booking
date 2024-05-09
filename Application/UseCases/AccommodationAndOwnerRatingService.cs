@@ -6,16 +6,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace BookingApp.Application.UseCases
 {
     public class AccommodationAndOwnerRatingService
     {
         private readonly IAccommodationAndOwnerRatingRepository _ratingRepository;
+        private AccommodationReservationService accommodationReservationService;
 
         public AccommodationAndOwnerRatingService()
         {
             _ratingRepository = Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>();
+        }
+
+        public AccommodationAndOwnerRatingService(AccommodationReservationService accommodationReservationService)
+        {
+            _ratingRepository = Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>();
+            this.accommodationReservationService = accommodationReservationService;
         }
 
         public List<AccommodationAndOwnerRating> GetAll()
@@ -51,6 +59,28 @@ namespace BookingApp.Application.UseCases
         public List<AccommodationAndOwnerRating> GetByReservationIds(List<int> accommodationReservationIds)
         {
             return _ratingRepository.GetByReservationIds(accommodationReservationIds);
+        }
+
+        public List<AccommodationAndOwnerRating> GetByReservations(List<AccommodationReservation> accommodationReservations)
+        {
+            var accommodationReservationsIds = accommodationReservations.Select(a => a.Id).ToList();
+            var ratings  = GetByReservationIds(accommodationReservationsIds);
+            return ratings;
+        }
+
+        public List<double> CalculateIndividualAverages(List<AccommodationAndOwnerRating> accommodationAndOwnerRatings)
+        {
+            List<double> individualAverages = new List<double>();
+            foreach (var r in accommodationAndOwnerRatings)
+            {
+                individualAverages.Add((double)(r.Cleanliness + r.OwnershipEthics) / 2);
+            }
+            return individualAverages;
+        }
+
+        public double CalculateAverageScore(List<double> individualAverages, int ratingsNumber)
+        {
+            return (double)individualAverages.Sum(a => a) / ratingsNumber;
         }
     }
 }

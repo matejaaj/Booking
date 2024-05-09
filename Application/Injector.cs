@@ -33,10 +33,12 @@ namespace BookingApp.Application
         { typeof(ITourReviewRepository), new TourReviewRepository() },
         { typeof(IReservationModificationRequestRepository), new ReservationModificationRequestRepository() },
         { typeof(IGroupDriveReservationRepository), new GroupDriveReservationRepository() },
-        { typeof(ITourRequestRepository), new TourRequestRepository()},
-        { typeof(IPrivateTourGuestRepository), new PrivateTourGuestRepository()},
         { typeof(ISuperDriverStateRepository), new SuperDriverStateRepository() },
+        { typeof(ITourRequestSegmentRepository), new TourRequestSegmentRepository()},
+        { typeof(IPrivateTourGuestRepository), new PrivateTourGuestRepository()},
+        { typeof(ITourRequestRepository), new TourRequestRepository() },
         { typeof(IDriverUnreliableReportRepository), new DriverUnreliableReportRepository() },
+        { typeof(IRenovationRepository), new RenovationRepository() },
     };
         
         public static T CreateInstance<T>()

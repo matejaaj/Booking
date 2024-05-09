@@ -1,0 +1,101 @@
+﻿<Window x:Class="BookingApp.WPF.View.Tourist.TourRequestFormWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
+        mc:Ignorable="d"
+        Title="Zatrazi turu" Height="800" Width="600"
+        WindowStartupLocation="CenterScreen">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10">
+            <ItemsControl ItemsSource="{Binding TourSegments}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <DockPanel>
+                                <Button Content="Ukloni" Margin="5" DockPanel.Dock="Right"
+                                        HorizontalAlignment="Right"
+                                        Click="RemoveSegment_Click" Width="auto" Height="30"
+                                        />
+                                <Expander Header="Deo ture" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="5">
+                                    <StackPanel Margin="10">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Content="Drzava:" Grid.Row="0" Grid.Column="0"/>
+                                            <ComboBox ItemsSource="{Binding Countries}"
+                                                      DisplayMemberPath="Value"
+                                                      SelectedValuePath="Key"
+                                                      SelectedItem="{Binding SelectedCountry}"
+                                                      Margin="5" Width="Auto" Grid.Row="0" Grid.Column="1"/>
+
+                                            <Label Content="Grad:" Grid.Row="1" Grid.Column="0"/>
+                                            <ComboBox ItemsSource="{Binding Cities}"
+                                                      DisplayMemberPath="Value"
+                                                      SelectedValuePath="Key"
+                                                      SelectedItem="{Binding SelectedCity}"
+                                                      Margin="5" Width="Auto" Grid.Row="1" Grid.Column="1"/>
+
+                                            <Label Content="Jezik:" Grid.Row="2" Grid.Column="0"/>
+                                            <ComboBox ItemsSource="{Binding Languages}"
+                                                      DisplayMemberPath="Value"
+                                                      SelectedValuePath="Key"
+                                                      SelectedItem="{Binding SelectedLanguage}"
+                                                      Margin="5" Width="Auto" Grid.Row="2" Grid.Column="1"/>
+
+                                            <Label Content="Opis:" Grid.Row="3" Grid.Column="0"/>
+                                            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                                                     Margin="5" Height="80" TextWrapping="Wrap"
+                                                     VerticalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="1"/>
+                                        </Grid>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Od:"/>
+                                            <DatePicker SelectedDate="{Binding FromDate}" Margin="5" />
+                                            <Label Content="Do:"/>
+                                            <DatePicker SelectedDate="{Binding ToDate}" Margin="5" />
+                                        </StackPanel>
+
+                                        <Label Content="Broj ljudi:"/>
+                                        <ComboBox ItemsSource="{Binding NumberOfPeopleOptions}"
+                                                  SelectedItem="{Binding NumberOfPeople}"
+                                                  Margin="5" Width="Auto" />
+
+                                        <Label Content="Podaci:"/>
+                                        <ItemsControl ItemsSource="{Binding GuestInputs}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                                        <Label Content="Ime:" Width="80"/>
+                                                        <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5"/>
+                                                        <Label Content="Prezime:" Width="80"/>
+                                                        <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5"/>
+                                                        <Label Content="Godine:" Width="auto"/>
+                                                        <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" Width="20" Margin="5"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </Expander>
+                            </DockPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Button Content="Dodaj deo ture" Margin="5" Click="AddSegment_Click"/>
+            <Button Content="Potvrdi" Margin="5" Click="Submit_Click"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

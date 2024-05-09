@@ -38,22 +38,21 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static UserService _userService;
         private static AccommodationService _accommodationService;
 
-        public ReschedulingOverviewViewModel(List<Domain.Model.AccommodationReservation> ownerAccommodationReservations)
+        public ReschedulingOverviewViewModel(Domain.Model.Owner loggedInOwner)
         {
             InitializeServices();
             Requests = new ObservableCollection<ReschedulingRequestDTO>();
-            AccommodationReservations = ownerAccommodationReservations;
-            AccommodationReservationsIds = AccommodationReservations.Select(a => a.Id).ToList();
-            ReservationModificationRequests = _reservationModificationRequestService.GetByReservationIds(AccommodationReservationsIds);
+            AccommodationReservations = _accommodationReservationService.GetByOwner(loggedInOwner);
+            ReservationModificationRequests = _reservationModificationRequestService.GetByReservationIds(AccommodationReservations);
             Update();
         }
 
         private void InitializeServices()
         {
-            _reservationModificationRequestService = new ReservationModificationRequestService();
-            _accommodationReservationService = new AccommodationReservationService();
             _userService = new UserService();
             _accommodationService = new AccommodationService();
+            _accommodationReservationService = new AccommodationReservationService(_accommodationService);
+            _reservationModificationRequestService = new ReservationModificationRequestService();
         }
 
         private void Update()
@@ -156,22 +155,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private bool IsReserved(DateTime startDate, DateTime endDate, DateTime oldStartDate, DateTime oldEndDate)
         {
-            foreach (var reservation in AccommodationReservations)
-            {
-                if (((startDate <= reservation.EndDate && endDate >= reservation.StartDate) ||
-                    (startDate >= reservation.StartDate && endDate <= reservation.EndDate)) 
-                    && !isOldReservation(reservation, oldStartDate, oldEndDate))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool isOldReservation(AccommodationReservation reservation, DateTime oldStartDate, DateTime oldEndDate)
-        {
-            return (reservation.StartDate == oldStartDate && reservation.EndDate == oldEndDate);
+            return _accommodationReservationService.IsDateReserved(startDate, endDate, oldStartDate, oldEndDate, AccommodationReservations);
         }
     }
 }

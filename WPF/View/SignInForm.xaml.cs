@@ -64,8 +64,10 @@ namespace BookingApp.WPF.View
                     {
                         case Role.OWNER:
                             Domain.Model.Owner owner = _ownerService.GetByUsername(Username);
-                            OwnerOverview ownerOverview = new OwnerOverview(owner);
-                            ownerOverview.Show();
+                            //OwnerOverview ownerOverview = new OwnerOverview(owner);
+                            //ownerOverview.Show();
+                            OwnerMainWindow ownerMainWindow = new OwnerMainWindow(owner);
+                            ownerMainWindow.Show();
                             break;
                         case Role.GUEST:
                             GuestOverview guestOverview = new GuestOverview(user);

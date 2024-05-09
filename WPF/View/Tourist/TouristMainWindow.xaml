@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
-        Title="TouristMainWindow" Height="200" Width="300">
+        Title="TouristMainWindow" Height="200" Width="300"
+        WindowStartupLocation="CenterScreen">
     <StackPanel>
         <Button Name="btnOpenToursOverview" Click="btnOpenToursOverview_Click">Open Tours Overview</Button>
         <Button Name="btnOpenRequestDrive" Click="btnOpenRequestDrive_Click">Open Request Drive</Button>

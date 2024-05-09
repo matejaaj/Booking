@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
-        Title="MyTourMoreDetailsWindow" Height="450" Width="400">
+        Title="MyTourMoreDetailsWindow" Height="450" Width="400"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -26,14 +27,14 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <TextBlock Grid.Row="1" Text="{Binding Path=TourInstance.CurrentCheckpoint, StringFormat='Trenutni checkpoint: {0}'}" 
+        <TextBlock Grid.Row="1" Text="{Binding Path=TourInstance.CurrentCheckpoint, StringFormat='Trenutni checkpoint: {0}'}"
                    HorizontalAlignment="Left" Margin="10" FontSize="14" FontWeight="Bold"/>
 
         <ListView Grid.Row ="2" ItemsSource="{Binding TourInstance.Guests}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="120" 
-                        DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Name" Width="120"
+                                    DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="Present" Width="70">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

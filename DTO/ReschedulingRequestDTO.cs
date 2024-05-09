@@ -95,6 +95,20 @@ namespace BookingApp.DTO
             }
         }
 
+        private string isAvailableString { get; set; }
+        public string IsAvailableString
+        {
+            get { return isAvailableString; }
+            set
+            {
+                if (isAvailableString != value)
+                {
+                    isAvailableString = value;
+                    OnPropertyChanged("IsAvailableString");
+                }
+            }
+        }
+
         private bool isAvailable { get; set; }
         public bool IsAvailable
         {
@@ -156,6 +170,14 @@ namespace BookingApp.DTO
             NewStartDate = request.NewStartDate; 
             NewEndDate = request.NewEndDate;
             IsAvailable = isAvailable;
+            if (isAvailable)
+            {
+                IsAvailableString = "Date Available";
+            }
+            else
+            {
+                IsAvailableString = "Date not Available";
+            }
             Status = request.Status.ToString();
         }
     }
