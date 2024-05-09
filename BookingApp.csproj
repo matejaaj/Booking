@@ -7,52 +7,52 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\Images\addIm.png" />
-    <None Remove="Resources\Images\addImage.png" />
-    <None Remove="Resources\Images\cancel.png" />
-    <None Remove="Resources\Images\accommodations.png" />
-    <None Remove="Resources\Images\babinobrdo.jpg" />
-    <None Remove="Resources\Images\car.png" />
-    <None Remove="Resources\Images\add.png" />
-    <None Remove="Resources\Images\carReg.png" />
-    <None Remove="Resources\Images\check.png" />
-    <None Remove="Resources\Images\clock.png" />
-    <None Remove="Resources\Images\delay.png" />
-    <None Remove="Resources\Images\delete.png" />
-    <None Remove="Resources\Images\destination.png" />
-    <None Remove="Resources\Images\edit.png" />
-    <None Remove="Resources\Images\forum.png" />
-    <None Remove="Resources\Images\goBack.png" />
-    <None Remove="Resources\Images\home.png" />
-    <None Remove="Resources\Images\insertImage.png" />
-    <None Remove="Resources\Images\location.png" />
-    <None Remove="Resources\Images\Map.jpg" />
-    <None Remove="Resources\Images\menu.png" />
-    <None Remove="Resources\Images\menuBar.png" />
-    <None Remove="Resources\Images\notifications.png" />
-    <None Remove="Resources\Images\pickup.png" />
-    <None Remove="Resources\Images\ratings.png" />
-    <None Remove="Resources\Images\regCar.png" />
-    <None Remove="Resources\Images\renovation.png" />
-    <None Remove="Resources\Images\reports.png" />
-    <None Remove="Resources\Images\reschedule.png" />
-    <None Remove="Resources\Images\statistics.png" />
-    <None Remove="Resources\Images\stats.png" />
-    <None Remove="Resources\Images\status.png" />
-    <None Remove="Resources\Images\taxi.png" />
-    <None Remove="Resources\Images\time.png" />
-    <None Remove="Resources\Images\superhero.png" />
-    <None Remove="Resources\Images\superowner.png" />
-    <None Remove="Resources\Images\trophy.png" />
-    <None Remove="Resources\Images\turista.png" />
-    <None Remove="Resources\Images\tutorial.png" />
-    <None Remove="Resources\Images\userData.png" />
-    <None Remove="Resources\Images\userProfile.png" />
-    <None Remove="Resources\Images\vacations.png" />
-    <None Remove="Resources\Images\view.png" />
-    <None Remove="Resources\Images\zuruckgehen.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Resources\Images\addIm.png" />
+		<None Remove="Resources\Images\addImage.png" />
+		<None Remove="Resources\Images\cancel.png" />
+		<None Remove="Resources\Images\accommodations.png" />
+		<None Remove="Resources\Images\babinobrdo.jpg" />
+		<None Remove="Resources\Images\car.png" />
+		<None Remove="Resources\Images\add.png" />
+		<None Remove="Resources\Images\carReg.png" />
+		<None Remove="Resources\Images\check.png" />
+		<None Remove="Resources\Images\clock.png" />
+		<None Remove="Resources\Images\delay.png" />
+		<None Remove="Resources\Images\delete.png" />
+		<None Remove="Resources\Images\destination.png" />
+		<None Remove="Resources\Images\edit.png" />
+		<None Remove="Resources\Images\forum.png" />
+		<None Remove="Resources\Images\goBack.png" />
+		<None Remove="Resources\Images\home.png" />
+		<None Remove="Resources\Images\insertImage.png" />
+		<None Remove="Resources\Images\location.png" />
+		<None Remove="Resources\Images\Map.jpg" />
+		<None Remove="Resources\Images\menu.png" />
+		<None Remove="Resources\Images\menuBar.png" />
+		<None Remove="Resources\Images\notifications.png" />
+		<None Remove="Resources\Images\pickup.png" />
+		<None Remove="Resources\Images\ratings.png" />
+		<None Remove="Resources\Images\regCar.png" />
+		<None Remove="Resources\Images\renovation.png" />
+		<None Remove="Resources\Images\reports.png" />
+		<None Remove="Resources\Images\reschedule.png" />
+		<None Remove="Resources\Images\statistics.png" />
+		<None Remove="Resources\Images\stats.png" />
+		<None Remove="Resources\Images\status.png" />
+		<None Remove="Resources\Images\taxi.png" />
+		<None Remove="Resources\Images\time.png" />
+		<None Remove="Resources\Images\superhero.png" />
+		<None Remove="Resources\Images\superowner.png" />
+		<None Remove="Resources\Images\trophy.png" />
+		<None Remove="Resources\Images\turista.png" />
+		<None Remove="Resources\Images\tutorial.png" />
+		<None Remove="Resources\Images\userData.png" />
+		<None Remove="Resources\Images\userProfile.png" />
+		<None Remove="Resources\Images\vacations.png" />
+		<None Remove="Resources\Images\view.png" />
+		<None Remove="Resources\Images\zuruckgehen.png" />
+	</ItemGroup>
 
   
 
@@ -81,8 +81,6 @@
   <ItemGroup>
     <Resource Include="Resources\Images\addIm.png" />
     <Resource Include="Resources\Images\cancel.png" />
-    <Resource Include="Resources\Images\carReg.png" />
-    <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\clock.png" />
     <Resource Include="Resources\Images\delay.png" />
     <Resource Include="Resources\Images\destination.png" />
