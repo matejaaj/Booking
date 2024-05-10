@@ -1,4 +1,6 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using System;
 using System.Collections.Generic;
@@ -68,10 +70,10 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void InitializeServices()
         {
-            accommodationService = new AccommodationService();
-            accommodationReservationService = new AccommodationReservationService();
-            locationService = new LocationService();
-            renovationService = new RenovationService(accommodationService, accommodationReservationService, locationService);
+            accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            renovationService = new RenovationService(accommodationService, accommodationReservationService, locationService, Injector.CreateInstance<IRenovationRepository>());
         }
 
         internal void CancelButton_Click(object sender, RoutedEventArgs e)

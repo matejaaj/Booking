@@ -17,22 +17,22 @@ namespace BookingApp.Application.UseCases
         private AccommodationReservationService accommodationReservationService;
         private LocationService locationService;
 
-        public RenovationService()
+        public RenovationService(IRenovationRepository repository)
         {
-            _repository = Injector.CreateInstance<IRenovationRepository>();
+            _repository = repository;
         }
 
-        public RenovationService(AccommodationService accommodationService, AccommodationReservationService accommodationReservationService, LocationService locationService)
+        public RenovationService(AccommodationService accommodationService, AccommodationReservationService accommodationReservationService, LocationService locationService, IRenovationRepository repository)
         {
-            _repository = Injector.CreateInstance<IRenovationRepository>();
+            _repository = repository;
             this.accommodationService = accommodationService;
             this.accommodationReservationService = accommodationReservationService;
             this.locationService = locationService;
         }
 
-        public RenovationService(AccommodationService accommodationService, AccommodationReservationService accommodationReservationService)
+        public RenovationService(AccommodationService accommodationService, AccommodationReservationService accommodationReservationService, IRenovationRepository repository)
         {
-            _repository = Injector.CreateInstance<IRenovationRepository>();
+            _repository = repository;
             this.accommodationService = accommodationService;
             this.accommodationReservationService = accommodationReservationService;
             this.locationService = new LocationService();

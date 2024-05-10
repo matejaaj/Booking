@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using BookingApp.WPF.View.Owner;
 using System;
@@ -114,9 +116,9 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void InitializeServices()
         {
-            accommodationService = new AccommodationService();
-            accommodationReservationService = new AccommodationReservationService();
-            renovationService = new RenovationService(accommodationService, accommodationReservationService);
+            accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            renovationService = new RenovationService(accommodationService, accommodationReservationService, Injector.CreateInstance<IRenovationRepository>());
         }
 
         internal void SearchButton_Click(object sender, RoutedEventArgs e)
