@@ -32,7 +32,7 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             if (DataContext is RegularDriveFormViewModel viewModel)
             {
                 viewModel.ReserveRegularDrive();
-                MessageBox.Show("Rezervacija uspešno izvršena!");
+                
 
 
                 Window parentWindow = Window.GetWindow(this);

@@ -7,12 +7,12 @@ using BookingApp.Domain.Model;
 
 namespace BookingApp.Application.UseCases.Factories
 {
-    public class TourRequestStatFactory
+    public class TourRequestStatisticCalculator
     {
         private TourRequestService _tourRequestService;
         private TourRequestSegmentService _tourSegmentService;
 
-        public TourRequestStatFactory(TourRequestService request, TourRequestSegmentService segment)
+        public TourRequestStatisticCalculator(TourRequestService request, TourRequestSegmentService segment)
         {
             _tourRequestService = request;
             _tourSegmentService = segment;

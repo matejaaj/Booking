@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Style="{StaticResource UserControlStyle}">
+    <!-- Primena globalnog stila za UserControl -->
 
     <Grid>
         <Grid.RowDefinitions>
@@ -11,55 +13,51 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0"
-                   FontSize="28"
-                   Text="Moje ture"/>
+        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Moje ture"/>
+        <!-- Globalni stil za TextBlock -->
 
         <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
             <ItemsControl ItemsSource="{Binding Tours}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" />
+                        <WrapPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="250"
-                                Margin="50 0 10 10"
-                                Padding="10"
-                                BorderBrush="LightGray"
-                                BorderThickness="1"
-                                CornerRadius="3">
+                        <Border Style="{StaticResource DefaultBorder}"
+                                Width="250">
+                            <!-- Globalni stil za Border -->
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Grid.Row="0"
-                                           FontSize="18"
-                                           Text="{Binding Name}" />
+                                           Style="{StaticResource ItemHeaderTextStyle}"
+                                           Text="{Binding Name}"/>
                                 <TextBlock Grid.Row="1"
                                            Margin="0 10 0 0"
-                                           Text="{Binding Name}"
-                                           TextWrapping="Wrap" />
+                                           Text="{Binding Description}"
+                                           TextWrapping="Wrap"/>
                                 <TextBlock Grid.Row="2"
                                            Margin="0 10 0 0"
                                            FontWeight="Bold"
-                                           Text="{Binding Date}" />
+                                           Text="{Binding Date}"/>
                                 <StackPanel Grid.Row="3"
                                             Orientation="Horizontal"
                                             HorizontalAlignment="Center">
-                                    <Button Margin="5"
+                                    <Button Style="{StaticResource DefaultButton}"
                                             Content="Više detalja"
-                                            Tag="{Binding}"
-                                            Click="MoreDetails_Click"/>
-                                    <Button Margin="5"
+                                            Click="MoreDetails_Click"
+                                            Tag="{Binding}"/>
+                                    <Button Style="{StaticResource DefaultButton}"
                                             Content="Oceni turu"
-                                            Tag="{Binding}"
-                                            Click="RateTour_Click"/>
+                                            Click="RateTour_Click"
+                                            Tag="{Binding}"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

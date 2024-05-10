@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="PrimaryBackground" Color="#FBF9F1"/>
+    <SolidColorBrush x:Key="SecondaryBackground" Color="#E5E1DA"/>
+    <SolidColorBrush x:Key="ButtonBackground" Color="#92C7CF"/>
+    <SolidColorBrush x:Key="BorderBrushColor" Color="#92C7CF"/>
+    <SolidColorBrush x:Key="SelectedTabBackground" Color="#FBF9F1"/>
+</ResourceDictionary>
