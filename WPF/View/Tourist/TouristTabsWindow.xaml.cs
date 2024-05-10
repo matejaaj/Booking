@@ -22,14 +22,21 @@ namespace BookingApp.WPF.View.Tourist
     /// </summary>
     public partial class TouristTabsWindow : Window
     {
+        public TouristTabsViewModel ViewModel { get; private set; }
+
         public TouristTabsWindow(User user)
         {
 
 
             InitializeComponent();
-            TouristTabsViewModel viewModel = new TouristTabsViewModel(user);
+            ViewModel = new TouristTabsViewModel(user);
 
-            DataContext = viewModel;
+            DataContext = ViewModel;
+        }
+
+        private void ChangeTheme_click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ChangeTheme();
         }
     }
 }

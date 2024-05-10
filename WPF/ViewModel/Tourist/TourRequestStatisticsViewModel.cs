@@ -21,12 +21,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private string _selectedYear;
         private ObservableCollection<string> _years = new ObservableCollection<string>();
 
-        private readonly TourRequestStatFactory _statFactory;
+        private readonly TourRequestStatisticCalculator _statisticCalculator;
         private readonly int _userId;
 
         public TourStatisticsViewModel(int userId, TourRequestService request, TourRequestSegmentService segment)
         {
-            _statFactory = new TourRequestStatFactory(request, segment);
+            _statisticCalculator = new TourRequestStatisticCalculator(request, segment);
             _userId = userId;
             InitializeYears();
             PieChartData = new SeriesCollection();
@@ -67,7 +67,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             Years.Add("Sve godine");
 
             int currentYear = DateTime.Now.Year;
-            int startYear = _statFactory.GetEarliestYear(_userId);
+            int startYear = _statisticCalculator.GetEarliestYear(_userId);
 
             Years.Clear();
             Years.Add("Sve godine");
@@ -84,11 +84,11 @@ namespace BookingApp.WPF.ViewModel.Tourist
             TourRequestStat stats;
             if (year == "Sve godine")
             {
-                stats = _statFactory.CreateUserStatForAllYears(_userId);
+                stats = _statisticCalculator.CreateUserStatForAllYears(_userId);
             }
             else
             {
-                stats = _statFactory.CreateUserStatForYear(int.Parse(year), _userId);
+                stats = _statisticCalculator.CreateUserStatForYear(int.Parse(year), _userId);
             }
 
 

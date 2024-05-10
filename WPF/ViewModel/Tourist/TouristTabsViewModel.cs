@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using BookingApp.Application;
 using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
@@ -76,5 +77,24 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 new PrivateTourGuestService(Injector.CreateInstance<IPrivateTourGuestRepository>());
 
         }
+
+        public void ChangeTheme()
+        {
+            var dictionaries = System.Windows.Application.Current.Resources.MergedDictionaries;
+            var themeDict = dictionaries.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Theme"));
+
+            if (themeDict != null)
+            {
+                var newTheme = themeDict.Source.OriginalString.Contains("Light") ? "Dark" : "Light";
+                var newUri = new Uri($"pack://application:,,,/Themes/Tourist{newTheme}Theme.xaml");
+
+                var newDict = new ResourceDictionary { Source = newUri };
+                dictionaries.Remove(themeDict);
+                dictionaries.Add(newDict);
+            }
+        }
+
     }
+
 }
+
