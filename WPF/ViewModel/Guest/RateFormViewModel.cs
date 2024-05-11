@@ -37,13 +37,12 @@ namespace BookingApp.WPF.ViewModel.Guest
             OnPropertyChanged(nameof(Images));
         }
 
-        public void RateAccommodationAndOwner(int cleanliness, int ownersCorrectness, string comment)
+        public void RateAccommodationAndOwner(int cleanliness, int ownersCorrectness, string comment, bool isRenovationRecommended, int renovationRecommendationId)
         {
-
-                var newRating = new AccommodationAndOwnerRating(_reservation.Id, cleanliness, ownersCorrectness, comment);
-                _ratingService.Save(newRating);
-                _reservation.IsAccommodationAndOwnerRated = true;
-                _reservationService.Update(_reservation);
+            var newRating = new AccommodationAndOwnerRating(_reservation.Id, cleanliness, ownersCorrectness, comment, isRenovationRecommended, renovationRecommendationId);
+            _ratingService.Save(newRating);
+            _reservation.IsAccommodationAndOwnerRated = true;
+            _reservationService.Update(_reservation);
 
             MessageBox.Show("Accommodation and owner successfully rated.");
         }
