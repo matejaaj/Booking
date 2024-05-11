@@ -20,7 +20,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Tony Parker (user)" FontSize="16" Padding="10" FontWeight="Bold" Background="#E0E0E0" HorizontalContentAlignment="Center"/>
+            <Label Grid.Row="0" Content="Tony Parker (user)" Height="60" FontSize="16" Padding="10" FontWeight="Bold" Background="#E0E0E0" HorizontalContentAlignment="Center"/>
 
             <Grid Grid.Row="1" VerticalAlignment="Center">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -35,6 +35,14 @@
             </Grid>
         </Grid>
 
-        <Frame Grid.Column="1" Name="ContentFrame" NavigationUIVisibility="Hidden" Width="880" HorizontalAlignment="Right"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Frame Grid.Row="2" Name="ContentFrame" NavigationUIVisibility="Hidden" MinWidth="880" HorizontalAlignment="Right"/>
+
+        </Grid>
     </Grid>
 </Window>

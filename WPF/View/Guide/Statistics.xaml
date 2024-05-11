@@ -6,81 +6,101 @@
         xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
-        Title="Statistics" Height="450" Width="800">
-    <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        Title="Statistics" Height="500" Width="800">
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="5">
-            <GroupBox Header="MOST VISITED TOUR" FontWeight="Bold">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <Label Content="Year:"/>
-                        <ComboBox SelectedIndex="0" Width="100" HorizontalAlignment="Right" ItemsSource="{Binding TourYears}" SelectedItem="{Binding Path=SelectedTourYear, UpdateSourceTrigger=PropertyChanged}">
-                        </ComboBox>
-                    </StackPanel>
-                    <Button Content="Search" Margin="5" Width="100" HorizontalAlignment="Right" Click="btnSearchTours_Click"/>
-                    <StackPanel Margin="5">
-                        <TextBlock FontWeight="Bold" Text="Tour Name:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Name}" />
-                        <TextBlock FontWeight="Bold" Text="Location:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Location}"/>
-                        <TextBlock FontWeight="Bold" Text="Language:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Language}"/>
-                        <TextBlock FontWeight="Bold" Text="Capacity:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Capacity}"/>
-                        <TextBlock FontWeight="Bold" Text="Duration:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Duration}"/>
-                    </StackPanel>
-                    <TextBlock Text="Description:" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding MostVisitedTour.Description}" TextWrapping="Wrap" Margin="5" Height="100"/>
-                </StackPanel>
-            </GroupBox>
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Margin="5">
-            <GroupBox Header="REQUESTS" FontWeight="Bold">
-                <StackPanel Height="416">
-                    <Grid Margin="5" Height="105">
+            <StackPanel Grid.Column="0" Margin="5">
+                <GroupBox Header="MOST VISITED TOUR" FontWeight="Bold" Height="450">
+                    <Grid Margin="5" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="58"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,10,0">
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                <Label Content="Location:" VerticalAlignment="Center"/>
-                                <ComboBox Width="150" Margin="5,0,0,0" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                <Label Content="Language:" VerticalAlignment="Center"/>
-                                <ComboBox Width="150" Margin="5,0,0,0" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                <Label Content="Year:" VerticalAlignment="Center"/>
-                                <ComboBox Width="150" Margin="5,0,0,0" ItemsSource="{Binding RequestYears}" SelectedItem="{Binding SelectedRequestYear}"/>
-                            </StackPanel>
-                        </StackPanel>
+                        <Label Content="Year:" Grid.Row="0" Grid.Column="0"/>
+                        <ComboBox SelectedIndex="0" Width="100" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" 
+                            ItemsSource="{Binding TourYears}" SelectedItem="{Binding Path=SelectedTourYear, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Content="Search" Margin="5,0" Width="100" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" Click="btnSearchTours_Click"/>
 
-                        <Button Grid.Column="2" Content="Search" Margin="5" Width="100" VerticalAlignment="Top" Click="btnSearchRequests_Click"/>
+                        <TextBlock Text="Tour Name:" FontWeight="Bold" Grid.Row="1" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MostVisitedTour.Name}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right"/>
+
+                        <TextBlock Text="Location:" FontWeight="Bold" Grid.Row="2" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MostVisitedTour.Location}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"/>
+
+                        <TextBlock Text="Language:" FontWeight="Bold" Grid.Row="3" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MostVisitedTour.Language}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
+
+                        <TextBlock Text="Capacity:" FontWeight="Bold" Grid.Row="4" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MostVisitedTour.Capacity}" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right"/>
+
+                        <TextBlock Text="Duration:" FontWeight="Bold" Grid.Row="5" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MostVisitedTour.Duration}" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right"/>
+
+                        <!-- Description -->
+                        <TextBlock Text="Description:" FontWeight="Bold" Grid.Row="6" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MostVisitedTour.Description}" TextWrapping="Wrap" Grid.Row="6" Grid.Column="2" Margin="5" Height="100"/>
                     </Grid>
-                    <charting:Chart x:Name="BarChartVisits" Height="246">
-                        <charting:BarSeries
-                    Title="requests" 
-                    ItemsSource="{Binding YearlyOrMonthlyVisits}"
-                    IndependentValuePath="Key"
-                    DependentValuePath="Value"/>
-                    </charting:Chart>
+                </GroupBox>
+            </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <Label Content="Number of requests in selected year:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding NumberOfRequestsInSelectedYear}" Background="LightGray" Padding="5" Width="146" Margin="5,0,0,0"/>
+            <StackPanel Grid.Column="1" Margin="5" >
+            <GroupBox Header="REQUESTS" FontWeight="Bold" Height="450">
+                    <StackPanel Height="416">
+                        <Grid Margin="5" Height="105">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,10,0">
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                    <Label Content="Location:" VerticalAlignment="Center"/>
+                                    <ComboBox Width="150" Margin="5,0,0,0" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                    <Label Content="Language:" VerticalAlignment="Center"/>
+                                    <ComboBox Width="150" Margin="5,0,0,0" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                    <Label Content="Year:" VerticalAlignment="Center"/>
+                                    <ComboBox Width="150" Margin="5,0,0,0" ItemsSource="{Binding RequestYears}" SelectedItem="{Binding SelectedRequestYear}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Button Grid.Column="2" Content="Search" Margin="5" Width="100" VerticalAlignment="Top" Click="btnSearchRequests_Click"/>
+                        </Grid>
+                        <charting:Chart x:Name="BarChartVisits" Height="246">
+                            <charting:BarSeries
+                            Title="requests" 
+                            ItemsSource="{Binding YearlyOrMonthlyVisits}"
+                            IndependentValuePath="Key"
+                            DependentValuePath="Value"/>    
+                        </charting:Chart>
+
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <Label Content="Number of requests in selected year:" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding NumberOfRequestsInSelectedYear}" Background="LightGray" Padding="5" Width="146" Margin="5,0,0,0"/>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </GroupBox>
-        </StackPanel>
-    </Grid>
+                </GroupBox>
+            </StackPanel>
+        </Grid>
 </Page>

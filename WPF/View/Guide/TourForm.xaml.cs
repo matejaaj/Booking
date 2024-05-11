@@ -20,21 +20,10 @@ namespace BookingApp.WPF.View.Guide
             _viewModel.SaveTour();
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            //Close();
-        }
-
         private void btnAddCheckpoints_Click(object sender, RoutedEventArgs e)
         {
             AddCheckpoint addCheckpointWindow = new AddCheckpoint(_viewModel.Checkpoints, _viewModel.TourId);
             addCheckpointWindow.ShowDialog();
-        }
-
-        private void btnShowCheckpoints_Click(object sender, RoutedEventArgs e)
-        {
-            ShowCheckpoints showCheckpointswindow = new ShowCheckpoints(_viewModel.Checkpoints);
-            showCheckpointswindow.ShowDialog();
         }
 
         private void btnAddStartDate_Click(object sender, RoutedEventArgs e)
@@ -49,19 +38,7 @@ namespace BookingApp.WPF.View.Guide
                 MessageBox.Show("Enter capacity", "Error", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-
-        private void btnShowStartDates_Click(object sender, RoutedEventArgs e)
-        {
-            ShowTourInstances showStartDatesWindow = new ShowTourInstances(_viewModel.TourStartDates);
-            showStartDatesWindow.ShowDialog();
-        }
-
-        private void btnShowImages_Click(object sender, RoutedEventArgs e)
-        {
-            ShowImages showImagesWindow = new ShowImages(_viewModel.Images);
-            showImagesWindow.ShowDialog();
-        }
-
+ 
         private void btnAddImage_Click(object sender, RoutedEventArgs e)
         {
             AddImage addImageWindow = new AddImage(_viewModel.Images, _viewModel.TourId, ImageResourceType.TOUR);

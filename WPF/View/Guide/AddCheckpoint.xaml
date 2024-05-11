@@ -5,36 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
-        Title="AddCheckpoint" Height="100" Width="400"
+        Title="Add Checkpoint" Height="400" Width="400"
         WindowStartupLocation="CenterOwner">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="83*"/>
-            <ColumnDefinition Width="17*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <Grid Grid.Column="1" Margin="10,10,10,10" Grid.ColumnSpan="2">
+        <Grid Grid.Row="0" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <Label Content="Checkpoint Name" Grid.Row="0"/>
-            <TextBox Name="txtName" Text="{Binding Path=CheckpointName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
-
-
-
+            <Label Content="Checkpoint Name" Grid.Column="0"/>
+            <TextBox Name="txtName" Text="{Binding Path=CheckpointName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="0,5,10,5"/>
+            <Button Content="Add" Width="100" Grid.Column="2" Click="btnAdd_Click" Margin="0,5,0,5"/>
         </Grid>
 
-        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">
-            <Button Name="btnConfirm" Content="Confirm" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />
-            <Button Name="btnCancel" Content="Cancel" Width="75" Click="btnCancel_Click" />
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Checkpoints}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTemplateColumn Header="Remove" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Remove"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Name="btnConfirm" Content="Save" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />
         </StackPanel>
     </Grid>
 </Window>
