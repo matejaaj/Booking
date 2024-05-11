@@ -15,6 +15,13 @@
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\goBack.png" />
+    <None Remove="Resources\Images\Guide\add.png" />
+    <None Remove="Resources\Images\Guide\calendar.png" />
+    <None Remove="Resources\Images\Guide\front-of-bus.png" />
+    <None Remove="Resources\Images\Guide\home-icon-silhouette.png" />
+    <None Remove="Resources\Images\Guide\pie-chart.png" />
+    <None Remove="Resources\Images\Guide\trophy.png" />
+    <None Remove="Resources\Images\Guide\user-avatar.png" />
     <None Remove="Resources\Images\Map.jpg" />
     <None Remove="Resources\Images\menu.png" />
     <None Remove="Resources\Images\menuBar.png" />
@@ -49,6 +56,12 @@
     </Content>
   </ItemGroup>
 
+  
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\Guide\user-avatar.png" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.0" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
@@ -61,6 +74,12 @@
     <Resource Include="Resources\Images\carReg.png" />
     <Resource Include="Resources\Images\check.png" />
     <Resource Include="Resources\Images\goBack.png" />
+    <Resource Include="Resources\Images\Guide\add.png" />
+    <Resource Include="Resources\Images\Guide\calendar.png" />
+    <Resource Include="Resources\Images\Guide\front-of-bus.png" />
+    <Resource Include="Resources\Images\Guide\home-icon-silhouette.png" />
+    <Resource Include="Resources\Images\Guide\pie-chart.png" />
+    <Resource Include="Resources\Images\Guide\trophy.png" />
     <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
     <Resource Include="Resources\Images\notifications.png" />
