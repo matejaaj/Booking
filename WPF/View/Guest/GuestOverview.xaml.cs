@@ -135,5 +135,12 @@ namespace BookingApp.WPF.View.Guest
             reservationsWindow.Show();
         }
 
+        private void ShowRatings_Click(object sender, RoutedEventArgs e)
+        {
+            ShowRatings showRatingsWindow = new ShowRatings(LoggedInGuest);
+            showRatingsWindow.Show();
+        }
+
+
     }
 }

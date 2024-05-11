@@ -24,12 +24,16 @@ namespace BookingApp.WPF.View.Guest
     public partial class RateForm : Window
     {
         private RateFormViewModel _viewModel;
+        private bool isRenovationRecommended = false;
+        private int renovationId = -1;
+        private int reservationId = -1;
 
         public RateForm(AccommodationReservation reservation)
         {
             InitializeComponent();
             _viewModel = new RateFormViewModel(reservation, new AccommodationAndOwnerRatingService(Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>()), new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>()));
             DataContext = _viewModel;
+            reservationId = reservation.Id;
         }
 
         private void AddPictures_Click(object sender, RoutedEventArgs e)
@@ -39,14 +43,26 @@ namespace BookingApp.WPF.View.Guest
             addImageWindow.ShowDialog();
         }
 
+        public void SetRenovationRecommendation(bool isRecommended, int renovationId)
+        {
+            isRenovationRecommended = isRecommended;
+            this.renovationId = renovationId;
+        }
+
         private void Rate_Click(object sender, RoutedEventArgs e)
         {
             int cleanliness = (int)CleanlinessSlider.Value;
             int ownersCorrectness = (int)OwnersCorrectnessSlider.Value;
             string comment = CommentsTextBox.Text;
 
-            _viewModel.RateAccommodationAndOwner(cleanliness, ownersCorrectness, comment);
+            _viewModel.RateAccommodationAndOwner(cleanliness, ownersCorrectness, comment, isRenovationRecommended, renovationId);
             Close();
+        }
+
+        private void RenovationRecommendation_Click(object sender, RoutedEventArgs e)
+        {
+            RenovationRecommendationForm renovationWindow = new RenovationRecommendationForm(this, reservationId);
+            renovationWindow.ShowDialog();
         }
     }
 }

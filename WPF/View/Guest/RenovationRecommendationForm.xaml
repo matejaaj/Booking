@@ -1,0 +1,35 @@
+﻿<Window x:Class="BookingApp.WPF.View.Guest.RenovationRecommendationForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApp.WPF.View.Guest"
+        mc:Ignorable="d"
+        Title="Renovation Recommendation Form" Height="450" Width="800">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Renovation Recommendation" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="1" Text="Describe the condition of the accommodation:" Margin="0,0,0,5"/>
+        <TextBox Grid.Row="2" Name="ConditionTextBox" Margin="0,0,0,10" Height="100" TextWrapping="Wrap"/>
+
+        <TextBlock Grid.Row="3" Text="Renovation urgency level:" Margin="0,0,0,5"/>
+        <ComboBox Grid.Row="4" Name="UrgencyComboBox" Margin="0,0,0,10" SelectedIndex="0">
+            <ComboBoxItem Content="Level 1 - It would be nice to renovate some small things, but everything works fine without it"/>
+            <ComboBoxItem Content="Level 2 - Minor complaints about the accommodation that, if removed, would make it perfect"/>
+            <ComboBoxItem Content="Level 3 - Several things that bothered should be renovated"/>
+            <ComboBoxItem Content="Level 4 - There are many bad things and renovation is really necessary"/>
+            <ComboBoxItem Content="Level 5 - The accommodation is in very bad condition and it is not worth renting it at all if it is not renovated"/>
+        </ComboBox>
+
+        <Button Grid.Row="5" Content="Submit" Click="Submit_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>

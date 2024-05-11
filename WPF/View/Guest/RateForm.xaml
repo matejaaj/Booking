@@ -35,6 +35,17 @@
 
         <Button Grid.Row="4" Content="Add Pictures" Click="AddPictures_Click" Margin="0,5,0,5" HorizontalAlignment="Center" Width="200"/>
 
-        <Button Grid.Row="5" Content="Rate" Click="Rate_Click" Margin="300,5,300,5"/>
+        <Button Grid.Row="5" Content="Renovation Recommendation" Click="RenovationRecommendation_Click" Margin="0,3,0,-2" HorizontalAlignment="Center" Width="200"/>
+
+        <Button Grid.Row="5" Content="Rate" Click="Rate_Click" Margin="300,31,300,-27" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
     </Grid>
 </Window>
