@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
+             Style="{StaticResource UserControlStyle}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -11,10 +12,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0"
-                   FontSize="28"
-                   Text="Sve ture"
-                   TextWrapping="Wrap"/>
+        <TextBlock Style="{StaticResource HeaderTextStyle}"
+                   Text="Sve ture"/>
 
         <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
             <ItemsControl ItemsSource="{Binding Tours}">
@@ -25,13 +24,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="450"
-                                Height="220"
-                                Margin="10"
-                                Padding="10"
-                                BorderBrush="LightGray"
-                                BorderThickness="1"
-                                CornerRadius="3">
+                        <Border Style="{StaticResource DefaultBorder}"
+                                Width="450" Height="auto">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -40,10 +34,8 @@
 
                                 <!-- Left Column for Text -->
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock FontSize="18"
-                                               FontWeight="Bold"
+                                    <TextBlock Style="{StaticResource ItemHeaderTextStyle}"
                                                Text="{Binding Name}"
-                                               TextWrapping="Wrap"
                                                TextTrimming="CharacterEllipsis"/>
                                     <TextBlock Text="{Binding Description}"
                                                TextWrapping="Wrap"/>
@@ -59,10 +51,8 @@
                                            Margin="0,0,0,10"
                                            Source="{Binding Images[0]}"
                                            Stretch="Fill"/>
-                                    <Button Content="Više detalja"
-                                            HorizontalAlignment="Center"
-                                            Command="{Binding MoreDetailsCommand}"
-                                            CommandParameter="{Binding}"/>
+                                    <Button Style="{StaticResource DefaultButton}"
+                                            Content="Više detalja"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

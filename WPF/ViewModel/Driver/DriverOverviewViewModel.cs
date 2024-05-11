@@ -203,12 +203,11 @@ namespace BookingApp.WPF.ViewModel.Driver
         public void DataGrid_Refresh(object? sender, EventArgs e)
         {
             UpdateReservationList();
-            if (sender is ViewDriveViewModel && ConfirmedReservation.DelayMinutesDriver < 0)
+            if (sender is ViewDriveViewModel && ConfirmedReservation.DriveReservationStatusId == 4)
             {
                 cancelTime.Stop();
                 sec = 0;
                 secTourist = 0;
-                ConfirmedReservation.DriveReservationStatusId = 4;
                 ConfirmedReservation.UpdateTourist();
                 driveReservationService.Update(ConfirmedReservation);
                 cancelTime.Start();

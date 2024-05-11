@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using System;
 using System.Collections.Generic;
@@ -56,9 +58,9 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void InitializeServices()
         {
-            _accommodationReservationService = new AccommodationReservationService();
-            _reservationModificationRequestService = new ReservationModificationRequestService();
-            _accommodationService = new AccommodationService(_accommodationReservationService, _reservationModificationRequestService);
+            _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            _reservationModificationRequestService = new ReservationModificationRequestService(Injector.CreateInstance<IReservationModificationRequestRepository>());
+            _accommodationService = new AccommodationService(_accommodationReservationService, _reservationModificationRequestService, Injector.CreateInstance<IAccommodationRepository>());
         }
     }
 }

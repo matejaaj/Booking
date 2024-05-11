@@ -18,16 +18,20 @@ namespace BookingApp.Application.UseCases
         private AccommodationReservationService _accommodationReservationService;
         private ReservationModificationRequestService _reservationModificationRequestService;
 
-        public AccommodationService()
+        public AccommodationService(IAccommodationRepository accommodationRepository)
         {
-            _accommodationRepository = Injector.CreateInstance<IAccommodationRepository>();
+            _accommodationRepository = accommodationRepository;
         }
 
-        public AccommodationService(AccommodationReservationService accommodationReservationService, ReservationModificationRequestService reservationModificationRequestService)
+        public AccommodationService(AccommodationReservationService accommodationReservationService, ReservationModificationRequestService reservationModificationRequestService, IAccommodationRepository accommodationRepository)
         {
-            _accommodationRepository = Injector.CreateInstance<IAccommodationRepository>();
+            _accommodationRepository = accommodationRepository;
             _accommodationReservationService = accommodationReservationService;
             _reservationModificationRequestService = reservationModificationRequestService;
+        }
+
+        public AccommodationService()
+        {
         }
 
         public List<Accommodation> GetAll()

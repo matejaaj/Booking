@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -62,10 +64,10 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void InitializeServices()
         {
-            _accommodationService = new AccommodationService();
-            _accommodationReservationService = new AccommodationReservationService();
-            _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService(_accommodationReservationService);
-            _ownerService = new OwnerService();
+            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService(_accommodationReservationService, Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>());
+            _ownerService = new OwnerService(Injector.CreateInstance<IOwnerRepository>());
         }
 
         private void CalculateRating()

@@ -6,37 +6,53 @@
              xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
-             >
+             Style="{StaticResource UserControlStyle}">
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button  Grid.Row="0"
-                Width="150"
-                Height="auto"
-                Content="Rezervisite voznju"
-                Tag="{Binding}"
-                Click="ResserveDrive_Click"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
 
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Style="{StaticResource HeaderTextStyle}"
+                       Text="Moje vožnje"
+                       HorizontalAlignment="Left"
+                       Margin="10,10,0,10"
+                       VerticalAlignment="Center"/>
+
+            <Button Grid.Column="1"
+                    Width="auto"
+                    Height="auto"
+                    Content="Rezervišite vožnju"
+                    Style="{StaticResource DefaultButton}"
+                    HorizontalAlignment="Center"
+                    Margin="10,10,10,10"
+                    Click="ResserveDrive_Click"/>
+        </Grid>
 
 
         <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
             <ItemsControl ItemsSource="{Binding Reservations}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" />
+                        <WrapPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="350"
-                                Margin="30 0 0 10"
-                                Padding="10"
-                                BorderBrush="LightGray"
-                                BorderThickness="1"
-                                CornerRadius="3">
+                        <Border Style="{StaticResource DefaultBorder}"
+                                Width="330">
+
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto" />
@@ -52,51 +68,51 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Grid.Row="0" Grid.Column="0"
-                                           FontSize="14"
-                                           Text="Pocetna adresa:"
-                                           FontWeight="Bold" />
+                                           Style="{StaticResource DriveItemHeaderTextStyle}"
+                                           Text="Početna adresa:"/>
+
                                 <TextBlock Grid.Row="0" Grid.Column="1"
-                                           Text="{Binding StartAddress}" />
+                                           Text="{Binding StartAddress}"/>
 
                                 <TextBlock Grid.Row="1" Grid.Column="0"
-                                           FontSize="14"
-                                           Text="Krajnja adresa:"
-                                           FontWeight="Bold" />
+                                           Style="{StaticResource DriveItemHeaderTextStyle}"
+                                           Text="Krajnja adresa:"/>
+
                                 <TextBlock Grid.Row="1" Grid.Column="1"
-                                           Text="{Binding EndAddress}" />
+                                           Text="{Binding EndAddress}"/>
 
                                 <TextBlock Grid.Row="2" Grid.Column="0"
-                                           FontSize="14"
-                                           Text="Datum i vreme polaska:"
-                                           FontWeight="Bold" />
+                                           Style="{StaticResource DriveItemHeaderTextStyle}"
+                                           Text="Datum i vreme: "/>
+
                                 <TextBlock Grid.Row="2" Grid.Column="1"
-                                           Text="{Binding Time}" />
+                                           Text="{Binding Time}"/>
 
                                 <TextBlock Grid.Row="3" Grid.Column="0"
-                                           FontSize="14"
-                                           Text="Vozac:"
-                                           FontWeight="Bold" />
+                                           Style="{StaticResource DriveItemHeaderTextStyle}"
+                                           Text="Vozač:"/>
+
                                 <TextBlock Grid.Row="3" Grid.Column="1"
-                                           Text="{Binding Driver}" />
+                                           Text="{Binding Driver}"/>
 
                                 <TextBlock Grid.Row="4" Grid.Column="0"
-                                           FontSize="14"
-                                           Text="Status:"
-                                           FontWeight="Bold" />
+                                           Style="{StaticResource DriveItemHeaderTextStyle}"
+                                           Text="Status:"/>
+
                                 <TextBlock Grid.Row="4" Grid.Column="1"
-                                           Text="{Binding Status}" />
+                                           Text="{Binding Status}"/>
 
                                 <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
-                                            Orientation="Vertical"
+                                            Orientation="Horizontal"
                                             HorizontalAlignment="Center">
-                                    <Button Margin="5"
-                                            Content="Dodajte kašnjenje"
-                                            Tag="{Binding}"
-                                            Click="AddDelay_Click"/>
-                                    <Button Margin="5"
-                                            Content="Označite vozača kao nepouzdanog"
-                                            Tag="{Binding}"
-                                            Click="MarkDriverAsUnreliable_Click"/>
+                                    <Button Style="{StaticResource SmallButton}"
+                                            Content="Dodajte kasnjenje"
+                                            Click="AddDelay_Click"
+                                            Tag="{Binding}"/>
+                                    <Button Style="{StaticResource SmallButton}"
+                                            Content="Vozač nepouzdan"
+                                            Click="MarkDriverAsUnreliable_Click"
+                                            Tag="{Binding}"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

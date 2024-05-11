@@ -15,14 +15,14 @@ namespace BookingApp.Application.UseCases
         private readonly IAccommodationAndOwnerRatingRepository _ratingRepository;
         private AccommodationReservationService accommodationReservationService;
 
-        public AccommodationAndOwnerRatingService()
+        public AccommodationAndOwnerRatingService(IAccommodationAndOwnerRatingRepository ratingRepository)
         {
-            _ratingRepository = Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>();
+            _ratingRepository = ratingRepository;
         }
 
-        public AccommodationAndOwnerRatingService(AccommodationReservationService accommodationReservationService)
+        public AccommodationAndOwnerRatingService(AccommodationReservationService accommodationReservationService, IAccommodationAndOwnerRatingRepository ratingRepository)
         {
-            _ratingRepository = Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>();
+            _ratingRepository = ratingRepository;
             this.accommodationReservationService = accommodationReservationService;
         }
 

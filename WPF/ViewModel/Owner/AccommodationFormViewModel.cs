@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Guide;
 using BookingApp.WPF.View.Owner;
@@ -136,8 +138,8 @@ namespace BookingApp.WPF.ViewModel.Owner
         public AccommodationFormViewModel(Domain.Model.Owner owner, Window ownerWindow)
         {
             LoggedInOwner = owner;
-            _accommodationService = new AccommodationService();
-            _locationService = new LocationService();
+            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
             locations = _locationService.GetAll();
             images = new List<Domain.Model.Image>();
             _accommodationId = _accommodationService.NextId();
@@ -146,29 +148,10 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         public void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-/*            if (ValidateFields())
-            {*/
                 Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
                 Accommodation savedAccommodation = _accommodationService.Save(newAccommodation);
                 OwnerOverviewViewModel.Accommodations.Add(savedAccommodation);
-/*            }
-            else
-            {
-                MessageBox.Show("Please fill all fields",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }*/
-
         }
-
-        /*        private bool ValidateFields()
-                {
-                    return !string.IsNullOrWhiteSpace(txtName.Text) &&
-                           !string.IsNullOrWhiteSpace(txtMinimumReservationDays.Text) &&
-                           cmbLocation.SelectedItem != null &&
-                           cmbType.SelectedItem != null &&
-                           !string.IsNullOrWhiteSpace(txtCapacity.Text) &&
-                           !string.IsNullOrWhiteSpace(txtCancelThreshold.Text);
-                }*/
 
         public void btnAddImage_Click(object sender, RoutedEventArgs e)
         {

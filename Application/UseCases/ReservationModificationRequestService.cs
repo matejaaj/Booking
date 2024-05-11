@@ -11,9 +11,9 @@ namespace BookingApp.Application.UseCases
     {
         private readonly IReservationModificationRequestRepository _requestRepository;
 
-        public ReservationModificationRequestService()
+        public ReservationModificationRequestService(IReservationModificationRequestRepository requestRepository)
         {
-            _requestRepository = Injector.CreateInstance<IReservationModificationRequestRepository>();
+            _requestRepository = requestRepository;
         }
 
         public List<ReservationModificationRequest> GetAll()

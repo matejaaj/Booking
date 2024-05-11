@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Guide;
 using BookingApp.WPF.ViewModel.Guest;
@@ -26,7 +28,7 @@ namespace BookingApp.WPF.View.Guest
         public RateForm(AccommodationReservation reservation)
         {
             InitializeComponent();
-            _viewModel = new RateFormViewModel(reservation, new AccommodationAndOwnerRatingService(), new AccommodationReservationService());
+            _viewModel = new RateFormViewModel(reservation, new AccommodationAndOwnerRatingService(Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>()), new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>()));
             DataContext = _viewModel;
         }
 
