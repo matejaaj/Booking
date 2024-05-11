@@ -85,7 +85,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             }
             else
             {
-                reservation.DelayMinutesDriver = -1;
+                reservation.DriveReservationStatusId = 4;
             }
 
             Repo.Update(reservation);
