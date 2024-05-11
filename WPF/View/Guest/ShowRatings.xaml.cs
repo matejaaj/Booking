@@ -31,8 +31,8 @@ namespace BookingApp.WPF.View.Guest
         {
             InitializeComponent();
             _accommodationService = new AccommodationService();
-            _ratingService = new GuestRatingService();
-            _reservationService = new AccommodationReservationService();
+            //_ratingService = new GuestRatingService();
+            //_reservationService = new AccommodationReservationService();
             this.loggedInGuest = loggedInGuest;
             LoadRatings();
         }

@@ -1,66 +1,61 @@
 ﻿using BookingApp.Domain.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 
 namespace BookingApp.WPF.ViewModel.Guide
 {
-    public class AddStartDateViewModel
+    public class AddStartDateViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private TimeSpan _selectedTime;
+        public TimeSpan SelectedTime
+        {
+            get { return _selectedTime; }
+            set
+            {
+                if (_selectedTime != value)
+                {
+                    _selectedTime = value;
+                    OnPropertyChanged(nameof(SelectedTime));
+                }
+            }
+        }
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private List<TourInstance> _startDates;
+        public ObservableCollection<TourInstance> StartDates { get; set; }
         private int _tourId;
         private int _capacity;
+        public DateTime? SelectedDate { get; set; }
 
         public AddStartDateViewModel(List<TourInstance> startDates, int tourId, int capacity)
         {
             _startDates = startDates;
             _tourId = tourId;
             _capacity = capacity;
-            LoadTimeComboboxes();
+            StartDates = new ObservableCollection<TourInstance>(startDates);
         }
 
-        public void Confirm()
+        public void Add()
         {
-            if (StartDate.HasValue && StartHourSelectedItem != null && StartMinuteSelectedItem != null)
+            if (SelectedDate.HasValue && SelectedTime != null)
             {
-                DateTime startDate = StartDate.Value.Date;
-                int hour = int.Parse(StartHourSelectedItem.ToString());
-                int minute = int.Parse(StartMinuteSelectedItem.ToString());
-                startDate = startDate.AddHours(hour).AddMinutes(minute);
+                DateTime combinedDateTime = SelectedDate.Value.Date + SelectedTime;
+                TourInstance newStartDate = new TourInstance(_tourId, _capacity, combinedDateTime);
 
-                TourInstance newStartDate = new TourInstance(_tourId, _capacity, startDate);
+                MessageBox.Show(SelectedTime.ToString());
 
                 _startDates.Add(newStartDate);
-
-                MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                StartDates.Add(newStartDate);
             }
-            else
-            {
-                MessageBox.Show("Not added", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+           
         }
-
-        public DateTime? StartDate { get; set; }
-        public object StartHourSelectedItem { get; set; }
-        public object StartMinuteSelectedItem { get; set; }
-
-        private void LoadTimeComboboxes()
-        {
-            for (int hour = 0; hour < 24; hour++)
-            {
-                StartHourItems.Add(hour.ToString("00"));
-            }
-
-            for (int minute = 0; minute < 60; minute++)
-            {
-                StartMinuteItems.Add(minute.ToString("00"));
-            }
-
-            StartHourSelectedItem = StartHourItems[0];
-            StartMinuteSelectedItem = StartMinuteItems[0];
-        }
-
-        public List<string> StartHourItems { get; } = new List<string>();
-        public List<string> StartMinuteItems { get; } = new List<string>();
     }
 }

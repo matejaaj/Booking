@@ -4,35 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AddStartDate" Height="200" Width="400"
+        Title="Add Start Date" Height="400" Width="520"
         WindowStartupLocation="CenterOwner">
-    <Grid Margin="10">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Label Content="Start Date" Grid.Row="0" Grid.Column="0"/>
-        <DatePicker Name="startDatePicker" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" SelectedDate="{Binding StartDate}"/>
-
-        <Label Content="Start Time" Grid.Row="1" Grid.Column="0"/>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,5,0,5">
-            <ComboBox Name="startHour" Width="60" ItemsSource="{Binding StartHourItems}" SelectedItem="{Binding StartHourSelectedItem}">
-            </ComboBox>
-            <ComboBox Name="startMinute" Width="60" Margin="5,0,0,0" ItemsSource="{Binding StartMinuteItems}" SelectedItem="{Binding StartMinuteSelectedItem}">
-            </ComboBox>
+        <StackPanel Grid.Row="0" Margin="10" Orientation="Horizontal">
+            <Label Content="Date (Alt + D):" FontWeight="Bold"/>
+            <DatePicker Name="dpDate" SelectedDate="{Binding SelectedDate}" Width="120"/>
+            <Label Content="Time (Alt + T):" FontWeight="Bold" Margin="10,0,0,0"/>
+            <xctk:TimePicker Name="tpTime" Value="{Binding SelectedTime, Mode=TwoWay, PresentationTraceSources.TraceLevel=High}" Format="Custom" FormatString="HH:mm"/>
+            <Button Content="Add (Ctrl + A)" Click="btnAdd_Click" Margin="10,0,0,0" HorizontalAlignment="Right"/>
         </StackPanel>
 
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,20,0,10">
-            <Button Name="btnConfirm" Content="Confirm" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />
-            <Button Name="btnCancel" Content="Cancel" Width="75" Click="btnCancel_Click" />
+        <DataGrid Grid.Row="1" ItemsSource="{Binding StartDates}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding StartTime.Date, StringFormat=\{0:dd/MM/yyyy\}}" Width="*"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding StartTime.TimeOfDay}" Width="100"/>
+                <DataGridTemplateColumn Header="Remove" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Remove"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Save (Ctrl + S)" Click="btnConfirm_Click" Width="100" Margin="0,0,10,0"/>
         </StackPanel>
     </Grid>
 </Window>
