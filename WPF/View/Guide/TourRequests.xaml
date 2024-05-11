@@ -45,7 +45,7 @@
                         <Button Click="btnSearch_Click" Content="Filter" Grid.Column="6" Grid.Row="1" Margin="5,5,0,5" Width="100"/>
                     </Grid>
 
-                    <DataGrid Grid.Row="1" AutoGenerateColumns="False" Height="180" Margin="0,0,0,10" 
+                    <DataGrid Grid.Row="1" AutoGenerateColumns="False" Height="180" Margin="0,0,0,10" IsReadOnly="True"
                               ItemsSource="{Binding TourRequests}"
                               SelectedItem="{Binding SelectedRequest}">
                         <DataGrid.Columns>

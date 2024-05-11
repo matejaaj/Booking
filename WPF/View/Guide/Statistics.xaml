@@ -6,62 +6,59 @@
         xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
-        Title="Statistics" Height="500" Width="800">
+        Title="Statistics" Height="470" Width="800">
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Margin="5">
-                <GroupBox Header="MOST VISITED TOUR" FontWeight="Bold" Height="450">
-                    <Grid Margin="5" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="58"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+        <GroupBox Header="MOST VISITED TOUR" FontWeight="Bold" Margin="5">
+            <Grid Margin="5" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Label Content="Year:" Grid.Row="0" Grid.Column="0"/>
+                <ComboBox SelectedIndex="0" Width="75" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Height="25" VerticalAlignment="Top"
+            ItemsSource="{Binding TourYears}" SelectedItem="{Binding Path=SelectedTourYear, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Search" Margin="10,0,0,10" Width="100" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" Height="25" VerticalAlignment="Top" Click="btnSearchTours_Click"/>
 
-                        <Label Content="Year:" Grid.Row="0" Grid.Column="0"/>
-                        <ComboBox SelectedIndex="0" Width="100" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" 
-                            ItemsSource="{Binding TourYears}" SelectedItem="{Binding Path=SelectedTourYear, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Button Content="Search" Margin="5,0" Width="100" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" Click="btnSearchTours_Click"/>
+                <TextBlock Text="Tour Name:" FontWeight="Bold" Grid.Row="1" Grid.Column="0"/>
+                <TextBlock Text="{Binding MostVisitedTour.Name}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right"/>
 
-                        <TextBlock Text="Tour Name:" FontWeight="Bold" Grid.Row="1" Grid.Column="0"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Name}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right"/>
+                <TextBlock Text="Location:" FontWeight="Bold" Grid.Row="2" Grid.Column="0"/>
+                <TextBlock Text="{Binding MostVisitedTour.Location}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"/>
 
-                        <TextBlock Text="Location:" FontWeight="Bold" Grid.Row="2" Grid.Column="0"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Location}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"/>
+                <TextBlock Text="Language:" FontWeight="Bold" Grid.Row="3" Grid.Column="0"/>
+                <TextBlock Text="{Binding MostVisitedTour.Language}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
 
-                        <TextBlock Text="Language:" FontWeight="Bold" Grid.Row="3" Grid.Column="0"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Language}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
+                <TextBlock Text="Capacity:" FontWeight="Bold" Grid.Row="4" Grid.Column="0"/>
+                <TextBlock Text="{Binding MostVisitedTour.Capacity}" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right"/>
 
-                        <TextBlock Text="Capacity:" FontWeight="Bold" Grid.Row="4" Grid.Column="0"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Capacity}" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right"/>
+                <TextBlock Text="Duration:" FontWeight="Bold" Grid.Row="5" Grid.Column="0"/>
+                <TextBlock Text="{Binding MostVisitedTour.Duration}" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right"/>
 
-                        <TextBlock Text="Duration:" FontWeight="Bold" Grid.Row="5" Grid.Column="0"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Duration}" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right"/>
+                <!-- Description -->
+                <TextBlock Text="Description:" FontWeight="Bold" Grid.Row="6" Grid.Column="0"/>
+                <TextBlock Text="{Binding MostVisitedTour.Description}" TextWrapping="Wrap" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Margin="5, 30, 5, 5" Height="Auto"/>
+            </Grid>
+        </GroupBox>
 
-                        <!-- Description -->
-                        <TextBlock Text="Description:" FontWeight="Bold" Grid.Row="6" Grid.Column="0"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Description}" TextWrapping="Wrap" Grid.Row="6" Grid.Column="2" Margin="5" Height="100"/>
-                    </Grid>
-                </GroupBox>
-            </StackPanel>
 
-            <StackPanel Grid.Column="1" Margin="5" >
-            <GroupBox Header="REQUESTS" FontWeight="Bold" Height="450">
+        <StackPanel Grid.Column="1" Margin="5" Height="450">
+            <GroupBox Header="REQUESTS" FontWeight="Bold" >
                     <StackPanel Height="416">
                         <Grid Margin="5" Height="105">
                             <Grid.ColumnDefinitions>
