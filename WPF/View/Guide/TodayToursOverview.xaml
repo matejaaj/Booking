@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
-        Title="TodayToursOverview" Height="450" Width="1000">
+        Title="TodayToursOverview" Height="500" Width="750">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
