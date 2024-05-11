@@ -17,6 +17,12 @@ namespace BookingApp.Application.UseCases
             _renovationRepository = Injector.CreateInstance<IRenovationRecommendationRepository>();
         }
 
+        public RenovationRecommendationService(IRenovationRecommendationRepository renovationRepository)
+        {
+            _renovationRepository = renovationRepository;
+        }
+
+
         public List<RenovationRecommendation> GetAll()
         {
             return _renovationRepository.GetAll();
@@ -40,6 +46,12 @@ namespace BookingApp.Application.UseCases
         public RenovationRecommendation GetById(int id)
         {
             return _renovationRepository.GetById(id);
+        }
+
+        public List<RenovationRecommendation> GetAllWithReservationId(int id)
+        {
+            var recommendations = _renovationRepository.GetAll();
+            return recommendations.FindAll(r => r.ReservationId == id).ToList();
         }
     }
 }

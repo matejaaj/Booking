@@ -10,6 +10,8 @@
 	<ItemGroup>
 		<None Remove="Resources\Images\addIm.png" />
 		<None Remove="Resources\Images\addImage.png" />
+		<None Remove="Resources\Images\babinobrdo1.jpg" />
+		<None Remove="Resources\Images\babinobrdo2.jpg" />
 		<None Remove="Resources\Images\cancel.png" />
 		<None Remove="Resources\Images\accommodations.png" />
 		<None Remove="Resources\Images\babinobrdo.jpg" />
@@ -26,12 +28,18 @@
 		<None Remove="Resources\Images\goBack.png" />
 		<None Remove="Resources\Images\home.png" />
 		<None Remove="Resources\Images\insertImage.png" />
+		<None Remove="Resources\Images\leopold.jpg" />
+		<None Remove="Resources\Images\leopold1.jpg" />
+		<None Remove="Resources\Images\leopold2.jpg" />
 		<None Remove="Resources\Images\location.png" />
 		<None Remove="Resources\Images\Map.jpg" />
 		<None Remove="Resources\Images\menu.png" />
 		<None Remove="Resources\Images\menuBar.png" />
 		<None Remove="Resources\Images\notifications.png" />
 		<None Remove="Resources\Images\pickup.png" />
+		<None Remove="Resources\Images\raspad.jpg" />
+		<None Remove="Resources\Images\raspad1.jpg" />
+		<None Remove="Resources\Images\raspad2.jpg" />
 		<None Remove="Resources\Images\ratings.png" />
 		<None Remove="Resources\Images\regCar.png" />
 		<None Remove="Resources\Images\renovation.png" />
@@ -80,6 +88,8 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\addIm.png" />
+    <Resource Include="Resources\Images\babinobrdo1.jpg" />
+    <Resource Include="Resources\Images\babinobrdo2.jpg" />
     <Resource Include="Resources\Images\cancel.png" />
     <Resource Include="Resources\Images\clock.png" />
     <Resource Include="Resources\Images\delay.png" />
@@ -92,11 +102,17 @@
     <Resource Include="Resources\Images\goBack.png" />
     <Resource Include="Resources\Images\home.png" />
     <Resource Include="Resources\Images\insertImage.png" />
+    <Resource Include="Resources\Images\leopold.jpg" />
+    <Resource Include="Resources\Images\leopold1.jpg" />
+    <Resource Include="Resources\Images\leopold2.jpg" />
     <Resource Include="Resources\Images\location.png" />
     <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
     <Resource Include="Resources\Images\notifications.png" />
     <Resource Include="Resources\Images\pickup.png" />
+    <Resource Include="Resources\Images\raspad.jpg" />
+    <Resource Include="Resources\Images\raspad1.jpg" />
+    <Resource Include="Resources\Images\raspad2.jpg" />
     <Resource Include="Resources\Images\ratings.png" />
     <Resource Include="Resources\Images\renovation.png" />
     <Resource Include="Resources\Images\reports.png" />

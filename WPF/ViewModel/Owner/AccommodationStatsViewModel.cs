@@ -24,6 +24,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static AccommodationReservationService _accommodationReservationService;
         private static AccommodationService _accommodationService;
         private static ReservationModificationRequestService _reservationModificationRequestService;
+        private static RenovationRecommendationService _renovationRecommendationService;
         private ObservableCollection<AccommodationStatisticsDTO> yearlyStats;
         public ObservableCollection<AccommodationStatisticsDTO> YearlyStats
         {
@@ -54,7 +55,8 @@ namespace BookingApp.WPF.ViewModel.Owner
         {
             _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
             _reservationModificationRequestService = new ReservationModificationRequestService(Injector.CreateInstance<IReservationModificationRequestRepository>());
-            _accommodationService = new AccommodationService(_accommodationReservationService, _reservationModificationRequestService, Injector.CreateInstance<IAccommodationRepository>());
+            _renovationRecommendationService = new RenovationRecommendationService(Injector.CreateInstance<IRenovationRecommendationRepository>());
+            _accommodationService = new AccommodationService(_accommodationReservationService, _reservationModificationRequestService, _renovationRecommendationService, Injector.CreateInstance<IAccommodationRepository>());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
