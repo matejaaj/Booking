@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using BookingApp.WPF.View.Guest;
 using BookingApp.WPF.View.Guide;
@@ -38,22 +40,21 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static UserService _userService;
         private static AccommodationService _accommodationService;
 
-        public ReschedulingOverviewViewModel(List<Domain.Model.AccommodationReservation> ownerAccommodationReservations)
+        public ReschedulingOverviewViewModel(Domain.Model.Owner loggedInOwner)
         {
             InitializeServices();
             Requests = new ObservableCollection<ReschedulingRequestDTO>();
-            AccommodationReservations = ownerAccommodationReservations;
-            AccommodationReservationsIds = AccommodationReservations.Select(a => a.Id).ToList();
-            ReservationModificationRequests = _reservationModificationRequestService.GetByReservationIds(AccommodationReservationsIds);
+            AccommodationReservations = _accommodationReservationService.GetByOwner(loggedInOwner);
+            ReservationModificationRequests = _reservationModificationRequestService.GetByReservationIds(AccommodationReservations);
             Update();
         }
 
         private void InitializeServices()
         {
-            _reservationModificationRequestService = new ReservationModificationRequestService();
-            _accommodationReservationService = new AccommodationReservationService();
-            _userService = new UserService();
-            _accommodationService = new AccommodationService();
+            _userService = new UserService(Injector.CreateInstance<IUserRepository>());
+            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _accommodationReservationService = new AccommodationReservationService(_accommodationService, Injector.CreateInstance<IAccommodationReservationRepository>());
+            _reservationModificationRequestService = new ReservationModificationRequestService(Injector.CreateInstance<IReservationModificationRequestRepository>());
         }
 
         private void Update()
@@ -156,22 +157,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private bool IsReserved(DateTime startDate, DateTime endDate, DateTime oldStartDate, DateTime oldEndDate)
         {
-            foreach (var reservation in AccommodationReservations)
-            {
-                if (((startDate <= reservation.EndDate && endDate >= reservation.StartDate) ||
-                    (startDate >= reservation.StartDate && endDate <= reservation.EndDate)) 
-                    && !isOldReservation(reservation, oldStartDate, oldEndDate))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool isOldReservation(AccommodationReservation reservation, DateTime oldStartDate, DateTime oldEndDate)
-        {
-            return (reservation.StartDate == oldStartDate && reservation.EndDate == oldEndDate);
+            return _accommodationReservationService.IsDateReserved(startDate, endDate, oldStartDate, oldEndDate, AccommodationReservations);
         }
     }
 }

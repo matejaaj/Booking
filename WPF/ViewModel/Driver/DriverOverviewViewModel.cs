@@ -1,4 +1,6 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.Events;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.LogicServices.Driver;
 using BookingApp.Repository;
@@ -24,9 +26,9 @@ namespace BookingApp.WPF.ViewModel.Driver
         public DriveReservation SelectedReservation { get; set; }
         public bool canCancel { get; set; }
 
-        private readonly DriveReservationService driveReservationService;
-        private readonly LocationRepository _locationRepository;
-        private readonly VehicleService vehicleService;
+        private DriveReservationService driveReservationService { get; set; }
+        private LocationRepository _locationRepository { get; set; }
+        private VehicleService vehicleService { get; set; }
 
         private DispatcherTimer cancelTime = new DispatcherTimer();
         private DispatcherTimer fastDriveTimer = new DispatcherTimer();
@@ -39,7 +41,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             {
                 confirmedReservation = value;
                 OnPropertyChanged(nameof(ConfirmedReservation));
-                IsVisible = confirmedReservation == null;
+                IsVisible = ConfirmedReservation == null ? Visibility.Visible : Visibility.Hidden;
             }
         }
         private int sec = 0;
@@ -51,7 +53,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         public ObservableCollection<Vehicle> Vehicles
         {
             get { return _vehicles; }
-            set { _vehicles = value;  OnPropertyChanged(); }
+            set { _vehicles = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<DriveReservation> _driveReservations;
@@ -88,16 +90,25 @@ namespace BookingApp.WPF.ViewModel.Driver
             }
         }
 
-        private bool isVisible;
-        public bool IsVisible
+        private Visibility isVisible;
+        public Visibility IsVisible
         {
             get { return isVisible; }
             set
             {
                 isVisible = value;
                 OnPropertyChanged(); // Notify the view of the change
+                if (IsVisible.Equals(Visibility.Visible))
+                {
+                    MainWindow.EventAggregator.Publish(new MenuItemsEvent(Visibility.Hidden));
+                }
+                else
+                {
+                    MainWindow.EventAggregator.Publish(new MenuItemsEvent(Visibility.Visible));
+                }
             }
         }
+
 
         public User Korisnik { get; set; }
 
@@ -114,6 +125,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             locations = _locationRepository.GetAll();
             canCancel = false;
             ConfirmedReservation = null;
+            IsVisible = ConfirmedReservation == null ? Visibility.Visible : Visibility.Hidden;
             UpdateVehicleCount();
             UpdateReservationList();
             cancelTime.Interval = System.TimeSpan.Parse("00:00:01");
@@ -121,7 +133,6 @@ namespace BookingApp.WPF.ViewModel.Driver
             fastDriveTimer.Interval = System.TimeSpan.Parse("00:00:05");
             fastDriveTimer.Tick += FastDriveTimer_Tick;
             fastDriveTimer.Start();
-            IsVisible = ConfirmedReservation == null;
         }
 
         public void UpdateVehicleCount()
@@ -130,14 +141,9 @@ namespace BookingApp.WPF.ViewModel.Driver
             TxtVehicleCount = $"Ukupno registrovanih vozila: {allVehicles.Count}";
         }
 
-        public void ShowCreateVehicleForm(object sender, RoutedEventArgs e, Page owner)
-        {
-            VehicleForm vehicleForm = new VehicleForm(DriverId);
-            vehicleForm.VM.VehicleAdded += VehicleForm_VehicleAdded;
-            owner.NavigationService.Navigate(vehicleForm);
-        }
 
-        public void ViewDrive_Click(object sender, RoutedEventArgs e)
+
+        public void ViewDrive_Click(object sender, RoutedEventArgs e, Page owner)
         {
             if (!ValidateInput(() => SelectedReservation.DriveReservationStatusId == 2 || SelectedReservation.DriveReservationStatusId == 13, "You can't delay reservation if it's not confirmed or not in the specific required status!"))
             {
@@ -146,21 +152,17 @@ namespace BookingApp.WPF.ViewModel.Driver
 
             ViewDrive vForm = new()
             {
-                VM = 
+                VM =
                 {
                     reservation = SelectedReservation,
                     Repo = driveReservationService
                 }
             };
             vForm.VM.ReservationConfirmed += DataGrid_Refresh;
-            vForm.Show();
+            owner.NavigationService.Navigate(vForm);
         }
 
-        public void VehicleForm_VehicleAdded(object? sender, EventArgs e)
-        {
-            UpdateVehicleCount();
-            UpdateReservationList();
-        }
+
 
         public void UpdateReservationList()
         {
@@ -174,23 +176,38 @@ namespace BookingApp.WPF.ViewModel.Driver
                     DriveReservations.Clear();
                     ConfirmedReservation = reservation;
                     DriveReservations.Add(reservation);
-                    IsVisible = ConfirmedReservation == null;
+                    IsVisible = ConfirmedReservation == null ? Visibility.Visible : Visibility.Hidden;
+                    if (IsVisible.Equals(Visibility.Visible))
+                    {
+                        MainWindow.EventAggregator.Publish(new MenuItemsEvent(Visibility.Hidden));
+                    }
+                    else
+                    {
+                        MainWindow.EventAggregator.Publish(new MenuItemsEvent(Visibility.Visible));
+                    }
                     return;
                 }
                 DriveReservations.Add(reservation);
-                IsVisible = ConfirmedReservation == null;
+                IsVisible = ConfirmedReservation == null ? Visibility.Visible : Visibility.Hidden;
+                if (IsVisible.Equals(Visibility.Visible))
+                {
+                    MainWindow.EventAggregator.Publish(new MenuItemsEvent(Visibility.Hidden));
+                }
+                else
+                {
+                    MainWindow.EventAggregator.Publish(new MenuItemsEvent(Visibility.Visible));
+                }
             }
         }
 
         public void DataGrid_Refresh(object? sender, EventArgs e)
         {
             UpdateReservationList();
-            if (sender is ViewDriveViewModel && ConfirmedReservation.DelayMinutesDriver < 0)
+            if (sender is ViewDriveViewModel && ConfirmedReservation.DriveReservationStatusId == 4)
             {
                 cancelTime.Stop();
                 sec = 0;
                 secTourist = 0;
-                ConfirmedReservation.DriveReservationStatusId = 4;
                 ConfirmedReservation.UpdateTourist();
                 driveReservationService.Update(ConfirmedReservation);
                 cancelTime.Start();
@@ -200,11 +217,10 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void ViewDrive_Respond(object? sender, EventArgs e)
         {
-            if (!ValidateInput(() => SelectedReservation.DriveReservationStatusId == 1, "You can't confirm this one!"))
+            if (!ValidateInput(() => (SelectedReservation.DriveReservationStatusId == 1 || SelectedReservation.DriveReservationStatusId == 14), "You can't confirm this one!"))
             {
                 return;
             }
-
             SelectedReservation.DriveReservationStatusId = 2;
             driveReservationService.Update(SelectedReservation);
             DataGrid_Refresh(sender, e);
@@ -218,14 +234,16 @@ namespace BookingApp.WPF.ViewModel.Driver
             {
                 return;
             }
+
             SelectedReservation.DriveReservationStatusId = 8;
             driveReservationService.Update(SelectedReservation);
             cancelTime.Stop();
             sec = 0;
             secTourist = 0;
+            ConfirmedReservation = null;
             UpdateReservationList();
             if (SuperDriverService.CanceledResevationByDriver(DriverId))
-                MessageBox.Show("You just lost status of Super-Driver!", "Super-Driver Notification", MessageBoxButton.OK);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("You just lost status of Super-Driver!", "Notification"));
         }
 
         public void CancelTime_Tick(object? sender, EventArgs e)
@@ -244,7 +262,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
             if (isClientNoShow)
             {
-                MessageBox.Show("Client hasn't showed up!");
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Client hasn't showed up!", "Notification"));
                 canCancel = true;
                 ConfirmedReservation.DelayMinutesTourist = -1;
             }
@@ -253,6 +271,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void FastDriveTimer_Tick(object? sender, EventArgs e)
         {
+
             if (ConfirmedReservation != null)
             {
                 return;
@@ -271,12 +290,15 @@ namespace BookingApp.WPF.ViewModel.Driver
             fastDriveTimer.Stop();
             foreach (var dr in fastReservations)
             {
-                MessageBoxResult result = MessageBox.Show($"Nova brza rezervacija je dostupna!\n{dr.DepartureTime}\nDa li je prihvatate?",
-                                                          "Brza voznja", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+                bool? result = ((MainWindow)System.Windows.Application.Current.MainWindow).DialogOverlayResult;
+                if(result.HasValue && !result.Value)
+                    MainWindow.EventAggregator.Publish(new ShowDialogEvent($"Nova brza rezervacija je dostupna!\n{dr.DepartureTime}\nDa li je prihvatate?", "Notifaction"));
+
+                if (result.HasValue && result.Value)
                 {
                     HandleFastReservationAcceptance(dr);
-                    return; 
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).DialogOverlayResult = false;
+                    return;
                 }
             }
             fastDriveTimer.Start();
@@ -288,25 +310,11 @@ namespace BookingApp.WPF.ViewModel.Driver
             reservation.DriveReservationStatusId = 13;
             reservation.DriverId = DriverId;
             if (SuperDriverService.UpdateStateForDriver(DriverId))
-                MessageBox.Show("Congratulations!\nYou are now Super-Driver!","Super-Driver Notification", MessageBoxButton.OK);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Congratulations!\nYou are now Super-Driver!", "Notification"));
             if (SuperDriverService.IsReadyForBonus(DriverId))
-                MessageBox.Show("Congratulations!\nYou are now getting paid more!", "Super-Driver Notification", MessageBoxButton.OK);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Congratulations!\nYou are now getting paid more!", "Notification"));
             driveReservationService.Update(reservation);
             UpdateReservationList();
-        }
-
-        public void btnDeleteVehicle_Click(object sender, RoutedEventArgs e)
-        {
-            int.TryParse(TxtVehicleIdInput, out int vehicleId);
-            var allVehicles = vehicleService.GetAll();
-            var vehicleToDelete = allVehicles.FirstOrDefault(v => v.VehicleId == vehicleId);
-            if (vehicleToDelete != null)
-            {
-                vehicleService.Delete(vehicleToDelete);
-                MessageBox.Show("Vozilo je uspešno izbrisano.");
-                UpdateVehicleCount(); 
-                TxtVehicleIdInput = ""; 
-            }
         }
 
         public void btnDrive_Click(object sender, RoutedEventArgs e, Page owner)
@@ -324,23 +332,32 @@ namespace BookingApp.WPF.ViewModel.Driver
             owner.NavigationService.Navigate(dForm);
         }
 
-        public void btnStats_Click(object sender, RoutedEventArgs e, Page owner)
+        public void VehicleForm_VehicleAdded(object? sender, EventArgs e)
         {
-            Stats sForm = new Stats(DriverId, driveReservationService);
-            owner.NavigationService.Navigate(sForm);
+            UpdateVehicleCount();
+            UpdateReservationList();
+            IsVisible = Visibility.Visible;
+            if (IsVisible.Equals(Visibility.Visible))
+            {
+                MainWindow.EventAggregator.Publish(new MenuItemsEvent(Visibility.Hidden));
+            }
+            else
+            {
+                MainWindow.EventAggregator.Publish(new MenuItemsEvent(Visibility.Visible));
+            }
         }
 
         private bool ValidateInput(Func<bool> condition, string errorMessage)
         {
             if (SelectedReservation == null)
             {
-                MessageBox.Show("You haven't selected any reservation!");
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("You haven't selected any reservation!", "Error" ));
                 return false;
             }
 
             if (!condition())
             {
-                MessageBox.Show(errorMessage);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent(errorMessage, "Error"));
                 return false;
             }
 

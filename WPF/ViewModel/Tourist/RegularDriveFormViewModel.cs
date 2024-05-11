@@ -70,6 +70,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
             DriveReservation reservation = new DriveReservation(start.Id, end.Id, departure, SelectedDriver.Key, _tourist.Id, 2, 0, 0);
             _driveReservationService.Save(reservation);
+            MessageBox.Show("Rezervacija uspešno izvršena!");
         }
     }
 }

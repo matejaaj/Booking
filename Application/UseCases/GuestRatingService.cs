@@ -13,9 +13,9 @@ namespace BookingApp.Application.UseCases
     {
         private readonly IGuestRatingRepository _guestRatingRepository;
 
-        public GuestRatingService()
+        public GuestRatingService(IGuestRatingRepository guestRatingRepository)
         {
-            _guestRatingRepository = Injector.CreateInstance<IGuestRatingRepository>();
+            _guestRatingRepository = guestRatingRepository;
         }
 
         public List<GuestRating> GetAll()

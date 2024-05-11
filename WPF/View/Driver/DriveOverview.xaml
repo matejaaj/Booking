@@ -5,13 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
         mc:Ignorable="d"
-        Title="DriveOverview" Height="200" Width="268">
-    <Grid Height="190" VerticalAlignment="Top">
-        <TextBox x:Name="txtStartingPrice" HorizontalAlignment="Left" Text="{Binding StartingPrice, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" Height="24" ToolTip="Start price"/>
-        <Button Content="Start" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalAlignment="Top" Width="80" Click="btnStart"/>
-        <Label Content="Current price: " HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Width="82"/>
-        <Label x:Name="price" Content="{Binding Price}" HorizontalAlignment="Left" Margin="97,66,0,0" VerticalAlignment="Top" Width="82" Height="26"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Click="btnCancel"/>
-        <Button Content="Finish" HorizontalAlignment="Left" Margin="185,145,0,0" VerticalAlignment="Top" Width="55" Click="btnFinish"/>
+        Title="Taxi Meter" Height="269" Width="484">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        
+        <TextBlock Text="Taxi Meter" FontSize="24" FontWeight="Bold" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            
+            <StackPanel Margin="10">
+                <TextBox x:Name="txtStartingPrice" Text="{Binding StartingPrice, UpdateSourceTrigger=PropertyChanged}" Width="135" Height="24" Margin="0,0,0,10" ToolTip="Start price"/>
+                <Button Content="Start" Width="80" Click="btnStart" Margin="0,0,0,10"/>
+                <Label Content="Current price: " Width="82"/>
+                <Label x:Name="price" Content="{Binding Price}" Width="82" Height="26"/>
+            </StackPanel>
+
+            
+            <StackPanel Grid.Column="1" Margin="10">
+                <Button Content="Cancel" Click="btnCancel" Margin="0,0,0,10"/>
+                <Button Content="Finish" Width="55" Click="btnFinish"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

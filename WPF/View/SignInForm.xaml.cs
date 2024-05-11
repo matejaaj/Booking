@@ -12,6 +12,8 @@ using System.Windows;
 using BookingApp.Application.UseCases;
 using Accessibility;
 using BookingApp.WPF.View.Tourist;
+using BookingApp.Application;
+using BookingApp.Domain.RepositoryInterfaces;
 
 namespace BookingApp.WPF.View
 {
@@ -50,7 +52,7 @@ namespace BookingApp.WPF.View
             InitializeComponent();
             DataContext = this;
             _repository = new UserRepository();
-            _ownerService = new OwnerService();
+            _ownerService = new OwnerService(Injector.CreateInstance<IOwnerRepository>());
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -64,8 +66,10 @@ namespace BookingApp.WPF.View
                     {
                         case Role.OWNER:
                             Domain.Model.Owner owner = _ownerService.GetByUsername(Username);
-                            OwnerOverview ownerOverview = new OwnerOverview(owner);
-                            ownerOverview.Show();
+                            //OwnerOverview ownerOverview = new OwnerOverview(owner);
+                            //ownerOverview.Show();
+                            OwnerMainWindow ownerMainWindow = new OwnerMainWindow(owner);
+                            ownerMainWindow.Show();
                             break;
                         case Role.GUEST:
                             GuestOverview guestOverview = new GuestOverview(user);

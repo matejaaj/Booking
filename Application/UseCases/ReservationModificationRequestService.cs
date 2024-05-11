@@ -3,6 +3,7 @@ using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookingApp.Application.UseCases
 {
@@ -10,9 +11,9 @@ namespace BookingApp.Application.UseCases
     {
         private readonly IReservationModificationRequestRepository _requestRepository;
 
-        public ReservationModificationRequestService()
+        public ReservationModificationRequestService(IReservationModificationRequestRepository requestRepository)
         {
-            _requestRepository = Injector.CreateInstance<IReservationModificationRequestRepository>();
+            _requestRepository = requestRepository;
         }
 
         public List<ReservationModificationRequest> GetAll()
@@ -45,9 +46,25 @@ namespace BookingApp.Application.UseCases
             return _requestRepository.GetByReservationId(id);
         }
 
+        public List<ReservationModificationRequest> GetAllWithReservationId(int id)
+        {
+            return _requestRepository.GetAllWithReservationId(id);
+        }
+
+        public List<ReservationModificationRequest> GetAllAcceptedWithReservationId(int id)
+        {
+            var requests = _requestRepository.GetAllWithReservationId(id);
+            return requests.FindAll(r => r.Status == ReservationModificationRequest.RequestStatus.APPROVED);
+        }
+
         public List<ReservationModificationRequest> GetByReservationIds(List<int> reservationIds)
         {
             return _requestRepository.GetByReservationIds(reservationIds);
+        }
+
+        internal List<ReservationModificationRequest> GetByReservationIds(List<AccommodationReservation> accommodationReservations)
+        {
+            return _requestRepository.GetByReservationIds(accommodationReservations.Select(a => a.Id).ToList());
         }
     }
 }

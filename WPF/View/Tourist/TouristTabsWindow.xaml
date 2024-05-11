@@ -6,13 +6,11 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         xmlns:control="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
         mc:Ignorable="d"
-        Title="TouristTabsWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="Booking"  Width="1320" Height="743"
+        Background="{DynamicResource PrimaryBackground}">
 
-    <Window.Resources>
-        <Style x:Key="TabStyle" TargetType="TabItem">
-            <Setter Property="Width" Value="80"/>
-        </Style>
-    </Window.Resources>
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,39 +18,43 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TabControl Grid.Row="0" TabStripPlacement="Left">
-            <TabItem Header="Ture" Style="{StaticResource TabStyle}">
+        <TabControl Grid.Row="0" TabStripPlacement="Left"
+                    Background="{DynamicResource PrimaryBackground}">
+            <TabItem Header="Ture" Style="{StaticResource ParentTabStyle}">
                 <TabControl>
-                    <TabItem Header="Sve ture">
+                    <TabItem Header="Sve ture" Style="{StaticResource ChildTabStyle}">
                         <control:AllToursControl DataContext="{Binding ToursMainViewModel.AllToursViewModel}"
                                                  Tourist="{Binding Tourist}"/>
                     </TabItem>
-                    <TabItem Header="Moje ture">
+                    <TabItem Header="Moje ture" Style="{StaticResource ChildTabStyle}">
                         <control:MyToursControl DataContext="{Binding ToursMainViewModel.MyToursViewModel}"
                                                 Tourist="{Binding Tourist}"/>
                     </TabItem>
 
-                    <TabItem Header="Zahtev ture">
+                    <TabItem Header="Zahtev ture" Style="{StaticResource ChildTabStyle}">
                         <control:TourRequestsControl DataContext="{Binding ToursMainViewModel.TourRequestsViewModel}"/>
                     </TabItem>
 
                 </TabControl>
             </TabItem>
-            <TabItem Header="Taksi" Style="{StaticResource TabStyle}">
+            <TabItem Header="Taksi" Style="{StaticResource ParentTabStyle}">
                 <TabControl>
-                    <TabItem Header="Moje vožnje">
+                    <TabItem Header="Moje vožnje" Style="{StaticResource ChildTabStyle}"
+                             >
                         <control:DriveReservationControl DataContext="{Binding DriveMainViewModel}"
-                                                         />
+                                                         Tourist="{Binding Tourist}"       />
                     </TabItem>
                 </TabControl>
             </TabItem>
         </TabControl>
 
         <!-- Buttons at the bottom -->
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="3,-71,0,0">
-            <Button Content="Promeni jezik"  />
-            <Button Content="Promeni temu" />
-            <Button Content="Odjavi se" />
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="3,-100,0,0">
+            <Button Content="Promeni jezik"  Style="{StaticResource SmallButton}"
+                    Width="130"/>
+            <Button Content="Promeni temu" Style="{StaticResource SmallButton}"
+                    Click="ChangeTheme_click"/>
+            <Button Content="Odjavi se" Style="{StaticResource SmallButton}"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -16,6 +16,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BookingApp.Application;
+using BookingApp.Domain.RepositoryInterfaces;
 
 namespace BookingApp.WPF.View.Guest
 {
@@ -26,7 +28,7 @@ namespace BookingApp.WPF.View.Guest
         public RequestModification(AccommodationReservation reservation)
         {
             InitializeComponent();
-            _viewModel = new RequestModificationViewModel(reservation, new ReservationModificationRequestService());
+            _viewModel = new RequestModificationViewModel(reservation, new ReservationModificationRequestService(Injector.CreateInstance<IReservationModificationRequestRepository>()));
             DataContext = _viewModel;
         }
 

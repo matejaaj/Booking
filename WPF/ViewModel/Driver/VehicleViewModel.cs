@@ -1,4 +1,5 @@
-﻿using BookingApp.Domain.Model;
+﻿using BookingApp.Application.Events;
+using BookingApp.Domain.Model;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Driver;
 using BookingApp.WPF.View.Guide;
@@ -134,7 +135,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         {
             if (MaxPassengers == null || SelectedLanguages.Count == 0 || SelectedLocations.Count == 0 || MaxPassengers <= 0)
             {
-                MessageBox.Show("Please ensure all fields are correctly filled and at least one language and location are selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Please ensure all fields are correctly filled and at least one language and location are selected.", "Error"));
                 return false;
             }
             return true;

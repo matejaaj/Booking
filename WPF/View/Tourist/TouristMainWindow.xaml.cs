@@ -32,9 +32,7 @@ namespace BookingApp.WPF.View.Tourist
 
         private void btnOpenToursOverview_Click(object sender, RoutedEventArgs e)
         {
-            ToursOverview toursOverview = new ToursOverview(_user);
-            toursOverview.Show();
-            this.Close();
+
         }
 
         private void btnOpenRequestDrive_Click(object sender, RoutedEventArgs e)

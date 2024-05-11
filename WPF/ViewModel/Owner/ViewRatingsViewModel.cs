@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using System;
 using System.Collections.Generic;
@@ -33,21 +35,22 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static AccommodationAndOwnerRatingService _accommodationAndOwnerRatingService;
         private static AccommodationService _accommodationService;
 
-        public ViewRatingsViewModel(Domain.Model.Owner loggedInOwner, List<AccommodationReservation> ownerAccommodationReservations) 
+        public ViewRatingsViewModel(Domain.Model.Owner loggedInOwner) 
         { 
             LoggedInOwner = loggedInOwner;
             InitializeServices();
             Ratings = new ObservableCollection<AccommodationRatingDTO>();
-            AccommodationReservations = ownerAccommodationReservations;
+            AccommodationReservations = _accommodationReservationService.GetByOwner(loggedInOwner);
+           // AccommodationReservations = ownerAccommodationReservations;
             Update();
         }
 
         private void InitializeServices()
         {
-            _accommodationReservationService = new AccommodationReservationService();
-            _userService = new UserService();
-            _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService();
-            _accommodationService = new AccommodationService(); 
+            _userService = new UserService(Injector.CreateInstance<IUserRepository>());
+            _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService(Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>());
+            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _accommodationReservationService = new AccommodationReservationService(_accommodationService, Injector.CreateInstance<IAccommodationReservationRepository>());
         }
 
         private void Update()

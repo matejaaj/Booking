@@ -14,9 +14,9 @@ namespace BookingApp.Application.UseCases
     {
         private readonly IOwnerRepository _ownerRepository;
 
-        public OwnerService()
+        public OwnerService(IOwnerRepository ownerRepository)
         {
-            _ownerRepository = Injector.CreateInstance<IOwnerRepository>();
+            _ownerRepository = ownerRepository;
         }
 
         public Owner GetByUsername(string username)

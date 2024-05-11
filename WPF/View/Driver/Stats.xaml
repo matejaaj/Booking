@@ -8,12 +8,14 @@
         Title="Stats" Height="500" Width="800">
 
     <Grid Margin="10">
-        <Button Content="Cancel" Click="btnCancel_Click" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="30"/>
-        <Button Content="Yearly" Click="btnYearly_Click"  HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top" Width="75" Height="30"/>
-        <Button Content="Monthly" Click="btnMonthly_Click" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" Width="75" Height="30"/>
-        <TextBox x:Name="txtYear" HorizontalAlignment="Left" Text="{Binding Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="280,10,0,0" Width="100" Height="30" VerticalAlignment="Top"/>
-
-        <DataGrid x:Name="lvReports" HorizontalAlignment="Left" Height="350" Margin="10,50,0,0" VerticalAlignment="Top" Width="760" ItemsSource="{Binding ListReport}" AutoGenerateColumns="False">
+        <TextBlock x:Name="txtDisplayMode" Text="{Binding DisplayMode}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.441,0.631" Width="189" Height="30"/>
+        <Button Content="Cancel" Click="btnCancel_Click" HorizontalAlignment="Right" Margin="0,0,10,60" VerticalAlignment="Bottom" Width="75" Height="30" RenderTransformOrigin="0.486,-0.414"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="279">
+            <Button Content="Yearly" Click="btnYearly_Click" Width="75" Height="30" Margin="0,0,5,0"/>
+            <Button Content="Monthly" Click="btnMonthly_Click" Width="75" Height="30" Margin="0,0,5,0"/>
+            <TextBox x:Name="txtYear" Text="{Binding Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="119" Height="30"/>
+        </StackPanel>
+        <DataGrid x:Name="lvReports" HorizontalAlignment="Center" Height="335" Margin="0,50,0,0" VerticalAlignment="Top" Width="760" ItemsSource="{Binding ListReport}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Year/Month" Binding="{Binding YearMonth}" Width="100"/>
                 <DataGridTextColumn Header="Number of Rides" Binding="{Binding NumberOfRides}" Width="120"/>

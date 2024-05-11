@@ -6,22 +6,20 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         xmlns:controls="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
         mc:Ignorable="d"
-        Title="RequestDriveWindow" Height="600" Width="500">
-    <Window.Resources>
-        <Style TargetType="Control" x:Key="LargerFontStyle">
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-    </Window.Resources>
+        Title="RequestDriveWindow" Height="600" Width="500"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource PrimaryBackground}">
+
 
     <Grid>
         <TabControl>
-            <TabItem Header="Obicna voznja" Style="{StaticResource LargerFontStyle}">
+            <TabItem Header="Obicna voznja" Style="{StaticResource ChildTabStyle}">
                 <controls:RegularDriveControl DataContext="{Binding RegularDriveViewModel}" />
             </TabItem>
-            <TabItem Header="Brza voznja" Style="{StaticResource LargerFontStyle}">
+            <TabItem Header="Brza voznja" Style="{StaticResource ChildTabStyle}">
                 <controls:FastDriveControl DataContext="{Binding FastDriveViewModel}" />
             </TabItem>
-            <TabItem Header="Grupna voznja" Style="{StaticResource LargerFontStyle}">
+            <TabItem Header="Grupna voznja" Style="{StaticResource ChildTabStyle}">
                 <controls:GroupDriveControl DataContext="{Binding GroupDriveViewModel}" />
             </TabItem>
         </TabControl>

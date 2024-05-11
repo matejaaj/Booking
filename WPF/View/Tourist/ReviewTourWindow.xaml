@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
-        Title="ReviewTourWindow" Height="450" Width="800">
-    <ScrollViewer>
-        <StackPanel>
+        Title="Oceni turu" Height="600" Width="450"
+        WindowStartupLocation="CenterScreen">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-            <ItemsControl ItemsSource="{Binding ReviewForms}">
+            <!-- Reviews Area -->
+            <ItemsControl ItemsSource="{Binding ReviewForms}" Grid.Row="1">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Padding="10" Margin="5" BorderThickness="1" BorderBrush="Black">
@@ -18,12 +25,10 @@
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                     <TextBlock Text="Ocenite turu od 1 do 5: " VerticalAlignment="Center" />
                                     <ComboBox Width="50" VerticalAlignment="Center"
-                                        ItemsSource="{Binding Ratings}"
-                                        SelectedItem="{Binding SelectedRating, Mode=TwoWay}" />
-
+                                              ItemsSource="{Binding Ratings}"
+                                              SelectedItem="{Binding SelectedRating, Mode=TwoWay}" />
                                 </StackPanel>
-                                <TextBox Text="{Binding Comment}" Height="60" TextWrapping="Wrap" 
-                                         Margin="0,0,0,5" />
+                                <TextBox Text="{Binding Comment}" Height="60" TextWrapping="Wrap" Margin="0,0,0,5" />
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Dodajte slike: " VerticalAlignment="Center" />
                                     <Button Content="+" Width="25" Height="25" VerticalAlignment="Center" Margin="5,0,0,0" Click="AddPictureButton_Click" />
@@ -32,14 +37,13 @@
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                                     <TextBlock Text="{Binding}" Margin="5,0,5,0"/>
-                                                    <Button Content="-" Width="25" Height="25" Margin="5,0,0,0" 
-                        Click="RemovePictureButton_Click" 
-                        Tag="{Binding}"/>
+                                                    <Button Content="-" Width="25" Height="25" Margin="5,0,0,0"
+                                                            Click="RemovePictureButton_Click"
+                                                            Tag="{Binding}"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -47,11 +51,11 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Button Content="Potvrdi ocene" Width="100" Click="ConfirmButton_Click" Margin="5,0,0,0" />
-                <Button Content="Odustani" Width="100" Click="CancelButton_Click" Margin="5,0,0,0"/>
+            <!-- Action Buttons -->
+            <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="10">
+                <Button Content="Potvrdi ocene" Width="120" Click="ConfirmButton_Click" Margin="5,0,0,0" />
+                <Button Content="Odustani" Width="120" Click="CancelButton_Click" Margin="5,0,0,0"/>
             </StackPanel>
-
-        </StackPanel>
+        </Grid>
     </ScrollViewer>
 </Window>

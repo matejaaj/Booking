@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
@@ -68,8 +70,8 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         public GuestRatingFormViewModel(AccommodationReservation reservation)
         {
-            _accommodationReservationService = new AccommodationReservationService();
-            _guestRatingService = new GuestRatingService();
+            _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            _guestRatingService = new GuestRatingService(Injector.CreateInstance<IGuestRatingRepository>());
             _reservation = reservation;
         }
 

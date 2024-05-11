@@ -1,4 +1,6 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.WPF.ViewModel.Guest;
 using System.Windows;
 
@@ -14,7 +16,7 @@ namespace BookingApp.WPF.View.Guest
         public ReservationConfirmation(int accommodationId, int guestId, string selectedDateRange, int days, int maxCapacity)
         {
             InitializeComponent();
-            _viewModel = new ReservationConfirmationViewModel(accommodationId, guestId, selectedDateRange, days, maxCapacity, new AccommodationReservationService());
+            _viewModel = new ReservationConfirmationViewModel(accommodationId, guestId, selectedDateRange, days, maxCapacity, new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>()));
             DataContext = _viewModel;
         }
 

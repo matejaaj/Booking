@@ -70,6 +70,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Button Content="Previous Reservations" Click="PreviousReservations_Click"  Margin="50,4,50,13" Width="150"></Button>
+            <Button Content="Show Ratings" Click="ShowRatings_Click" Margin="50,4,50,13" Width="150"></Button>
         </StackPanel>
     </Grid>
 </Window>

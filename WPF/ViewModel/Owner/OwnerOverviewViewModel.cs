@@ -1,19 +1,24 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Owner;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
-    public class OwnerOverviewViewModel
+    public class OwnerOverviewViewModel : INotifyPropertyChanged
     {
+        public string PageName { get; set; }
         public Domain.Model.Owner LoggedInOwner { get; set; }
         public bool isSuperOwner { get; set; }
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
@@ -33,34 +38,33 @@ namespace BookingApp.WPF.ViewModel.Owner
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(LoggedInOwner));
             InitializeAccommodationReservaions();
             CalculateRating();
+            PageName = "Accommodations";
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void InitializeAccommodationReservaions()
         {
-            var accommodationIds = Accommodations.Select(a => a.AccommodationId).ToList();
-            OwnerAccommodationReservations = _accommodationReservationService.GetByAccommodationIds(accommodationIds);
+            OwnerAccommodationReservations = _accommodationReservationService.GetByAccommodationIds(Accommodations);
         }
 
         private void InitializeServices()
         {
-            _accommodationService = new AccommodationService();
-            _accommodationReservationService = new AccommodationReservationService();
-            _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService();
-            _ownerService = new OwnerService();
+            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService(_accommodationReservationService, Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>());
+            _ownerService = new OwnerService(Injector.CreateInstance<IOwnerRepository>());
         }
 
         private void CalculateRating()
         {
-            var ratings = GetRatings();
-
-            RatingsNumber = ratings.Count();
-            List<double> individualAverages = new List<double>();
-            foreach(var r in ratings)
-            {
-                individualAverages.Add((double)(r.Cleanliness+r.OwnershipEthics)/2);
-            }
-            AverageScore = (double)individualAverages.Sum(a => a)/RatingsNumber;
-
+            RatingsNumber = GetRatings().Count();
+            var individualAverages = _accommodationAndOwnerRatingService.CalculateIndividualAverages(GetRatings());
+            AverageScore = _accommodationAndOwnerRatingService.CalculateAverageScore(individualAverages, RatingsNumber);
             CheckSuperOwner();
         }
 
@@ -80,26 +84,26 @@ namespace BookingApp.WPF.ViewModel.Owner
         }
 
         private List<AccommodationAndOwnerRating> GetRatings() {
-            var accommodationReservationsIds = OwnerAccommodationReservations.Select(a => a.Id).ToList();
-            return _accommodationAndOwnerRatingService.GetByReservationIds(accommodationReservationsIds);
+            return _accommodationAndOwnerRatingService.GetByReservations(OwnerAccommodationReservations);
         }
 
-        public void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
+        public void NewAccommodation_Click(object sender, RoutedEventArgs e, AccommodationsPage accommodationsPage)
         {
             AccommodationForm accommodationForm = new AccommodationForm(LoggedInOwner);
+            accommodationForm.Owner = Window.GetWindow(accommodationsPage);
             accommodationForm.Show();
         }
 
-        public void ShowViewAccommodation(object sender, RoutedEventArgs e)
+        public ViewAccommodationPage ShowViewAccommodation(object sender, RoutedEventArgs e)
         {
             if (SelectedAccommodation == null)
             {
                 MessageBox.Show("Please choose an accommodation to view!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
             }
             else
             {
-                ViewAccommodation viewAccommodationWindow = new ViewAccommodation(SelectedAccommodation);
-                viewAccommodationWindow.Show();
+                return new ViewAccommodationPage(SelectedAccommodation);
             }
         }
 
@@ -110,22 +114,13 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         public void NotifyMissingRatings(ObservableCollection<Accommodation> accommodations)
         {
-            var missingRatingReservations = new List<AccommodationReservation>(
-                 OwnerAccommodationReservations.Where(reservation => (DateTime.Now - reservation.EndDate).TotalDays <= 5 &&
-                reservation.EndDate < DateTime.Now && reservation.IsRated == false)
-             );
+            var missingRatingReservations = _accommodationReservationService.GetUnratedReservations(Accommodations);
 
             if (missingRatingReservations.Any())
             {
                 MessageBox.Show("You have recent unrated reservations",
                     "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-        }
-
-        public void ShowRatingsButton(object sender, RoutedEventArgs e)
-        {
-            ViewRatings viewRatingsWindow = new ViewRatings(LoggedInOwner, OwnerAccommodationReservations);
-            viewRatingsWindow.Show();
         }
 
         internal void SuperTrophyButton(object sender, RoutedEventArgs e)
@@ -151,10 +146,13 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        internal void ReschedulingButton(object sender, RoutedEventArgs e)
+        internal void AccommodationsListView_SelectionChanged(object sender, SelectionChangedEventArgs e, AccommodationsPage accommodationsPage)
         {
-            ReschedulingOverview reschedulingOverviewWindow = new ReschedulingOverview(OwnerAccommodationReservations);
-            reschedulingOverviewWindow.Show();  
+            ViewAccommodationPage page = ShowViewAccommodation(sender, e);
+            if (page != null)
+            {
+                accommodationsPage.NavigationService.Navigate(page);
+            }
         }
     }
 }

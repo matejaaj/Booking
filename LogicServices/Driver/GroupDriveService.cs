@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application.Events;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.WPF.View.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +68,7 @@ namespace BookingApp.LogicServices.Driver
                     }
 
                     eventHandler?.Invoke(this, EventArgs.Empty);
-                    MessageBox.Show("You have new group drive!\nSee it in your list of reservations!", "Group drive notification", MessageBoxButton.OK);
+                    MainWindow.EventAggregator.Publish(new ShowMessageEvent("You have new group drive!\nSee it in your list of reservations!","Notification"));
                 }
 
                 ProccesDataUpdate(toUpdate, toDelete);

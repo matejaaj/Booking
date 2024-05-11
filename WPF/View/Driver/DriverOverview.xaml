@@ -26,76 +26,13 @@
             <ColumnDefinition Width="242*"/>
             <ColumnDefinition Width="36*"/>
             <ColumnDefinition Width="428*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="SideMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="#333333">
-            <StackPanel Width="250" Background="#FFA9A9A9" VerticalAlignment="Top">
-                <!-- Dugme za zatvaranje menija sa strelicom levo -->
-                <Button Click="HideMenuBar" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" HorizontalAlignment="Stretch" Height="39">
-                    <DockPanel>
-                        <Image Source="../../../Resources/Images/goBack.png" Width="20" Height="20" DockPanel.Dock="Left"/>
-                        <TextBlock Text="CityConnect" FontWeight="Bold" FontSize="18" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                    </DockPanel>
-                </Button>
-
-                <!-- Profilna slika, ime korisnika i dugme za odjavu -->
-                <StackPanel Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
-                    <Image Source="../../../Resources/Images/userProfile.png" Height="80" Width="100" Margin="0,0,0,5"/>
-                    <TextBlock Text="{Binding Korisnik.Username}" Foreground="Black" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="5,5,0,5"/>
-                </StackPanel>
-
-                <!-- Dugme za odjavu -->
-                <Button Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
-
-                <!-- Ostale stavke menija -->
-                <Button Click="ShowCreateVehicleForm" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/carReg.png" Width="25" Height="25"/>
-                        <TextBlock Text="Vehicle Registration" FontSize="16" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Button>
-                <Button Click="btnStats_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/stats.png" Width="25" Height="25"/>
-                        <TextBlock Text="Statistics" FontSize="16" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/notifications.png" Width="25" Height="25"/>
-                        <TextBlock Text="Notifications" FontSize="16" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/vacations.png" Width="25" Height="25"/>
-                        <TextBlock Text="Vacation Requests" FontSize="16" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/reports.png" Width="25" Height="25"/>
-                        <TextBlock Text="Vacation Reports" FontSize="16" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/userData.png" Width="25" Height="25"/>
-                        <TextBlock Text="Personal Data" FontSize="16" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Button>
-                <Button Padding="5" Margin="5,57,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/tutorial.png" Width="25" Height="25"/>
-                        <TextBlock Text="Tutorijal" FontSize="16" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-        </Canvas>
+        
         <StackPanel Grid.Row="1" Grid.ColumnSpan="4">
             <ListView ItemsSource="{Binding DriveReservations}" 
                     Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}" 
@@ -123,35 +60,53 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" VerticalAlignment="Top">
-                                    <TextBlock  Margin="0,5,0,5">
-                                        <Run Text="Tourist: "/>
-                                        <Run Text="{Binding Tourist.Username}"/>
-                                    </TextBlock>
-                                    <TextBlock Margin="0,5,0,5">
-                                        <Run Text="Pick up location: "/>
-                                        <Run Text="{Binding PickupLocationId, Converter={StaticResource LocationConverterDriver}}"/>
-                                    </TextBlock>
-                                    <TextBlock Margin="0,5,0,5">
-                                        <Run Text="Dropoff location: "/>
-                                        <Run Text="{Binding DropoffLocationid, Converter={StaticResource LocationConverterDriver}}"/>
-                                    </TextBlock>
-                                    <TextBlock Margin="0,5,0,5">
-                                        <Run Text="Departure time: "/>
-                                        <Run Text="{Binding DepartureTime, StringFormat='{}{0:MM/dd/yyyy HH:mm:ss}'}"/>
-                                    </TextBlock>
-                                    <TextBlock Margin="0,5,0,5">
-                                        <Run Text="Delay: "/>
-                                        <Run Text="{Binding DelayMinutesTourist, StringFormat='{}{0}min'}"/>
-                                    </TextBlock>
-                                    <TextBlock  Margin="0,5,0,5">
-                                        <Run Text="Status: "/>
-                                        <Run Text="{Binding Status.Name}"/>
-                                    </TextBlock>
+                                    <StackPanel Orientation="Horizontal" Margin="2,5,0,4">
+                                        <Image Source="../../../Resources/Images/turista.png" Width="20" Height="25" Margin="0,0,5,0"/>
+                                        <TextBlock FontSize="16">
+                                            <Run Text="Tourist: "/>
+                                            <Run Text="{Binding Tourist.Username}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="2,5,0,4">
+                                        <Image Source="../../../Resources/Images/pickup.png" Width="20" Height="25" Margin="0,0,5,0"/>
+                                        <TextBlock FontSize="16">
+                                            <Run Text="Pick up location: "/>
+                                            <Run Text="{Binding PickupLocationId, Converter={StaticResource LocationConverterDriver}}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="2,5,0,4">
+                                        <Image Source="../../../Resources/Images/destination.png" Width="20" Height="25" Margin="0,0,5,0"/>
+                                        <TextBlock FontSize="16">
+                                            <Run Text="Destination: "/>
+                                            <Run Text="{Binding DropoffLocationid, Converter={StaticResource LocationConverterDriver}}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="2,5,0,4">
+                                        <Image Source="../../../Resources/Images/time.png" Width="20" Height="25" Margin="0,0,5,0"/>
+                                        <TextBlock FontSize="16">
+                                            <Run Text="Departure: "/>
+                                            <Run Text="{Binding DepartureTime, StringFormat='{}{0:MM/dd/yyyy HH:mm:ss}'}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="2,5,0,4">
+                                        <Image Source="../../../Resources/Images/delay.png" Width="20" Height="25" Margin="0,0,5,0"/>
+                                        <TextBlock FontSize="16">
+                                            <Run Text="Delay: "/>
+                                            <Run Text="{Binding DelayMinutesTourist, StringFormat='{}{0}min'}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="2,5,0,4">
+                                        <Image Source="../../../Resources/Images/status.png" Width="20" Height="25" Margin="0,0,5,0"/>
+                                        <TextBlock FontSize="16">
+                                            <Run Text="Status: "/>
+                                            <Run Text="{Binding Status.Name}"/>
+                                        </TextBlock>
+                                    </StackPanel>
                                 </StackPanel>
                                 <!-- Mapa -->
-                                <Image Grid.Column="1" Source="../../../Resources/Images/Map.jpg" Height="150"  Margin="10" VerticalAlignment="Bottom"/>
+                                <Image Grid.Column="1" Source="../../../Resources/Images/Map.jpg" Height="180" Width="300"  Margin="10" VerticalAlignment="Bottom"/>
                                 <!-- Dugme za akciju -->
-                                <Button Grid.Column="2" Click="ViewDrive_Respond" Margin="10" VerticalAlignment="Center" Visibility="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged}">
+                                <Button Grid.Column="2" Click="ViewDrive_Respond" Margin="10" VerticalAlignment="Center" Visibility="{Binding DataContext.IsVisible, RelativeSource={RelativeSource AncestorType={x:Type Page}}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="../../../Resources/Images/check.png" Width="20" Height="25"/>
                                         <TextBlock Text="Accept Ride" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
@@ -164,61 +119,7 @@
             </ListView>
         </StackPanel>
 
-        <ToolBar Grid.Row="0" Grid.ColumnSpan="5" Background="#FFA9A9A9">
-            <Button Click="ShowMenuBar">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../../../Resources/Images/menuBar.png" Width="20" Height="25"/>
-                    <TextBlock Text="CityConnect" 
-                        FontSize="20" 
-                        FontWeight="Bold" 
-                        Foreground="Black"
-                        VerticalAlignment="Center" 
-                        Margin="10,0,0,0" 
-                        FontFamily="Arial"/>
-                </StackPanel>
-            </Button>
-            <Separator/>
-            <Button Click="ViewDrive_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../../../Resources/Images/view.png" Width="20" Height="25"/>
-                    <TextBlock Text="Delay" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
-            </Button>
-            <Separator/>
-            <Button Click="ViewDrive_Respond">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../../../Resources/Images/edit.png" Width="20" Height="25"/>
-                    <TextBlock Text="Respond" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
-            </Button>
-            <Separator/>
-            <Button Click="ViewDrive_Cancel">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../../../Resources/Images/delete.png" Width="20" Height="25"/>
-                    <TextBlock Name="DeleteTxtBlock" Text="Cancel Reservation" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
-            </Button>
-            <Separator/>
-            <TextBox x:Name="txtVehicleIdInput" Width="100" ToolTip="Enter Vehicle ID" Text="{Binding TxtVehicleIdInput, UpdateSourceTrigger=PropertyChanged}" />
-            <Button x:Name="btnDeleteVehicle" Click="btnDeleteVehicle_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../../../Resources/Images/delete.png" Width="20" Height="25"/>
-                    <TextBlock Text="Dismiss" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
-            </Button>
-            <Separator/>
-            <Button x:Name="btnDrive" Click="btnDrive_Click">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Drive overview" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
-            </Button>
-            <Separator/>
-            <Button x:Name="btnStats" Click="btnStats_Click">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Stats" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
-            </Button>
-        </ToolBar>
+        
         <Frame Name="MainNavigationFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 

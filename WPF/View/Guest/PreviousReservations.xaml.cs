@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using BookingApp.Repository;
 using BookingApp.WPF.ViewModel.Guest;
@@ -22,9 +24,9 @@ namespace BookingApp.WPF.View.Guest
         {
             InitializeComponent();
             _viewModel = new PreviousReservationsViewModel(guest,
-                new AccommodationReservationService(),
-                new AccommodationService(),
-                new ReservationModificationRequestService());
+                new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>()),
+                new AccommodationService(Injector.CreateInstance<IAccommodationRepository>()),
+                new ReservationModificationRequestService(Injector.CreateInstance<IReservationModificationRequestRepository>()));
             DataContext = _viewModel;
             ReservationsListBox.ItemsSource = _viewModel.ReservationInfos;
         }

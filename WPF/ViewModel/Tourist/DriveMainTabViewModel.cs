@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.WPF.View.Tourist;
 using BookingApp.WPF.ViewModel.Tourist.Factories;
 
 namespace BookingApp.WPF.ViewModel.Tourist
@@ -17,7 +18,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public DriveReservation SelectedReservation { get; private set; }
 
 
-        private User _user;
+        public User Tourist { get;  }
 
         private DriveReservationViewModelFactory factory;
 
@@ -28,13 +29,13 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public DriveMainTabViewModel(User user, DriveReservationService driveReservationService, UserService userService, DetailedLocationService detailedLocationService, DriverUnreliableReportService driverReport)
         {
-            _user = user;
+            Tourist = user;
             _driveReservationService = driveReservationService;
             _userService = userService;
             _detailedLocationService = detailedLocationService;
             _driverReportService = driverReport;
 
-            factory = new DriveReservationViewModelFactory(_user, driveReservationService, userService,
+            factory = new DriveReservationViewModelFactory(Tourist, driveReservationService, userService,
                 detailedLocationService);
 
 
@@ -65,7 +66,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public bool CheckIfMarked()
         {
             var driverId = SelectedReservation.DriverId;
-            return _driverReportService.ReportExists(SelectedReservation.Id, _user.Id, driverId);
+            return _driverReportService.ReportExists(SelectedReservation.Id, Tourist.Id, driverId);
         }
 
         public bool CheckIfDriverArrived(DriveReservationViewModel reservationViewModel)
@@ -78,10 +79,15 @@ namespace BookingApp.WPF.ViewModel.Tourist
         {
             var driverId = SelectedReservation.DriverId;
             DateTime time = DateTime.Now;
-            DriverUnreliableReport report = new DriverUnreliableReport(_user.Id, driverId, SelectedReservation.Id, time);
+            DriverUnreliableReport report = new DriverUnreliableReport(Tourist.Id, driverId, SelectedReservation.Id, time);
             _driverReportService.Save(report);
         }
 
 
+        public void OpenReservationWindos()
+        {
+            DriveReservationWindow requestDrive = new DriveReservationWindow(Tourist);
+            requestDrive.Show();
+        }
     }
 }
