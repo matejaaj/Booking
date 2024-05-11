@@ -23,11 +23,32 @@ namespace BookingApp.WPF.View.Guide
     {
         private readonly TourRequestsViewModel _viewModel;
 
+        public static readonly DependencyProperty PageTitleProperty = DependencyProperty.Register(
+            "PageTitle", typeof(string), typeof(TourRequests), new PropertyMetadata(default(string)));
+
+        public string PageTitle
+        {
+            get { return (string)GetValue(PageTitleProperty); }
+            set { SetValue(PageTitleProperty, value); }
+        }
+
+        public static readonly DependencyProperty PageIconProperty = DependencyProperty.Register(
+            "PageIcon", typeof(string), typeof(TourRequests), new PropertyMetadata(default(string)));
+
+        public string PageIcon
+        {
+            get { return (string)GetValue(PageIconProperty); }
+            set { SetValue(PageIconProperty, value); }
+        }
+
+
         public TourRequests()
         {
             InitializeComponent();
             _viewModel = new TourRequestsViewModel();
             DataContext = _viewModel;
+            this.PageIcon = "../../../Resources/Images/Guide/personal.png";
+            this.PageTitle = "REQUESTS";
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

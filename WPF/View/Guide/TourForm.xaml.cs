@@ -8,11 +8,31 @@ namespace BookingApp.WPF.View.Guide
     {
         private readonly TourFormViewModel _viewModel;
 
+        public static readonly DependencyProperty PageTitleProperty = DependencyProperty.Register(
+           "PageTitle", typeof(string), typeof(TourForm), new PropertyMetadata(default(string)));
+
+        public string PageTitle
+        {
+            get { return (string)GetValue(PageTitleProperty); }
+            set { SetValue(PageTitleProperty, value); }
+        }
+
+        public static readonly DependencyProperty PageIconProperty = DependencyProperty.Register(
+            "PageIcon", typeof(string), typeof(TourForm), new PropertyMetadata(default(string)));
+
+        public string PageIcon
+        {
+            get { return (string)GetValue(PageIconProperty); }
+            set { SetValue(PageIconProperty, value); }
+        }
+
         public TourForm()
         {
             InitializeComponent();
             _viewModel = new TourFormViewModel();
             DataContext = _viewModel;
+            this.PageTitle = "CREATE TOUR";
+            this.PageIcon = "../../../Resources/Images/Guide/map.png";
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)

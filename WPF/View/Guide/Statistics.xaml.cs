@@ -13,11 +13,30 @@ namespace BookingApp.WPF.View.Guide
     {
         private readonly StatisticsViewModel _viewModel;
 
+        public static readonly DependencyProperty PageTitleProperty = DependencyProperty.Register(
+           "PageTitle", typeof(string), typeof(Statistics), new PropertyMetadata(default(string)));
+
+        public string PageTitle
+        {
+            get { return (string)GetValue(PageTitleProperty); }
+            set { SetValue(PageTitleProperty, value); }
+        }
+
+        public static readonly DependencyProperty PageIconProperty = DependencyProperty.Register(
+            "PageIcon", typeof(string), typeof(Statistics), new PropertyMetadata(default(string)));
+
+        public string PageIcon
+        {
+            get { return (string)GetValue(PageIconProperty); }
+            set { SetValue(PageIconProperty, value); }
+        }
         public Statistics()
         {
             InitializeComponent();
             _viewModel = new StatisticsViewModel();
             DataContext = _viewModel;
+            this.PageTitle = "STATISTICS";
+            this.PageIcon = "../../../Resources/Images/Guide/analytics.png";
         }
 
         private void btnSearchTours_Click(object sender, RoutedEventArgs e)

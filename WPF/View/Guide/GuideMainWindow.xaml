@@ -16,15 +16,20 @@
     </Window.Resources>
 
     <Grid>
-        <Grid Grid.Column="0" Background="#F0F0F0" Width="200" HorizontalAlignment="Left">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="0" Background="#4F6F52" Width="200" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Tony Parker (user)" Height="60" FontSize="16" Padding="10" FontWeight="Bold" Background="#E0E0E0" HorizontalContentAlignment="Center"/>
+            <Label Grid.Row="0" Content="Tony Parker (user)" Width="200" Height="60" FontSize="16" Padding="10" FontWeight="Bold" Background="#1A4D2E" HorizontalContentAlignment="Center"/>
 
             <Grid Grid.Row="1" VerticalAlignment="Center">
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="200">
                     <Button Style="{StaticResource TransparentButtonStyle}" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../../../Resources\Images\Guide\home-icon-silhouette.png" Width="30" Height="30"/>
@@ -77,7 +82,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Frame Grid.Row="2" Name="ContentFrame" NavigationUIVisibility="Hidden" MinWidth="880" HorizontalAlignment="Right"/>
+            <Grid Grid.Row="0" Background="#E8DFCA" Height="60">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Column="1" Width="40" Height="40" Source="{Binding ElementName=ContentFrame, Path=Content.PageIcon}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Margin="10,0,0,0" FontSize="20" FontWeight="Bold" Text="{Binding ElementName=ContentFrame, Path=Content.PageTitle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Frame Grid.Row="2" Name="ContentFrame" NavigationUIVisibility="Hidden" Width="880" HorizontalAlignment="Right" Background="#E8DFCA"/>
 
         </Grid>
     </Grid>

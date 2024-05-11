@@ -16,10 +16,17 @@
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\goBack.png" />
     <None Remove="Resources\Images\Guide\add.png" />
+    <None Remove="Resources\Images\Guide\analytics.png" />
+    <None Remove="Resources\Images\Guide\badge.png" />
     <None Remove="Resources\Images\Guide\calendar.png" />
     <None Remove="Resources\Images\Guide\front-of-bus.png" />
     <None Remove="Resources\Images\Guide\home-icon-silhouette.png" />
+    <None Remove="Resources\Images\Guide\house.png" />
+    <None Remove="Resources\Images\Guide\map.png" />
+    <None Remove="Resources\Images\Guide\personal.png" />
     <None Remove="Resources\Images\Guide\pie-chart.png" />
+    <None Remove="Resources\Images\Guide\planet-earth.png" />
+    <None Remove="Resources\Images\Guide\tour-guide.png" />
     <None Remove="Resources\Images\Guide\trophy.png" />
     <None Remove="Resources\Images\Guide\user-avatar.png" />
     <None Remove="Resources\Images\Map.jpg" />
@@ -59,6 +66,13 @@
   
 
   <ItemGroup>
+    <Resource Include="Resources\Images\Guide\analytics.png" />
+    <Resource Include="Resources\Images\Guide\badge.png" />
+    <Resource Include="Resources\Images\Guide\house.png" />
+    <Resource Include="Resources\Images\Guide\map.png" />
+    <Resource Include="Resources\Images\Guide\personal.png" />
+    <Resource Include="Resources\Images\Guide\planet-earth.png" />
+    <Resource Include="Resources\Images\Guide\tour-guide.png" />
     <Resource Include="Resources\Images\Guide\user-avatar.png" />
   </ItemGroup>
 

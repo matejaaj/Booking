@@ -10,11 +10,30 @@ namespace BookingApp.WPF.View.Guide
     {
         private readonly AllToursOverviewViewModel _viewModel;
 
+        public static readonly DependencyProperty PageTitleProperty = DependencyProperty.Register(
+           "PageTitle", typeof(string), typeof(AllToursOverview), new PropertyMetadata(default(string)));
+
+        public string PageTitle
+        {
+            get { return (string)GetValue(PageTitleProperty); }
+            set { SetValue(PageTitleProperty, value); }
+        }
+
+        public static readonly DependencyProperty PageIconProperty = DependencyProperty.Register(
+            "PageIcon", typeof(string), typeof(AllToursOverview), new PropertyMetadata(default(string)));
+
+        public string PageIcon
+        {
+            get { return (string)GetValue(PageIconProperty); }
+            set { SetValue(PageIconProperty, value); }
+        }
         public AllToursOverview()
         {
             InitializeComponent();
             _viewModel = new AllToursOverviewViewModel();
             DataContext = _viewModel;
+            this.PageTitle = "ALL TOURS";
+            this.PageIcon = "../../../Resources/Images/Guide/planet-earth.png";
         }
 
         private void btnCancelTour_Click(object sender, RoutedEventArgs e)

@@ -19,7 +19,7 @@
             <DataGrid ItemsSource="{Binding AllTours}"
               SelectedItem="{Binding SelectedTour}"
               IsReadOnly="True" SelectionMode="Single" 
-              AutoGenerateColumns="False" Height="200" HeadersVisibility="Column" FontSize="13" Width="750">
+              AutoGenerateColumns="False" Height="200" HeadersVisibility="Column" FontSize="13" Width="750" Background="#F5EFE6">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
@@ -36,7 +36,7 @@
             <TextBlock Text="{Binding SelectedTour.Description}" TextWrapping="Wrap" Margin="5"/>
         </StackPanel>
 
-        <ListView Grid.Row="3" ItemsSource="{Binding SelectedTourCheckpoints}" Height="150" Margin="5">
+        <ListView Grid.Row="3" ItemsSource="{Binding SelectedTourCheckpoints}" Height="150" Margin="5" Background="#F5EFE6">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Checkpoints" DisplayMemberBinding="{Binding Name}" Width="200"/>
