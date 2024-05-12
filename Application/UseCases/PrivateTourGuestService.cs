@@ -46,5 +46,10 @@ namespace BookingApp.Application.UseCases
         {
             return _privateTourGuestRepository.Update(privateTourGuest);
         }
+
+        public List<PrivateTourGuest> GetAllByTourRequestSegmentId(int segmentId)
+        {
+            return _privateTourGuestRepository.GetAllByTourRequestSegmentId(segmentId);
+        }
     }
 }

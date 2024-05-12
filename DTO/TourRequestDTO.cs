@@ -22,20 +22,22 @@ namespace BookingApp.DTO
         public int Id { get; set; }
 
         private int _tourRequestId;
+
         public int TourRequestId
         {
             get { return _tourRequestId; }
             set
             {
-                if( _tourRequestId != value )
+                if (_tourRequestId != value)
                 {
                     _tourRequestId = value;
                     OnPropertyChanged("TourRequestId");
                 }
             }
         }
-        
+
         private string _description { get; set; }
+
         public string Description
         {
             get { return _description; }
@@ -50,6 +52,7 @@ namespace BookingApp.DTO
         }
 
         private int _locationId;
+
         public int LocationId
         {
             get { return _locationId; }
@@ -64,6 +67,7 @@ namespace BookingApp.DTO
         }
 
         private int _languageId;
+
         public int LanguageId
         {
             get { return _languageId; }
@@ -78,6 +82,7 @@ namespace BookingApp.DTO
         }
 
         private int _capacity;
+
         public int Capacity
         {
             get { return _capacity; }
@@ -92,6 +97,7 @@ namespace BookingApp.DTO
         }
 
         private string _location;
+
         public string Location
         {
             get { return _location; }
@@ -104,7 +110,9 @@ namespace BookingApp.DTO
                 }
             }
         }
+
         private string _language;
+
         public string Language
         {
             get { return _language; }
@@ -119,51 +127,58 @@ namespace BookingApp.DTO
         }
 
         private DateTime _fromDate;
+
         public DateTime FromDate
         {
             get { return _fromDate; }
             set
             {
-                if(_fromDate != value)
+                if (_fromDate != value)
                 {
                     _fromDate = value;
                     OnPropertyChanged("FromDate");
                 }
             }
         }
+
         private DateTime _toDate;
+
         public DateTime ToDate
         {
             get { return _toDate; }
             set
             {
-                if(_toDate != value)
+                if (_toDate != value)
                 {
                     _toDate = value;
                     OnPropertyChanged("ToDate");
                 }
             }
         }
+
         private DateTime _acceptedDate;
+
         public DateTime AcceptedDate
         {
             get { return _acceptedDate; }
             set
             {
-                if(_acceptedDate != value)
+                if (_acceptedDate != value)
                 {
                     _acceptedDate = value;
                     OnPropertyChanged("AcceptedDate");
                 }
             }
         }
+
         private TourRequestStatus _isAccepted;
+
         public TourRequestStatus IsAccepted
         {
-            get { return _isAccepted; } 
+            get { return _isAccepted; }
             set
             {
-                if(_isAccepted != value)
+                if (_isAccepted != value)
                 {
                     _isAccepted = value;
                     OnPropertyChanged("IsAccepted");
@@ -171,7 +186,38 @@ namespace BookingApp.DTO
             }
         }
 
+        private List<PrivateTourGuest> _guests;
+
+        public List<PrivateTourGuest> Guests
+        {
+            get { return _guests; }
+            set
+            {
+                if (_guests != value)
+                {
+                    _guests = value;
+                    OnPropertyChanged("Guests");
+                }
+            }
+        }
+
+        private string _status;
+
+        public string Status
+        {
+            get { return _status; }
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    OnPropertyChanged("Language");
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
+
         protected virtual void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
@@ -186,7 +232,7 @@ namespace BookingApp.DTO
             Location = "not set";
         }
 
-        public TourRequestDTO(TourRequestSegment tourRequest)
+        public TourRequestDTO(TourRequestSegment tourRequest) : this() // Chain to default constructor
         {
             _locationService = new LocationService();
             _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
@@ -207,13 +253,30 @@ namespace BookingApp.DTO
             ToDate = tourRequest.ToDate;
             AcceptedDate = tourRequest.AcceptedDate;
             TourRequestId = tourRequest.TourRequestId;
+            
+
+            
         }
+
+        public  string GetStatusDescription(TourRequestStatus status)
+        {
+            switch (status)
+            {
+                case TourRequestStatus.PENDING:
+                    return  "Status: Aktivan";
+                case TourRequestStatus.ACCEPTED:
+                    return "Status: Prihvaćen";
+                case TourRequestStatus.CANCELED:
+                    return "Status: Neaktivan";
+                default:
+                    return "Status: Nepoznat";
+            }
+        }
+
         public TourRequestSegment ToRequest()
         {
-            return new TourRequestSegment(TourRequestId, Description, LocationId, LanguageId, Capacity, FromDate, ToDate);
+            return new TourRequestSegment(TourRequestId, Description, LocationId, LanguageId, Capacity, FromDate,
+                ToDate);
         }
-
-
-
     }
 }

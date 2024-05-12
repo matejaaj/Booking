@@ -71,5 +71,6 @@ namespace BookingApp.Domain.Model
                 IsAccepted.ToString(),
             };
         }
+
     }
 }

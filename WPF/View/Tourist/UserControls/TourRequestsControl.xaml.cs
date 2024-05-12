@@ -42,5 +42,10 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             var viewModel = this.DataContext as TourRequestsViewModel;
             viewModel.OpenStatisticsWindow();
         }
+
+        private void MoreDetails_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Test");
+        }
     }
 }
