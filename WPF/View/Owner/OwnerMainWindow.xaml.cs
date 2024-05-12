@@ -125,5 +125,22 @@ namespace BookingApp.WPF.View.Owner
                 MainFrame.GoBack();
             }
         }
+
+        private void HideNotifications(object sender, RoutedEventArgs e)
+        {
+            NotificationMenu.Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowNotifications(object sender, RoutedEventArgs e)
+        {
+            if (NotificationMenu.Visibility == Visibility.Collapsed)
+            {
+                NotificationMenu.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NotificationMenu.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }

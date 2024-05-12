@@ -35,7 +35,6 @@ namespace BookingApp.Application.UseCases
             _repository = repository;
             this.accommodationService = accommodationService;
             this.accommodationReservationService = accommodationReservationService;
-            this.locationService = new LocationService();
         }
 
         public List<Renovation> GetAll()
