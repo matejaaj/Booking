@@ -19,6 +19,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 {
     public class RenovationSchedulingViewModel : INotifyPropertyChanged
     {
+        public AccommodationPageDTO SelectedAccommodation { get; set; }
         private Accommodation accommodation;
         public Accommodation Accommodation
         {
@@ -107,10 +108,11 @@ namespace BookingApp.WPF.ViewModel.Owner
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public RenovationSchedulingViewModel(Domain.Model.Accommodation accommodation)
+        public RenovationSchedulingViewModel(Domain.Model.Accommodation accommodation, AccommodationPageDTO selectedAccommodation)
         {
             InitializeServices();
             Accommodation = accommodation;
+            SelectedAccommodation = selectedAccommodation;
             FreeDates = new ObservableCollection<FreeDatesDTO>();
         }
 
@@ -194,7 +196,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void NavigateToAccommodationViewPage(RenovationSchedulingPage renovationSchedulingPage)
         {
-            ViewAccommodationPage page = new ViewAccommodationPage(Accommodation);
+            ViewAccommodationPage page = new ViewAccommodationPage(SelectedAccommodation);
             renovationSchedulingPage.NavigationService.Navigate(page);
         }
     }

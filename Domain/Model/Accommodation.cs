@@ -18,12 +18,12 @@ namespace BookingApp.Domain.Model
         public int MaxGuests { get; set; }
         public int MinReservations { get; set; }
         public int CancelThershold { get; set; }
-        public List<int> imageSourceIds;
+        public List<int> ImageIds;
         public int OwnerId;
 
         public Accommodation()
         {
-            imageSourceIds = new List<int>();
+            ImageIds = new List<int>();
         }
 
         public Accommodation(string name, int locationId, string type, int maxGuests, int minReservations, int cancelThershold, int ownerId)
@@ -36,7 +36,7 @@ namespace BookingApp.Domain.Model
             MaxGuests = maxGuests;
             CancelThershold = cancelThershold;
             OwnerId = ownerId;
-            imageSourceIds = new List<int>();
+            ImageIds = new List<int>();
         }
 
         public void FromCSV(string[] values)
@@ -50,17 +50,24 @@ namespace BookingApp.Domain.Model
             MinReservations = Convert.ToInt32(values[5]);
             CancelThershold = Convert.ToInt32(values[6]);
             OwnerId = Convert.ToInt32(values[7]);
+            foreach (string s in values[8].Split(','))
+            {
+                if (int.TryParse(s, out _))
+                    ImageIds.Add(Convert.ToInt32(s));
+            }
         }
 
         public string[] ToCSV()
         {
+            string images = string.Join(",", ImageIds);
             string[] csvValues = { AccommodationId.ToString(),
                                    Name, LocationId.ToString(),
                                    Type.ToString(),
                                    MaxGuests.ToString(),
                                    MinReservations.ToString(),
                                    CancelThershold.ToString(),
-                                   OwnerId.ToString() };
+                                   OwnerId.ToString(),
+                                   images};
             return csvValues;
         }
     }

@@ -15,12 +15,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
     public class ViewAccommodationViewModel : INotifyPropertyChanged
     {
         public static Accommodation Accommodation { get; set; }
+        private string currentImage;
+        public string CurrentImage
+        {
+            get { return currentImage; }
+            set
+            {
+                currentImage = value;
+                OnPropertyChanged(nameof(CurrentImage));
+            }
+        }
+        public AccommodationPageDTO SelectedAccommodation { get; set; }
         private static AccommodationReservationService _accommodationReservationService;
         private static GuestRatingService _guestRatingService;
         private List<GuestRating> _guestRatings;
@@ -57,15 +69,38 @@ namespace BookingApp.WPF.ViewModel.Owner
                 OnPropertyChanged(nameof(OtherAccommodationReservations));
             }
         }
+        private static AccommodationService _accommodationService;
         private bool IsNew { get; set; }
 
-        public ViewAccommodationViewModel(Accommodation accommodation)
+        private int _currentImageIndex;
+        public int CurrentImageIndex
         {
-            Accommodation = accommodation;
-            _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
-            _guestRatingService = new GuestRatingService(Injector.CreateInstance<IGuestRatingRepository>());
+            get { return _currentImageIndex; }
+            set
+            {
+                if (_currentImageIndex != value)
+                {
+                    _currentImageIndex = value;
+                    OnPropertyChanged(nameof(CurrentImageIndex));
+                }
+            }
+        }
+
+        public ViewAccommodationViewModel(AccommodationPageDTO accommodation)
+        {
+            InitializeServices();
+            SelectedAccommodation = accommodation;
+            CurrentImage = SelectedAccommodation.Images?.Count > 0 ? SelectedAccommodation.Images[CurrentImageIndex] : null;
+            Accommodation = _accommodationService.GetById(SelectedAccommodation.Id);
             _guestRatings = _guestRatingService.GetAll();
             FillReservations();
+        }
+
+        private void InitializeServices()
+        {
+            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            _guestRatingService = new GuestRatingService(Injector.CreateInstance<IGuestRatingRepository>());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -116,7 +151,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         internal void RenovateAccommodation_Click(object sender, RoutedEventArgs e, ViewAccommodationPage viewAccommodationPage)
         {
-            RenovationSchedulingPage page = new RenovationSchedulingPage(Accommodation);
+            RenovationSchedulingPage page = new RenovationSchedulingPage(Accommodation, SelectedAccommodation);
             viewAccommodationPage.NavigationService.Navigate(page);
         }
 
@@ -124,6 +159,20 @@ namespace BookingApp.WPF.ViewModel.Owner
         {
             AccommodationStatsPage page = new AccommodationStatsPage(Accommodation);
             viewAccommodationPage.NavigationService.Navigate(page);
+        }
+
+        internal void PreviousImage_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedAccommodation.Images == null || SelectedAccommodation.Images.Count == 0) return;
+            CurrentImageIndex = (CurrentImageIndex - 1 + SelectedAccommodation.Images.Count) % SelectedAccommodation.Images.Count;
+            CurrentImage = SelectedAccommodation.Images[CurrentImageIndex];
+        }
+
+        internal void NextImage_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedAccommodation.Images == null || SelectedAccommodation.Images.Count == 0) return;
+            CurrentImageIndex = (CurrentImageIndex + 1) % SelectedAccommodation.Images.Count;
+            CurrentImage = SelectedAccommodation.Images[CurrentImageIndex];
         }
     }
 }

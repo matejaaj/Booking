@@ -22,10 +22,10 @@ namespace BookingApp.WPF.View.Owner
     public partial class RenovationSchedulingPage : Page
     {
         public static RenovationSchedulingViewModel viewModel { get; set; }
-        public RenovationSchedulingPage(Domain.Model.Accommodation accommodation)
+        public RenovationSchedulingPage(Domain.Model.Accommodation accommodation, DTO.AccommodationPageDTO selectedAccommodation)
         {
             InitializeComponent();
-            viewModel = new RenovationSchedulingViewModel(accommodation);
+            viewModel = new RenovationSchedulingViewModel(accommodation, selectedAccommodation);
             DataContext = viewModel;
         }
 

@@ -1,4 +1,5 @@
 ﻿using BookingApp.Domain.Model;
+using BookingApp.DTO;
 using BookingApp.WPF.ViewModel.Owner;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BookingApp.WPF.View.Owner
 {
@@ -23,7 +25,7 @@ namespace BookingApp.WPF.View.Owner
     public partial class ViewAccommodationPage : Page
     {
         public static ViewAccommodationViewModel viewModel { get; set; }
-        public ViewAccommodationPage(Accommodation accommodation)
+        public ViewAccommodationPage(AccommodationPageDTO accommodation)
         {
             InitializeComponent();
             viewModel = new ViewAccommodationViewModel(accommodation);
@@ -43,6 +45,16 @@ namespace BookingApp.WPF.View.Owner
         private void Statistics_Click(object sender, RoutedEventArgs e)
         {
             viewModel.Statistics_Click(sender, e, this);
+        }
+
+        private void NextImage_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.NextImage_Click(sender, e);
+        }
+
+        private void PreviousImage_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.PreviousImage_Click(sender, e);
         }
     }
 }

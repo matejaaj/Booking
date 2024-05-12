@@ -7,6 +7,63 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+	<ItemGroup>
+		<None Remove="Resources\Images\addIm.png" />
+		<None Remove="Resources\Images\addImage.png" />
+		<None Remove="Resources\Images\babinobrdo1.jpg" />
+		<None Remove="Resources\Images\babinobrdo2.jpg" />
+		<None Remove="Resources\Images\cancel.png" />
+		<None Remove="Resources\Images\accommodations.png" />
+		<None Remove="Resources\Images\babinobrdo.jpg" />
+		<None Remove="Resources\Images\car.png" />
+		<None Remove="Resources\Images\add.png" />
+		<None Remove="Resources\Images\carReg.png" />
+		<None Remove="Resources\Images\check.png" />
+		<None Remove="Resources\Images\clock.png" />
+		<None Remove="Resources\Images\delay.png" />
+		<None Remove="Resources\Images\delete.png" />
+		<None Remove="Resources\Images\destination.png" />
+		<None Remove="Resources\Images\edit.png" />
+		<None Remove="Resources\Images\forum.png" />
+		<None Remove="Resources\Images\goBack.png" />
+		<None Remove="Resources\Images\home.png" />
+		<None Remove="Resources\Images\insertImage.png" />
+		<None Remove="Resources\Images\leopold.jpg" />
+		<None Remove="Resources\Images\leopold1.jpg" />
+		<None Remove="Resources\Images\leopold2.jpg" />
+		<None Remove="Resources\Images\location.png" />
+		<None Remove="Resources\Images\Map.jpg" />
+		<None Remove="Resources\Images\menu.png" />
+		<None Remove="Resources\Images\menuBar.png" />
+		<None Remove="Resources\Images\notifications.png" />
+		<None Remove="Resources\Images\pickup.png" />
+		<None Remove="Resources\Images\raspad.jpg" />
+		<None Remove="Resources\Images\raspad1.jpg" />
+		<None Remove="Resources\Images\raspad2.jpg" />
+		<None Remove="Resources\Images\ratings.png" />
+		<None Remove="Resources\Images\regCar.png" />
+		<None Remove="Resources\Images\renovation.png" />
+		<None Remove="Resources\Images\reports.png" />
+		<None Remove="Resources\Images\reschedule.png" />
+		<None Remove="Resources\Images\statistics.png" />
+		<None Remove="Resources\Images\stats.png" />
+		<None Remove="Resources\Images\status.png" />
+		<None Remove="Resources\Images\taxi.png" />
+		<None Remove="Resources\Images\time.png" />
+		<None Remove="Resources\Images\superhero.png" />
+		<None Remove="Resources\Images\superowner.png" />
+		<None Remove="Resources\Images\trophy.png" />
+		<None Remove="Resources\Images\turista.png" />
+		<None Remove="Resources\Images\tutorial.png" />
+		<None Remove="Resources\Images\userData.png" />
+		<None Remove="Resources\Images\userProfile.png" />
+		<None Remove="Resources\Images\vacations.png" />
+		<None Remove="Resources\Images\view.png" />
+		<None Remove="Resources\Images\zuruckgehen.png" />
+	</ItemGroup>
+
+  
+
   <ItemGroup>
     <!-- Including images as content so they are copied to the output directory -->
     <Content Include="Resources\Images\add.png">
@@ -175,5 +232,52 @@
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="24.2.9" />
     <PackageReference Include="WpfToolkit.DataVisualization" Version="3.5.50211.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\addIm.png" />
+    <Resource Include="Resources\Images\babinobrdo1.jpg" />
+    <Resource Include="Resources\Images\babinobrdo2.jpg" />
+    <Resource Include="Resources\Images\cancel.png" />
+    <Resource Include="Resources\Images\clock.png" />
+    <Resource Include="Resources\Images\delay.png" />
+    <Resource Include="Resources\Images\destination.png" />
+    <Resource Include="Resources\Images\accommodations.png" />
+    <Resource Include="Resources\Images\babinobrdo.jpg" />
+    <Resource Include="Resources\Images\carReg.png" />
+    <Resource Include="Resources\Images\check.png" />
+    <Resource Include="Resources\Images\forum.png" />
+    <Resource Include="Resources\Images\goBack.png" />
+    <Resource Include="Resources\Images\home.png" />
+    <Resource Include="Resources\Images\insertImage.png" />
+    <Resource Include="Resources\Images\leopold.jpg" />
+    <Resource Include="Resources\Images\leopold1.jpg" />
+    <Resource Include="Resources\Images\leopold2.jpg" />
+    <Resource Include="Resources\Images\location.png" />
+    <Resource Include="Resources\Images\Map.jpg" />
+    <Resource Include="Resources\Images\menuBar.png" />
+    <Resource Include="Resources\Images\notifications.png" />
+    <Resource Include="Resources\Images\pickup.png" />
+    <Resource Include="Resources\Images\raspad.jpg" />
+    <Resource Include="Resources\Images\raspad1.jpg" />
+    <Resource Include="Resources\Images\raspad2.jpg" />
+    <Resource Include="Resources\Images\ratings.png" />
+    <Resource Include="Resources\Images\renovation.png" />
+    <Resource Include="Resources\Images\reports.png" />
+    <Resource Include="Resources\Images\reschedule.png" />
+    <Resource Include="Resources\Images\statistics.png" />
+    <Resource Include="Resources\Images\stats.png" />
+    <Resource Include="Resources\Images\status.png" />
+    <Resource Include="Resources\Images\taxi.png" />
+    <Resource Include="Resources\Images\time.png" />
+    <Resource Include="Resources\Images\superhero.png" />
+    <Resource Include="Resources\Images\superowner.png" />
+    <Resource Include="Resources\Images\trophy.png" />
+    <Resource Include="Resources\Images\turista.png" />
+    <Resource Include="Resources\Images\tutorial.png" />
+    <Resource Include="Resources\Images\userData.png" />
+    <Resource Include="Resources\Images\userProfile.png" />
+    <Resource Include="Resources\Images\vacations.png" />
+    <Resource Include="Resources\Images\zuruckgehen.png" />
   </ItemGroup>
 </Project>

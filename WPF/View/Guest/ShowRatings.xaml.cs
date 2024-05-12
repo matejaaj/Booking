@@ -1,5 +1,7 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using System;
 using System.Collections.Generic;
@@ -31,8 +33,8 @@ namespace BookingApp.WPF.View.Guest
         {
             InitializeComponent();
             _accommodationService = new AccommodationService();
-            //_ratingService = new GuestRatingService();
-            //_reservationService = new AccommodationReservationService();
+            _ratingService = new GuestRatingService(Injector.CreateInstance<IGuestRatingRepository>());
+            _reservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
             this.loggedInGuest = loggedInGuest;
             LoadRatings();
         }
