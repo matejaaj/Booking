@@ -23,10 +23,7 @@ namespace BookingApp.WPF.View.Guest
         public PreviousReservations(User guest)
         {
             InitializeComponent();
-            _viewModel = new PreviousReservationsViewModel(guest,
-                new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>()),
-                new AccommodationService(Injector.CreateInstance<IAccommodationRepository>()),
-                new ReservationModificationRequestService(Injector.CreateInstance<IReservationModificationRequestRepository>()));
+            _viewModel = new PreviousReservationsViewModel(guest);
             DataContext = _viewModel;
             ReservationsListBox.ItemsSource = _viewModel.ReservationInfos;
         }

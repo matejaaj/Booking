@@ -1,10 +1,13 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.WPF.View.Guest;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
+using System.Windows;
 
 namespace BookingApp.WPF.ViewModel.Guest
 {
@@ -19,6 +22,59 @@ namespace BookingApp.WPF.ViewModel.Guest
         private List<AccommodationReservation> AccommodationsReserved { get; set; }
 
         private AccommodationReservationService _reservationService;
+
+        public AccommodationReservationFormViewModel(Accommodation accommodation, User guest)
+        {
+            Accommodation = accommodation;
+            Guest = guest;
+            InitializeService();
+            LoadReservations();
+        }
+
+        private void InitializeService()
+        {
+            var accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _reservationService = new AccommodationReservationService(accommodationService, Injector.CreateInstance<IAccommodationReservationRepository>());
+        }
+
+        private void LoadReservations()
+        {
+            AccommodationsReserved = _reservationService.GetByAccommodationId(Accommodation.AccommodationId);
+        }
+
+        public void CheckAvailability()
+        {
+            if (Days < Accommodation.MinReservations)
+            {
+                MessageBox.Show($"Number of days should be at least {Accommodation.MinReservations}.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var dateRanges = _reservationService.GenerateDateRanges(StartDate, EndDate, Days, AccommodationsReserved);
+            if (dateRanges.Count == 0)
+            {
+                DateTime yearBeginning = new DateTime(DateTime.Today.Year, 1, 1);
+                DateTime yearEnding = new DateTime(DateTime.Today.Year, 12, 31);
+                dateRanges = _reservationService.GenerateDateRanges(yearBeginning, yearEnding, Days, AccommodationsReserved);
+            }
+            DateRanges = dateRanges;
+
+        }
+
+        public void HandleDateRangeSelection(string selectedDateRange)
+        {
+            if (selectedDateRange != null)
+            {
+                MessageBoxResult result = MessageBox.Show($"You have selected dates: {selectedDateRange}. Would you like to proceed with the reservation?", "Confirmation", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    ReservationConfirmation reservationConfirmationWindow = new ReservationConfirmation(
+                        Accommodation.AccommodationId, Guest.Id, selectedDateRange, Days, Accommodation.MaxGuests);
+                    reservationConfirmationWindow.Show();
+                }
+            }
+        }
 
         private int _days;
         public int Days
@@ -62,65 +118,18 @@ namespace BookingApp.WPF.ViewModel.Guest
             }
         }
 
-        public List<(DateTime, DateTime)> DateRanges { get; private set; } = new List<(DateTime, DateTime)>();
-
-        public AccommodationReservationFormViewModel(Accommodation accommodation, User guest, AccommodationReservationService reservationService)
+        public List<(DateTime, DateTime)> DateRanges
         {
-            Accommodation = accommodation;
-            Guest = guest;
-            _reservationService = reservationService;
-            LoadReservations();
-        }
-
-        private void LoadReservations()
-        {
-            AccommodationsReserved = _reservationService.GetByAccommodationId(Accommodation.AccommodationId);
-        }
-
-        public bool CheckAndGenerateDateRanges()
-        {
-            if (Days < Accommodation.MinReservations)
-                return false;
-
-            DateRanges.Clear();
-            List<(DateTime, DateTime)> dateRanges = GenerateDateRanges(StartDate, EndDate, Days);
-
-            if (dateRanges.Count == 0)
+            get => _dateRanges;
+            private set
             {
-                DateTime yearBeginning = new DateTime(DateTime.Today.Year, 1, 1);
-                DateTime yearEnding = new DateTime(DateTime.Today.Year, 12, 31);
-                dateRanges = GenerateDateRanges(yearBeginning, yearEnding, Days);
+                if (_dateRanges != value)
+                {
+                    _dateRanges = value;
+                    OnPropertyChanged(nameof(DateRanges));
+                }
             }
-
-            foreach (var dateRange in dateRanges)
-                DateRanges.Add(dateRange);
-
-            return true;
         }
-
-        private List<(DateTime, DateTime)> GenerateDateRanges(DateTime startDate, DateTime endDate, int days)
-        {
-            var dateRanges = new List<(DateTime, DateTime)>();
-            DateTime currentStartDate = startDate;
-            DateTime currentEndDate = startDate.AddDays(days - 1);
-
-            while (currentEndDate <= endDate)
-            {
-                if (!IsReserved(currentStartDate, currentEndDate))
-                    dateRanges.Add((currentStartDate, currentEndDate));
-
-                currentStartDate = currentStartDate.AddDays(1);
-                currentEndDate = currentStartDate.AddDays(days - 1);
-            }
-
-            return dateRanges;
-        }
-
-        private bool IsReserved(DateTime startDate, DateTime endDate)
-        {
-            return AccommodationsReserved.Any(reservation =>
-                (startDate <= reservation.EndDate && endDate >= reservation.StartDate) ||
-                (startDate >= reservation.StartDate && endDate <= reservation.EndDate));
-        }
+        private List<(DateTime, DateTime)> _dateRanges = new List<(DateTime, DateTime)>();
     }
 }

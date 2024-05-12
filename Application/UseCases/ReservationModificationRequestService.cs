@@ -4,6 +4,7 @@ using BookingApp.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Navigation;
 
 namespace BookingApp.Application.UseCases
 {
@@ -65,6 +66,36 @@ namespace BookingApp.Application.UseCases
         internal List<ReservationModificationRequest> GetByReservationIds(List<AccommodationReservation> accommodationReservations)
         {
             return _requestRepository.GetByReservationIds(accommodationReservations.Select(a => a.Id).ToList());
+        }
+
+        public bool SendRequest(int reservationId, DateTime newStartDate, DateTime newEndDate)
+        {
+            if (newStartDate == DateTime.MinValue || newEndDate == DateTime.MinValue)
+                return false;
+
+            if (newStartDate >= newEndDate)
+                return false;
+
+            var existingRequest = _requestRepository.GetByReservationId(reservationId);
+
+            if (existingRequest != null)
+            {
+                existingRequest.NewStartDate = newStartDate;
+                existingRequest.NewEndDate = newEndDate;
+                existingRequest.Status = ReservationModificationRequest.RequestStatus.PENDING;
+                existingRequest.OwnerComment = "";
+                Update(existingRequest);
+                return true;
+            }
+            else
+            {
+                var request = new ReservationModificationRequest(
+                    reservationId, DateTime.MinValue, DateTime.MinValue, // Start and end date of existing reservation
+                    newStartDate, newEndDate, ReservationModificationRequest.RequestStatus.PENDING, "");
+
+                Save(request);
+                return true;
+            }
         }
     }
 }

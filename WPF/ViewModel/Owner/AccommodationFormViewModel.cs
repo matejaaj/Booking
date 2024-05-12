@@ -25,6 +25,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private readonly AccommodationService _accommodationService;
         private readonly LocationService _locationService;
+        private readonly ImageService _imageService;
         public List<Location> locations { get; set; }
         public List<Domain.Model.Image> images { get; set; }
 
@@ -140,6 +141,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             LoggedInOwner = owner;
             _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
             _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
             locations = _locationService.GetAll();
             images = new List<Domain.Model.Image>();
             _accommodationId = _accommodationService.NextId();
@@ -148,9 +150,15 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         public void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-                Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
-                Accommodation savedAccommodation = _accommodationService.Save(newAccommodation);
-                OwnerOverviewViewModel.Accommodations.Add(savedAccommodation);
+            Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
+            List<Image> images = _imageService.GetImagesByEntityAndType(newAccommodation.AccommodationId, ImageResourceType.ACCOMMODATION);
+            var imageIds = images?.Select(i => i.Id).ToList() ?? new List<int>();
+            var imagePaths = images?.Select(i => i.Path).ToList() ?? new List<string>();
+            var location = _locationService.GetLocationById(newAccommodation.LocationId);
+            newAccommodation.ImageIds = imageIds;
+            Accommodation savedAccommodation = _accommodationService.Save(newAccommodation);
+            OwnerOverviewViewModel.Accommodations.Add(savedAccommodation);
+            OwnerOverviewViewModel.AccommodationsDTOs.Add(new DTO.AccommodationPageDTO(savedAccommodation, location, imagePaths));
         }
 
         public void btnAddImage_Click(object sender, RoutedEventArgs e)
