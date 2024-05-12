@@ -38,5 +38,7 @@ namespace BookingApp.WPF.View.Tourist
         {
             ViewModel.ChangeTheme();
         }
+
+
     }
 }

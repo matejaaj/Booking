@@ -19,13 +19,12 @@ namespace BookingApp.WPF.View.Guide
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.Confirm();
             Close();
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            viewModel.Add();
         }
     }
 }

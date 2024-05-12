@@ -9,8 +9,6 @@
       d:DesignHeight="750" d:DesignWidth="430"
       Title="ViewAccommodationPage">
     <Page.Resources>
-        <guest:LocationConverter x:Key="LocationConverter" />
-
         <Style x:Key="RoundedButton" TargetType="Button">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="Foreground" Value="Black"/>
@@ -56,7 +54,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Image Grid.Row="0" Source="../../../Resources/Images/babinobrdo.jpg" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,20,20,20"/>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Row="0" Source="{Binding CurrentImage}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,20,20,0"/>
+                <Button Margin="3" Background="Transparent" Grid.Row="0" Content="←" Click="PreviousImage_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Margin="3" Background="Transparent" Grid.Row="0" Content="→" Click="NextImage_Click" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
 
             <Border Grid.Row="1" Margin="20" BorderBrush="Gray" BorderThickness="1">
                 <StackPanel Margin="10">
@@ -66,28 +72,28 @@
                         </Style>
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Name:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.Name}" Margin="5,0"/>
+                        <TextBlock Text="Name:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.Name}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Location:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Path=Accommodation.LocationId , Converter={StaticResource LocationConverter}}" Margin="5,0"/>
+                        <TextBlock Text="Location:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.Location}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Type:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.Type}" Margin="5,0"/>
+                        <TextBlock Text="Type:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.Type}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Capacity:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.MaxGuests}" Margin="5,0"/>
+                        <TextBlock Text="Capacity:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.MaxGuests}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Minimum Reservation Days:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.MinReservations}" Margin="5,0"/>
+                        <TextBlock Text="Minimum Reservation Days:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.MinReservations}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Cancellation Window:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.CancelThershold}" Margin="5,0"/>
+                        <TextBlock Text="Cancellation Window:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.CancelThershold}" Margin="5,0"/>
                     </StackPanel>
                 </StackPanel>
             </Border>

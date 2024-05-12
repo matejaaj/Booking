@@ -2,6 +2,7 @@
 using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.DTO;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Owner;
 using System;
@@ -22,11 +23,14 @@ namespace BookingApp.WPF.ViewModel.Owner
         public Domain.Model.Owner LoggedInOwner { get; set; }
         public bool isSuperOwner { get; set; }
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
+        public static ObservableCollection<AccommodationPageDTO> AccommodationsDTOs { get; set; }
         public List<AccommodationReservation> OwnerAccommodationReservations { get; set; }  
-        public Accommodation SelectedAccommodation { get; set; }
+        public AccommodationPageDTO SelectedAccommodation { get; set; }
         private static AccommodationService _accommodationService;
         private static AccommodationReservationService _accommodationReservationService;
         private static AccommodationAndOwnerRatingService _accommodationAndOwnerRatingService;
+        private static LocationService _locationService;
+        private static ImageService _imageService;
         private static OwnerService _ownerService;
         public int RatingsNumber { get; set; }
         public double AverageScore { get; set; }
@@ -39,6 +43,12 @@ namespace BookingApp.WPF.ViewModel.Owner
             InitializeAccommodationReservaions();
             CalculateRating();
             PageName = "Accommodations";
+            Update();
+        }
+
+        private void Update()
+        {
+            AccommodationsDTOs = new ObservableCollection<AccommodationPageDTO>(_accommodationService.GetByUserWithLocationAndImage(LoggedInOwner));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -54,7 +64,9 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void InitializeServices()
         {
-            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
+            _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>(), _imageService, _locationService);
             _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
             _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService(_accommodationReservationService, Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>());
             _ownerService = new OwnerService(Injector.CreateInstance<IOwnerRepository>());
@@ -92,6 +104,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             AccommodationForm accommodationForm = new AccommodationForm(LoggedInOwner);
             accommodationForm.Owner = Window.GetWindow(accommodationsPage);
             accommodationForm.Show();
+            Update();
         }
 
         public ViewAccommodationPage ShowViewAccommodation(object sender, RoutedEventArgs e)

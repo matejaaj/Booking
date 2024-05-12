@@ -162,9 +162,9 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         public void btnShowImages_Click(object sender, RoutedEventArgs e)
         {
-            ShowImages showImagesWindow = new ShowImages(images);
-            showImagesWindow.Owner = _ownerWindow;
-            showImagesWindow.ShowDialog();
+            //ShowImages showImagesWindow = new ShowImages(images);
+           // showImagesWindow.Owner = _ownerWindow;
+//showImagesWindow.ShowDialog();
         }
     }
 

@@ -11,12 +11,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using BookingApp.Application;
+using BookingApp.Domain.RepositoryInterfaces;
 
 namespace BookingApp.LogicServices.Driver
 {
     public class GroupDriveService
     {
         private static readonly GroupDriveReservationService groupDriveReservationService = new GroupDriveReservationService();
+
+        private static readonly NotificationService notificationService =
+            new NotificationService(Injector.CreateInstance<INotificationRepository>());
+
+        private static readonly UserService userService = new UserService(Injector.CreateInstance<IUserRepository>());
+
         private static readonly VehicleService vehicleService = new VehicleService();
         private static readonly DriveReservationService driveReservationService = new DriveReservationService();
         private readonly DispatcherTimer timer;
@@ -101,8 +109,27 @@ namespace BookingApp.LogicServices.Driver
                 DepartureTime = g.DepartureTime
             };
 
+            SendNotification(g, driver);
+
             driveReservation.UpdateTourist();
             driveReservationService.Save(driveReservation);
+        }
+
+        private void SendNotification(GroupDriveReservation reservation, int driverId)
+        {
+            string title = "Pronadjen vozač";
+            string text = "Pronađen vozać " +
+                          userService.GetById(driverId).Username + 
+                          " za grupnu vožnju za" +
+                          reservation.DepartureTime.ToString("HH:mm dd.MM.yyyy");
+            Notification notification = new Notification()
+            {
+                DateIssued = DateTime.Now,
+                Title = title,
+                Text = text,
+                TargetUserId = reservation.TouristId
+            };
+            notificationService.Save(notification);
         }
 
         private int FindDriver(GroupDriveReservation g)

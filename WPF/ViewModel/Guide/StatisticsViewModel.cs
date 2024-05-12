@@ -107,6 +107,7 @@ namespace BookingApp.WPF.ViewModel.Guide
 
             Languages = _languageService.GetAll();
             Locations = _locationService.GetAll();
+            SelectedTourYear = TourYears.FirstOrDefault(yr => yr.Equals("All time"));
         }
 
         public void SearchTours()
