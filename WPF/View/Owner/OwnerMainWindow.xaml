@@ -77,7 +77,7 @@
                         <TextBlock Text="Forum" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Row="9 " VerticalAlignment="Bottom" Padding="5" Margin="5,140,0,5" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                <Button Grid.Row="9 " VerticalAlignment="Bottom" Padding="5" Margin="5,130,0,5" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/statistics.png" Width="25" Height="25"/>
                         <TextBlock Text="Generate Statistics" FontSize="23" Margin="5,0,0,0"/>
@@ -88,18 +88,32 @@
 
         <!-- Action bar at the top -->
         <Grid Background="LightGray" Height="50" VerticalAlignment="Top">
-            <Button Click="ShowMenuBar" Content="&#x2630;" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="20"/>
+            <Button Click="ShowMenuBar" Content="&#x2630;" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Left" BorderThickness="0" Margin="10,0,0,0" FontSize="20"/>
             <TextBlock Text="{Binding PageName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="48,0,0,0"/>
             <Button Click="GoBackButton_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,50,0" BorderThickness="0" Background="Transparent">
                 <Image Source="../../../Resources/Images/zuruckgehen.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             </Button>
+            <Button Click="ShowNotifications" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,85,0" BorderThickness="0" Background="Transparent">
+                <Image Source="../../../Resources/Images/notifications.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            </Button>
 
-            <!-- Icon on the right side -->
             <Image x:Name="iconImage" Source="../../../Resources/Images/accommodations.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
         </Grid>
 
+        <Canvas Margin="216,0,0,0" VerticalAlignment="Stretch" x:Name="NotificationMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="Transparent">
+            <Grid Width="200" Height="350" Background="#FFA9A9A9">
 
-        <!-- Rest of the screen is a Frame -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Click="HideNotifications" Content="DASD"/>
+                <TextBlock Grid.Row="1" Text="dasdsad"/>
+            </Grid>
+        </Canvas>
+
+
         <Frame Name="MainFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,50,0,0"
                NavigationUIVisibility="Hidden"
                Source="AccommodationsPage.xaml"/>
