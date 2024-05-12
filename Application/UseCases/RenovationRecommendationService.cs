@@ -12,9 +12,9 @@ namespace BookingApp.Application.UseCases
     {
         private readonly IRenovationRecommendationRepository _renovationRepository;
 
-        public RenovationRecommendationService()
+        public RenovationRecommendationService(IRenovationRecommendationRepository renovationRecommendationRepository)
         {
-            _renovationRepository = Injector.CreateInstance<IRenovationRecommendationRepository>();
+            _renovationRepository = renovationRecommendationRepository;
         }
 
         public List<RenovationRecommendation> GetAll()

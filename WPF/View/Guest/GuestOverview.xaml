@@ -35,13 +35,13 @@
                 </Popup>
             </StackPanel>
 
-
             <TextBlock Text="Guest number:" Margin="10 0 5 0"/>
             <TextBox x:Name="GuestsTextBox" Text="" Width="50"/>
             <TextBlock Text="Reservation days:" Margin="10 0 5 0"/>
             <TextBox x:Name="DaysTextBox" Text="" Width="50"/>
+            <Button Content="Super Guest" Click="SuperGuest_Click" Margin="200,0,0,0" HorizontalAlignment="Right" />
         </StackPanel>
-        
+
         <StackPanel  Grid.Row="1">
             <Button x:Name="ButtonSearch" Content="Search" Margin="50,4,50,13" Click="ButtonSearch_Click" Width="103"/>
         </StackPanel>
