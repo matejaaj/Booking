@@ -12,9 +12,11 @@
 
 
 
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -48,10 +50,15 @@
             </TabItem>
         </TabControl>
 
-        <!-- Buttons at the bottom -->
+        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Left" Margin="0,-600,0,0">
+            <TextBlock>Notifikacije</TextBlock>
+            <control:NotificationControl/>
+        </StackPanel>
+
+
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="3,-100,0,0">
             <Button Content="Promeni jezik"  Style="{StaticResource SmallButton}"
-                    Width="130"/>
+                    />
             <Button Content="Promeni temu" Style="{StaticResource SmallButton}"
                     Click="ChangeTheme_click"/>
             <Button Content="Odjavi se" Style="{StaticResource SmallButton}"/>

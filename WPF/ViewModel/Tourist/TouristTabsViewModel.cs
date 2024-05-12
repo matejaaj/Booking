@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using BookingApp.Application;
 using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.DTO;
 using BookingApp.Repository;
 
 namespace BookingApp.WPF.ViewModel.Tourist
@@ -18,6 +20,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public ToursMainTabViewModel ToursMainViewModel { get; }
         public DriveMainTabViewModel DriveMainViewModel { get; }
+
+        public ObservableCollection<NotificationDTO> Notifications { get; private set; }
 
 
         private TourService _tourService;
@@ -37,14 +41,17 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourRequestService _tourRequestService;
         private TourRequestSegmentService _tourRequestSegmentService;
         private PrivateTourGuestService _privateTourGuestService;
+        private NotificationService _notificationService;
 
 
         public TouristTabsViewModel(User loggedUser)
         {
             Tourist = loggedUser;
-
+            Notifications = new ObservableCollection<NotificationDTO>();
 
             InitializeServices();
+            UpdateNotifications();
+
 
             ToursMainViewModel = new ToursMainTabViewModel(loggedUser, _tourService, _tourInstanceService, _checkpointService, _imageService,  _locationService, _languageService, _tourGuestService, _tourReservationService, _tourReviewService, _voucherService, _tourRequestService, _tourRequestSegmentService, _privateTourGuestService);
             DriveMainViewModel = new DriveMainTabViewModel(loggedUser, _driveReservationService, _userService, _detailedLocationService, _driverUnreliableReportService);
@@ -75,6 +82,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 new TourRequestSegmentService(Injector.CreateInstance<ITourRequestSegmentRepository>());
             _privateTourGuestService =
                 new PrivateTourGuestService(Injector.CreateInstance<IPrivateTourGuestRepository>());
+            _notificationService = new NotificationService(Injector.CreateInstance<INotificationRepository>());
 
         }
 
@@ -94,6 +102,24 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+
+        private void UpdateNotifications()
+        {
+            Notifications.Clear();
+            var notifications = _notificationService.GetNotificationsForUser(Tourist.Id);
+            foreach (var notification in notifications)
+            {
+                NotificationDTO dto = new NotificationDTO(notification.Id, notification.Title, notification.Text,
+                    notification.DateIssued, notification.TargetUserId);
+                Notifications.Add(dto);
+            }
+        }
+
+        public void DeleteNotification(int notificaitonId)
+        {
+            _notificationService.RemoveNotification(notificaitonId);
+            UpdateNotifications();
+        }
     }
 
 }
