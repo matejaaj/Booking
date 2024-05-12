@@ -129,6 +129,7 @@ namespace BookingApp.LogicServices.Driver
                 Text = text,
                 TargetUserId = reservation.TouristId
             };
+            notificationService.Save(notification);
         }
 
         private int FindDriver(GroupDriveReservation g)

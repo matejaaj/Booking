@@ -22,7 +22,7 @@ namespace BookingApp.Application.UseCases
             return _notificationRepository.GetAll();
         }
 
-        public void AddOrUpdateNotification(Notification notification)
+        public void Save(Notification notification)
         {
             _notificationRepository.Save(notification);
         }

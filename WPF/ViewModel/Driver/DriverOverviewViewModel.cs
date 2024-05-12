@@ -247,6 +247,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 Text = text,
                 TargetUserId = reservation.TouristId
             };
+            notificationService.Save(notification);
         }
 
         public void ViewDrive_Cancel(object? sender, EventArgs e)
