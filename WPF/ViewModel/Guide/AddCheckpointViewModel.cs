@@ -1,6 +1,7 @@
 ﻿using BookingApp.Domain.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -16,11 +17,13 @@ namespace BookingApp.WPF.ViewModel.Guide
         }
 
         private List<Checkpoint> _checkpoints;
+        public ObservableCollection<Checkpoint> Checkpoints { get; set; }
         private int _tourId;
 
         public AddCheckpointViewModel(List<Checkpoint> checkpoints, int tourId)
         {
             _checkpoints = checkpoints;
+            Checkpoints = new ObservableCollection<Checkpoint>(checkpoints);
             _tourId = tourId;
         }
 
@@ -37,19 +40,15 @@ namespace BookingApp.WPF.ViewModel.Guide
                 }
             }
         }
-
-        public void Confirm()
+        public void AddCheckpoint()
         {
             if (!string.IsNullOrEmpty(CheckpointName))
             {
                 Checkpoint newCheckpoint = new Checkpoint(_name, _tourId);
                 _checkpoints.Add(newCheckpoint);
-                MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                Checkpoints.Add(newCheckpoint);
             }
-            else
-            {
-                MessageBox.Show("Not added", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            
         }
     }
 }

@@ -24,16 +24,15 @@ namespace BookingApp.WPF.View.Guide
             viewModel = new AddImageViewModel(images, entityId, imageResourceType);
             DataContext = viewModel;
         }
-
+ 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.Confirm();
             Close();
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void btnAddImage_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            viewModel.AddImage();
         }
     }
 }
