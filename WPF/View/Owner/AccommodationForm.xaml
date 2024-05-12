@@ -59,8 +59,7 @@
             <TextBox Name="txtCancelThreshold" Text="{Binding Path=CancelThershold, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" Width="150"/>
 
             <Label Content="Images" Grid.Row="6" FontSize="12" VerticalAlignment="Center"/>
-            <Button x:Name="btnAddImage" Grid.Row="6" Grid.Column="1" Content="Add image" HorizontalAlignment="Left" Margin="30,1,0,10" Width="90" Click="btnAddImage_Click"/>
-            <Button x:Name="btnShowImages" Grid.Row="6" Content="Show Images" Grid.Column="1" HorizontalAlignment="Left" Margin="150,1,0,10" Width="90" Click="btnShowImages_Click"/>
+            <Button x:Name="btnAddImage" Grid.Row="6" Grid.Column="1" Content="Add image" HorizontalAlignment="Left" Margin="30,10,0,10" Width="90" Click="btnAddImage_Click"/>
         </Grid>
 
         <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">

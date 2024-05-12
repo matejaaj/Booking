@@ -23,6 +23,8 @@
 		<None Remove="Resources\Images\delay.png" />
 		<None Remove="Resources\Images\delete.png" />
 		<None Remove="Resources\Images\destination.png" />
+		<None Remove="Resources\Images\eden.jpg" />
+		<None Remove="Resources\Images\eden1.jpg" />
 		<None Remove="Resources\Images\edit.png" />
 		<None Remove="Resources\Images\forum.png" />
 		<None Remove="Resources\Images\goBack.png" />
@@ -36,6 +38,7 @@
 		<None Remove="Resources\Images\menu.png" />
 		<None Remove="Resources\Images\menuBar.png" />
 		<None Remove="Resources\Images\notifications.png" />
+		<None Remove="Resources\Images\notifications1.png" />
 		<None Remove="Resources\Images\pickup.png" />
 		<None Remove="Resources\Images\raspad.jpg" />
 		<None Remove="Resources\Images\raspad1.jpg" />
@@ -246,6 +249,8 @@
     <Resource Include="Resources\Images\babinobrdo.jpg" />
     <Resource Include="Resources\Images\carReg.png" />
     <Resource Include="Resources\Images\check.png" />
+    <Resource Include="Resources\Images\eden.jpg" />
+    <Resource Include="Resources\Images\eden1.jpg" />
     <Resource Include="Resources\Images\forum.png" />
     <Resource Include="Resources\Images\goBack.png" />
     <Resource Include="Resources\Images\home.png" />
@@ -257,6 +262,7 @@
     <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
     <Resource Include="Resources\Images\notifications.png" />
+    <Resource Include="Resources\Images\notifications1.png" />
     <Resource Include="Resources\Images\pickup.png" />
     <Resource Include="Resources\Images\raspad.jpg" />
     <Resource Include="Resources\Images\raspad1.jpg" />

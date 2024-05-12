@@ -19,7 +19,6 @@ namespace BookingApp.WPF.ViewModel.Owner
 {
     public class OwnerOverviewViewModel : INotifyPropertyChanged
     {
-        public string PageName { get; set; }
         public Domain.Model.Owner LoggedInOwner { get; set; }
         public bool isSuperOwner { get; set; }
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
@@ -42,7 +41,6 @@ namespace BookingApp.WPF.ViewModel.Owner
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(LoggedInOwner));
             InitializeAccommodationReservaions();
             CalculateRating();
-            PageName = "Accommodations";
             Update();
         }
 
@@ -117,22 +115,6 @@ namespace BookingApp.WPF.ViewModel.Owner
             else
             {
                 return new ViewAccommodationPage(SelectedAccommodation);
-            }
-        }
-
-        public void OwnerOverview_Loaded(object sender, RoutedEventArgs e)
-        {
-            NotifyMissingRatings(Accommodations);
-        }
-
-        public void NotifyMissingRatings(ObservableCollection<Accommodation> accommodations)
-        {
-            var missingRatingReservations = _accommodationReservationService.GetUnratedReservations(Accommodations);
-
-            if (missingRatingReservations.Any())
-            {
-                MessageBox.Show("You have recent unrated reservations",
-                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

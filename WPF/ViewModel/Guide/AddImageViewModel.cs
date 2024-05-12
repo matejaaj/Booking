@@ -1,7 +1,11 @@
-﻿using System;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
+using BookingApp.Domain.RepositoryInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -19,6 +23,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         private List<Domain.Model.Image> _images;
         private int _entityId;
         private ImageResourceType _imageResourceType;
+        private ImageService _imageService;
 
         private string _source;
         public string Source
@@ -40,6 +45,7 @@ namespace BookingApp.WPF.ViewModel.Guide
             _images = images;
             _entityId = entityId;
             _imageResourceType = imageResourceType;
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
         }
 
         public void AddImage()
@@ -49,6 +55,10 @@ namespace BookingApp.WPF.ViewModel.Guide
                 Domain.Model.Image newImage = new Domain.Model.Image(_source, _entityId, _imageResourceType, -1);
                 Images.Add(newImage);
                 _images.Add(newImage);
+                if (_imageService.GetAll().Find(i => i.Path == newImage.Path)==null)
+                {
+                    _imageService.Save(newImage);
+                }
             }
         }
     }
