@@ -39,6 +39,19 @@ namespace BookingApp.Domain.Model
             ImageIds = new List<int>();
         }
 
+        public Accommodation(string name, int locationId, string type, int maxGuests, int minReservations, int cancelThershold, int ownerId, List<int> ids)
+        {
+            Name = name;
+            LocationId = locationId;
+            Enum.TryParse(type, out Type typeEnum);
+            Type = typeEnum;
+            MinReservations = minReservations;
+            MaxGuests = maxGuests;
+            CancelThershold = cancelThershold;
+            OwnerId = ownerId;
+            ImageIds = ids;
+        }
+
         public void FromCSV(string[] values)
         {
             AccommodationId = Convert.ToInt32(values[0]);
