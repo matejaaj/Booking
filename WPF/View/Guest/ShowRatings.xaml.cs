@@ -3,6 +3,7 @@ using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
+using BookingApp.WPF.ViewModel.Guest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,52 +25,12 @@ namespace BookingApp.WPF.View.Guest
     /// </summary>
     public partial class ShowRatings : Window
     {
-        private readonly GuestRatingService _ratingService;
-        private readonly AccommodationReservationService _reservationService;
-        private readonly AccommodationService _accommodationService;
-        private readonly User loggedInGuest;
-
+        private readonly ShowRatingsViewModel _viewModel;
         public ShowRatings(User loggedInGuest)
         {
             InitializeComponent();
-            _accommodationService = new AccommodationService();
-            _ratingService = new GuestRatingService(Injector.CreateInstance<IGuestRatingRepository>());
-            _reservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
-            this.loggedInGuest = loggedInGuest;
-            LoadRatings();
-        }
-
-
-        private void LoadRatings()
-        {
-            List<GuestRating> ratings = _ratingService.GetAll();
-            List<Accommodation> accommodations = _accommodationService.GetAll(); 
-            List<AccommodationReservation> reservations = _reservationService.GetAll();
-            List<GuestRating> filteredRatings = new List<GuestRating>();
-            List<GuestRatingsOverviewDTO> ratingsDTOs = new List<GuestRatingsOverviewDTO>();
-
-            foreach (var reservation in reservations)
-            {
-                if (reservation.IsRated && reservation.IsAccommodationAndOwnerRated && reservation.GuestId == loggedInGuest.Id)
-                {
-                    var rating = ratings.Find(r => r.AccommodationReservationId == reservation.Id);
-                    var accommodation = accommodations.Find(a => a.AccommodationId == reservation.AccommodationId);
-                    if (rating != null && accommodation != null)
-                    {
-                        var ratingDTO = new GuestRatingsOverviewDTO(rating.Cleanliness, rating.RulesRespect, rating.Comment, accommodation.Name);
-                        ratingsDTOs.Add(ratingDTO);
-                    }
-                }
-            }
-
-            if (ratingsDTOs.Count == 0)
-            {
-                MessageBox.Show("Nema ocena za prikaz.");
-            }
-            else
-            {
-                RatingsDataGrid.ItemsSource = ratingsDTOs;
-            }
+            _viewModel = new ShowRatingsViewModel(loggedInGuest);
+            DataContext = _viewModel;
         }
 
     }

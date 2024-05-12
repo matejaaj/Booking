@@ -1,5 +1,8 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -10,20 +13,26 @@ namespace BookingApp.WPF.ViewModel.Guest
     {
         public List<Image> Images { get; set; }
 
-        private readonly AccommodationAndOwnerRatingService _ratingService;
-        private readonly AccommodationReservationService _reservationService;
+        private AccommodationAndOwnerRatingService _ratingService;
+        private AccommodationReservationService _reservationService;
         private readonly AccommodationReservation _reservation;
         public int AccommodationId { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public RateFormViewModel(AccommodationReservation reservation, AccommodationAndOwnerRatingService ratingService, AccommodationReservationService reservationService)
+        public RateFormViewModel(AccommodationReservation reservation)
         {
             Images = new List<Image>();
             _reservation = reservation;
             AccommodationId = reservation.AccommodationId;
-            _ratingService = ratingService;
-            _reservationService = reservationService;
+            InitializeServices();
+        }
+
+        private void InitializeServices()
+        {
+            var _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _reservationService = new AccommodationReservationService(_accommodationService,Injector.CreateInstance<IAccommodationReservationRepository>());
+            _ratingService = new AccommodationAndOwnerRatingService(_reservationService, Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>());
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

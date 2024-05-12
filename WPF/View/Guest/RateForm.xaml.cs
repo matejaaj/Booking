@@ -31,7 +31,7 @@ namespace BookingApp.WPF.View.Guest
         public RateForm(AccommodationReservation reservation)
         {
             InitializeComponent();
-            _viewModel = new RateFormViewModel(reservation, new AccommodationAndOwnerRatingService(Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>()), new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>()));
+            _viewModel = new RateFormViewModel(reservation);
             DataContext = _viewModel;
             reservationId = reservation.Id;
         }

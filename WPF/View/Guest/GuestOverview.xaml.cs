@@ -141,6 +141,19 @@ namespace BookingApp.WPF.View.Guest
             showRatingsWindow.Show();
         }
 
+        private void SuperGuest_Click(object sender, RoutedEventArgs e)
+        {
+            if (LoggedInGuest != null)
+            {
+                SuperGuestOverview superGuestOverviewWindow = new SuperGuestOverview(LoggedInGuest);
+                superGuestOverviewWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Logged in guest is null.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
 
     }
 }
