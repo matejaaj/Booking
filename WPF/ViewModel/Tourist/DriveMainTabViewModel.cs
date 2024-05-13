@@ -87,6 +87,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public void OpenReservationWindos()
         {
             DriveReservationWindow requestDrive = new DriveReservationWindow(Tourist);
+            requestDrive.Closed += (sender, args) => UpdateView();
             requestDrive.Show();
         }
     }
