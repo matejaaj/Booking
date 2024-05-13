@@ -17,10 +17,7 @@ namespace BookingApp.Application.UseCases
             _renovationRepository = renovationRecommendationRepository;
         }
 
-        public RenovationRecommendationService(IRenovationRecommendationRepository renovationRepository)
-        {
-            _renovationRepository = renovationRepository;
-        }
+        
 
 
         public List<RenovationRecommendation> GetAll()

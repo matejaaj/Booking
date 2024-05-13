@@ -59,9 +59,13 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public void OpenFormWindow()
         {
             var tourRequestFormWindow = new TourRequestFormWindow(_user, _locationService, _languageService, _tourRequestService, _tourSegmentService, _tourGuestService);
+
+            // Postavljanje događaja Closed da pozove UpdateTourRequests
+            tourRequestFormWindow.Closed += (sender, args) => UpdateTourRequests();
+
             tourRequestFormWindow.Show();
-            UpdateTourRequests();
         }
+
 
         public void OpenStatisticsWindow()
         {
