@@ -40,7 +40,7 @@ namespace BookingApp.Application
         { typeof(IDriverUnreliableReportRepository), new DriverUnreliableReportRepository() },
         { typeof(IRenovationRepository), new RenovationRepository() },
         { typeof(IRenovationRecommendationRepository), new RenovationRecommendationRepository()},
-        { typeof(ISuperGuestRepository), new SuperGuestRepository()}
+        { typeof(ISuperGuestRepository), new SuperGuestRepository()},
         { typeof(INotificationRepository), new NotificationRepository()}
     };
         
