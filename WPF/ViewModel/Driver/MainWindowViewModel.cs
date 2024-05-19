@@ -69,5 +69,13 @@ namespace BookingApp.WPF.ViewModel.Driver
         {
             IsNotVisible = visibility;
         }
+
+        internal void btnData_Click(object sender, RoutedEventArgs e, Page currentPage)
+        {
+            PersonalData personalDataPage = new PersonalData();
+
+            
+            currentPage.NavigationService.Navigate(personalDataPage);
+        }
     }
 }

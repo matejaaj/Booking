@@ -85,6 +85,14 @@ namespace BookingApp.WPF.View.Driver
             }
         }
 
+        public void btnData_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = MainNavigationFrame.Content as Page;
+            if (currentPage != null)
+            {
+                VM.btnData_Click(sender, e, currentPage);
+            }
+        }
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
             currentPage = MainNavigationFrame.Content as Page;
