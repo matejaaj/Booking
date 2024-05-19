@@ -80,7 +80,7 @@
 
                 <Button Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
 
-                <!-- Ostale stavke menija -->
+                
                 <Button Click="ShowCreateVehicleForm" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/carReg.png" Width="25" Height="25"/>
@@ -99,7 +99,7 @@
                         <TextBlock Text="Notifications" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Click="btnVacatioRequest_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/vacations.png" Width="25" Height="25"/>
                         <TextBlock Text="Vacation Requests" FontSize="16" Margin="5,0,0,0"/>

@@ -101,6 +101,15 @@ namespace BookingApp.WPF.View.Driver
                 VM.ShowCreateVehicleForm(sender, e, currentPage);
             }
         }
+
+        private void btnVacatioRequest_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = MainNavigationFrame.Content as Page;
+            if (currentPage != null)
+            {
+                VM.btnVacatioRequest_Click(sender,e, currentPage);
+            }
+        }
         private void ViewDrive_Cancel(object? sender, EventArgs e)
         {
             currentPage = MainNavigationFrame.Content as Page;

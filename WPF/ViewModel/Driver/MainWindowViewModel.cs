@@ -77,5 +77,11 @@ namespace BookingApp.WPF.ViewModel.Driver
             
             currentPage.NavigationService.Navigate(personalDataPage);
         }
+
+        internal void btnVacatioRequest_Click(object sender, RoutedEventArgs e, Page currentPage)
+        {
+            VacationRequest vacationRequest = new VacationRequest();
+            currentPage.NavigationService.Navigate(vacationRequest);
+        }
     }
 }
