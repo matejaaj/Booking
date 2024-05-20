@@ -36,6 +36,7 @@
 		<None Remove="Resources\Images\menuBar.png" />
 		<None Remove="Resources\Images\nameIcon.png" />
 		<None Remove="Resources\Images\notifications.png" />
+		<None Remove="Resources\Images\pdfIcon.png" />
 		<None Remove="Resources\Images\phoneIcon.png" />
 		<None Remove="Resources\Images\pickup.png" />
 		<None Remove="Resources\Images\ratings.png" />
@@ -57,6 +58,7 @@
 		<None Remove="Resources\Images\tutorial.png" />
 		<None Remove="Resources\Images\userData.png" />
 		<None Remove="Resources\Images\userProfile.png" />
+		<None Remove="Resources\Images\vacationIcon.png" />
 		<None Remove="Resources\Images\vacations.png" />
 		<None Remove="Resources\Images\view.png" />
 		<None Remove="Resources\Images\zuruckgehen.png" />
@@ -109,6 +111,7 @@
     <Resource Include="Resources\Images\menuBar.png" />
     <Resource Include="Resources\Images\nameIcon.png" />
     <Resource Include="Resources\Images\notifications.png" />
+    <Resource Include="Resources\Images\pdfIcon.png" />
     <Resource Include="Resources\Images\phoneIcon.png" />
     <Resource Include="Resources\Images\pickup.png" />
     <Resource Include="Resources\Images\ratings.png" />
@@ -129,6 +132,7 @@
     <Resource Include="Resources\Images\tutorial.png" />
     <Resource Include="Resources\Images\userData.png" />
     <Resource Include="Resources\Images\userProfile.png" />
+    <Resource Include="Resources\Images\vacationIcon.png" />
     <Resource Include="Resources\Images\vacations.png" />
     <Resource Include="Resources\Images\zuruckgehen.png" />
   </ItemGroup>

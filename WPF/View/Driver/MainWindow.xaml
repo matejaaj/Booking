@@ -105,7 +105,7 @@
                         <TextBlock Text="Vacation Requests" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Click="btnVacationReports_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/reports.png" Width="25" Height="25"/>
                         <TextBlock Text="Vacation Reports" FontSize="16" Margin="5,0,0,0"/>

@@ -110,6 +110,15 @@ namespace BookingApp.WPF.View.Driver
                 VM.btnVacatioRequest_Click(sender,e, currentPage);
             }
         }
+
+        private void btnVacationReports_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = MainNavigationFrame.Content as Page;
+            if (currentPage != null)
+            {
+                VM.btnVacationReports_Click(sender,e,currentPage);
+            }
+        }
         private void ViewDrive_Cancel(object? sender, EventArgs e)
         {
             currentPage = MainNavigationFrame.Content as Page;
