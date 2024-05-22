@@ -28,6 +28,7 @@
 		<None Remove="Resources\Images\edit.png" />
 		<None Remove="Resources\Images\forum.png" />
 		<None Remove="Resources\Images\goBack.png" />
+		<None Remove="Resources\Images\help.png" />
 		<None Remove="Resources\Images\home.png" />
 		<None Remove="Resources\Images\insertImage.png" />
 		<None Remove="Resources\Images\leopold.jpg" />
@@ -62,6 +63,9 @@
 		<None Remove="Resources\Images\userProfile.png" />
 		<None Remove="Resources\Images\vacations.png" />
 		<None Remove="Resources\Images\view.png" />
+		<None Remove="Resources\Images\wizard1.png" />
+		<None Remove="Resources\Images\wizard2.png" />
+		<None Remove="Resources\Images\wizard3.png" />
 		<None Remove="Resources\Images\zuruckgehen.png" />
 	</ItemGroup>
 
@@ -253,6 +257,7 @@
     <Resource Include="Resources\Images\eden1.jpg" />
     <Resource Include="Resources\Images\forum.png" />
     <Resource Include="Resources\Images\goBack.png" />
+    <Resource Include="Resources\Images\help.png" />
     <Resource Include="Resources\Images\home.png" />
     <Resource Include="Resources\Images\insertImage.png" />
     <Resource Include="Resources\Images\leopold.jpg" />
@@ -284,6 +289,9 @@
     <Resource Include="Resources\Images\userData.png" />
     <Resource Include="Resources\Images\userProfile.png" />
     <Resource Include="Resources\Images\vacations.png" />
+    <Resource Include="Resources\Images\wizard1.png" />
+    <Resource Include="Resources\Images\wizard2.png" />
+    <Resource Include="Resources\Images\wizard3.png" />
     <Resource Include="Resources\Images\zuruckgehen.png" />
   </ItemGroup>
 </Project>

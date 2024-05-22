@@ -116,6 +116,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         public MainWindowViewModel(Domain.Model.Owner owner, System.Windows.Controls.Frame mainFrame)
         {
             LoggedInOwner = owner;
+            MainFrame = mainFrame;
             ShowRatingsCommand = new RelayCommand(ShowRatings);
             ShowAccommodationsCommand = new RelayCommand(ShowAccommodations);
             ShowReschedulingCommand = new RelayCommand(ShowRescheduling);
@@ -128,11 +129,24 @@ namespace BookingApp.WPF.ViewModel.Owner
             ShowNotificationsCommand = new RelayCommand(ShowNotifications);
             HideNotificationsCommand = new RelayCommand(HideNotifications);
             ItemClickedCommand = new RelayCommand(ExecuteItemClicked);
-            PageName = "Accommodations";
-            mainFrame.Navigate(new AccommodationsPage(owner));
-            MainFrame = mainFrame;
+
+            StartUp();            
             InitializeServices();
             NotifyMissingRatings();
+        }
+
+        private void StartUp()
+        {
+
+            PageName = "Accommodations";
+            MainFrame.Navigate(new AccommodationsPage(LoggedInOwner));
+
+            if (LoggedInOwner.IsFirstLogIn)
+            {
+                OwnerWizardWindow wizard = new OwnerWizardWindow();
+                wizard.Owner = System.Windows.Application.Current.MainWindow;
+                wizard.Show(); 
+            }
         }
 
         private void InitializeServices()

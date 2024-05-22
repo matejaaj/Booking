@@ -22,6 +22,7 @@ namespace BookingApp.Domain.Model
         public bool SuperOwner { get; set; }
         public double AverageRating { get; set; }
         public int NumberOfRatings { get; set; }
+        public bool IsFirstLogIn { get; set; }
         public Owner()
         {
             Accommodations = new List<Accommodation>();
@@ -64,7 +65,8 @@ namespace BookingApp.Domain.Model
                 GenderToCSV(),
                 Address,
                 PhoneNumber,
-                Email
+                Email,
+                IsFirstLogIn.ToString()
                 };
             return csvValues;
         }
@@ -83,6 +85,7 @@ namespace BookingApp.Domain.Model
             Address = values[8];
             PhoneNumber = values[9];
             Email = values[10];
+            IsFirstLogIn = bool.Parse(values[11]);
         }
     }
 }
