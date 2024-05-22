@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookingApp.WPF.ViewModel.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,22 @@ namespace BookingApp.WPF.View.Driver
     /// </summary>
     public partial class VacationRequest : Page
     {
-        public VacationRequest()
+        private VacationRequestViewModel VM;
+        public VacationRequest(int driverId)
         {
+            VM = new VacationRequestViewModel(driverId);
             InitializeComponent();
+            DataContext = VM;
+        }
+
+        private void Button_Click_Confirm(object sender, RoutedEventArgs e)
+        {
+            VM.Button_Confirm(sender, e, this);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

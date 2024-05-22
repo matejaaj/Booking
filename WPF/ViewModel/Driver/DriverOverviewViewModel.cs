@@ -320,7 +320,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         public void btnDrive_Click(object sender, RoutedEventArgs e, Page owner)
         {
             if (!ValidateInput(() => !(SelectedReservation.DriveReservationStatusId != 4
-                                    || SelectedReservation.DelayMinutesDriver != -1),
+                                    || SelectedReservation.DelayMinutesDriver != 0),
                               "You don't have any confirmed reservation or you aren't at location!"))
             {
                 return;

@@ -29,7 +29,7 @@
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Beginning Date" VerticalAlignment="Center" FontSize="15"/>
-                <DatePicker Grid.Column="1" Margin="50,10,-49,5" />
+                <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="50,10,-49,5" />
             </Grid>
         </StackPanel>
 
@@ -40,7 +40,7 @@
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Ending Date" VerticalAlignment="Center" FontSize="15"/>
-                <DatePicker Grid.Column="1" Margin="72,10,-72,5"/>
+                <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="72,10,-72,5"/>
             </Grid>
         </StackPanel>
 
@@ -51,10 +51,7 @@
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Vacation type" VerticalAlignment="Center" FontSize="15"/>
-                <ComboBox Grid.Column="1" Margin="60,10,-61,5">
-                    <ComboBoxItem Content="Bolovanje" />
-                    <ComboBoxItem Content="Trudnicko" />
-                    <ComboBoxItem Content="Neplacen" />
+                <ComboBox ItemsSource="{Binding VacTypes}" SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="60,10,-61,5">
                 </ComboBox>
             </Grid>
         </StackPanel>
@@ -63,8 +60,8 @@
                    Text="NAPOMENA: Zahtev za odmor se moze podneti minimum 48h pre odabranog datuma. U slucaju da vam ne nadjemo adekvatnu zamenu sto se tice voznji vas zahtev za odmor ce biti odbijen!" />
 
         <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-            <Button Content="Cancel" Margin="10" Width="100"/>
-            <Button Content="Confirm" Margin="10" Width="100"/>
+            <Button Content="Cancel" Margin="10" Width="100" Click="Button_Click"/>
+            <Button Content="Confirm" Margin="10" Width="100" Click="Button_Click_Confirm"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -80,7 +80,7 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         internal void btnVacatioRequest_Click(object sender, RoutedEventArgs e, Page currentPage)
         {
-            VacationRequest vacationRequest = new VacationRequest();
+            VacationRequest vacationRequest = new VacationRequest(DriverID);
             currentPage.NavigationService.Navigate(vacationRequest);
         }
 
