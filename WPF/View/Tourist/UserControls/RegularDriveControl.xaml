@@ -51,7 +51,7 @@
         <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,5,0,5">
             <ComboBox ItemsSource="{Binding Hours}" SelectedItem="{Binding SelectedHour}" Width="50"/>
             <TextBlock Text=":" VerticalAlignment="Center" Margin="5,0"/>
-            <ComboBox ItemsSource="{Binding Minutes}" SelectedItem="{Binding SelectedMinute, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+            <ComboBox ItemsSource="{Binding Minutes}" SelectedItem="{Binding SelectedMinute,  UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Minutes_SelectionChanged" Width="50"/>
         </StackPanel>
 
         <Label Content="Vozač" Grid.Row="7" Grid.Column="0"/>

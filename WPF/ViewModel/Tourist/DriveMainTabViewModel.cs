@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.WPF.View.Tourist;
@@ -71,8 +72,43 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public bool CheckIfDriverArrived(DriveReservationViewModel reservationViewModel)
         {
-            SelectedReservation = _driveReservationService.GetById(reservationViewModel.DriveReservationId);
             return SelectedReservation.DriveReservationStatusId == 4;
+        }
+
+        public bool CheckIfDriverAssigned(DriveReservationViewModel reservationViewModel)
+        {
+            SelectedReservation = _driveReservationService.GetById(reservationViewModel.DriveReservationId);
+            return SelectedReservation.DriverId == 0;
+        }
+
+        public void ValidateAndMarkDriverAsUnreliable(DriveReservationViewModel reservation)
+        {
+            if (CheckIfDriverAssigned(reservation))
+            {
+                MessageBox.Show("Driver has not been asigned yet");
+                return;
+            }
+
+            if (!reservation.CheckTimeDifference())
+            {
+                MessageBox.Show("Cannot mark the driver as unreliable.");
+                return;
+            }
+
+            if (CheckIfDriverArrived(reservation))
+            {
+                MessageBox.Show("Driver has arrived, you cannot mark the driver as unreliable.");
+                return;
+            }
+
+            if (CheckIfMarked())
+            {
+                MessageBox.Show("This driver has already been marked as unreliable for this reservation.");
+                return;
+            }
+
+            MarkDriverAsUnreliable();
+            MessageBox.Show("Driver has been marked as unreliable.");
         }
 
         public void MarkDriverAsUnreliable()
