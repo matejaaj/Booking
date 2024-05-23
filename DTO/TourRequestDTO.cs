@@ -16,9 +16,9 @@ namespace BookingApp.DTO
     public class TourRequestDTO
     {
 
-        private readonly LocationService _locationService;
+/*        private readonly LocationService _locationService;
         private readonly LanguageService _languageService;
-
+*/
         public int Id { get; set; }
 
         private int _tourRequestId;
@@ -201,6 +201,21 @@ namespace BookingApp.DTO
             }
         }
 
+
+        public string DisplayGuests
+        {
+            get
+            {
+                if (Guests != null && Guests.Count > 3)
+                {
+                    var firstThreeGuests = Guests.Take(3).Select(g => g.Name).Aggregate((i, j) => i + "\n" + j);
+                    return $"{firstThreeGuests} ...";
+                }
+                return Guests == null ? string.Empty : string.Join("\n", Guests.Select(g => g.Name));
+            }
+        }
+
+
         private string _status;
 
         public string Status
@@ -211,7 +226,7 @@ namespace BookingApp.DTO
                 if (_status != value)
                 {
                     _status = value;
-                    OnPropertyChanged("Language");
+                    OnPropertyChanged("Status");
                 }
             }
         }
@@ -228,14 +243,13 @@ namespace BookingApp.DTO
 
         public TourRequestDTO()
         {
-            Language = "not set";
-            Location = "not set";
+
         }
 
         public TourRequestDTO(TourRequestSegment tourRequest) : this() // Chain to default constructor
         {
-            _locationService = new LocationService();
-            _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
+/*            _locationService = new LocationService();
+            _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());*/
 
             Id = tourRequest.Id;
             Description = tourRequest.Description;
@@ -243,20 +257,19 @@ namespace BookingApp.DTO
             LanguageId = tourRequest.LanguageId;
             Capacity = tourRequest.Capacity;
 
-            Language language = _languageService.GetById(LanguageId);
+/*            Language language = _languageService.GetById(LanguageId);
             Location location = _locationService.GetLocationById(LocationId);
 
             Language = language.Name;
-            Location = location.City + " " + location.Country;
+            Location = location.City + " " + location.Country;*/
 
             FromDate = tourRequest.FromDate;
             ToDate = tourRequest.ToDate;
             AcceptedDate = tourRequest.AcceptedDate;
             TourRequestId = tourRequest.TourRequestId;
             
-
-            
         }
+
 
         public  string GetStatusDescription(TourRequestStatus status)
         {

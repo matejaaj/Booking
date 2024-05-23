@@ -53,6 +53,12 @@ namespace BookingApp.Application.UseCases
             return _tourRequestSegmentRepository.GetAll().FirstOrDefault(request => request.TourRequestId == id);
         }
 
+
+        public List<TourRequestSegment> GetAllByRequestId(int id)
+        {
+            return _tourRequestSegmentRepository.GetAll().Where(request => request.TourRequestId == id).ToList();
+        }
+
         public void MarkAsAccepted(TourRequestSegment tourRequest)
         {
             var request = _tourRequestSegmentRepository.GetById(tourRequest.Id);
