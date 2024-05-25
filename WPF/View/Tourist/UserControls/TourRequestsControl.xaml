@@ -14,9 +14,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Margin="20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -27,17 +26,17 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"/>
 
-            <Button Grid.Column="1"
-                    Style="{StaticResource DefaultButton}"
-                    Content="Kreiraj zahtev"
-                    HorizontalAlignment="Right"
-                    Click="OpenTourRequestForm_Click"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="-70 0 0 0">
+                <Button Style="{StaticResource DefaultButton}"
+                        Content="Kreiraj zahtev"
+                        Margin="5,0"
+                        Click="OpenTourRequestForm_Click"/>
 
-            <Button Grid.Column="2"
-                    Style="{StaticResource DefaultButton}"
-                    Content="Statistika zahteva"
-                    HorizontalAlignment="Right"
-                    Click="OpenRequestStatistics_Click"/>
+                <Button Style="{StaticResource DefaultButton}"
+                        Content="Statistika zahteva"
+                        Margin="5,0"
+                        Click="OpenRequestStatistics_Click"/>
+            </StackPanel>
         </Grid>
 
         <ScrollViewer Grid.Row="1">
@@ -66,10 +65,10 @@
 
                                     <TextBlock Height="60" Text="{Binding DisplayGuests}" />
 
-
-                                    <TextBlock Text="{Binding Status}"
-                                               FontWeight="Bold"
-                                               HorizontalAlignment="Center"/>
+                                    <TextBlock HorizontalAlignment="Center">
+                                        <Run Text="Status: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Status}"/>
+                                    </TextBlock>
 
                                     <Button Style="{StaticResource DefaultButton}"
                                             Content="Više detalja"
@@ -98,9 +97,10 @@
 
                                     <TextBlock Height="60" Text="{Binding DisplayGuestNames}"/>
 
-                                    <TextBlock Text="{Binding Status}"
-                                               FontWeight="Bold"
-                                               HorizontalAlignment="Center"/>
+                                    <TextBlock HorizontalAlignment="Center">
+                                        <Run Text="Status: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Status}"/>
+                                    </TextBlock>
 
                                     <Button Content="Više detalja"
                                             HorizontalAlignment="Center"

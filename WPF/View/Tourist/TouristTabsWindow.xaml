@@ -51,17 +51,18 @@
         </TabControl>
 
         <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Left" Margin="0,-600,0,0">
-            <TextBlock>Notifikacije</TextBlock>
             <control:NotificationControl/>
         </StackPanel>
 
 
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="3,-100,0,0">
-            <Button Content="Promeni jezik"  Style="{StaticResource SmallButton}"
-                    />
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10,-130,0,0">
+            <Button Content="Promeni jezik" Style="{StaticResource SmallButton}" Width="175"
+                    Command="{Binding ChangeLanguageCommand}" />
             <Button Content="Promeni temu" Style="{StaticResource SmallButton}"
-                    Click="ChangeTheme_click"/>
-            <Button Content="Odjavi se" Style="{StaticResource SmallButton}"/>
+                    Command="{Binding ChangeThemeCommand}" />
+            <Button Content="Odjavi se" Style="{StaticResource SmallButton}"
+                    Command="{Binding LogoutCommand}" />
         </StackPanel>
+
     </Grid>
 </Window>

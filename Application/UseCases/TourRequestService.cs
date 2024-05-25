@@ -68,24 +68,6 @@ namespace BookingApp.Application.UseCases
             return GetSimpleRequests().Where(request => request.TouristId == userId).ToList();
         }
 
-        public void CheckExpiredSimpleRequests(List<TourRequestSegment> allSegments)
-        {
-            var requests = GetSimpleRequests().Where(r => r.IsAccepted == TourRequestStatus.PENDING).ToList();
 
-            foreach (var request in requests)
-            {
-                var exactSegment = allSegments.FirstOrDefault(segment => segment.TourRequestId == request.Id);
-
-                if (exactSegment != null)
-                {
-                    TimeSpan timeUntilExpiration = exactSegment.ToDate - DateTime.Now;
-                    if (timeUntilExpiration.TotalHours < 48)
-                    {
-                        request.IsAccepted = TourRequestStatus.CANCELED;
-                        Update(request);
-                    }
-                }
-            }
-        }
     }
 }

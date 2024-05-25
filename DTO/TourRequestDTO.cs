@@ -171,6 +171,10 @@ namespace BookingApp.DTO
             }
         }
 
+
+        public string DisplayAcceptedDate => AcceptedDate == DateTime.MinValue ? "Nije jos izabran" : AcceptedDate.ToString("dd.MM.yyyy");
+
+
         private TourRequestStatus _isAccepted;
 
         public TourRequestStatus IsAccepted

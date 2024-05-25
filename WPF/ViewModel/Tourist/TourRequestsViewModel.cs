@@ -11,6 +11,7 @@ using BookingApp.DTO;
 using BookingApp.DTO.Factories;
 using BookingApp.WPF.View.Tourist;
 
+
 namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class TourRequestsViewModel
@@ -20,6 +21,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public ObservableCollection<ComplexTourRequestDTO> ComplexRequests { get; private set; }
 
         private TourRequestDTOFactory dtoFactory;
+        private TourRequestExpirationChecker _expirationChecker;
 
         private LocationService _locationService;
         private LanguageService _languageService;
@@ -36,6 +38,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _user = user;
 
             dtoFactory = new TourRequestDTOFactory(locationService, languageService, guestService, tourSegmentService);
+            _expirationChecker = new TourRequestExpirationChecker(_tourRequestService, tourSegmentService);
             SimpleRequests = new ObservableCollection<TourRequestDTO>();
             ComplexRequests = new ObservableCollection<ComplexTourRequestDTO>();
 
@@ -45,7 +48,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         private void CheckForExpiredRequests()
         {
-            _tourRequestService.CheckExpiredSimpleRequests(_tourSegmentService.GetAll());
+            _expirationChecker.CheckAndExpireRequests();
         }
 
         public void UpdateTourRequests()

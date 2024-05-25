@@ -61,7 +61,7 @@ namespace BookingApp.DTO.Factories
                 Capacity = segment.Capacity,
                 FromDate = segment.FromDate,
                 ToDate = segment.ToDate,
-                AcceptedDate = segment.AcceptedDate,
+                AcceptedDate = segment.IsAccepted == TourRequestStatus.ACCEPTED ? segment.AcceptedDate : DateTime.MinValue, 
                 TourRequestId = segment.TourRequestId,
                 Location = _locationService.GetLocationById(segment.LocationId).City + " " + _locationService.GetLocationById(segment.LocationId).Country,
                 Language = _languageService.GetById(segment.LanguageId).Name,
@@ -70,18 +70,19 @@ namespace BookingApp.DTO.Factories
             };
         }
 
+
         private string GetStatusDescription(TourRequestStatus status)
         {
             switch (status)
             {
                 case TourRequestStatus.PENDING:
-                    return "Status: Na čekanju";
+                    return "Na čekanju";
                 case TourRequestStatus.ACCEPTED:
-                    return "Status: Prihvaćen";
+                    return "Prihvaćen";
                 case TourRequestStatus.CANCELED:
-                    return "Status: Odbijen";
+                    return "Odbijen";
                 default:
-                    return "Status: Nepoznat";
+                    return "Nepoznat";
             }
         }
     }

@@ -15,6 +15,7 @@
         </Style>
         <Style x:Key="NormalTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
         <Style x:Key="StackPanelStyle" TargetType="StackPanel">
             <Setter Property="Margin" Value="0, 25,0,0"/>
@@ -27,58 +28,59 @@
         </Style>
     </Window.Resources>
     <Grid Margin="10">
-        <Border Style="{StaticResource BorderStyle}">
-            <StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Border Style="{StaticResource BorderStyle}">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource StackPanelStyle}" Margin="0 5 0 0">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Status: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Status}" />
+                    </StackPanel>
 
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Lokacija: " />
-                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Location}" />
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Prihvacen datum: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding DisplayAcceptedDate}" />
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Lokacija: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Location}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0, 25, 0, 0">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Opis: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Description}" />
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Jezik: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Language}" />
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Turisti: " />
+                    </StackPanel>
+
+                    <ItemsControl ItemsSource="{Binding Guests}" Margin="10,0,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Name}" />
+                                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text=", " />
+                                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Age}" />
+                                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text=" godina" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Opseg mogućeg održavanja: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding FromDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text=" - " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding ToDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
+                    </StackPanel>
                 </StackPanel>
-
-
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Opis: " />
-                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Description}" />
-                </StackPanel>
-
-
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Jezik: " />
-                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Language}" />
-                </StackPanel>
-
-
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Turisti: " />
-                </StackPanel>
-
-                <ItemsControl ItemsSource="{Binding Guests}" Margin="10,0,0,0">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Name}" />
-                                <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text=", " />
-                                <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Age}" />
-                                <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text=" godina" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Opseg mogućeg održavanja: " />
-                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding FromDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
-                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text=" - " />
-                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding ToDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
-                </StackPanel>
-
-
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-
-                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{Binding Status}" />
-                </StackPanel>
-            </StackPanel>
-        </Border>
+            </Border>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -25,18 +25,18 @@
 
             <TextBlock Grid.Column="0"
                        Style="{StaticResource HeaderTextStyle}"
+                       Margin="20"
                        Text="Moje vožnje"
                        HorizontalAlignment="Left"
-                       Margin="10,10,0,10"
                        VerticalAlignment="Center"/>
 
             <Button Grid.Column="1"
                     Width="auto"
                     Height="auto"
                     Content="Rezervišite vožnju"
+                    Margin="20"
                     Style="{StaticResource DefaultButton}"
                     HorizontalAlignment="Center"
-                    Margin="10,10,10,10"
                     Click="ResserveDrive_Click"/>
         </Grid>
 

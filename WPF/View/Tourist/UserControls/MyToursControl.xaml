@@ -13,8 +13,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Moje ture"/>
-        <!-- Globalni stil za TextBlock -->
+        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Moje ture" Margin="20"/>
+
 
         <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
             <ItemsControl ItemsSource="{Binding Tours}">
