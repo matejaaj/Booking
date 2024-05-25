@@ -270,22 +270,6 @@ namespace BookingApp.DTO
             
         }
 
-
-        public  string GetStatusDescription(TourRequestStatus status)
-        {
-            switch (status)
-            {
-                case TourRequestStatus.PENDING:
-                    return  "Status: Aktivan";
-                case TourRequestStatus.ACCEPTED:
-                    return "Status: Prihvaćen";
-                case TourRequestStatus.CANCELED:
-                    return "Status: Neaktivan";
-                default:
-                    return "Status: Nepoznat";
-            }
-        }
-
         public TourRequestSegment ToRequest()
         {
             return new TourRequestSegment(TourRequestId, Description, LocationId, LanguageId, Capacity, FromDate,

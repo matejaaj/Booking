@@ -19,7 +19,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private ObservableCollection<KeyValuePair<int, string>> _countries = new ObservableCollection<KeyValuePair<int, string>>();
         private ObservableCollection<KeyValuePair<int, string>> _cities = new ObservableCollection<KeyValuePair<int, string>>();
         private ObservableCollection<KeyValuePair<int, string>> _languages = new ObservableCollection<KeyValuePair<int, string>>();
-        private ObservableCollection<int> _numberOfPeopleOptions = new ObservableCollection<int>();
+
        
         public ObservableCollection<TourGuestInputViewModel> GuestInputs { get; } = new ObservableCollection<TourGuestInputViewModel>();
 
@@ -111,15 +111,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-        public ObservableCollection<int> NumberOfPeopleOptions
-        {
-            get => _numberOfPeopleOptions;
-            private set
-            {
-                _numberOfPeopleOptions = value;
-                OnPropertyChanged(nameof(NumberOfPeopleOptions));
-            }
-        }
+
         public ObservableCollection<KeyValuePair<int, string>> Languages
         {
             get => _languages;
@@ -197,16 +189,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _fromDate = DateTime.Now;
             _toDate = DateTime.Now;
 
-            FillNumberOfPeopleOptions();
         }
 
-        private void FillNumberOfPeopleOptions()
-        {
-            NumberOfPeopleOptions.Clear();
-            NumberOfPeopleOptions.Add(1);
-            NumberOfPeopleOptions.Add(2);
-            NumberOfPeopleOptions.Add(3);
-        }
+
 
         private void GenerateGuestInputs(int numberOfPeople)
         {

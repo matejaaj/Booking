@@ -60,9 +60,18 @@ namespace BookingApp.DTO
         {
             get
             {
-                return TourSegments.Take(2).Select(ts => ts.Location).Aggregate((i, j) => i + "\n" + j);
+                var uniqueLocations = TourSegments.Select(ts => ts.Location).Distinct().ToList();
+
+
+                if (uniqueLocations.Count <= 2)
+                {
+                    return string.Join("\n", uniqueLocations);
+                }
+
+                return string.Join("\n", uniqueLocations.Take(2)) + " ...";
             }
         }
+
 
         public string DisplayGuestNames
         {
@@ -89,20 +98,6 @@ namespace BookingApp.DTO
             }
         }
 
-        public string GetStatusDescription(TourRequestStatus status)
-        {
-            switch (status)
-            {
-                case TourRequestStatus.PENDING:
-                    return "Status: Na cekanju";
-                case TourRequestStatus.ACCEPTED:
-                    return "Status: Prihvaćen";
-                case TourRequestStatus.CANCELED:
-                    return "Status: Odbijen";
-                default:
-                    return "Status: Nepoznat";
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

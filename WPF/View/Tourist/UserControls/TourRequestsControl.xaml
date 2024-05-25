@@ -29,7 +29,7 @@
 
             <Button Grid.Column="1"
                     Style="{StaticResource DefaultButton}"
-                    Content="Zatraži turu"
+                    Content="Kreiraj zahtev"
                     HorizontalAlignment="Right"
                     Click="OpenTourRequestForm_Click"/>
 
@@ -74,7 +74,9 @@
                                     <Button Style="{StaticResource DefaultButton}"
                                             Content="Više detalja"
                                             HorizontalAlignment="Center"
-                                            Click="MoreDetails_Click"/>
+                                            Tag="{Binding}"
+                                            Click="SimpleRequestDetails_Click"/>
+
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -82,6 +84,11 @@
                 </ItemsControl>
 
                 <ItemsControl ItemsSource="{Binding ComplexRequests}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{StaticResource DefaultBorder}" Width="300">
@@ -89,10 +96,7 @@
                                     <TextBlock Text="{Binding DisplayLocations}"
                                                Style="{StaticResource ItemHeaderTextStyle}"/>
 
-
-
-                                    <TextBlock Height="60" Text="{Binding DisplayGuestNames}"
-                                               />
+                                    <TextBlock Height="60" Text="{Binding DisplayGuestNames}"/>
 
                                     <TextBlock Text="{Binding Status}"
                                                FontWeight="Bold"
@@ -100,13 +104,15 @@
 
                                     <Button Content="Više detalja"
                                             HorizontalAlignment="Center"
-                                            Click="MoreDetails_Click"
+                                            Tag="{Binding}"
+                                            Click="ComplexRequestDetails_Click"
                                             Style="{StaticResource DefaultButton}"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+
             </StackPanel>
         </ScrollViewer>
     </Grid>
