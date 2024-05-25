@@ -157,7 +157,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         {
             if (int.TryParse(Year, out int year))
                 return year;
-            return 0; // return 0 when parsing fails
+            return 0; 
         }
 
     }

@@ -60,6 +60,7 @@
 		<None Remove="Resources\Images\userProfile.png" />
 		<None Remove="Resources\Images\vacationIcon.png" />
 		<None Remove="Resources\Images\vacations.png" />
+		<None Remove="Resources\Images\VideoTutorial.jpg" />
 		<None Remove="Resources\Images\view.png" />
 		<None Remove="Resources\Images\zuruckgehen.png" />
 	</ItemGroup>
@@ -134,6 +135,7 @@
     <Resource Include="Resources\Images\userProfile.png" />
     <Resource Include="Resources\Images\vacationIcon.png" />
     <Resource Include="Resources\Images\vacations.png" />
+    <Resource Include="Resources\Images\VideoTutorial.jpg" />
     <Resource Include="Resources\Images\zuruckgehen.png" />
   </ItemGroup>
 

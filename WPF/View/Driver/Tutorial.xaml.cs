@@ -15,10 +15,12 @@ using System.Windows.Shapes;
 
 namespace BookingApp.WPF.View.Driver
 {
-   
-    public partial class VacationReports : Page
+    /// <summary>
+    /// Interaction logic for Tutorial.xaml
+    /// </summary>
+    public partial class Tutorial : Page
     {
-        public VacationReports()
+        public Tutorial()
         {
             InitializeComponent();
         }

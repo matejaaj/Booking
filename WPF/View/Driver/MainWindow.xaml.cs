@@ -102,6 +102,14 @@ namespace BookingApp.WPF.View.Driver
             }
         }
 
+        public void btnTutorial_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = MainNavigationFrame.Content as Page;
+            if (currentPage != null)
+            {
+                VM.btnTutorial_Click(sender,e,currentPage);
+            }
+        }
         private void btnVacatioRequest_Click(object sender, RoutedEventArgs e)
         {
             currentPage = MainNavigationFrame.Content as Page;

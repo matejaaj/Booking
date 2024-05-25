@@ -1,6 +1,8 @@
-﻿using BookingApp.Application.UseCases;
+﻿using BookingApp.Application.Events;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Repository;
+using BookingApp.WPF.View.Driver;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -82,7 +84,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             }
             else
             {
-                MessageBox.Show("Error!");
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Error!", "Notification"));
             }
         }
 
@@ -96,7 +98,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             trip.EndTime = System.DateTime.Now;
             trip.Status = TripStatus.TripEnded;
             tripRepository.Save(trip);
-            MessageBox.Show(String.Format("Total price for this ride is: {0}", Price), "Drive");
+            MainWindow.EventAggregator.Publish(new ShowMessageEvent(String.Format("Total price for this ride is: {0}", Price), "Notification"));
             Reservation.DriveReservationStatusId = 6;
             driveReservationSerivce.Update(Reservation);
             Finished?.Invoke(this, EventArgs.Empty);

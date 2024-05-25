@@ -89,5 +89,11 @@ namespace BookingApp.WPF.ViewModel.Driver
             VacationReports vacationReports = new VacationReports();
             currentPage.NavigationService.Navigate(vacationReports);
         }
+
+        internal void btnTutorial_Click(object sender, RoutedEventArgs e, Page currentPage)
+        {
+            Tutorial tutorial = new Tutorial();
+            currentPage.NavigationService.Navigate(tutorial);
+        }
     }
 }

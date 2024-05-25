@@ -1,0 +1,97 @@
+﻿<Page x:Class="BookingApp.WPF.View.Driver.Tutorial"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
+      mc:Ignorable="d" 
+      d:Height="550" Width="936"
+      Title="Tutorial">
+
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox Header="Registracija vozila" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        <Run FontWeight="Normal">Kako funkcioniše rezervacija vozila:</Run>
+                        <LineBreak />
+                        Korisnik prijavljuje svoje vozilo u sistem gde se unose svi potrebni podaci, uključujući adrese i parametre koje je korisnik podesio. 
+                        Sistem zatim automatski pretražuje dostupne vožnje koje odgovaraju unetim parametrima i prikazuje ih korisniku.
+                        <LineBreak />
+                        <Run FontWeight="Normal">Inteligentna pretraga i lokacija:</Run>
+                        <LineBreak />
+                        Naš sistem koristi napredne algoritme za prepoznavanje tačne lokacije vozila. Ako vozilo nije na odgovarajućoj lokaciji, sistem će to automatski prepoznati i obavestiti korisnika kako bi mogao da izvrši potrebne korekcije.
+                        <LineBreak />
+                        Ovaj proces omogućava korisnicima da brzo i efikasno pronađu odgovarajuće vožnje bez potrebe za ručnim pretraživanjem, štedeći vreme i trud.
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Statistika voznji" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Prikaz statistike vožnji: 
+                        Sistem izračunava broj vožnji, vreme provedeno u vožnjama, kao i zaradu tokom istih u proteklim mesecima i godinama. Korisnicima je omogućeno da prate svoju statistiku kroz različite vremenske periode, što im pomaže da bolje razumeju i analiziraju svoje aktivnosti. Ovaj pregled uključuje sve relevantne podatke koji korisnicima pružaju uvid u njihovu efikasnost i zaradu tokom vožnji, omogućavajući im da donesu informisane odluke za buduće planove.
+
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Prihvati vožnju" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Sistem će tokom vremena sam obavestiti korisnika o adresi na kojoj se nalazi, kao 
+                        i o pojavama super vožnji i grupnih vožnji. Potencijalno o sistemskim greskama kao i zahtevima za odmor 
+                        tj preuzimanje voznji drugih vozaca
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Zahtev za odmor" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Korisnik uvek može podneti zahtev za odmor gde navodi tačan datum početka i kraja odmora, kao i tip odmora. Odmor će biti odobren u slučaju da kolege preuzmu njegove vožnje, a zahtev mora biti podnet minimum 48 sati pre planiranih vožnji.
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Pregled podnetih odmora" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Korisnik ovde može da vidi sve zahteve koje je podneo za odmor, kao i njihov trenutni status: da li su u procesu obrade, prihvaćeni ili odbijeni.
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Licni podaci" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Ovde vozač može videti sve svoje lične podatke, kao i podatke firme.
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Prihvatanje voznji" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Vozac ima opciju da pregleda sve voznje u toku dana u kojima ima opciju da prihvati iste.
+                        Kada prihvati voznju pojavljuju mu se tri nove opcije Delay,Cancel Ride,Taximeter
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Delay(Kasnjenje)" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Vozac moze da oznaci da ce kasniti na adresu putnika ili ako je stigao da oznaci da je na adresi.
+                        Ako se putnik ne pojavi u roku od 20 minuta nakon sto je vozac podesio da je na adresi on moze da otkaze voznju
+                        bez ikakvih posledica.
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Cancel Ride(otkazivanje voznje)" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Opcija za vozaca da otkaze voznju odnosno napusti adresu ako se putnik ne pojavi u roku.
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Taximeter(Taksimetar)" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Kada je voznja prihavena i putnik udje u vozilo.Vozac pali taksimetar i time voznja pocinje.
+                        Popunjava potrebnu vrednost za cenu voznje i kada pristigne na adresu ode na Finish i time zavrsava voznju
+                        i vidi konacnu cenu voznje.
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="Super-voznja i Grupna-voznja" Margin="10" FontSize="18" FontWeight="Bold">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Normal">
+                        Putnik uvek ima opciju da zatrazi brzu-voznju ili grupnu voznju. Brza voznja odmah trazi slobodno vozaca
+                        i za svaku prihvacenu dobija bonus 5 poena sa kojima postaje super vozac. Status super vozaca traje godinu dana
+                        i tu vozac dobija bonuse na platu.
+                     <LineBreak />
+                        Grupna voznja: Putnik oznaca koliko putnika ceka vozilo i sistem pronalazi odgovarajuce vozace kao i kola
+                        koje salje na lokaciju. Ova voznja se smatra kao obicna voznja i ne donosi nikakve benefite.
+                    </TextBlock>
+                </GroupBox>
+
+                <MediaElement Source="../../../Resources/Images/VideoTutorial.jpg" Width="400" Height="300"  Margin="10"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
