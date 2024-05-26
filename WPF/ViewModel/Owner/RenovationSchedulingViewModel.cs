@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
@@ -9,11 +10,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
@@ -102,28 +105,29 @@ namespace BookingApp.WPF.ViewModel.Owner
         public static AccommodationService accommodationService { get; set; }
         public static AccommodationReservationService accommodationReservationService {get;set;}
 
+        public ICommand SearchCommand { get; }
+        public ICommand ScheduleCommand { get; }
+
+        private RenovationSchedulingPage _currentPage;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public RenovationSchedulingViewModel(Domain.Model.Accommodation accommodation, AccommodationPageDTO selectedAccommodation)
+        public RenovationSchedulingViewModel(Domain.Model.Accommodation accommodation, AccommodationPageDTO selectedAccommodation, RenovationSchedulingPage renovationSchedulingPage)
         {
             InitializeServices();
             Accommodation = accommodation;
             SelectedAccommodation = selectedAccommodation;
             FreeDates = new ObservableCollection<FreeDatesDTO>();
+            SearchCommand = new RelayCommand(Search);
+            ScheduleCommand = new CancelCommand(OnSchedule, CanSchedule);
+            _currentPage = renovationSchedulingPage;
         }
 
-        private void InitializeServices()
-        {
-            accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
-            accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
-            renovationService = new RenovationService(accommodationService, accommodationReservationService, Injector.CreateInstance<IRenovationRepository>());
-        }
-
-        internal void SearchButton_Click(object sender, RoutedEventArgs e)
+        private void Search(object obj)
         {
             if (!ValidateFields())
             {
@@ -140,7 +144,26 @@ namespace BookingApp.WPF.ViewModel.Owner
                 FreeDates.Clear();
                 FindAvailableDates();
             }
-            
+        }
+
+        private bool CanSchedule(object obj)
+        {
+            return true;
+        }
+
+        private void OnSchedule(object obj)
+        {
+            var schedule = obj as FreeDatesDTO;
+            SelectedFreeDate = schedule;
+            renovationService.Save(new Renovation(SelectedFreeDate.StartDate, SelectedFreeDate.EndDate, Accommodation.AccommodationId));
+            NavigateToAccommodationViewPage(_currentPage);
+        }
+
+        private void InitializeServices()
+        {
+            accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            renovationService = new RenovationService(accommodationService, accommodationReservationService, Injector.CreateInstance<IRenovationRepository>());
         }
 
         private bool areDatesPast()
@@ -184,14 +207,6 @@ namespace BookingApp.WPF.ViewModel.Owner
         {
            List<FreeDatesDTO> dates =  renovationService.FindAvailableDates(StartDate, EndDate, EstimatedDuration, Accommodation);
            FreeDates = new ObservableCollection<FreeDatesDTO>(dates);
-        }
-
-        internal void ScheduleButton_Click(object sender, RoutedEventArgs e, View.Owner.RenovationSchedulingPage renovationSchedulingPage)
-        {
-            Button scheduleButton = (Button)sender;
-            SelectedFreeDate = (FreeDatesDTO)scheduleButton.DataContext;
-            renovationService.Save(new Renovation(SelectedFreeDate.StartDate, SelectedFreeDate.EndDate, Accommodation.AccommodationId));
-            NavigateToAccommodationViewPage(renovationSchedulingPage);
         }
 
         private void NavigateToAccommodationViewPage(RenovationSchedulingPage renovationSchedulingPage)

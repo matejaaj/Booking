@@ -61,7 +61,7 @@ namespace BookingApp.WPF.View.Guide
  
         private void btnAddImage_Click(object sender, RoutedEventArgs e)
         {
-            AddImage addImageWindow = new AddImage(_viewModel.Images, _viewModel.TourId, ImageResourceType.TOUR);
+            AddImage addImageWindow = new AddImage(_viewModel.Images, _viewModel.TourId, ImageResourceType.TOUR, -1);
             addImageWindow.ShowDialog();
         }
 

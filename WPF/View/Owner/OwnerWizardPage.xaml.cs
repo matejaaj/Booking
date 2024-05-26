@@ -1,5 +1,4 @@
-﻿using BookingApp.Domain.Model;
-using BookingApp.WPF.ViewModel.Owner;
+﻿using BookingApp.WPF.ViewModel.Owner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +17,15 @@ using System.Windows.Shapes;
 namespace BookingApp.WPF.View.Owner
 {
     /// <summary>
-    /// Interaction logic for AccommodationsPage.xaml
+    /// Interaction logic for OwnerWizardPage.xaml
     /// </summary>
-    public partial class AccommodationsPage : Page
+    public partial class OwnerWizardPage : Page
     {
-        public static OwnerOverviewViewModel viewModel { get; set; }
-        public AccommodationsPage(Domain.Model.Owner owner)
+        public OwnerWizardViewModel viewModel;
+        public OwnerWizardPage(Domain.Model.Owner owner)
         {
             InitializeComponent();
-            viewModel = new OwnerOverviewViewModel(owner, this);
+            viewModel = new OwnerWizardViewModel(owner, this);
             DataContext = viewModel;
         }
     }
