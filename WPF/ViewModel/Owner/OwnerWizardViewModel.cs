@@ -1,4 +1,5 @@
 ﻿using BookingApp.Commands;
+using BookingApp.WPF.View.Owner;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,7 +36,8 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        private View.Owner.OwnerWizardWindow _ownerWizardWindow;
+        private Domain.Model.Owner _loggedInOwner;
+        private View.Owner.OwnerWizardPage _currentPage;
 
         public ICommand ButtonCommand { get; }
 
@@ -46,10 +48,11 @@ namespace BookingApp.WPF.ViewModel.Owner
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public OwnerWizardViewModel(View.Owner.OwnerWizardWindow ownerWizardWindow)
+        public OwnerWizardViewModel(Domain.Model.Owner owner, View.Owner.OwnerWizardPage ownerWizardPage)
         {
             ButtonCommand = new RelayCommand(ButtonClick);
-            _ownerWizardWindow = ownerWizardWindow;
+            _loggedInOwner = owner;
+            _currentPage = ownerWizardPage;
         }
 
         private void ButtonClick(object obj)
@@ -64,7 +67,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
             else
             {
-               _ownerWizardWindow.Close();
+                _currentPage.NavigationService.Navigate(new AccommodationsPage(_loggedInOwner));
             }
         }
     }

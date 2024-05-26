@@ -28,15 +28,5 @@ namespace BookingApp.WPF.View.Owner
             viewModel = new ReschedulingOverviewViewModel(loggedInOwner);
             DataContext = viewModel;
         }
-
-        private void btnApprove_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.btnApprove_Click(sender, e);
-        }
-
-        private void btnReject_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.btnReject_Click(sender, e);
-        }
     }
 }

@@ -11,20 +11,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BookingApp.WPF.View.Owner
 {
     /// <summary>
-    /// Interaction logic for OwnerWizardWindow.xaml
+    /// Interaction logic for OwnerWizardPage.xaml
     /// </summary>
-    public partial class OwnerWizardWindow : Window
+    public partial class OwnerWizardPage : Page
     {
         public OwnerWizardViewModel viewModel;
-        public OwnerWizardWindow()
+        public OwnerWizardPage(Domain.Model.Owner owner)
         {
             InitializeComponent();
-            viewModel = new OwnerWizardViewModel(this);
+            viewModel = new OwnerWizardViewModel(owner, this);
             DataContext = viewModel;
         }
     }

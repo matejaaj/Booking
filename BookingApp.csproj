@@ -30,7 +30,9 @@
 		<None Remove="Resources\Images\goBack.png" />
 		<None Remove="Resources\Images\help.png" />
 		<None Remove="Resources\Images\home.png" />
+		<None Remove="Resources\Images\hotelpark.jpg" />
 		<None Remove="Resources\Images\insertImage.png" />
+		<None Remove="Resources\Images\kuca.jpg" />
 		<None Remove="Resources\Images\leopold.jpg" />
 		<None Remove="Resources\Images\leopold1.jpg" />
 		<None Remove="Resources\Images\leopold2.jpg" />
@@ -38,6 +40,7 @@
 		<None Remove="Resources\Images\Map.jpg" />
 		<None Remove="Resources\Images\menu.png" />
 		<None Remove="Resources\Images\menuBar.png" />
+		<None Remove="Resources\Images\nacional.jpg" />
 		<None Remove="Resources\Images\notifications.png" />
 		<None Remove="Resources\Images\notifications1.png" />
 		<None Remove="Resources\Images\pickup.png" />
@@ -133,6 +136,7 @@
     <Content Include="Resources\Images\Guide\user-avatar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\hotelpark.jpg" />
     <Content Include="Resources\Images\Map.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -266,6 +270,7 @@
     <Resource Include="Resources\Images\location.png" />
     <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
+    <Resource Include="Resources\Images\nacional.jpg" />
     <Resource Include="Resources\Images\notifications.png" />
     <Resource Include="Resources\Images\notifications1.png" />
     <Resource Include="Resources\Images\pickup.png" />

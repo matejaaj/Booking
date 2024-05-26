@@ -26,18 +26,8 @@ namespace BookingApp.WPF.View.Owner
         public AccommodationsPage(Domain.Model.Owner owner)
         {
             InitializeComponent();
-            viewModel = new OwnerOverviewViewModel(owner);
+            viewModel = new OwnerOverviewViewModel(owner, this);
             DataContext = viewModel;
-        }
-
-        private void AccommodationsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            viewModel.AccommodationsListView_SelectionChanged(sender, e, this);
-        }
-
-        private void NewAccommodation_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.NewAccommodation_Click(sender, e, this);
         }
     }
 }

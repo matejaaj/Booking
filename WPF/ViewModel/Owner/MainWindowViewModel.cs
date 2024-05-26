@@ -137,15 +137,16 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void StartUp()
         {
-
-            PageName = "Accommodations";
-            MainFrame.Navigate(new AccommodationsPage(LoggedInOwner));
-
             if (LoggedInOwner.IsFirstLogIn)
             {
-                OwnerWizardWindow wizard = new OwnerWizardWindow();
-                wizard.Owner = System.Windows.Application.Current.MainWindow;
-                wizard.Show(); 
+                PageName = "Accommodations";
+                MainFrame.Navigate(new OwnerWizardPage(LoggedInOwner));
+            }
+            else
+            {
+                PageName = "Accommodations";
+                var page = new AccommodationsPage(LoggedInOwner);
+                MainFrame.Navigate(page);
             }
         }
 
