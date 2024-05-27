@@ -10,6 +10,7 @@ using BookingApp.Application.UseCases;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
 using System.Linq;
+using BookingApp.DTO.Factories;
 
 namespace BookingApp.WPF.ViewModel.Guide
 {
@@ -135,6 +136,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         private TourRequestSegmentService _segmentService;
         private LocationService _locationService;
         private LanguageService _languageService;
+        private TourRequestDTOFactory dtoFactory;
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -149,6 +151,8 @@ namespace BookingApp.WPF.ViewModel.Guide
             Languages = _languageService.GetAll();
             Locations = _locationService.GetAll();
             TourRequests = new ObservableCollection<TourRequestDTO>();
+            var _guestService = new PrivateTourGuestService();
+            dtoFactory = new TourRequestDTOFactory(_locationService, _languageService, _guestService, _segmentService);
 
             SelectedFirstDate = DateTime.Now.Date;
             SelectedSecondDate = DateTime.Now.Date;
@@ -159,10 +163,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         public void LoadRequests()
         {
             List<TourRequest> simpleRequests = _tourRequestService.GetSimpleRequests();
-            foreach(var request in simpleRequests)
-            {
-                TourRequests.Add(new TourRequestDTO(_segmentService.GetByRequestId(request.Id)));
-            }
+            TourRequests = new ObservableCollection<TourRequestDTO>(dtoFactory.CreateSimpleTourDTOs(simpleRequests)); 
         }
         public void InitializeServices()
         {

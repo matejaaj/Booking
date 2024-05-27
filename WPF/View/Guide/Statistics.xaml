@@ -45,10 +45,10 @@
                 <TextBlock Text="{Binding MostVisitedTour.Language}" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right"/>
 
                 <TextBlock Text="Capacity:" FontWeight="Bold" Grid.Row="4" Grid.Column="0"/>
-                <TextBlock Text="{Binding MostVisitedTour.Capacity}" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right"/>
+                <TextBlock Text="{Binding MostVisitedTour.MaximumCapacity}" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right"/>
 
                 <TextBlock Text="Duration:" FontWeight="Bold" Grid.Row="5" Grid.Column="0"/>
-                <TextBlock Text="{Binding MostVisitedTour.Duration}" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right"/>
+                <TextBlock Text="{Binding MostVisitedTour.DurationHours}" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right"/>
 
                 <!-- Description -->
                 <TextBlock Text="Description:" FontWeight="Bold" Grid.Row="6" Grid.Column="0"/>
