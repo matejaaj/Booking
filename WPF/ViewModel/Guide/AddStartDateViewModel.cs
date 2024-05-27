@@ -33,12 +33,14 @@ namespace BookingApp.WPF.ViewModel.Guide
         public ObservableCollection<TourInstance> StartDates { get; set; }
         private int _tourId;
         private int _capacity;
+        private int _guideId;
         public DateTime? SelectedDate { get; set; }
 
-        public AddStartDateViewModel(List<TourInstance> startDates, int tourId, int capacity)
+        public AddStartDateViewModel(List<TourInstance> startDates, int tourId, int capacity, int guideId)
         {
             _startDates = startDates;
             _tourId = tourId;
+            _guideId = guideId;
             _capacity = capacity;
             StartDates = new ObservableCollection<TourInstance>(startDates);
         }
@@ -48,7 +50,7 @@ namespace BookingApp.WPF.ViewModel.Guide
             if (SelectedDate.HasValue && SelectedTime != null)
             {
                 DateTime combinedDateTime = SelectedDate.Value.Date + SelectedTime;
-                TourInstance newStartDate = new TourInstance(_tourId, _capacity, combinedDateTime);
+                TourInstance newStartDate = new TourInstance(_tourId, _capacity, combinedDateTime, _guideId);
 
                 MessageBox.Show(SelectedTime.ToString());
 
