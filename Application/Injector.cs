@@ -42,6 +42,7 @@ namespace BookingApp.Application
         { typeof(IDriverOnVacationRepository), new DriverOnVacationReposiroty() },
         { typeof(IVacationStatusRepository), new VacationStatusRepository() },
         { typeof(IVacationTypeRepository), new VacationTypeRepository() },
+        { typeof(ILocationStateRepository), new LocationStateRepository() },
     };
         
         public static T CreateInstance<T>()

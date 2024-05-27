@@ -1,4 +1,5 @@
-﻿using BookingApp.WPF.ViewModel.Driver;
+﻿using BookingApp.LogicServices.Driver;
+using BookingApp.WPF.ViewModel.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace BookingApp.WPF.View.Driver
         private VacationRequestViewModel VM;
         public VacationRequest(int driverId)
         {
-            VM = new VacationRequestViewModel(driverId);
+            VM = ViewModelInjector.GetInstance(driverId, new VacationService(driverId, null));
             InitializeComponent();
             DataContext = VM;
         }

@@ -42,22 +42,21 @@
             <Image Source="../../../Resources/Images/pdfIcon.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
             <TextBlock Text="Vacation Reports" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
         </StackPanel>
-        <DataGrid Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,10,10,10"
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False"  CanUserAddRows="False" Margin="10,10,10,10"
                   AlternatingRowBackground="LightGray" RowBackground="White"
                   GridLinesVisibility="None" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray"
                   ColumnHeaderHeight="32" RowHeight="25" FontSize="14"
-                  ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}">
+                  ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                  ItemsSource="{Binding Vacations, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  HorizontalAlignment="Center">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date of vacation" Binding="{Binding DateOfVacation}" Width="*"/>
-                <DataGridTextColumn Header="Date of ending" Binding="{Binding DateOfEnding}" Width="*"/>
-                <DataGridTextColumn Header="Vacation Type" Binding="{Binding VacationType}" Width="*"/>
+                <DataGridTextColumn Header="Date of vacation" Binding="{Binding StartDate}" Width="*"  />
+                <DataGridTextColumn Header="Date of ending" Binding="{Binding EndDate}" Width="*"/>
+                <DataGridTextColumn Header="Vacation Type" Binding="{Binding Type}" Width="*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Vacation Request" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="776,0,10,30"
-                Width="150" Height="30" FontSize="14" FontWeight="Bold"
-                Background="#FF4C87B7" Foreground="White" BorderBrush="{x:Null}"
-                Style="{StaticResource RoundedButtonStyle}"/>
+        
     </Grid>
 </Page>

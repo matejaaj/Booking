@@ -51,12 +51,13 @@
                     </StackPanel>
                 </Button>
                 <Separator Visibility="Hidden" Width="230"/>
-                <TextBlock Text="Today's Ride"
-                   FontSize="18"
-                   Foreground="Black"
-                   VerticalAlignment="Center"
-                   Margin="5,0,10,0" 
-                   FontFamily="Arial" />
+                <TextBlock x:Name="lbl_Page" Text="Today's Ride"
+                    FontSize="18"
+                    Foreground="Black"
+                    VerticalAlignment="Center"
+                    Margin="5,0,10,0" 
+                    FontFamily="Arial" 
+                    Width="102.486666666667"/>
                 <Button Click="btnHome_Click" HorizontalAlignment="Right">
                     <Image Source="../../../Resources/Images/home.png" Width="25" Height="30"/>
                 </Button>
@@ -78,7 +79,7 @@
                 </StackPanel>
 
 
-                <Button Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+                <Button Click="btn_LogOff" Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
 
                 
                 <Button Click="ShowCreateVehicleForm" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >

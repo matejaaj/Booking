@@ -46,6 +46,7 @@ namespace BookingApp.WPF.View.Driver
             EventAggregator.Subscribe<MenuItemsEvent>(e => ChangeVisibility(e.Visibility));
             VM = new MainWindowViewModel(user);
             DataContext = VM;
+            lbl_Page.Text = "Home page";
         }
 
         private void ChangeVisibility(Visibility visibility)
@@ -82,6 +83,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnStats_Click(sender, e, currentPage);
+                lbl_Page.Text = "Stats";
             }
         }
 
@@ -91,6 +93,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnData_Click(sender, e, currentPage);
+                lbl_Page.Text = "User";
             }
         }
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
@@ -99,6 +102,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.ShowCreateVehicleForm(sender, e, currentPage);
+                lbl_Page.Text = "Register vehicle";
             }
         }
 
@@ -108,6 +112,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnTutorial_Click(sender,e,currentPage);
+                lbl_Page.Text = "Tutorial";
             }
         }
         private void btnVacatioRequest_Click(object sender, RoutedEventArgs e)
@@ -116,6 +121,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnVacatioRequest_Click(sender,e, currentPage);
+                lbl_Page.Text = "Vacation request";
             }
         }
 
@@ -125,6 +131,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnVacationReports_Click(sender,e,currentPage);
+                lbl_Page.Text = "Vacation reports";
             }
         }
         private void ViewDrive_Cancel(object? sender, EventArgs e)
@@ -170,11 +177,18 @@ namespace BookingApp.WPF.View.Driver
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
             MainNavigationFrame.NavigationService.Navigate(new DriverOverview(driver));
+            lbl_Page.Text = "Home page";
         }
         private void SideMenu_MouseLeave(object sender, MouseEventArgs e)
         {
             SideMenu.Visibility = Visibility.Collapsed;
         }
 
+        private void btn_LogOff(object sender, RoutedEventArgs e)
+        {
+            SignInForm signInForm = new SignInForm();
+            signInForm.Show();
+            this.Close();
+        }
     }
 }

@@ -38,5 +38,10 @@ namespace BookingApp.Domain.Model
             };
             return values;
         }
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
 }
