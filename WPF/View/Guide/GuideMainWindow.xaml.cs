@@ -47,7 +47,7 @@ namespace BookingApp.WPF.View.Guide
 
         private void RequestsPage(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(new TourRequests());
+            ContentFrame.Navigate(new TourRequests(user));
         }
     }
 }

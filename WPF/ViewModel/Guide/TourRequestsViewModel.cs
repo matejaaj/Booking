@@ -138,6 +138,8 @@ namespace BookingApp.WPF.ViewModel.Guide
         private LanguageService _languageService;
         private TourRequestDTOFactory dtoFactory;
 
+        private User user { get; set; }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -145,15 +147,16 @@ namespace BookingApp.WPF.ViewModel.Guide
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public TourRequestsViewModel()
+        public TourRequestsViewModel(User user)
         {
             InitializeServices();
+            this.user = user;
             Languages = _languageService.GetAll();
             Locations = _locationService.GetAll();
             TourRequests = new ObservableCollection<TourRequestDTO>();
-            var _guestService = new PrivateTourGuestService();
+            var _guestService = new PrivateTourGuestService(Injector.CreateInstance<IPrivateTourGuestRepository>());
             dtoFactory = new TourRequestDTOFactory(_locationService, _languageService, _guestService, _segmentService);
-
+             
             SelectedFirstDate = DateTime.Now.Date;
             SelectedSecondDate = DateTime.Now.Date;
 
@@ -162,8 +165,8 @@ namespace BookingApp.WPF.ViewModel.Guide
         
         public void LoadRequests()
         {
-            List<TourRequest> simpleRequests = _tourRequestService.GetSimpleRequests();
-            TourRequests = new ObservableCollection<TourRequestDTO>(dtoFactory.CreateSimpleTourDTOs(simpleRequests)); 
+            List<TourRequestSegment> tourRequestSegments = _segmentService.GetAvailableRequestsForGuide(user);
+            TourRequests = new ObservableCollection<TourRequestDTO>(dtoFactory.GetRequestDTOs(tourRequestSegments)); 
         }
         public void InitializeServices()
         {
@@ -206,7 +209,13 @@ namespace BookingApp.WPF.ViewModel.Guide
                 TourRequestSegment request = SelectedRequest.ToRequest();
                 request.Id = SelectedRequest.Id;
                 request.AcceptedDate = SelectedDate;
-                _segmentService.MarkAsAccepted(request);
+                _segmentService.MarkAsAccepted(request, user.Id);
+
+                var itemsToRemove = TourRequests.Where(r => request.TourRequestId == r.TourRequestId).ToList();
+                foreach (var item in itemsToRemove)
+                {
+                    TourRequests.Remove(item);
+                }
             }
         }
     }

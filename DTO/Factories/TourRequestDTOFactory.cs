@@ -32,6 +32,16 @@ namespace BookingApp.DTO.Factories
             }).ToList();
         }
 
+        public List<TourRequestDTO> GetRequestDTOs(List<TourRequestSegment> requests)
+        {
+            List<TourRequestDTO> dtos = new List<TourRequestDTO>();
+            foreach(TourRequestSegment segment in requests)
+            {
+                dtos.Add(CreateTourRequestDTO(segment));
+            }
+            return dtos;
+        }
+
         public List<ComplexTourRequestDTO> CreateComplexTourDTOs(List<TourRequest> requests)
         {
             List<ComplexTourRequestDTO> complexDtos = new List<ComplexTourRequestDTO>();
