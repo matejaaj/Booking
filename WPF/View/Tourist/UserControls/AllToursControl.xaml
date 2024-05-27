@@ -53,8 +53,15 @@
                                            Margin="0,0,0,10"
                                            Source="{Binding Images[0]}"
                                            Stretch="Fill"/>
-                                    <Button Style="{StaticResource DefaultButton}"
-                                            Content="Više detalja"/>
+
+
+                                    <Button Style="{StaticResource DefaultButton}" Click="MoreDetails_Click" Tag="{Binding}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="30" Height="30" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Više detalja"/>
+                                        </StackPanel>
+                                    </Button>
+
                                 </StackPanel>
                             </Grid>
                         </Border>

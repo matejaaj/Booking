@@ -25,6 +25,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private CheckpointService _checkPointService;
         private VoucherService _voucherService;
         private TourReviewService _tourReviewService;
+        private ImageService _imageService;
 
         public MyToursViewModel(User loggedUser, TourService tourService, TourInstanceService tourInstanceService, CheckpointService checkpointService, ImageService imageService, LocationService locationService, LanguageService languageService, TourGuestService tourGuestService, TourReservationService tourReservationService, VoucherService voucherService, TourReviewService tourReviewService)
         {
@@ -35,6 +36,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _checkPointService = checkpointService;
             _voucherService = voucherService;
             _tourReviewService = tourReviewService;
+            _imageService = imageService;
 
 
             Tourist = loggedUser;
@@ -50,9 +52,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 var tour = _tourService.GetById(tourInstance.TourId);
                 var checkpoints = _checkPointService.GetAllByTourId(tour.Id);
                 var tourGuests = _tourGuestService.GetAllByTouristForTourInstance(Tourist.Id, tourInstance.Id).ToList();
-
+                var image = _imageService.GetImagesByEntityAndType(tour.Id, ImageResourceType.TOUR).First();
                 var viewModel = new TourInstanceViewModel
-                { 
+                {
                     Id = tourInstanceId,
                     IsFinished = tourInstance.IsCompleted,
                     Guests = tourGuests,
@@ -60,11 +62,13 @@ namespace BookingApp.WPF.ViewModel.Tourist
                     Name = tour.Name,
                     CheckpointNames = checkpoints.Select(cp => cp.Name).ToList(),
                     CurrentCheckpoint = tourInstance.CurrentCheckpoint,
+                    ImagePath = image.Path,
                 };
 
                 Tours.Add(viewModel);
             }
         }
+
         private List<int> GetMyTourInstanceIds()
         {
             var tourReservations = _tourReservationService.GetAllByUserId(Tourist.Id);
