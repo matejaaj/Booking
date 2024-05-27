@@ -175,14 +175,17 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         public void Filter()
         {
-            var filteredRequests = _tourRequestService.GetSimpleRequests()
-                      .Select(req => new TourRequestDTO(_segmentService.GetByRequestId(req.Id)))
-                      .Where(req =>
-                          (SelectedLanguage == null || req.LanguageId == SelectedLanguage.Id) &&
-                          (SelectedLocation == null || req.LocationId == SelectedLocation.Id) &&
-                          (req.FromDate.Date >= SelectedFirstDate.Date && req.ToDate.Date <= SelectedSecondDate.Date) &&
-                          req.Capacity <= Capacity
-                      ).ToList();
+            List<TourRequest> simpleRequests = _tourRequestService.GetSimpleRequests();
+            List<TourRequestDTO> tourRequestDTOs = dtoFactory.CreateSimpleTourDTOs(simpleRequests);
+
+            var filteredRequests = tourRequestDTOs
+                .Where(req =>
+                    (SelectedLanguage == null || req.LanguageId == SelectedLanguage.Id) &&
+                    (SelectedLocation == null || req.LocationId == SelectedLocation.Id) &&
+                    (req.FromDate.Date >= SelectedFirstDate.Date && req.ToDate.Date <= SelectedSecondDate.Date) &&
+                    req.Capacity <= Capacity
+                ).ToList();
+
 
             TourRequests.Clear();
             foreach (var request in filteredRequests)
