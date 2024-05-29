@@ -41,6 +41,7 @@
 		<None Remove="Resources\Images\menu.png" />
 		<None Remove="Resources\Images\menuBar.png" />
 		<None Remove="Resources\Images\nacional.jpg" />
+		<None Remove="Resources\Images\nacional1.jpg" />
 		<None Remove="Resources\Images\notifications.png" />
 		<None Remove="Resources\Images\notifications1.png" />
 		<None Remove="Resources\Images\pickup.png" />
@@ -271,6 +272,7 @@
     <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
     <Resource Include="Resources\Images\nacional.jpg" />
+    <Resource Include="Resources\Images\nacional1.jpg" />
     <Resource Include="Resources\Images\notifications.png" />
     <Resource Include="Resources\Images\notifications1.png" />
     <Resource Include="Resources\Images\pickup.png" />
