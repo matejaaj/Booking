@@ -49,5 +49,10 @@ namespace BookingApp.WPF.View.Guide
         {
             ContentFrame.Navigate(new TourRequests(user));
         }
+
+        private void ShowSuperGuidePage(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new SuperGuide(user));
+        }
     }
 }

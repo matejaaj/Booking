@@ -66,7 +66,7 @@
                             <TextBlock Text="Statistics (F6)" Margin="5,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource TransparentButtonStyle}">
+                    <Button Style="{StaticResource TransparentButtonStyle}" Click="ShowSuperGuidePage">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../../../Resources\Images\Guide\trophy.png" Width="30" Height="30"/>
                             <TextBlock Text="Super guide (F7)" Margin="5,0,0,0" VerticalAlignment="Center"/>
