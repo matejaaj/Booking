@@ -27,28 +27,26 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             InitializeComponent();
         }
 
-        public void btnReserve_Click(object sender, RoutedEventArgs e)
+        /*        public void btnReserve_Click(object sender, RoutedEventArgs e)
+                {
+                    if (DataContext is RegularDriveFormViewModel viewModel)
+                    {
+                        viewModel.ReserveRegularDrive();
+
+
+
+                        Window parentWindow = Window.GetWindow(this);
+                        parentWindow?.Close();
+                    }
+                }*/
+
+        private void Minute_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataContext is RegularDriveFormViewModel viewModel)
-            {
-                viewModel.ReserveRegularDrive();
-                
-
-
-                Window parentWindow = Window.GetWindow(this);
-                parentWindow?.Close();
-            }
-        }
-
-        private void Minutes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox comboBox = sender as ComboBox;
-            if (comboBox.SelectedItem != null && DataContext is RegularDriveFormViewModel viewModel)
+            var autoCompleteBox = sender as AutoCompleteBox;
+            if (autoCompleteBox?.SelectedItem != null && DataContext is RegularDriveFormViewModel viewModel)
             {
                 viewModel.UpdateDriverList();
             }
         }
-
-
     }
 }

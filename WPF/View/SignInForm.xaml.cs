@@ -82,7 +82,7 @@ namespace BookingApp.WPF.View
                             mainWindow.Show();
                             break;
                         case Role.TOURIST:
-                            TouristMainWindow touristMainWindow = new TouristMainWindow(user);
+                            TouristTabsWindow touristMainWindow = new TouristTabsWindow(user);
                             touristMainWindow.Show();
                             break;
                         case Role.DRIVER:
