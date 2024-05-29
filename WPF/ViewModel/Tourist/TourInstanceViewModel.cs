@@ -11,7 +11,7 @@ public class TourInstanceViewModel : INotifyPropertyChanged
     private string currentCheckpoint;
     private DateTime date;
     private List<TourGuest> guests = new List<TourGuest>();
-    private List<string> checkpointNames = new List<string>();
+
     private bool isFinished;
     private string imagePath;
 
@@ -100,6 +100,21 @@ public class TourInstanceViewModel : INotifyPropertyChanged
         }
     }
 
+    public string DisplayCheckpoints
+    {
+        get
+        {
+            if (CheckpointNames != null && CheckpointNames.Count > 0)
+            {
+                return string.Join(" → ", CheckpointNames);
+            }
+
+            return string.Empty;
+        }
+    }
+
+    private List<string> checkpointNames = new List<string>();
+
     public List<string> CheckpointNames
     {
         get => checkpointNames;
@@ -109,6 +124,7 @@ public class TourInstanceViewModel : INotifyPropertyChanged
             {
                 checkpointNames = value;
                 OnPropertyChanged(nameof(CheckpointNames));
+                OnPropertyChanged(nameof(DisplayCheckpoints)); // Notify change for DisplayCheckpoints
             }
         }
     }

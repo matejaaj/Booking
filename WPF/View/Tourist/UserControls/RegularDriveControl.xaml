@@ -25,7 +25,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Izaberite državu:" Grid.Row="0" Grid.Column="0" Margin="40,0,0,15"/>
+        <Label Content="Izaberite državu:" Grid.Row="0" Grid.Column="0" Margin="40,0,0,15"
+               Width="190"/>
         <controls:AutoCompleteBox x:Name="autoCompleteCountry" ItemsSource="{Binding Countries}"
                                   SelectedItem="{Binding SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   ValueMemberPath="Value"

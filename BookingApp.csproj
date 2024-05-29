@@ -60,9 +60,12 @@
 		<None Remove="Resources\Images\Tourist\clock.png" />
 		<None Remove="Resources\Images\Tourist\language.png" />
 		<None Remove="Resources\Images\Tourist\left.png" />
+		<None Remove="Resources\Images\Tourist\left_light.png" />
+		<None Remove="Resources\Images\Tourist\left_light_theme.png" />
 		<None Remove="Resources\Images\Tourist\logout.png" />
 		<None Remove="Resources\Images\Tourist\map.png" />
 		<None Remove="Resources\Images\Tourist\next.png" />
+		<None Remove="Resources\Images\Tourist\next_light.png" />
 		<None Remove="Resources\Images\Tourist\rate.png" />
 		<None Remove="Resources\Images\Tourist\report.png" />
 		<None Remove="Resources\Images\Tourist\request.png" />
@@ -298,9 +301,11 @@
     <Resource Include="Resources\Images\Tourist\clock.png" />
     <Resource Include="Resources\Images\Tourist\language.png" />
     <Resource Include="Resources\Images\Tourist\left.png" />
+    <Resource Include="Resources\Images\Tourist\left_light_theme.png" />
     <Resource Include="Resources\Images\Tourist\logout.png" />
     <Resource Include="Resources\Images\Tourist\map.png" />
     <Resource Include="Resources\Images\Tourist\next.png" />
+    <Resource Include="Resources\Images\Tourist\next_light.png" />
     <Resource Include="Resources\Images\Tourist\rate.png" />
     <Resource Include="Resources\Images\Tourist\report.png" />
     <Resource Include="Resources\Images\Tourist\request.png" />

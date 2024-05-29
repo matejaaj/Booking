@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Style="{StaticResource HeaderTextStyle}"
+        <TextBlock Style="{StaticResource HeaderTextStyle}" 
                    Text="Sve ture"
 
                    Margin="20"/>

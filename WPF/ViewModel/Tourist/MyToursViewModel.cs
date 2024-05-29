@@ -9,7 +9,11 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using BookingApp.Domain.Model.BookingApp.Domain.Model;
+using System.Windows.Input;
+using BookingApp.Commands;
+using BookingApp.WPF.View.Tourist;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
@@ -27,6 +31,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourReviewService _tourReviewService;
         private ImageService _imageService;
 
+        public ICommand MoreDetailsCommand { get; }
+        public ICommand RateTourCommand { get; }
+
         public MyToursViewModel(User loggedUser, TourService tourService, TourInstanceService tourInstanceService, CheckpointService checkpointService, ImageService imageService, LocationService locationService, LanguageService languageService, TourGuestService tourGuestService, TourReservationService tourReservationService, VoucherService voucherService, TourReviewService tourReviewService)
         {
             _tourService = tourService;
@@ -38,6 +45,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _tourReviewService = tourReviewService;
             _imageService = imageService;
 
+
+            MoreDetailsCommand = new RelayCommand(MoreDetailsExecute);
+            RateTourCommand = new RelayCommand(RateTourExecute);
 
             Tourist = loggedUser;
             Tours = new ObservableCollection<TourInstanceViewModel>();
@@ -79,6 +89,39 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public bool CheckIfAlreadyReviewed(int userId, int tourId)
         {
             return _tourReviewService.HasUserReviewedTour(userId, tourId);
+        }
+
+
+        private void MoreDetailsExecute(object parameter)
+        {
+            var tour = parameter as TourInstanceViewModel;
+            if (tour != null)
+            {
+                var detailsWindow = new MyTourMoreDetailsWindow(tour);
+                detailsWindow.Show();
+            }
+        }
+
+        private void RateTourExecute(object parameter)
+        {
+            var tourInstanceViewModel = parameter as TourInstanceViewModel;
+            if (tourInstanceViewModel != null)
+            {
+                if (!tourInstanceViewModel.IsFinished)
+                {
+                    MessageBox.Show("Tura nije gotova i dalje");
+                    return;
+                }
+
+                if (CheckIfAlreadyReviewed(Tourist.Id, tourInstanceViewModel.Id))
+                {
+                    MessageBox.Show("Tura je već ocenjena");
+                    return;
+                }
+
+                var reviewWindow = new ReviewTourWindow(tourInstanceViewModel, Tourist.Id);
+                reviewWindow.Show();
+            }
         }
 
     }

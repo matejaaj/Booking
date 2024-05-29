@@ -5,22 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
-        Title="TourDetailsWindow" Height="675" Width="1100"
+        Title="Detalji ture" Height="675" Width="1100"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="BoldTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
         <Style x:Key="NormalTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
         <Style x:Key="StackPanelStyle" TargetType="StackPanel">
             <Setter Property="Margin" Value="0, 10, 0, 0"/>
             <Setter Property="Orientation" Value="Horizontal"/>
         </Style>
         <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource SecondaryBackground}"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="10"/>
@@ -34,9 +37,10 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
         </Style>
     </Window.Resources>
-    <Grid Margin="10">
+    <Grid Margin="10" Background="{DynamicResource PrimaryBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -99,9 +103,9 @@
         <Grid Grid.Column="1">
             <StackPanel Orientation="Vertical" Margin="80 75 0 0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Command="{Binding PreviousImageCommand}" Margin="0 0 10 0" Height="30" Width="30" Style="{StaticResource ImageButtonStyle}" Tag="pack://application:,,,/Resources/Images/Tourist/left.png" />
+                    <Button Command="{Binding PreviousImageCommand}" Margin="0 0 10 0" Height="30" Width="30" Style="{StaticResource ImageButtonStyle}" Tag="{DynamicResource LeftImageSource}" />
                     <Image Source="{Binding CurrentImage}" Height="330" Width="390" Stretch="Uniform"/>
-                    <Button Command="{Binding NextImageCommand}" Margin="10 0 0 0" Height="30" Width="30" Style="{StaticResource ImageButtonStyle}" Tag="pack://application:,,,/Resources/Images/Tourist/next.png" />
+                    <Button Command="{Binding NextImageCommand}" Margin="10 0 0 0" Height="30" Width="30" Style="{StaticResource ImageButtonStyle}" Tag="{DynamicResource NextImageSource}" />
                 </StackPanel>
                 <Button Content="Rezervacija" Margin="0, 20, 0, 0" Style="{StaticResource DefaultButton}" Width="250" Height="75" HorizontalAlignment="Center" Command="{Binding ReservationCommand}"/>
             </StackPanel>
