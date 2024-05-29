@@ -173,7 +173,7 @@ namespace BookingApp.Application.UseCases
             return (reservation.StartDate == oldStartDate && reservation.EndDate == oldEndDate);
         }
 
-        internal List<AccommodationReservation> GetByOwner(Owner loggedInOwner)
+        public List<AccommodationReservation> GetByOwner(Owner loggedInOwner)
         {
             var accommodations = accommodationService.GetByUser(loggedInOwner);
             var accommodationIds = accommodations.Select(a => a.AccommodationId).ToList();
