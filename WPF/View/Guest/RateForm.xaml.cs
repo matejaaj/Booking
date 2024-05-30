@@ -38,7 +38,7 @@ namespace BookingApp.WPF.View.Guest
 
         private void AddPictures_Click(object sender, RoutedEventArgs e)
         {
-            AddImage addImageWindow = new AddImage(_viewModel.Images, _viewModel.AccommodationId, ImageResourceType.ACCOMMODATION);
+            AddImage addImageWindow = new AddImage(_viewModel.Images, _viewModel.AccommodationId, ImageResourceType.ACCOMMODATION, -1);
             addImageWindow.Owner = this;
             addImageWindow.ShowDialog();
         }

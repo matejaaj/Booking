@@ -18,10 +18,10 @@ namespace BookingApp.WPF.View.Guide
 
         private AddImageViewModel viewModel;
 
-        public AddImage(List<Domain.Model.Image> images, int entityId, ImageResourceType imageResourceType)
+        public AddImage(List<Domain.Model.Image> images, int entityId, ImageResourceType imageResourceType, int userId)
         {
             InitializeComponent();
-            viewModel = new AddImageViewModel(images, entityId, imageResourceType);
+            viewModel = new AddImageViewModel(images, entityId, imageResourceType, userId);
             DataContext = viewModel;
         }
  

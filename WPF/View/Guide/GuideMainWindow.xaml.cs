@@ -11,14 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BookingApp.Domain.Model;
 
 namespace BookingApp.WPF.View.Guide
 {
     public partial class GuideMainWindow : Window
-    {
-        public GuideMainWindow()
+    {   
+        private User user { get; set; }
+        public GuideMainWindow(User user)
         {
             InitializeComponent();
+            this.user = user;
             DataContext = this;
         }
 
@@ -29,7 +32,7 @@ namespace BookingApp.WPF.View.Guide
 
         private void CreateTourPage(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(new TourForm());
+            ContentFrame.Navigate(new TourForm(user));
         }
 
         private void AllToursPage(object sender, RoutedEventArgs e)
@@ -44,7 +47,17 @@ namespace BookingApp.WPF.View.Guide
 
         private void RequestsPage(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(new TourRequests());
+            ContentFrame.Navigate(new TourRequests(user));
+        }
+
+        private void ShowSuperGuidePage(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new SuperGuide(user));
+        }
+
+        private void Home(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new Home(user, this));
         }
     }
 }

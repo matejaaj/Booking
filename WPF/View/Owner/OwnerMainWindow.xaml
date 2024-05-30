@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="OwnerMainWindow" Height="750" Width="430">
     <Grid>
+        <!-- Existing UI elements -->
         <Canvas VerticalAlignment="Stretch" x:Name="SideMenu" Canvas.ZIndex="100" Visibility="{Binding SideMenuVisibility}" Background="Transparent">
             <Grid Width="250" Height="715" Background="#FFA9A9A9">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -23,8 +23,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
-                <!-- Dugme za zatvaranje menija sa strelicom levo -->
+
+                <!-- Side menu buttons and components -->
                 <Button Grid.Row="0" Command="{Binding HideMenuCommand}" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" Height="39">
                     <DockPanel>
                         <Image Source="../../../Resources/Images/goBack.png" Width="20" Height="20" DockPanel.Dock="Left"/>
@@ -32,16 +32,13 @@
                     </DockPanel>
                 </Button>
 
-                <!-- Profilna slika, ime korisnika i dugme za odjavu -->
                 <StackPanel Grid.Row="1" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
                     <Image Source="../../../Resources/Images/userProfile.png" Height="125" Width="125" Margin="0,0,0,5"/>
                     <TextBlock Text="{Binding LoggedInOwner.Username}" Foreground="Black" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="5,0,0,5"/>
                 </StackPanel>
 
-                <!-- Dugme za odjavu -->
                 <Button Grid.Row="2" Command="{Binding LogOutCommand}" Content="Log out" FontSize="15" Width="75" HorizontalAlignment="Center" Margin="5,5,0,20"/>
 
-                <!-- Ostale stavke menija -->
                 <Button Grid.Row="3" Command="{Binding ShowRatingsCommand}" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/ratings.png" Width="25" Height="25"/>
@@ -91,25 +88,20 @@
         <Grid Background="LightGray" Height="50" VerticalAlignment="Top">
             <Button Command="{Binding ShowMenuCommand}" Content="&#x2630;" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Left" BorderThickness="0" Margin="10,0,0,0" FontSize="20"/>
             <TextBlock Text="{Binding PageName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="48,0,0,0"/>
-            <Button  Command="{Binding GoBackCommand}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,50,0" BorderThickness="0" Background="Transparent">
-                <Image Source="../../../Resources/Images/zuruckgehen.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            </Button>
-            <Button  Command="{Binding ShowNotificationsCommand}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,85,0" BorderThickness="0" Background="Transparent">
+            <Button  Command="{Binding ShowNotificationsCommand}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,55,0" BorderThickness="0" Background="Transparent">
                 <Image Source="{Binding NotificationImageSource}" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             </Button>
 
             <Image x:Name="iconImage" Source="../../../Resources/Images/accommodations.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
         </Grid>
 
-
+        <!-- Notification Menu -->
         <Border BorderThickness="1" Width="222" Height="352" BorderBrush="Black" Margin="216,50,0,0"  VerticalAlignment="Top" x:Name="NotificationMenu" Canvas.ZIndex="100" Visibility="{Binding NotificationMenuVisibility}" Background="Transparent">
             <Canvas>
                 <Grid Width="200" Height="350" Background="LightSlateGray">
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-
                     </Grid.RowDefinitions>
                     <ListView x:Name="NotificationsListView"
                           Margin="0,0,0,5"
@@ -167,13 +159,32 @@
                             </ControlTemplate>
                         </ListView.Template>
                     </ListView>
-
                 </Grid>
             </Canvas>
         </Border>
 
+        <!-- Main content frame -->
         <Frame Name="MainFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,50,0,0"
                NavigationUIVisibility="Hidden"
                Source="AccommodationsPage.xaml"/>
+
+        <!-- Action bar at the bottom -->
+        <Grid Background="LightGray" Height="45" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Command="{Binding GoBackCommand}" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0" FontSize="16" Grid.Column="0">
+                <Image Source="../../../Resources/Images/zuruckgehen.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            </Button>
+            <Button Command="{Binding ShowAccommodationsCommand}" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0" FontSize="16" Grid.Column="1">
+                <Image Source="../../../Resources/Images/home.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            </Button>
+            <Button Command="{Binding BottomButton3Command}" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0" FontSize="16" Grid.Column="2">
+                <Image Source="../../../Resources/Images/help.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            </Button>
+        </Grid>
     </Grid>
 </Window>

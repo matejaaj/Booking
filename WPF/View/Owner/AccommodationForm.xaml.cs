@@ -34,45 +34,5 @@ namespace BookingApp.WPF.View.Owner
             viewModel = new AccommodationFormViewModel(owner, this);
             DataContext = viewModel;
         }
-
-        private void btnConfirm_Click(object sender, RoutedEventArgs e)
-        {
-            if (ValidateFields())
-            {
-                viewModel.btnConfirm_Click(sender, e);  
-                Close();
-            }
-            else
-            {
-                MessageBox.Show("Please fill all fields",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            
-        }
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private bool ValidateFields()
-        {
-            return !string.IsNullOrWhiteSpace(txtName.Text) &&
-                   !string.IsNullOrWhiteSpace(txtMinimumReservationDays.Text) &&
-                   cmbLocation.SelectedItem != null &&
-                   cmbType.SelectedItem != null &&
-                   !string.IsNullOrWhiteSpace(txtCapacity.Text) &&
-                   !string.IsNullOrWhiteSpace(txtCancelThreshold.Text);
-        }
-
-        private void btnAddImage_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.btnAddImage_Click(sender, e);
-        }
-
-        private void btnShowImages_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.btnShowImages_Click(sender, e);
-        }
     }
 }

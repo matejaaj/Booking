@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookingApp.WPF.View.Owner"
       xmlns:guest="clr-namespace:BookingApp.WPF.View.Guest"
+      xmlns:commands="clr-namespace:BookingApp.Commands"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="AccommodationsPage">
@@ -14,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Click="NewAccommodation_Click" Margin="5,5,5,5" Width="185">
+        <Button Grid.Row="0" Command="{Binding AddCommand}" Margin="5,5,5,5" Width="185">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../../../Resources/Images/add.png" Width="25" Height="25"/>
                 <TextBlock Text="Add Accommodation" FontSize="16" Margin="5,0,0,0"/>
@@ -30,13 +31,13 @@
             ItemsSource="{Binding AccommodationsDTOs}"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectedItem="{Binding SelectedAccommodation}"
-            SelectionMode="Single"
-            SelectionChanged="AccommodationsListView_SelectionChanged">
+            SelectionMode="Single">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Background" Value="White" />
                     <Setter Property="Padding" Value="0" />
                     <Setter Property="Margin" Value="5,5,5,5" />
+                    <Setter Property="commands:ListViewItemClickedBehavior.Command" Value="{Binding DataContext.ItemClickedCommand, RelativeSource={RelativeSource AncestorType=ListView}}" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Owner"
+        xmlns:val="clr-namespace:BookingApp.Validation"
         mc:Ignorable="d"
         Title="Create new accommodation" Height="350" Width="400" WindowStartupLocation="CenterOwner">
     <Grid>
@@ -33,13 +34,70 @@
             </Grid.RowDefinitions>
 
             <Label Content="Name" Grid.Row="0" FontSize="12" VerticalAlignment="Center" Margin="0,5,0,0"/>
-            <TextBox x:Name="txtName" Text="{Binding Path=AccommodationName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" Width="150"/>
+            <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" Width="150">
+                <TextBox.Text>
+                    <Binding Path="AccommodationName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:AccommodationFormValidationRules/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-            <Label Content="Location" Grid.Row="1" FontSize="12" VerticalAlignment="Center"/>
-            <ComboBox Name="cmbLocation" IsTextSearchEnabled="True" ItemsSource="{Binding locations}" SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Width="150" Margin="0,0,0,5"/>
+                            <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                            <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+
+            <Label Margin="0,0,0,0" Content="Location" Grid.Row="1" FontSize="12" VerticalAlignment="Center"/>
+            <ComboBox Margin="0,10,0,5" 
+                      Name="cmbLocation" 
+                      IsTextSearchEnabled="True" 
+                      ItemsSource="{Binding locations}" 
+                      SelectedItem="{Binding Path=SelectedLocation, UpdateSourceTrigger=PropertyChanged}" 
+                      Grid.Row="1" Grid.Column="1" 
+                      Width="150"
+                      SelectedIndex="0">
+                <!-- Ovo postavlja prvu stavku kao početnu vrijednost -->
+                <ComboBox.SelectedValue>
+                    <Binding Path="SelectedLocation" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:AccommodationFormValidationRules/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.SelectedValue>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <AdornedElementPlaceholder Grid.Row="0" x:Name="comboBox"/>
+                            <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </ComboBox>
+
 
             <Label Content="Type" Grid.Row="2" FontSize="12" VerticalAlignment="Center"/>
-            <ComboBox Name="cmbType" IsTextSearchEnabled="True"  SelectedItem="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="150" Margin="0,0,0,5">
+            <ComboBox Name="cmbType" IsTextSearchEnabled="True"  SelectedItem="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="150" Margin="0,10,0,5">
                 <ComboBox.ItemsSource>
                     <x:Array Type="{x:Type sys:String}">
                         <sys:String>Apartment</sys:String>
@@ -50,21 +108,121 @@
             </ComboBox>
 
             <Label Content="Capacity" Grid.Row="3" FontSize="12" VerticalAlignment="Center"/>
-            <TextBox Name="txtCapacity" Text="{Binding Path=MaxGuests, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" Width="150"/>
+            <TextBox Name="txtCapacity" Grid.Row="3" Grid.Column="1" Margin="0,10,0,5" Width="150">
+                <TextBox.Text>
+                    <Binding Path="MaxGuests" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:AccommodationFormValidationRules ValidationStep="RawProposedValue"/>
+                            <val:StringToDoubleValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                            <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
 
             <Label Content="Minimum reservation days" Grid.Row="4" FontSize="12" VerticalAlignment="Center"/>
-            <TextBox Name="txtMinimumReservationDays" Text="{Binding Path=MinReservations, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" Width="150"/>
+            <TextBox Name="txtMinimumReservationDays" Grid.Row="4" Grid.Column="1" Margin="0,10,0,5" Width="150">
+                <TextBox.Text>
+                    <Binding Path="MinReservations" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:AccommodationFormValidationRules ValidationStep="RawProposedValue"/>
+                            <val:StringToDoubleValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                            <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
 
             <Label Content="Cancelation thershold" Grid.Row="5" FontSize="12" VerticalAlignment="Center"/>
-            <TextBox Name="txtCancelThreshold" Text="{Binding Path=CancelThershold, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" Width="150"/>
+            <TextBox Name="txtCancelThreshold" Grid.Row="5" Grid.Column="1" Margin="0,10,0,5" Width="150">
+                <TextBox.Text>
+                    <Binding Path="CancelThershold" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:AccommodationFormValidationRules ValidationStep="RawProposedValue"/>
+                            <val:StringToDoubleValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                            <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
 
             <Label Content="Images" Grid.Row="6" FontSize="12" VerticalAlignment="Center"/>
-            <Button x:Name="btnAddImage" Grid.Row="6" Grid.Column="1" Content="Add image" HorizontalAlignment="Left" Margin="30,10,0,10" Width="90" Click="btnAddImage_Click"/>
+            <Button x:Name="btnAddImage" Grid.Row="6" Grid.Column="1" Content="Add image" HorizontalAlignment="Left" Margin="30,10,0,10" Width="90" Command="{Binding AddImagesCommand}">
+                
+            </Button>
         </Grid>
 
         <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">
-            <Button Name="btnConfirm" Content="Confirm" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click"/>
-            <Button Name="btnCancel" Content="Cancel" Width="75" Click="btnCancel_Click"/>
+            <Button Name="btnConfirm" Content="Confirm" Width="75" Margin="0,0,10,0" Command="{Binding ConfirmCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=txtName, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=cmbLocation, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=txtCancelThreshold, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=txtMinimumReservationDays, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=MaxGuests, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Name="btnCancel" Content="Cancel" Width="75" Command="{Binding CancelCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

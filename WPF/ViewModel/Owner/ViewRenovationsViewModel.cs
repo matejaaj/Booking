@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
 using System;
@@ -7,11 +8,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
@@ -45,6 +48,7 @@ namespace BookingApp.WPF.ViewModel.Owner
                 OnPropertyChanged(nameof(FutureAndCurrentRenovations));
             }
         }
+        public ICommand CancelCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -59,7 +63,23 @@ namespace BookingApp.WPF.ViewModel.Owner
             LoggedInOwner = loggedInOwner;
             FutureAndCurrentRenovations = new ObservableCollection<RenovationDTO>();
             PastRenovations = new ObservableCollection<RenovationDTO>();
+            CancelCommand = new CancelCommand(OnCancel, CanCancel);
             Update();
+        }
+
+        private bool CanCancel(object obj)
+        {
+            return true;
+        }
+
+        private void OnCancel(object parameter)
+        {
+            var selectedRenovation = parameter as RenovationDTO;
+            if (selectedRenovation != null)
+            {
+                renovationService.DeleteById(selectedRenovation.Id);
+                Update();
+            }
         }
 
         private void Update()
@@ -74,14 +94,6 @@ namespace BookingApp.WPF.ViewModel.Owner
             accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
             locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
             renovationService = new RenovationService(accommodationService, accommodationReservationService, locationService, Injector.CreateInstance<IRenovationRepository>());
-        }
-
-        internal void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            Button cancelButton = (Button)sender;
-            SelectedFutureOrCurrentRenovation = (RenovationDTO)cancelButton.DataContext;
-            renovationService.DeleteById(SelectedFutureOrCurrentRenovation.Id);
-            Update();
         }
     }
 }
