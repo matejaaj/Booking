@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookingApp.WPF.View.Owner"
+      xmlns:val="clr-namespace:BookingApp.Validation"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="RenovationSchedulingPage">
@@ -35,8 +36,43 @@
             <Label Content="To:" Grid.Row="0" Grid.Column="2" Margin="0,15,0,0" HorizontalAlignment="Center"/>
             <DatePicker Grid.Row="0" Grid.Column="2" Margin="62,15,0,36" SelectedDate="{Binding EndDate}" HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
             <Label Content="Estimated Duration:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,10,0,0"/>
-            <TextBox Text="{Binding Path=EstimatedDuration, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="0,15,0,5" Width="120"/>
-            <Button Command="{Binding SearchCommand}" Content="Search" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtDuration" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="0,15,0,5" Width="120">
+                <TextBox.Text>
+                    <Binding Path="EstimatedDuration" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:StringToIntValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                            <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+            <Button Command="{Binding SearchCommand}" Content="Search" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=txtDuration, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="10"/>
             <TextBlock Text="Available Dates:" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
         </Grid>

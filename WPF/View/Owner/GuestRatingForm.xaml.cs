@@ -34,17 +34,5 @@ namespace BookingApp.WPF.View.Owner
             viewModel = new GuestRatingFormViewModel(reservation);
             DataContext = viewModel;
         }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.ConfirmButton_Click(sender, e);
-            Close();
-
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
     }
 }
