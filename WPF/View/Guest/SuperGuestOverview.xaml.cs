@@ -1,19 +1,13 @@
 ﻿using BookingApp.Domain.Model;
-using BookingApp.Repository;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Printing.IndexedProperties;
-using System.Windows;
-using System.Diagnostics;
 using BookingApp.WPF.ViewModel.Guest;
+using System.Windows.Controls;
 
 namespace BookingApp.WPF.View.Guest
 {
-    public partial class SuperGuestOverview : Window
+    public partial class SuperGuestOverview : Page
     {
         private readonly SuperGuestOverviewViewModel _viewModel;
+        
         public SuperGuestOverview(User loggedInGuest)
         {
             InitializeComponent();
