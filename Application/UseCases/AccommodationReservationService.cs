@@ -78,7 +78,7 @@ namespace BookingApp.Application.UseCases
             return _accommodationReservationRepository.GetByReservationId(id);
         }
 
-        public List<AccommodationReservation> GetUnratedReservations(ObservableCollection<Accommodation> accommodations)
+        public List<AccommodationReservation> GetRecentUnratedReservations(List<Accommodation> accommodations)
         {
             var accommodationIds = accommodations.Select(a => a.AccommodationId).ToList();
             List<AccommodationReservation> OwnerAccommodationReservations = GetByAccommodationIds(accommodationIds);

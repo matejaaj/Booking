@@ -23,11 +23,16 @@
 		<None Remove="Resources\Images\delay.png" />
 		<None Remove="Resources\Images\delete.png" />
 		<None Remove="Resources\Images\destination.png" />
+		<None Remove="Resources\Images\eden.jpg" />
+		<None Remove="Resources\Images\eden1.jpg" />
 		<None Remove="Resources\Images\edit.png" />
 		<None Remove="Resources\Images\forum.png" />
 		<None Remove="Resources\Images\goBack.png" />
+		<None Remove="Resources\Images\help.png" />
 		<None Remove="Resources\Images\home.png" />
+		<None Remove="Resources\Images\hotelpark.jpg" />
 		<None Remove="Resources\Images\insertImage.png" />
+		<None Remove="Resources\Images\kuca.jpg" />
 		<None Remove="Resources\Images\leopold.jpg" />
 		<None Remove="Resources\Images\leopold1.jpg" />
 		<None Remove="Resources\Images\leopold2.jpg" />
@@ -35,7 +40,9 @@
 		<None Remove="Resources\Images\Map.jpg" />
 		<None Remove="Resources\Images\menu.png" />
 		<None Remove="Resources\Images\menuBar.png" />
+		<None Remove="Resources\Images\nacional.jpg" />
 		<None Remove="Resources\Images\notifications.png" />
+		<None Remove="Resources\Images\notifications1.png" />
 		<None Remove="Resources\Images\pickup.png" />
 		<None Remove="Resources\Images\raspad.jpg" />
 		<None Remove="Resources\Images\raspad1.jpg" />
@@ -52,6 +59,24 @@
 		<None Remove="Resources\Images\time.png" />
 		<None Remove="Resources\Images\superhero.png" />
 		<None Remove="Resources\Images\superowner.png" />
+		<None Remove="Resources\Images\Tourist\add.png" />
+		<None Remove="Resources\Images\Tourist\car.png" />
+		<None Remove="Resources\Images\Tourist\clock.png" />
+		<None Remove="Resources\Images\Tourist\language.png" />
+		<None Remove="Resources\Images\Tourist\left.png" />
+		<None Remove="Resources\Images\Tourist\left_light.png" />
+		<None Remove="Resources\Images\Tourist\left_light_theme.png" />
+		<None Remove="Resources\Images\Tourist\logout.png" />
+		<None Remove="Resources\Images\Tourist\map.png" />
+		<None Remove="Resources\Images\Tourist\next.png" />
+		<None Remove="Resources\Images\Tourist\next_light.png" />
+		<None Remove="Resources\Images\Tourist\rate.png" />
+		<None Remove="Resources\Images\Tourist\report.png" />
+		<None Remove="Resources\Images\Tourist\request.png" />
+		<None Remove="Resources\Images\Tourist\saved.png" />
+		<None Remove="Resources\Images\Tourist\stats.png" />
+		<None Remove="Resources\Images\Tourist\theme.png" />
+		<None Remove="Resources\Images\Tourist\view.png" />
 		<None Remove="Resources\Images\trophy.png" />
 		<None Remove="Resources\Images\turista.png" />
 		<None Remove="Resources\Images\tutorial.png" />
@@ -59,6 +84,9 @@
 		<None Remove="Resources\Images\userProfile.png" />
 		<None Remove="Resources\Images\vacations.png" />
 		<None Remove="Resources\Images\view.png" />
+		<None Remove="Resources\Images\wizard1.png" />
+		<None Remove="Resources\Images\wizard2.png" />
+		<None Remove="Resources\Images\wizard3.png" />
 		<None Remove="Resources\Images\zuruckgehen.png" />
 	</ItemGroup>
 
@@ -126,6 +154,7 @@
     <Content Include="Resources\Images\Guide\user-avatar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\hotelpark.jpg" />
     <Content Include="Resources\Images\Map.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -246,8 +275,11 @@
     <Resource Include="Resources\Images\babinobrdo.jpg" />
     <Resource Include="Resources\Images\carReg.png" />
     <Resource Include="Resources\Images\check.png" />
+    <Resource Include="Resources\Images\eden.jpg" />
+    <Resource Include="Resources\Images\eden1.jpg" />
     <Resource Include="Resources\Images\forum.png" />
     <Resource Include="Resources\Images\goBack.png" />
+    <Resource Include="Resources\Images\help.png" />
     <Resource Include="Resources\Images\home.png" />
     <Resource Include="Resources\Images\insertImage.png" />
     <Resource Include="Resources\Images\leopold.jpg" />
@@ -256,7 +288,9 @@
     <Resource Include="Resources\Images\location.png" />
     <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
+    <Resource Include="Resources\Images\nacional.jpg" />
     <Resource Include="Resources\Images\notifications.png" />
+    <Resource Include="Resources\Images\notifications1.png" />
     <Resource Include="Resources\Images\pickup.png" />
     <Resource Include="Resources\Images\raspad.jpg" />
     <Resource Include="Resources\Images\raspad1.jpg" />
@@ -272,12 +306,32 @@
     <Resource Include="Resources\Images\time.png" />
     <Resource Include="Resources\Images\superhero.png" />
     <Resource Include="Resources\Images\superowner.png" />
+    <Resource Include="Resources\Images\Tourist\add.png" />
+    <Resource Include="Resources\Images\Tourist\car.png" />
+    <Resource Include="Resources\Images\Tourist\clock.png" />
+    <Resource Include="Resources\Images\Tourist\language.png" />
+    <Resource Include="Resources\Images\Tourist\left.png" />
+    <Resource Include="Resources\Images\Tourist\left_light_theme.png" />
+    <Resource Include="Resources\Images\Tourist\logout.png" />
+    <Resource Include="Resources\Images\Tourist\map.png" />
+    <Resource Include="Resources\Images\Tourist\next.png" />
+    <Resource Include="Resources\Images\Tourist\next_light.png" />
+    <Resource Include="Resources\Images\Tourist\rate.png" />
+    <Resource Include="Resources\Images\Tourist\report.png" />
+    <Resource Include="Resources\Images\Tourist\request.png" />
+    <Resource Include="Resources\Images\Tourist\saved.png" />
+    <Resource Include="Resources\Images\Tourist\stats.png" />
+    <Resource Include="Resources\Images\Tourist\theme.png" />
+    <Resource Include="Resources\Images\Tourist\view.png" />
     <Resource Include="Resources\Images\trophy.png" />
     <Resource Include="Resources\Images\turista.png" />
     <Resource Include="Resources\Images\tutorial.png" />
     <Resource Include="Resources\Images\userData.png" />
     <Resource Include="Resources\Images\userProfile.png" />
     <Resource Include="Resources\Images\vacations.png" />
+    <Resource Include="Resources\Images\wizard1.png" />
+    <Resource Include="Resources\Images\wizard2.png" />
+    <Resource Include="Resources\Images\wizard3.png" />
     <Resource Include="Resources\Images\zuruckgehen.png" />
   </ItemGroup>
 </Project>

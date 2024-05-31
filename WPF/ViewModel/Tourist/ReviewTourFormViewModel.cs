@@ -1,39 +1,113 @@
-﻿using BookingApp.Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Input;
+using BookingApp.Commands;
+using BookingApp.Domain.Model;
 
-namespace BookingApp.WPF.ViewModel.Tourist
+public class ReviewTourFormViewModel : INotifyPropertyChanged
 {
-    public class ReviewTourFormViewModel : INotifyPropertyChanged
+    private int _selectedRating;
+    private string _comment;
+
+    public TourGuest Guest { get; set; }
+    public ObservableCollection<string> ImagePaths { get; set; } = new ObservableCollection<string>();
+
+    public int SelectedRating
     {
-        private int _selectedRating;
-        public TourGuest Guest { get; set; }
-        public string Comment { get; set; }
-        public ObservableCollection<string> ImagePaths { get; set; } = new ObservableCollection<string>();
-        public List<int> Ratings { get; } = new List<int> { 1, 2, 3, 4, 5 };
-        public int SelectedRating
+        get => _selectedRating;
+        set
         {
-            get => _selectedRating;
-            set
+            if (_selectedRating != value)
             {
-                if (_selectedRating != value)
-                {
-                    _selectedRating = value;
-                    OnPropertyChanged(nameof(SelectedRating));
-                }
+                _selectedRating = value;
+                OnPropertyChanged(nameof(SelectedRating));
             }
         }
+    }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
+    public bool IsRating1
+    {
+        get => SelectedRating == 1;
+        set
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (value) SelectedRating = 1;
         }
+    }
+
+    public bool IsRating2
+    {
+        get => SelectedRating == 2;
+        set
+        {
+            if (value) SelectedRating = 2;
+        }
+    }
+
+    public bool IsRating3
+    {
+        get => SelectedRating == 3;
+        set
+        {
+            if (value) SelectedRating = 3;
+        }
+    }
+
+    public bool IsRating4
+    {
+        get => SelectedRating == 4;
+        set
+        {
+            if (value) SelectedRating = 4;
+        }
+    }
+
+    public bool IsRating5
+    {
+        get => SelectedRating == 5;
+        set
+        {
+            if (value) SelectedRating = 5;
+        }
+    }
+
+    public string Comment
+    {
+        get => _comment;
+        set
+        {
+            if (_comment != value)
+            {
+                _comment = value;
+                OnPropertyChanged(nameof(Comment));
+            }
+        }
+    }
+
+    public ICommand RemovePictureCommand { get; }
+
+    public ReviewTourFormViewModel()
+    {
+        RemovePictureCommand = new RelayCommand(param =>
+        {
+            if (param is string imagePath && !string.IsNullOrEmpty(imagePath))
+            {
+                RemovePicture(imagePath);
+            }
+        });
+    }
+
+    private void RemovePicture(string imagePath)
+    {
+        if (ImagePaths.Contains(imagePath))
+        {
+            ImagePaths.Remove(imagePath);
+        }
+    }
+
+    // Implement INotifyPropertyChanged
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

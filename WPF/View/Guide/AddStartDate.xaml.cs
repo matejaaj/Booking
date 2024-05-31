@@ -10,10 +10,10 @@ namespace BookingApp.WPF.View.Guide
     {
         private AddStartDateViewModel viewModel;
 
-        public AddStartDate(List<TourInstance> startDates, int tourId, int capacity)
+        public AddStartDate(List<TourInstance> startDates, int tourId, int capacity, int guideId)
         {
             InitializeComponent();
-            viewModel = new AddStartDateViewModel(startDates, tourId, capacity);
+            viewModel = new AddStartDateViewModel(startDates, tourId, capacity, guideId);
             DataContext = viewModel;
         }
 

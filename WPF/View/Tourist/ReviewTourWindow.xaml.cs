@@ -30,7 +30,7 @@ namespace BookingApp.WPF.View.Tourist
             DataContext = _viewModel;
         }
 
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+/*        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.SaveReviews();
             this.Close();
@@ -59,7 +59,7 @@ namespace BookingApp.WPF.View.Tourist
             
             _viewModel.RemovePicture(reviewFormViewModel, imagePath);
         }
-
+*/
         public static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
             DependencyObject parentObject = VisualTreeHelper.GetParent(child);

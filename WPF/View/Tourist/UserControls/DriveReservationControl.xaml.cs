@@ -76,31 +76,12 @@ namespace BookingApp.WPF.View.Tourist.UserControls
                 return;
             }
 
-            if (!reservation.CheckTimeDifference())
-            {
-                MessageBox.Show("Cannot mark the driver as unrelable.");
-                return;
-            }
-
             if (DataContext is DriveMainTabViewModel viewModel)
             {
-
-                if (viewModel.CheckIfDriverArrived(reservation))
-                {
-                    MessageBox.Show("Driver has arrived, you cannot mark driver as unreliable.");
-                    return;
-                }
-
-                if (viewModel.CheckIfMarked())
-                {
-                    MessageBox.Show("This driver has already been marked as unreliable for this reservation.");
-                    return;
-                }
-
-                viewModel.MarkDriverAsUnreliable();
-                MessageBox.Show("Driver has been marked as unreliable.");
+                viewModel.ValidateAndMarkDriverAsUnreliable(reservation);
             }
         }
+
 
 
 

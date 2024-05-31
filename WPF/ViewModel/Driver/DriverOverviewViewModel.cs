@@ -223,11 +223,11 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void ViewDrive_Respond(object? sender, EventArgs e)
         {
-            if (!ValidateInput(() => (SelectedReservation.DriveReservationStatusId == 1 || SelectedReservation.DriveReservationStatusId == 14), "You can't confirm this one!"))
+            if (!ValidateInput(() => (SelectedReservation.DriveReservationStatusId == 1 || SelectedReservation.DriveReservationStatusId == 14 || SelectedReservation.DriveReservationStatusId == 12), "You can't confirm this one!"))
             {
                 return;
             }
-            SelectedReservation.DriveReservationStatusId = 2;
+            SelectedReservation.DriveReservationStatusId = 13;
             driveReservationService.Update(SelectedReservation);
             SendNotification(SelectedReservation);
             DataGrid_Refresh(sender, e);
@@ -238,7 +238,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             string title = "Pronadjen vozač";
             string text = "Pronađen vozać " +
                           userService.GetById(reservation.DriverId).Username +
-                          " za  vožnju za" +
+                          " za  vožnju za " +
                           reservation.DepartureTime.ToString("HH:mm dd.MM.yyyy");
             Notification notification = new Notification()
             {

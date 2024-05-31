@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Owner"
+        xmlns:commands="clr-namespace:BookingApp.Commands"
         mc:Ignorable="d"
         Title="OwnerMainWindow" Height="750" Width="430">
     <Grid>
-        <Canvas VerticalAlignment="Stretch" x:Name="SideMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="Transparent">
+        <!-- Existing UI elements -->
+        <Canvas VerticalAlignment="Stretch" x:Name="SideMenu" Canvas.ZIndex="100" Visibility="{Binding SideMenuVisibility}" Background="Transparent">
             <Grid Width="250" Height="715" Background="#FFA9A9A9">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -22,50 +23,47 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
-                <!-- Dugme za zatvaranje menija sa strelicom levo -->
-                <Button Grid.Row="0" Click="HideMenuBar" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" Height="39">
+
+                <!-- Side menu buttons and components -->
+                <Button Grid.Row="0" Command="{Binding HideMenuCommand}" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" Height="39">
                     <DockPanel>
                         <Image Source="../../../Resources/Images/goBack.png" Width="20" Height="20" DockPanel.Dock="Left"/>
                         <TextBlock Text="Accommodation Management" FontWeight="Bold" FontSize="12" Margin="10,0,0,0" VerticalAlignment="Center"/>
                     </DockPanel>
                 </Button>
 
-                <!-- Profilna slika, ime korisnika i dugme za odjavu -->
                 <StackPanel Grid.Row="1" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
                     <Image Source="../../../Resources/Images/userProfile.png" Height="125" Width="125" Margin="0,0,0,5"/>
                     <TextBlock Text="{Binding LoggedInOwner.Username}" Foreground="Black" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="5,0,0,5"/>
                 </StackPanel>
 
-                <!-- Dugme za odjavu -->
-                <Button Grid.Row="2" Click="LogOutButton_Click" Content="Log out" FontSize="15" Width="75" HorizontalAlignment="Center" Margin="5,5,0,20"/>
+                <Button Grid.Row="2" Command="{Binding LogOutCommand}" Content="Log out" FontSize="15" Width="75" HorizontalAlignment="Center" Margin="5,5,0,20"/>
 
-                <!-- Ostale stavke menija -->
-                <Button Grid.Row="3" Click="ShowRatings_Click" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Grid.Row="3" Command="{Binding ShowRatingsCommand}" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/ratings.png" Width="25" Height="25"/>
                         <TextBlock Text="Ratings" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Row="4" Click="ShowAccommodations_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Grid.Row="4" Command="{Binding ShowAccommodationsCommand}" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/accommodations.png" Width="25" Height="25"/>
                         <TextBlock Text="Accommodations" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Row="5" Click="ShowRescheduling_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Grid.Row="5" Command="{Binding ShowReschedulingCommand}" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/reschedule.png" Width="25" Height="25"/>
                         <TextBlock Text="Reschedulings" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Row="6" Click="ShowRenovations_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Grid.Row="6" Command="{Binding ShowRenovationsCommand}" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/renovation.png" Width="25" Height="25"/>
                         <TextBlock Text="Renovations" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Click="SuperOwner_Click" Grid.Row="7" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Command="{Binding ShowSuperOwnerCommand}" Grid.Row="7" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/superowner.png" Width="25" Height="25"/>
                         <TextBlock Text="Super-Owner" FontSize="23" Margin="5,0,0,0"/>
@@ -88,34 +86,105 @@
 
         <!-- Action bar at the top -->
         <Grid Background="LightGray" Height="50" VerticalAlignment="Top">
-            <Button Click="ShowMenuBar" Content="&#x2630;" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Left" BorderThickness="0" Margin="10,0,0,0" FontSize="20"/>
+            <Button Command="{Binding ShowMenuCommand}" Content="&#x2630;" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Left" BorderThickness="0" Margin="10,0,0,0" FontSize="20"/>
             <TextBlock Text="{Binding PageName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="48,0,0,0"/>
-            <Button Click="GoBackButton_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,50,0" BorderThickness="0" Background="Transparent">
-                <Image Source="../../../Resources/Images/zuruckgehen.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            </Button>
-            <Button Click="ShowNotifications" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,85,0" BorderThickness="0" Background="Transparent">
-                <Image Source="../../../Resources/Images/notifications.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <Button  Command="{Binding ShowNotificationsCommand}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,55,0" BorderThickness="0" Background="Transparent">
+                <Image Source="{Binding NotificationImageSource}" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             </Button>
 
             <Image x:Name="iconImage" Source="../../../Resources/Images/accommodations.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
         </Grid>
 
-        <Canvas Margin="216,0,0,0" VerticalAlignment="Stretch" x:Name="NotificationMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="Transparent">
-            <Grid Width="200" Height="350" Background="#FFA9A9A9">
+        <!-- Notification Menu -->
+        <Border BorderThickness="1" Width="222" Height="352" BorderBrush="Black" Margin="216,50,0,0"  VerticalAlignment="Top" x:Name="NotificationMenu" Canvas.ZIndex="100" Visibility="{Binding NotificationMenuVisibility}" Background="Transparent">
+            <Canvas>
+                <Grid Width="200" Height="350" Background="LightSlateGray">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView x:Name="NotificationsListView"
+                          Margin="0,0,0,5"
+                          Grid.Row="0"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          ItemsSource="{Binding Notifications}"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          SelectedItem="{Binding SelectedNotification}"
+                          SelectionMode="Single">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0,5,0,0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border x:Name="Border"
+                                                BorderBrush="DimGray"
+                                                BorderThickness="1"
+                                                CornerRadius="10"
+                                                Background="LightGray"
+                                                Margin="0,0,0,0">
+                                                <Grid Margin="5">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Text="{Binding Title}" FontSize="13" FontWeight="Bold" Grid.Row="0" HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Text}" FontSize="8" TextWrapping="Wrap" FontWeight="DemiBold" Grid.Row="1"  HorizontalAlignment="Center"/>
+                                                </Grid>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Border" Property="Background" Value="Gray"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="commands:ListViewItemClickedBehavior.Command" Value="{Binding DataContext.ItemClickedCommand, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.Template>
+                            <ControlTemplate TargetType="ListView">
+                                <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Background="{TemplateBinding Background}">
+                                    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                                        <ItemsPresenter Margin="5,0,5,0"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </ControlTemplate>
+                        </ListView.Template>
+                    </ListView>
+                </Grid>
+            </Canvas>
+        </Border>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-
-                </Grid.RowDefinitions>
-                <Button Grid.Row="0" Click="HideNotifications" Content="DASD"/>
-                <TextBlock Grid.Row="1" Text="dasdsad"/>
-            </Grid>
-        </Canvas>
-
-
+        <!-- Main content frame -->
         <Frame Name="MainFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,50,0,0"
                NavigationUIVisibility="Hidden"
                Source="AccommodationsPage.xaml"/>
+
+        <!-- Action bar at the bottom -->
+        <Grid Background="LightGray" Height="45" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Command="{Binding GoBackCommand}" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0" FontSize="16" Grid.Column="0">
+                <Image Source="../../../Resources/Images/zuruckgehen.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            </Button>
+            <Button Command="{Binding ShowAccommodationsCommand}" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0" FontSize="16" Grid.Column="1">
+                <Image Source="../../../Resources/Images/home.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            </Button>
+            <Button Command="{Binding BottomButton3Command}" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0" FontSize="16" Grid.Column="2">
+                <Image Source="../../../Resources/Images/help.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            </Button>
+        </Grid>
     </Grid>
 </Window>

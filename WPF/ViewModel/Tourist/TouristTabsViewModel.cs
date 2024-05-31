@@ -5,18 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using BookingApp.Application;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
+
 using BookingApp.Repository;
+using BookingApp.WPF.View;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class TouristTabsViewModel
     {
         public User Tourist { get; }
+
+        public ICommand ChangeThemeCommand { get; private set; }
+        public ICommand ChangeLanguageCommand { get; private set; }
+        public ICommand LogoutCommand { get; private set; }
+        public event EventHandler RequestClose;
 
         public ToursMainTabViewModel ToursMainViewModel { get; }
         public DriveMainTabViewModel DriveMainViewModel { get; }
@@ -50,12 +59,20 @@ namespace BookingApp.WPF.ViewModel.Tourist
             Notifications = new ObservableCollection<NotificationDTO>();
 
             InitializeServices();
+            InitializeCommands();
             UpdateNotifications();
 
 
             ToursMainViewModel = new ToursMainTabViewModel(loggedUser, _tourService, _tourInstanceService, _checkpointService, _imageService,  _locationService, _languageService, _tourGuestService, _tourReservationService, _tourReviewService, _voucherService, _tourRequestService, _tourRequestSegmentService, _privateTourGuestService);
             DriveMainViewModel = new DriveMainTabViewModel(loggedUser, _driveReservationService, _userService, _detailedLocationService, _driverUnreliableReportService);
 
+        }
+
+        private void InitializeCommands()
+        {
+            ChangeThemeCommand = new RelayCommand(_ => ChangeTheme());
+            ChangeLanguageCommand = new RelayCommand(_ => ChangeLanguage());
+            LogoutCommand = new RelayCommand(_ => Logout());
         }
 
         private void InitializeServices()
@@ -86,22 +103,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         }
 
-        public void ChangeTheme()
-        {
-            var dictionaries = System.Windows.Application.Current.Resources.MergedDictionaries;
-            var themeDict = dictionaries.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Theme"));
-
-            if (themeDict != null)
-            {
-                var newTheme = themeDict.Source.OriginalString.Contains("Light") ? "Dark" : "Light";
-                var newUri = new Uri($"pack://application:,,,/Themes/Tourist{newTheme}Theme.xaml");
-
-                var newDict = new ResourceDictionary { Source = newUri };
-                dictionaries.Remove(themeDict);
-                dictionaries.Add(newDict);
-            }
-        }
-
 
         private void UpdateNotifications()
         {
@@ -120,6 +121,35 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _notificationService.RemoveNotification(notificaitonId);
             UpdateNotifications();
         }
+
+        public void ChangeTheme()
+        {
+            var dictionaries = System.Windows.Application.Current.Resources.MergedDictionaries;
+            var themeDict = dictionaries.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Theme"));
+
+            if (themeDict != null)
+            {
+                var newTheme = themeDict.Source.OriginalString.Contains("Light") ? "Dark" : "Light";
+                var newUri = new Uri($"pack://application:,,,/Themes/Tourist{newTheme}Theme.xaml");
+
+                var newDict = new ResourceDictionary { Source = newUri };
+                dictionaries.Remove(themeDict);
+                dictionaries.Add(newDict);
+            }
+        }
+
+        private void ChangeLanguage()
+        {
+            
+        }
+
+        private void Logout()
+        {
+            SignInForm signIn = new SignInForm();
+            signIn.Show();
+            RequestClose?.Invoke(this, EventArgs.Empty);
+        }
+
     }
 
 }

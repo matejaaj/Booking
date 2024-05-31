@@ -4,20 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
+             xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <Style TargetType="Label">
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Margin" Value="10,5"/>
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-    </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -32,31 +25,67 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Država" Grid.Row="0" Grid.Column="0"/>
-        <ComboBox ItemsSource="{Binding Countries}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedCountry}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,5,0,5"/>
+        <Label Content="Izaberite državu:" Grid.Row="0" Grid.Column="0" Margin="40,0,0,15"
+               Width="190"/>
+        <controls:AutoCompleteBox x:Name="autoCompleteCountry" ItemsSource="{Binding Countries}"
+                                  SelectedItem="{Binding SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  ValueMemberPath="Value"
+                                  Grid.Row="0" Grid.Column="1" Margin="0,0,60,15">
+            <controls:AutoCompleteBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Value}" />
+                </DataTemplate>
+            </controls:AutoCompleteBox.ItemTemplate>
+        </controls:AutoCompleteBox>
 
-        <Label Content="Grad" Grid.Row="1" Grid.Column="0"/>
-        <ComboBox ItemsSource="{Binding Cities}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedCity}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,5,0,5"/>
+        <Label Content="Izaberite grad:" Grid.Row="1" Grid.Column="0" Margin="40,0,0,15"/>
+        <controls:AutoCompleteBox x:Name="autoCompleteCity" ItemsSource="{Binding Cities}"
+                                  SelectedItem="{Binding SelectedCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  ValueMemberPath="Value"
+                                  Grid.Row="1" Grid.Column="1" Margin="0,0,60,15">
+            <controls:AutoCompleteBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Value}" />
+                </DataTemplate>
+            </controls:AutoCompleteBox.ItemTemplate>
+        </controls:AutoCompleteBox>
 
-        <Label Content="Ulica polaska" Grid.Row="2" Grid.Column="0"/>
-        <TextBox Text="{Binding StartAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,5,0,5"/>
+        <Label Content="Izaberite ulicu polaska:" Grid.Row="2" Grid.Column="0" Margin="40,0,0,15"/>
+        <TextBox x:Name="startAddressTextBox" Text="{Binding StartAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="2" Grid.Column="1" Margin="0,0,60,15"/>
 
-        <Label Content="Krajnja ulica" Grid.Row="3" Grid.Column="0"/>
-        <TextBox Text="{Binding EndAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,5,0,5"/>
+        <Label Content="Izaberite krajnju ulicu:" Grid.Row="3" Grid.Column="0" Margin="40,0,0,15"/>
+        <TextBox x:Name="endAddressTextBox" Text="{Binding EndAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="3" Grid.Column="1" Margin="0,0,60,15"/>
 
-        <Label Content="Datum" Grid.Row="4" Grid.Column="0"/>
-        <DatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,5,0,5"/>
+        <Label Content="Izaberite datum:" Grid.Row="4" Grid.Column="0" Margin="40,0,0,15"/>
+        <DatePicker x:Name="datePicker" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" Margin="0,0,60,15"/>
 
-        <Label Content="Sati i minuti" Grid.Row="5" Grid.Column="0"/>
-        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,5,0,5">
-            <ComboBox ItemsSource="{Binding Hours}" SelectedItem="{Binding SelectedHour}" Width="50"/>
+        <Label Content="Izaberite sate i minute" Grid.Row="5" Grid.Column="0" Margin="40,0,0,15"/>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="0,0,60,15" HorizontalAlignment="Left">
+            <controls:AutoCompleteBox x:Name="autoCompleteHour" ItemsSource="{Binding Hours}"
+                                      SelectedItem="{Binding SelectedHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Width="50">
+                <controls:AutoCompleteBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </controls:AutoCompleteBox.ItemTemplate>
+            </controls:AutoCompleteBox>
             <TextBlock Text=":" VerticalAlignment="Center" Margin="5,0"/>
-            <ComboBox ItemsSource="{Binding Minutes}" SelectedItem="{Binding SelectedMinute, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+            <controls:AutoCompleteBox x:Name="autoCompleteMinute" ItemsSource="{Binding Minutes}"
+                                      SelectedItem="{Binding SelectedMinute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Minute_SelectionChanged"
+                                      Width="50">
+                <controls:AutoCompleteBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </controls:AutoCompleteBox.ItemTemplate>
+            </controls:AutoCompleteBox>
         </StackPanel>
 
-        <Label Content="Vozač" Grid.Row="7" Grid.Column="0"/>
-        <ComboBox ItemsSource="{Binding Drivers}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedDriver}" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,5,0,5"/>
+        <Label Content="Izaberite vozača:" Grid.Row="7" Grid.Column="0" Margin="40,0,0,15"/>
+        <ComboBox x:Name="comboBoxDriver" ItemsSource="{Binding Drivers}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedDriver, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" Grid.Column="1" Margin="0,0,60,15"/>
 
-        <Button x:Name="btnReserve" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Content="Rezerviši" Click="btnReserve_Click" HorizontalAlignment="Stretch" Margin="20"/>
+        <Button x:Name="btnReserve" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Content="Rezerviši" Command="{Binding ReserveCommand}"
+                Margin="20,20,20,20"/>
     </Grid>
 </UserControl>

@@ -166,5 +166,13 @@ namespace BookingApp.Application.UseCases
             return retValue;
         }
 
+        public AccommodationPageDTO GetDisplayDTOById(int targetUserId)
+        {
+            var accommodation = _accommodationRepository.GetById(targetUserId);
+            var location = _locationService.GetLocationById(accommodation.LocationId);
+            List<Image> images = _imageService.GetImagesByEntityAndType(accommodation.AccommodationId, ImageResourceType.ACCOMMODATION);
+            var imagePaths = images?.Select(i => i.Path).ToList() ?? new List<string>();
+            return new AccommodationPageDTO(accommodation, location, imagePaths);
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
             MyToursViewModel = new MyToursViewModel(loggedUser, tourService, tourInstanceService, checkpointService, imageService, locationService, languageService, tourGuestService, tourReservationService, _voucherService, tourReviewService);
             AllToursViewModel = new AllToursViewModel(loggedUser, tourService, tourInstanceService, checkpointService, imageService, locationService, languageService, tourGuestService, tourReservationService, _voucherService);
-            TourRequestsViewModel = new TourRequestsViewModel(loggedUser,_locationService, languageService, _tourRequestService, _tourRequestSegmentService, _privateTourGuestService);
+            TourRequestsViewModel = new TourRequestsViewModel(loggedUser,_locationService, languageService, _tourRequestService, _tourRequestSegmentService, _privateTourGuestService, _privateTourGuestService);
         }
         
     }

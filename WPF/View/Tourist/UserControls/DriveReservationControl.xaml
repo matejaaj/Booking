@@ -25,19 +25,24 @@
 
             <TextBlock Grid.Column="0"
                        Style="{StaticResource HeaderTextStyle}"
+                       Margin="20"
                        Text="Moje vožnje"
                        HorizontalAlignment="Left"
-                       Margin="10,10,0,10"
                        VerticalAlignment="Center"/>
 
             <Button Grid.Column="1"
                     Width="auto"
                     Height="auto"
-                    Content="Rezervišite vožnju"
+                    Margin="20"
                     Style="{StaticResource DefaultButton}"
                     HorizontalAlignment="Center"
-                    Margin="10,10,10,10"
-                    Click="ResserveDrive_Click"/>
+                    Click="ResserveDrive_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Resources/Images/Tourist/add.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                    <TextBlock Text="Rezerviši vožnju"/>
+                </StackPanel>
+            </Button>
+
         </Grid>
 
 
@@ -51,7 +56,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Style="{StaticResource DefaultBorder}"
-                                Width="330">
+                                Width="350">
 
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -105,14 +110,19 @@
                                 <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
                                             Orientation="Horizontal"
                                             HorizontalAlignment="Center">
-                                    <Button Style="{StaticResource SmallButton}"
-                                            Content="Dodajte kasnjenje"
-                                            Click="AddDelay_Click"
-                                            Tag="{Binding}"/>
-                                    <Button Style="{StaticResource SmallButton}"
-                                            Content="Vozač nepouzdan"
-                                            Click="MarkDriverAsUnreliable_Click"
-                                            Tag="{Binding}"/>
+                                    <Button Style="{StaticResource SmallButton}" Click="AddDelay_Click" Tag="{Binding}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/clock.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Kasnjenje" Margin="0 0 10 0 "/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource SmallButton}" Click="MarkDriverAsUnreliable_Click" Tag="{Binding}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/report.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Vozač nepouzdan"/>
+                                        </StackPanel>
+                                    </Button>
+
                                 </StackPanel>
                             </Grid>
                         </Border>

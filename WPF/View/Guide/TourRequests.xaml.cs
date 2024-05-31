@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Controls;
+using BookingApp.Domain.Model;
 
 namespace BookingApp.WPF.View.Guide
 {
@@ -22,6 +23,7 @@ namespace BookingApp.WPF.View.Guide
     public partial class TourRequests : Page
     {
         private readonly TourRequestsViewModel _viewModel;
+        private User User { get; set; }
 
         public static readonly DependencyProperty PageTitleProperty = DependencyProperty.Register(
             "PageTitle", typeof(string), typeof(TourRequests), new PropertyMetadata(default(string)));
@@ -42,13 +44,14 @@ namespace BookingApp.WPF.View.Guide
         }
 
 
-        public TourRequests()
+        public TourRequests(User user)
         {
             InitializeComponent();
-            _viewModel = new TourRequestsViewModel();
+            _viewModel = new TourRequestsViewModel(user);
             DataContext = _viewModel;
             this.PageIcon = "../../../Resources/Images/Guide/personal.png";
             this.PageTitle = "REQUESTS";
+            User = user;
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

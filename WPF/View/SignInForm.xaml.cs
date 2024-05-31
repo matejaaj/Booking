@@ -78,11 +78,11 @@ namespace BookingApp.WPF.View
                         case Role.GUIDE:
                             //GuideOverview guideOverview = new GuideOverview();
                             //guideOverview.Show();
-                            GuideMainWindow mainWindow = new GuideMainWindow();
+                            GuideMainWindow mainWindow = new GuideMainWindow(user);
                             mainWindow.Show();
                             break;
                         case Role.TOURIST:
-                            TouristMainWindow touristMainWindow = new TouristMainWindow(user);
+                            TouristTabsWindow touristMainWindow = new TouristTabsWindow(user);
                             touristMainWindow.Show();
                             break;
                         case Role.DRIVER:

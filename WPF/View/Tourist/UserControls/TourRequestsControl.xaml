@@ -8,39 +8,118 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Style="{StaticResource UserControlStyle}">
 
-
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0"
-                   Style="{StaticResource HeaderTextStyle}"
-                   Text="Zahtevi tura"
-                   HorizontalAlignment="Left"
-                   Margin="10,10,0,0"
-                   VerticalAlignment="Top"/>
+        <Grid Grid.Row="0" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="2"
-                Style="{StaticResource DefaultButton}"
-                Content="Zatrazi turu"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Margin="0,20,10,0"
-                Width="180"
-                Click="OpenTourRequestForm_Click"/>
+            <TextBlock Grid.Column="0"
+                       Style="{StaticResource HeaderTextStyle}"
+                       Text="Zahtevi za ture"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"/>
 
-        <Button Grid.Column="3"
-                Style="{StaticResource DefaultButton}"
-                Content="Statistika zahteva"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="10,20,0,0"
-                Width="180"
-                Click="OpenRequestStatistics_Click"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="-70,0,0,0">
+                <Button Style="{StaticResource DefaultButton}" Click="OpenTourRequestForm_Click" Margin="5,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/Images/Tourist/add.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                        <TextBlock Text="Kreiraj zahtev"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource DefaultButton}" Click="OpenRequestStatistics_Click" Margin="5,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/Images/Tourist/stats.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                        <TextBlock Text="Statistika zahteva"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding SimpleRequests}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource DefaultBorder}" Width="300">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Location}"
+                                               Style="{StaticResource ItemHeaderTextStyle}"/>
+
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0:dd.MM.yyyy} - {1:dd.MM.yyyy}">
+                                                <Binding Path="FromDate"/>
+                                                <Binding Path="ToDate"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+
+                                    <TextBlock Height="60" Text="{Binding DisplayGuests}" />
+
+                                    <TextBlock HorizontalAlignment="Center">
+                                        <Run Text="Status: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Status}"/>
+                                    </TextBlock>
+
+                                    <Button Style="{StaticResource DefaultButton}" HorizontalAlignment="Center" Tag="{Binding}" Click="SimpleRequestDetails_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Više detalja"/>
+                                        </StackPanel>
+                                    </Button>
+
+
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <ItemsControl ItemsSource="{Binding ComplexRequests}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource DefaultBorder}" Width="300">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding DisplayLocations}"
+                                               Style="{StaticResource ItemHeaderTextStyle}"/>
+
+                                    <TextBlock Height="60" Text="{Binding DisplayGuestNames}"/>
+
+                                    <TextBlock HorizontalAlignment="Center">
+                                        <Run Text="Status: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Status}"/>
+                                    </TextBlock>
+
+                                    <Button Content="Više detalja"
+                                            HorizontalAlignment="Center"
+                                            Tag="{Binding}"
+                                            Click="ComplexRequestDetails_Click"
+                                            Style="{StaticResource DefaultButton}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

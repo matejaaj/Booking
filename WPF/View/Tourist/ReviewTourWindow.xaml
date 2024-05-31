@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
-        Title="Oceni turu" Height="600" Width="450"
-        WindowStartupLocation="CenterScreen">
+        Title="Oceni turu" Height="600" Width="500"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource PrimaryBackground}">
+
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-        <Grid >
+        <Grid Margin="0 20 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -16,30 +18,53 @@
             </Grid.RowDefinitions>
 
             <!-- Reviews Area -->
-            <ItemsControl ItemsSource="{Binding ReviewForms}" Grid.Row="1">
+            <ItemsControl Name="ReviewFormsControl" ItemsSource="{Binding ReviewForms}" Grid.Row="1">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Padding="10" Margin="5" BorderThickness="1" BorderBrush="Black">
                             <StackPanel Margin="5">
-                                <TextBlock Text="{Binding Guest.Name}" FontWeight="Bold" Margin="0,0,0,5" />
+                                <TextBlock Text="{Binding Guest.Name}" FontWeight="Bold" Margin="0,0,0,5"
+                                           Foreground="{StaticResource PrimaryTextColor}"/>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                    <TextBlock Text="Ocenite turu od 1 do 5: " VerticalAlignment="Center" />
-                                    <ComboBox Width="50" VerticalAlignment="Center"
-                                              ItemsSource="{Binding Ratings}"
-                                              SelectedItem="{Binding SelectedRating, Mode=TwoWay}" />
+                                    <TextBlock Text="Ocenite turu od 1 do 5: " VerticalAlignment="Center"
+                                               Foreground="{StaticResource PrimaryTextColor}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton Content="1" GroupName="{Binding Guest.Id}" Margin="5,0"
+                                                     IsChecked="{Binding IsRating1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     Foreground="{StaticResource PrimaryTextColor}"/>
+                                        <RadioButton Content="2" GroupName="{Binding Guest.Id}" Margin="5,0"
+                                                     IsChecked="{Binding IsRating2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     Foreground="{StaticResource PrimaryTextColor}"/>
+                                        <RadioButton Content="3" GroupName="{Binding Guest.Id}" Margin="5,0"
+                                                     IsChecked="{Binding IsRating3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     Foreground="{StaticResource PrimaryTextColor}"/>
+                                        <RadioButton Content="4" GroupName="{Binding Guest.Id}" Margin="5,0"
+                                                     IsChecked="{Binding IsRating4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     Foreground="{StaticResource PrimaryTextColor}"/>
+                                        <RadioButton Content="5" GroupName="{Binding Guest.Id}" Margin="5,0"
+                                                     IsChecked="{Binding IsRating5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     Foreground="{StaticResource PrimaryTextColor}"/>
+                                    </StackPanel>
                                 </StackPanel>
-                                <TextBox Text="{Binding Comment}" Height="60" TextWrapping="Wrap" Margin="0,0,0,5" />
+                                <TextBox Text="{Binding Comment}" Height="60" TextWrapping="Wrap" Margin="0,0,0,5"
+                                         Style="{StaticResource FormInput}"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Dodajte slike: " VerticalAlignment="Center" />
-                                    <Button Content="+" Width="25" Height="25" VerticalAlignment="Center" Margin="5,0,0,0" Click="AddPictureButton_Click" />
+                                    <TextBlock Text="Dodajte slike: " VerticalAlignment="Center"
+                                               Foreground="{StaticResource PrimaryTextColor}"/>
+                                    <Button Content="+" Width="25" Height="25" VerticalAlignment="Center" Margin="5,0,0,0"
+                                            Command="{Binding DataContext.AddPictureCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding}" Style="{StaticResource SmallButton}"/>
                                     <ItemsControl ItemsSource="{Binding ImagePaths}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="{Binding}" Margin="5,0,5,0"/>
+                                                    <TextBlock Text="{Binding}" Margin="5,0,5,0"
+                                                               Foreground="{StaticResource PrimaryTextColor}"/>
                                                     <Button Content="-" Width="25" Height="25" Margin="5,0,0,0"
-                                                            Click="RemovePictureButton_Click"
-                                                            Tag="{Binding}"/>
+                                                            Command="{Binding RemovePictureCommand}"
+                                                            CommandParameter="{Binding}"
+                                                            DataContext="{Binding DataContext, ElementName=ReviewFormsControl}"
+                                                            Style="{StaticResource SmallButton}"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -53,8 +78,10 @@
 
             <!-- Action Buttons -->
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Potvrdi ocene" Width="120" Click="ConfirmButton_Click" Margin="5,0,0,0" />
-                <Button Content="Odustani" Width="120" Click="CancelButton_Click" Margin="5,0,0,0"/>
+                <Button Content="Potvrdi ocene" Width="120" Command="{Binding ConfirmCommand}" Margin="5,0,0,0"
+                        Style="{StaticResource SmallButton}"/>
+                <Button Content="Odustani" Width="120" Command="{Binding CancelCommand}" Margin="5,0,0,0"
+                        Style="{StaticResource SmallButton}"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

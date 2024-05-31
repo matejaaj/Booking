@@ -1,0 +1,114 @@
+﻿<Window x:Class="BookingApp.WPF.View.Tourist.TourDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
+        mc:Ignorable="d"
+        Title="Detalji ture" Height="675" Width="1100"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="BoldTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        </Style>
+        <Style x:Key="NormalTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        </Style>
+        <Style x:Key="StackPanelStyle" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0, 10, 0, 0"/>
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+
+        <Style x:Key="ImageButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Stretch="Uniform"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10" Background="{DynamicResource PrimaryBackground}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            <Border Style="{StaticResource BorderStyle}" Margin="30 0 0 0" Width="440" Height="570">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Naziv: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Name}" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Lokacija: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Location}" />
+                    </StackPanel>
+                    <StackPanel Margin="0, 10, 0, 0">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Opis: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Description}" />
+                    </StackPanel>
+                    <StackPanel Margin="0, 10, 0, 0">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Kljucne tacke: " />
+                        <ItemsControl ItemsSource="{Binding Tour.Checkpoints}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Name}" Margin="0, 0, 10, 0" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Jezik: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Language}" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Trajanje u satima: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.DurationHours}" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Maksimalno turista: " />
+                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.MaximumCapacity}" />
+                    </StackPanel>
+                    <StackPanel Margin="0, 10, 0, 0">
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Datumi odrzavanja: " />
+                        <ItemsControl ItemsSource="{Binding Tour.Dates}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="20 0 0 0 " Style="{StaticResource NormalTextBlockStyle}" Text="{Binding}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+        <Grid Grid.Column="1">
+            <StackPanel Orientation="Vertical" Margin="80 75 0 0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Command="{Binding PreviousImageCommand}" Margin="0 0 10 0" Height="30" Width="30" Style="{StaticResource ImageButtonStyle}" Tag="{DynamicResource LeftImageSource}" />
+                    <Image Source="{Binding CurrentImage}" Height="330" Width="390" Stretch="Uniform"/>
+                    <Button Command="{Binding NextImageCommand}" Margin="10 0 0 0" Height="30" Width="30" Style="{StaticResource ImageButtonStyle}" Tag="{DynamicResource NextImageSource}" />
+                </StackPanel>
+                <Button Content="Rezervacija" Margin="0, 20, 0, 0" Style="{StaticResource DefaultButton}" Width="250" Height="75" HorizontalAlignment="Center" Command="{Binding ReservationCommand}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

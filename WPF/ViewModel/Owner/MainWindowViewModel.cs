@@ -1,4 +1,10 @@
-﻿using BookingApp.WPF.View.Owner;
+﻿using BookingApp.Application.UseCases;
+using BookingApp.Application;
+using BookingApp.Commands;
+using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.WPF.View;
+using BookingApp.WPF.View.Guest;
+using BookingApp.WPF.View.Owner;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +13,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Navigation;
+using BookingApp.Domain.Model;
+using System.Collections.ObjectModel;
+using BookingApp.DTO;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
@@ -23,6 +35,75 @@ namespace BookingApp.WPF.ViewModel.Owner
                 OnPropertyChanged(nameof(PageName));
             }
         }
+        private List<Notification> notifications { get; set; }
+        public List<Notification> Notifications
+        {
+            get { return notifications; }
+            set
+            {
+                notifications = value;
+                OnPropertyChanged(nameof(Notifications));
+            }
+        }
+        private Frame _mainFrame;
+        public Frame MainFrame
+        {
+            get { return _mainFrame; }
+            set { _mainFrame = value; OnPropertyChanged(); }
+        }
+
+        public ICommand ShowRatingsCommand { get; }
+        public ICommand ShowAccommodationsCommand { get; }
+        public ICommand ShowReschedulingCommand { get; }
+        public ICommand ShowRenovationsCommand { get; }
+        public ICommand ShowSuperOwnerCommand { get; }
+        public ICommand LogOutCommand { get; }
+        public ICommand HideMenuCommand { get; }
+        public ICommand ShowMenuCommand { get; }
+        public ICommand GoBackCommand { get; }
+        public ICommand ShowNotificationsCommand { get; }
+        public ICommand HideNotificationsCommand { get; }
+        public ICommand ItemClickedCommand { get; private set; }
+        private static AccommodationService _accommodationService;
+        private static AccommodationReservationService _accommodationReservationService;
+        private static AccommodationAndOwnerRatingService _accommodationAndOwnerRatingService;
+        private static LocationService _locationService;
+        private static ImageService _imageService;
+        private static OwnerService _ownerService;
+
+        private Visibility _sideMenuVisibility = Visibility.Collapsed;
+        private OwnerMainWindow _ownerMainWindow;
+
+        public Visibility SideMenuVisibility
+        {
+            get { return _sideMenuVisibility; }
+            set 
+            { 
+                _sideMenuVisibility = value; 
+                OnPropertyChanged(nameof(SideMenuVisibility)); 
+            }
+        }
+        private Visibility _notificationMenuVisibility = Visibility.Collapsed;
+        public Visibility NotificationMenuVisibility
+        {
+            get { return _notificationMenuVisibility; }
+            set
+            {
+                _notificationMenuVisibility = value;
+                OnPropertyChanged(nameof(NotificationMenuVisibility));
+            }
+        }
+
+        private string _notificationImageSource = "../../../Resources/Images/notifications.png"; // Default image source
+        public string NotificationImageSource
+        {
+            get { return _notificationImageSource; }
+            set
+            {
+                _notificationImageSource = value;
+                OnPropertyChanged(nameof(NotificationImageSource));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -31,22 +112,172 @@ namespace BookingApp.WPF.ViewModel.Owner
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private static System.Windows.Controls.Frame _mainFrame;
 
         public MainWindowViewModel(Domain.Model.Owner owner, System.Windows.Controls.Frame mainFrame)
         {
             LoggedInOwner = owner;
-            PageName = "Accommodations";
-            mainFrame.Navigate(new AccommodationsPage(owner));
-            _mainFrame = mainFrame;
+            MainFrame = mainFrame;
+            ShowRatingsCommand = new RelayCommand(ShowRatings);
+            ShowAccommodationsCommand = new RelayCommand(ShowAccommodations);
+            ShowReschedulingCommand = new RelayCommand(ShowRescheduling);
+            ShowRenovationsCommand = new RelayCommand(ShowRenovations);
+            HideMenuCommand = new RelayCommand(HideMenu);
+            ShowMenuCommand = new RelayCommand(ShowMenu);
+            ShowSuperOwnerCommand = new RelayCommand(ShowSuperOwner);
+            LogOutCommand = new RelayCommand(LogOut);
+            GoBackCommand = new RelayCommand(GoBack);
+            ShowNotificationsCommand = new RelayCommand(ShowNotifications);
+            HideNotificationsCommand = new RelayCommand(HideNotifications);
+            ItemClickedCommand = new RelayCommand(ExecuteItemClicked);
+
+            StartUp();            
+            InitializeServices();
+            NotifyMissingRatings();
         }
 
-/*        private void ShowRatings_Click(object sender, RoutedEventArgs e)
+        private void StartUp()
+        {
+            if (LoggedInOwner.IsFirstLogIn)
+            {
+                PageName = "Accommodations";
+                MainFrame.Navigate(new OwnerWizardPage(LoggedInOwner));
+            }
+            else
+            {
+                PageName = "Accommodations";
+                var page = new AccommodationsPage(LoggedInOwner);
+                MainFrame.Navigate(page);
+            }
+        }
+
+        private void InitializeServices()
+        {
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
+            _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>(), _imageService, _locationService);
+            _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService(_accommodationReservationService, Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>());
+            _ownerService = new OwnerService(Injector.CreateInstance<IOwnerRepository>());
+        }
+
+        public void NotifyMissingRatings()
+        {
+            Notifications = new List<Notification>();
+            var missingRatingReservations = _accommodationReservationService.GetRecentUnratedReservations(_accommodationService.GetByUser(LoggedInOwner));
+            if (missingRatingReservations.Any())
+            {
+                foreach(var r in missingRatingReservations)
+                {
+                    var accommodation = _accommodationService.GetById(r.AccommodationId);
+                    Notifications.Add(new Notification("Missing Rating!", $"Reservation in {accommodation.Name} is missing a rating", DateTime.Today, accommodation.AccommodationId));
+                }
+                NotificationImageSource = "../../../Resources/Images/notifications1.png";
+                /*MessageBox.Show("You have recent unrated reservations",
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);*/
+            }
+            else
+            {
+                NotificationImageSource = "../../../Resources/Images/notifications.png";
+            }
+        }
+
+        private void HideNotifications(object obj)
+        {
+            NotificationMenuVisibility = Visibility.Collapsed;
+        }
+
+        private void ShowNotifications(object obj)
+        {
+            if (NotificationMenuVisibility == Visibility.Collapsed)
+            {
+                NotificationMenuVisibility = Visibility.Visible;
+            }
+            else
+            {
+                NotificationMenuVisibility = Visibility.Collapsed;
+            }
+        }
+
+        private void GoBack(object obj)
+        {
+            if (MainFrame.CanGoBack)
+            {
+                MainFrame.GoBack();
+            }
+        }
+
+        public MainWindowViewModel(Domain.Model.Owner owner, Frame mainFrame, OwnerMainWindow ownerMainWindow) : this(owner, mainFrame)
+        {
+            _ownerMainWindow = ownerMainWindow;
+        }
+
+        private void ShowRatings(object parameter)
         {
             PageName = "Ratings";
-            ViewRatingsPage page = new ViewRatingsPage(LoggedInOwner);
-            MainFrame.Navigate(page);
-            SideMenu.Visibility = Visibility.Collapsed;
-        }*/
+            MainFrame.Navigate(new ViewRatingsPage(LoggedInOwner));
+            SideMenuVisibility = Visibility.Collapsed;
+        }
+
+        private void HideMenu(object parameter)
+        {
+            SideMenuVisibility = Visibility.Collapsed;
+        }
+
+        private void ShowMenu(object parameter)
+        {
+            if (SideMenuVisibility == Visibility.Collapsed)
+            {
+                SideMenuVisibility = Visibility.Visible;
+                NotificationMenuVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                SideMenuVisibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ShowAccommodations(object parameter)
+        {
+            PageName = "Accommodations";
+            MainFrame.Navigate(new AccommodationsPage(LoggedInOwner));
+            SideMenuVisibility = Visibility.Collapsed;
+        }
+
+        private void ShowRescheduling(object parameter)
+        {
+            PageName = "Rescheduling Requests";
+            MainFrame.Navigate(new ReschedulingOverviewPage(LoggedInOwner));
+            SideMenuVisibility = Visibility.Collapsed;
+        }
+
+        private void ShowRenovations(object parameter)
+        {
+            PageName = "Renovations";
+            MainFrame.Navigate(new ViewRenovationsPage(LoggedInOwner));
+            SideMenuVisibility = Visibility.Collapsed;
+        }
+
+        private void ShowSuperOwner(object parameter)
+        {
+            PageName = "Super-Owner";
+            MainFrame.Navigate(new SuperOwnerPage(LoggedInOwner));
+            SideMenuVisibility = Visibility.Collapsed;
+        }
+
+        private void LogOut(object parameter)
+        {
+            SignInForm signInForm = new SignInForm();
+            signInForm.Show();
+            _ownerMainWindow.Close();
+        }
+
+        private void ExecuteItemClicked(object selectedItem)
+        {
+            var selectedNotification = (Notification)selectedItem;
+            AccommodationPageDTO accommodation = _accommodationService.GetDisplayDTOById(selectedNotification.TargetUserId);
+            PageName = "Accommodations";
+            MainFrame.Navigate(new ViewAccommodationPage(accommodation));
+            NotificationMenuVisibility = Visibility.Collapsed;
+        }
     }
 }

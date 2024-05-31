@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
@@ -14,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Xml.Linq;
 
 namespace BookingApp.WPF.ViewModel.Owner
@@ -25,6 +27,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private readonly AccommodationService _accommodationService;
         private readonly LocationService _locationService;
+        private readonly ImageService _imageService;
         public List<Location> locations { get; set; }
         public List<Domain.Model.Image> images { get; set; }
 
@@ -70,7 +73,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        private string _type;
+        private string _type = "House";
         public string Type
         {
             get => _type;
@@ -127,6 +130,10 @@ namespace BookingApp.WPF.ViewModel.Owner
         }
 
         private int _accommodationId;
+        public ICommand ConfirmCommand { get; }
+        public ICommand CancelCommand { get; }
+        public ICommand AddImagesCommand { get; }
+        public ICommand ShowImagesCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -140,31 +147,47 @@ namespace BookingApp.WPF.ViewModel.Owner
             LoggedInOwner = owner;
             _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
             _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
             locations = _locationService.GetAll();
+            SelectedLocation = locations[0];
             images = new List<Domain.Model.Image>();
             _accommodationId = _accommodationService.NextId();
             _ownerWindow = ownerWindow;
+
+            ConfirmCommand = new RelayCommand(Confirm);
+            CancelCommand = new RelayCommand(Cancel);
+            AddImagesCommand = new RelayCommand(AddImages);
+            ShowImagesCommand = new RelayCommand(ShowImages);
         }
 
-        public void btnConfirm_Click(object sender, RoutedEventArgs e)
+        private void Confirm(object obj)
         {
-                Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
-                Accommodation savedAccommodation = _accommodationService.Save(newAccommodation);
-                OwnerOverviewViewModel.Accommodations.Add(savedAccommodation);
+            Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
+            List<Image> images = _imageService.GetImagesByEntityAndType(newAccommodation.AccommodationId, ImageResourceType.ACCOMMODATION);
+            var imageIds = images?.Select(i => i.Id).ToList() ?? new List<int>();
+            var imagePaths = images?.Select(i => i.Path).ToList() ?? new List<string>();
+            var location = _locationService.GetLocationById(newAccommodation.LocationId);
+            newAccommodation.ImageIds = imageIds;
+            Accommodation savedAccommodation = _accommodationService.Save(newAccommodation);
+
+            _ownerWindow.Close();
         }
 
-        public void btnAddImage_Click(object sender, RoutedEventArgs e)
+        private void Cancel(object obj)
         {
-            AddImage addImageWindow = new AddImage(images, _accommodationId, ImageResourceType.ACCOMMODATION);
+            _ownerWindow.Close();
+        }
+
+        private void AddImages(object obj)
+        {
+            AddImage addImageWindow = new AddImage(images, _accommodationId, ImageResourceType.ACCOMMODATION, LoggedInOwner.Id);
             addImageWindow.Owner = _ownerWindow;
             addImageWindow.ShowDialog();
         }
 
-        public void btnShowImages_Click(object sender, RoutedEventArgs e)
+        private void ShowImages(object obj)
         {
-            //ShowImages showImagesWindow = new ShowImages(images);
-           // showImagesWindow.Owner = _ownerWindow;
-//showImagesWindow.ShowDialog();
+            throw new NotImplementedException();
         }
     }
 

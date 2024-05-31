@@ -81,5 +81,11 @@ namespace BookingApp.Repository
         {
             return _privateTourGuests.FirstOrDefault(guest => guest.Id == id);
         }
+
+        public List<PrivateTourGuest> GetAllByTourRequestSegmentId(int segmentId)
+        {
+            _privateTourGuests = _serializer.FromCSV(FilePath);
+            return _privateTourGuests.Where(guest => guest.TourRequestSegmentId == segmentId).ToList();
+        }
     }
 }
