@@ -83,5 +83,17 @@ namespace BookingApp.Application.UseCases
             var userForums = GetAll().Where(forum => forum.UserId == userId).ToList();
             return userForums;
         }
+
+        internal List<Forum> GetNewForumsByLocationIds(List<int> locationIds)
+        {
+            var forums = GetAll().Where(f => locationIds.Contains(f.LocationId) && (DateTime.Now - f.DateOpened).TotalDays < 5).ToList();
+            return forums;
+        }
+
+        internal List<Forum> GetByLocationIds(List<int> locationIds)
+        {
+            var forums = GetAll().Where(f => locationIds.Contains(f.LocationId)).ToList();
+            return forums;
+        }
     }
 }

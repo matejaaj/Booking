@@ -174,5 +174,13 @@ namespace BookingApp.Application.UseCases
             var imagePaths = images?.Select(i => i.Path).ToList() ?? new List<string>();
             return new AccommodationPageDTO(accommodation, location, imagePaths);
         }
+
+        internal List<int> GetLocationIdsByOwner(Owner loggedInOwner)
+        {
+            var accommodations = GetByUser(loggedInOwner);
+            List<int> ids = accommodations.Select(a => a.LocationId).Distinct().ToList();
+
+            return ids;
+        }
     }
 }

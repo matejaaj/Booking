@@ -20,6 +20,7 @@
 		<None Remove="Resources\Images\carReg.png" />
 		<None Remove="Resources\Images\check.png" />
 		<None Remove="Resources\Images\clock.png" />
+		<None Remove="Resources\Images\cross.png" />
 		<None Remove="Resources\Images\delay.png" />
 		<None Remove="Resources\Images\delete.png" />
 		<None Remove="Resources\Images\destination.png" />
@@ -27,6 +28,7 @@
 		<None Remove="Resources\Images\eden1.jpg" />
 		<None Remove="Resources\Images\edit.png" />
 		<None Remove="Resources\Images\forum.png" />
+		<None Remove="Resources\Images\forum1.png" />
 		<None Remove="Resources\Images\goBack.png" />
 		<None Remove="Resources\Images\help.png" />
 		<None Remove="Resources\Images\home.png" />
@@ -51,6 +53,7 @@
 		<None Remove="Resources\Images\ratings.png" />
 		<None Remove="Resources\Images\regCar.png" />
 		<None Remove="Resources\Images\renovation.png" />
+		<None Remove="Resources\Images\reportComment.png" />
 		<None Remove="Resources\Images\reports.png" />
 		<None Remove="Resources\Images\reschedule.png" />
 		<None Remove="Resources\Images\statistics.png" />
@@ -60,27 +63,10 @@
 		<None Remove="Resources\Images\time.png" />
 		<None Remove="Resources\Images\superhero.png" />
 		<None Remove="Resources\Images\superowner.png" />
-		<None Remove="Resources\Images\Tourist\add.png" />
-		<None Remove="Resources\Images\Tourist\car.png" />
-		<None Remove="Resources\Images\Tourist\clock.png" />
-		<None Remove="Resources\Images\Tourist\language.png" />
-		<None Remove="Resources\Images\Tourist\left.png" />
-		<None Remove="Resources\Images\Tourist\left_light.png" />
-		<None Remove="Resources\Images\Tourist\left_light_theme.png" />
-		<None Remove="Resources\Images\Tourist\logout.png" />
-		<None Remove="Resources\Images\Tourist\map.png" />
-		<None Remove="Resources\Images\Tourist\next.png" />
-		<None Remove="Resources\Images\Tourist\next_light.png" />
-		<None Remove="Resources\Images\Tourist\rate.png" />
-		<None Remove="Resources\Images\Tourist\report.png" />
-		<None Remove="Resources\Images\Tourist\request.png" />
-		<None Remove="Resources\Images\Tourist\saved.png" />
-		<None Remove="Resources\Images\Tourist\stats.png" />
-		<None Remove="Resources\Images\Tourist\theme.png" />
-		<None Remove="Resources\Images\Tourist\view.png" />
 		<None Remove="Resources\Images\trophy.png" />
 		<None Remove="Resources\Images\turista.png" />
 		<None Remove="Resources\Images\tutorial.png" />
+		<None Remove="Resources\Images\usefulForum.png" />
 		<None Remove="Resources\Images\userData.png" />
 		<None Remove="Resources\Images\userProfile.png" />
 		<None Remove="Resources\Images\vacations.png" />
@@ -155,6 +141,8 @@
     <Content Include="Resources\Images\Guide\user-avatar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\cross.png" />
+    <Resource Include="Resources\Images\forum1.png" />
     <Resource Include="Resources\Images\hotelpark.jpg" />
     <Content Include="Resources\Images\Map.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -299,6 +287,7 @@
     <Resource Include="Resources\Images\raspad2.jpg" />
     <Resource Include="Resources\Images\ratings.png" />
     <Resource Include="Resources\Images\renovation.png" />
+    <Resource Include="Resources\Images\reportComment.png" />
     <Resource Include="Resources\Images\reports.png" />
     <Resource Include="Resources\Images\reschedule.png" />
     <Resource Include="Resources\Images\statistics.png" />
@@ -308,26 +297,10 @@
     <Resource Include="Resources\Images\time.png" />
     <Resource Include="Resources\Images\superhero.png" />
     <Resource Include="Resources\Images\superowner.png" />
-    <Resource Include="Resources\Images\Tourist\add.png" />
-    <Resource Include="Resources\Images\Tourist\car.png" />
-    <Resource Include="Resources\Images\Tourist\clock.png" />
-    <Resource Include="Resources\Images\Tourist\language.png" />
-    <Resource Include="Resources\Images\Tourist\left.png" />
-    <Resource Include="Resources\Images\Tourist\left_light_theme.png" />
-    <Resource Include="Resources\Images\Tourist\logout.png" />
-    <Resource Include="Resources\Images\Tourist\map.png" />
-    <Resource Include="Resources\Images\Tourist\next.png" />
-    <Resource Include="Resources\Images\Tourist\next_light.png" />
-    <Resource Include="Resources\Images\Tourist\rate.png" />
-    <Resource Include="Resources\Images\Tourist\report.png" />
-    <Resource Include="Resources\Images\Tourist\request.png" />
-    <Resource Include="Resources\Images\Tourist\saved.png" />
-    <Resource Include="Resources\Images\Tourist\stats.png" />
-    <Resource Include="Resources\Images\Tourist\theme.png" />
-    <Resource Include="Resources\Images\Tourist\view.png" />
     <Resource Include="Resources\Images\trophy.png" />
     <Resource Include="Resources\Images\turista.png" />
     <Resource Include="Resources\Images\tutorial.png" />
+    <Resource Include="Resources\Images\usefulForum.png" />
     <Resource Include="Resources\Images\userData.png" />
     <Resource Include="Resources\Images\userProfile.png" />
     <Resource Include="Resources\Images\vacations.png" />

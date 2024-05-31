@@ -63,6 +63,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         public ICommand GoBackCommand { get; }
         public ICommand ShowNotificationsCommand { get; }
         public ICommand HideNotificationsCommand { get; }
+        public ICommand ShowForumCommand { get; }
         public ICommand ItemClickedCommand { get; private set; }
         private static AccommodationService _accommodationService;
         private static AccommodationReservationService _accommodationReservationService;
@@ -71,7 +72,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static ImageService _imageService;
         private static OwnerService _ownerService;
         private static SuggestionService _suggestionService;
-
+        private static ForumService _forumService;
         private Visibility _sideMenuVisibility = Visibility.Collapsed;
         private OwnerMainWindow _ownerMainWindow;
 
@@ -130,13 +131,16 @@ namespace BookingApp.WPF.ViewModel.Owner
             ShowNotificationsCommand = new RelayCommand(ShowNotifications);
             HideNotificationsCommand = new RelayCommand(HideNotifications);
             ItemClickedCommand = new RelayCommand(ExecuteItemClicked);
+            ShowForumCommand = new RelayCommand(ShowForum);
 
             Notifications = new List<Notification>();
             StartUp();            
             InitializeServices();
             NotifyMissingRatings();
             NotifySuggestions();
+            NotifyNewForum();
         }
+
 
         private void StartUp()
         {
@@ -162,6 +166,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService(_accommodationReservationService, Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>());
             _ownerService = new OwnerService(Injector.CreateInstance<IOwnerRepository>());
             _suggestionService = new SuggestionService(_locationService, _accommodationService, _accommodationReservationService);
+            _forumService = new ForumService(Injector.CreateInstance<IForumRepository>());
         }
 
         public void NotifyMissingRatings()
@@ -188,6 +193,17 @@ namespace BookingApp.WPF.ViewModel.Owner
             Location unpopularLocation = _suggestionService.GetLeastPopularLocation(LoggedInOwner);
             Notifications.Add(new Notification("New Opportunity!", $"High demand detected! Consider opening a new Accommodation at {popularLocation}", DateTime.Today, -1));
             Notifications.Add(new Notification("Low Demand!", $"Low demand alert! Consider closing Accommodations at {unpopularLocation}", DateTime.Today, -1));
+        }
+
+        private void NotifyNewForum()
+        {
+            List<int> locationIds = _accommodationService.GetLocationIdsByOwner(LoggedInOwner);
+            List<Forum> newForum = _forumService.GetNewForumsByLocationIds(locationIds);
+            foreach(var f in newForum)
+            {
+                Location location = _locationService.GetLocationById(f.LocationId);
+                Notifications.Add(new Notification("New Forum!", $"New forum alert! A user started a forum at {location}", DateTime.Today, f.Id));
+            }
         }
 
         private void HideNotifications(object obj)
@@ -271,9 +287,15 @@ namespace BookingApp.WPF.ViewModel.Owner
             PageName = "Super-Owner";
             MainFrame.Navigate(new SuperOwnerPage(LoggedInOwner));
             SideMenuVisibility = Visibility.Collapsed;
-        }
 
-        private void LogOut(object parameter)
+        }
+        private void ShowForum(object parameter)
+        {
+            PageName = "Forum";
+            MainFrame.Navigate(new ViewForumsPage(LoggedInOwner));
+            SideMenuVisibility = Visibility.Collapsed;
+        }
+            private void LogOut(object parameter)
         {
             SignInForm signInForm = new SignInForm();
             signInForm.Show();
@@ -284,6 +306,9 @@ namespace BookingApp.WPF.ViewModel.Owner
         {
             var selectedNotification = (Notification)selectedItem;
             if(selectedNotification.TargetUserId == -1)
+            {
+                return;
+            }else if (selectedNotification.Title.Equals("New Forum!"))
             {
                 return;
             }
