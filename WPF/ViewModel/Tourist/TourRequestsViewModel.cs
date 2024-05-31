@@ -5,7 +5,9 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.DTO;
 using BookingApp.DTO.Factories;
@@ -28,6 +30,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourRequestService _tourRequestService;
         private TourRequestSegmentService _tourSegmentService;
         private PrivateTourGuestService _tourGuestService;
+
+        public ICommand OpenTourRequestFormCommand { get; private set; }
+        public ICommand OpenRequestStatisticsCommand { get; private set; }
+        public ICommand ShowSimpleRequestDetailsCommand { get; private set; }
+        public ICommand ShowComplexRequestDetailsCommand { get; private set; }
+
         public TourRequestsViewModel(User user, LocationService locationService, LanguageService languageService, TourRequestService tourRequestService, TourRequestSegmentService tourSegmentService, PrivateTourGuestService tourGuestService, PrivateTourGuestService guestService)
         {
             _locationService = locationService;
@@ -37,14 +45,31 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _tourGuestService = tourGuestService;
             _user = user;
 
-            dtoFactory = new TourRequestDTOFactory(locationService, languageService, guestService, tourSegmentService);
-            _expirationChecker = new TourRequestExpirationChecker(_tourRequestService, tourSegmentService);
-            SimpleRequests = new ObservableCollection<TourRequestDTO>();
-            ComplexRequests = new ObservableCollection<ComplexTourRequestDTO>();
 
+
+            InitializeFields();
             CheckForExpiredRequests();
             UpdateTourRequests();
         }
+
+        private void InitializeFields()
+        {
+            dtoFactory = new TourRequestDTOFactory(_locationService, _languageService, _tourGuestService, _tourSegmentService);
+            _expirationChecker = new TourRequestExpirationChecker(_tourRequestService, _tourSegmentService);
+            SimpleRequests = new ObservableCollection<TourRequestDTO>();
+            ComplexRequests = new ObservableCollection<ComplexTourRequestDTO>();
+            InitializeCommands();
+
+        }
+
+        private void InitializeCommands()
+        {
+            OpenTourRequestFormCommand = new RelayCommand(_ => OpenFormWindow());
+            OpenRequestStatisticsCommand = new RelayCommand(_ => OpenStatisticsWindow());
+            ShowSimpleRequestDetailsCommand = new RelayCommand(ShowSimpleRequestDetails);
+            ShowComplexRequestDetailsCommand = new RelayCommand(ShowComplexRequestDetails);
+        }
+    
 
         private void CheckForExpiredRequests()
         {
@@ -69,6 +94,24 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+
+        private void ShowSimpleRequestDetails(object parameter)
+        {
+            if (parameter is TourRequestDTO tourRequest)
+            {
+                SimpleTourRequestDetails detailsWindow = new SimpleTourRequestDetails(tourRequest);
+                detailsWindow.Show();
+            }
+        }
+
+        private void ShowComplexRequestDetails(object parameter)
+        {
+            if (parameter is ComplexTourRequestDTO complexTourRequest)
+            {
+                ComplexTourRequestDetails detailsWindow = new ComplexTourRequestDetails(complexTourRequest);
+                detailsWindow.Show();
+            }
+        }
 
         public void OpenFormWindow()
         {

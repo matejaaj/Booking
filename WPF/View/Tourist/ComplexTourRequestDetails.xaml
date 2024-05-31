@@ -6,24 +6,38 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
         Title="ComplexTourRequestDetails" Height="600" Width="500"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource PrimaryBackground}">
     <Window.Resources>
         <Style x:Key="BoldTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
         <Style x:Key="NormalTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
         <Style x:Key="StackPanelStyle" TargetType="StackPanel">
             <Setter Property="Margin" Value="0, 25,0,0"/>
             <Setter Property="Orientation" Value="Horizontal"/>
         </Style>
         <Style x:Key="BorderStyle" TargetType="Border">
-            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushColor}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="10"/>
+        </Style>
+
+        <Style x:Key="ImageButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Stretch="Uniform"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
         </Style>
     </Window.Resources>
     <Grid Margin="10">
@@ -33,12 +47,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Status celokupnog zahteva: " />
             <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding ComplexTourRequest.Status}" />
         </StackPanel>
-
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <ContentControl Content="{Binding CurrentTourRequest}">
@@ -98,8 +110,9 @@
         </ScrollViewer>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Previous" Command="{Binding PreviousCommand}" Margin="5"/>
-            <Button Content="Next" Command="{Binding NextCommand}" Margin="5"/>
+            <Button Command="{Binding PreviousCommand}" Margin="0 0 10 0" Height="30" Width="30" Style="{StaticResource ImageButtonStyle}" Tag="{DynamicResource LeftImageSource}" />
+            <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding CurrentIndexDisplay}" VerticalAlignment="Center" Margin="10,0,10,0" />
+            <Button Command="{Binding NextCommand}" Margin="10 0 0 0" Height="30" Width="30" Style="{StaticResource ImageButtonStyle}" Tag="{DynamicResource NextImageSource}" />
         </StackPanel>
     </Grid>
 </Window>

@@ -1,14 +1,16 @@
 ﻿using BookingApp.Application.UseCases;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BookingApp.Application;
+using System.Windows.Input;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
-using System.Collections.ObjectModel;
+using System.Windows;
+using BookingApp.Application;
+using GalaSoft.MvvmLight.Command;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
@@ -38,6 +40,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
+
         private KeyValuePair<int, string> _selectedLanguage;
         public KeyValuePair<int, string> SelectedLanguage
         {
@@ -52,20 +55,24 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+        private readonly DetailedLocationService _detailedLocationService;
+        private readonly DriveReservationService _driveReservationService;
+        private readonly User _tourist;
+        private readonly LanguageService _languageService;
+        private readonly GroupDriveReservationService _groupDriveReservationService;
+        public ICommand CloseWindowCommand { get; }
+        public ICommand ReserveCommand { get;  }
 
-
-        private DetailedLocationService _detailedLocationService;
-        private DriveReservationService _driveReservationService;
-        private User _tourist;
-        private LanguageService _languageService;
-        private GroupDriveReservationService _groupDriveReservationService;
-
-        public GroupDriveFormViewModel(User user, DetailedLocationService detailedLocationService)
+        public GroupDriveFormViewModel(User user, DetailedLocationService detailedLocationService, DriveReservationService driveReservationService, ICommand closeCommand)
         {
             _tourist = user;
             _detailedLocationService = detailedLocationService;
+            _driveReservationService = driveReservationService;
             _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
             _groupDriveReservationService = new GroupDriveReservationService(Injector.CreateInstance<IGroupDriveReservationRepository>());
+            CloseWindowCommand = closeCommand;
+            ReserveCommand = new BookingApp.Commands.RelayCommand(ReserveGroupDrive);
+
 
             FillLanguages();
         }
@@ -80,7 +87,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-        public void ReserveGroupDrive()
+        public void ReserveGroupDrive(object parameter)
         {
             DateTime departure = CreateDateTimeFromSelections();
 
@@ -94,7 +101,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 start.Id, end.Id, departure, _tourist.Id, 14);
 
             _groupDriveReservationService.Save(reservation);
-        }
+            MessageBox.Show("Group drive reservation successful!");
 
+            if (parameter is Window window)
+            {
+                window.Close();
+            }
+        }
     }
 }

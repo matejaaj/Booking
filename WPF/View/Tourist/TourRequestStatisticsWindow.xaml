@@ -7,21 +7,29 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
         Title="Statistika zahteva" Height="450" Width="450"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource PrimaryBackground}">
+    <Window.Resources>
+        <Style TargetType="lvc:DefaultLegend">
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Label Content="Izaberite godinu:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,12,0,0"/>
+        <Label Content="Izaberite godinu:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,12,0,0"
+               Foreground="{DynamicResource PrimaryTextColor}"/>
 
         <ComboBox x:Name="YearSelector" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,10,0,0" Width="120"
                   ItemsSource="{Binding Years}"
-                  SelectedItem="{Binding SelectedYear}" />
+                  SelectedItem="{Binding SelectedYear}"
+                  Style="{StaticResource CustomComboBoxStyle}"
+                  ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" />
 
         <lvc:PieChart HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,50,10,10"
                       LegendLocation="Right">
             <lvc:PieChart.Series>
-                <lvc:PieSeries Title="Prihvaceni zahtevi" Values="{Binding PieChartData[0].Values}" DataLabels="True"/>
-                <lvc:PieSeries Title="Odbijeni" Values="{Binding PieChartData[1].Values}" DataLabels="True"/>
+                <lvc:PieSeries Title="Prihvaceni zahtevi" Values="{Binding PieChartData[0].Values}" DataLabels="True" Fill="LightGreen"/>
+                <lvc:PieSeries Title="Odbijeni" Values="{Binding PieChartData[1].Values}" DataLabels="True" Fill="DarkRed"/>
             </lvc:PieChart.Series>
         </lvc:PieChart>
     </Grid>
-
 </Window>

@@ -42,6 +42,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _privateTourGuestService = privateTourGuestService;
 
 
+
             InitialieFields();
         }
 

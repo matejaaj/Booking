@@ -1,17 +1,12 @@
-﻿
-
-using BookingApp.Application.UseCases;
-using BookingApp.Application;
-using BookingApp.Domain.RepositoryInterfaces;
-using System;
+﻿using BookingApp.Application.UseCases;
+using BookingApp.Domain.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Windows;
+using System;
 using System.Windows.Input;
 using BookingApp.Commands;
-using BookingApp.Domain.Model;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
@@ -23,7 +18,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private readonly DriveReservationService _driveReservationService;
         private readonly UserService _userService;
         private readonly User _tourist;
-
 
         private ObservableCollection<KeyValuePair<int, string>> _drivers = new ObservableCollection<KeyValuePair<int, string>>();
         private KeyValuePair<int, string> _selectedDriver;
@@ -42,8 +36,10 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
 
         public ICommand ReserveCommand { get; }
+        public ICommand CloseWindowCommand { get;  }
+        public ICommand TestCommand { get; }
 
-        public RegularDriveFormViewModel(User user, UserService userService, VehicleService vehicleService, DetailedLocationService detailedLocationService, LocationService locationService, DriveReservationService driveReservationService)
+        public RegularDriveFormViewModel(User user, UserService userService, VehicleService vehicleService, DetailedLocationService detailedLocationService, LocationService locationService, DriveReservationService driveReservationService, ICommand closeCommand)
         {
             _userService = userService;
             _vehicleService = vehicleService;
@@ -51,7 +47,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _locationService = locationService;
             _driveReservationService = driveReservationService;
             _tourist = user;
-
+            CloseWindowCommand = closeCommand;
+            TestCommand = new RelayCommand(param => MessageBox.Show("Test Command Executed"));
+            SelectedCountry = new KeyValuePair<int, string>(0, string.Empty);
             ReserveCommand = new RelayCommand(ReserveRegularDrive);
         }
 
@@ -75,7 +73,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public void ReserveRegularDrive(object parameter)
         {
-
             DateTime departure = CreateDateTimeFromSelections();
 
             DetailedLocation start = new DetailedLocation(SelectedCountry.Key, StartAddress);

@@ -25,7 +25,17 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public ICommand ChangeThemeCommand { get; private set; }
         public ICommand ChangeLanguageCommand { get; private set; }
         public ICommand LogoutCommand { get; private set; }
+
+        public ICommand ShowAllToursCommand { get; private set; }
+        public ICommand ShowMyToursCommand { get; private set; }
+        public ICommand ShowTourRequestsCommand { get; private set; }
+        public ICommand ShowMyDrivesCommand { get; private set; }
+
         public event EventHandler RequestClose;
+        public event EventHandler ShowAllToursRequested;
+        public event EventHandler ShowMyToursRequested;
+        public event EventHandler ShowTourRequestsRequested;
+        public event EventHandler ShowMyDrivesRequested;
 
         public ToursMainTabViewModel ToursMainViewModel { get; }
         public DriveMainTabViewModel DriveMainViewModel { get; }
@@ -73,6 +83,11 @@ namespace BookingApp.WPF.ViewModel.Tourist
             ChangeThemeCommand = new RelayCommand(_ => ChangeTheme());
             ChangeLanguageCommand = new RelayCommand(_ => ChangeLanguage());
             LogoutCommand = new RelayCommand(_ => Logout());
+
+            ShowAllToursCommand = new RelayCommand(_ => ShowAllTours());
+            ShowMyToursCommand = new RelayCommand(_ => ShowMyTours());
+            ShowTourRequestsCommand = new RelayCommand(_ => ShowTourRequests());
+            ShowMyDrivesCommand = new RelayCommand(_ => ShowMyDrives());
         }
 
         private void InitializeServices()
@@ -150,6 +165,26 @@ namespace BookingApp.WPF.ViewModel.Tourist
             RequestClose?.Invoke(this, EventArgs.Empty);
         }
 
+
+        private void ShowAllTours()
+        {
+            ShowAllToursRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ShowMyTours()
+        {
+            ShowMyToursRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ShowTourRequests()
+        {
+            ShowTourRequestsRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ShowMyDrives()
+        {
+            ShowMyDrivesRequested?.Invoke(this, EventArgs.Empty);
+        }
     }
 
 }

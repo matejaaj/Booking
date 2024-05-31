@@ -10,6 +10,15 @@
         Title="Booking" Width="1320" Height="743"
         Background="{DynamicResource PrimaryBackground}">
 
+    <Window.InputBindings>
+        <KeyBinding Key="D1" Modifiers="Control" Command="{Binding ShowAllToursCommand}"/>
+        <KeyBinding Key="D2" Modifiers="Control" Command="{Binding ShowMyToursCommand}"/>
+        <KeyBinding Key="D3" Modifiers="Control" Command="{Binding ShowTourRequestsCommand}"/>
+        <KeyBinding Key="D4" Modifiers="Control" Command="{Binding ShowMyDrivesCommand}"/>
+        <KeyBinding Key="L" Modifiers="Control" Command="{Binding ChangeLanguageCommand}"/>
+        <KeyBinding Key="T" Modifiers="Control" Command="{Binding ChangeThemeCommand}"/>
+    </Window.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -17,9 +26,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TabControl Grid.Row="0" TabStripPlacement="Left"
+        <TabControl x:Name="MainTabControl" Grid.Row="0" TabStripPlacement="Left"
                     Background="{DynamicResource PrimaryBackground}">
-            <TabItem Style="{StaticResource ParentTabStyle}">
+            <TabItem x:Name="ToursTabItem" Style="{StaticResource ParentTabStyle}" ToolTip="Ctrl + 1: Sve ture">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -29,7 +38,7 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <TabControl>
-                    <TabItem Style="{StaticResource ChildTabStyle}">
+                    <TabItem x:Name="AllToursTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="Ctrl + 1: Sve ture">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -41,7 +50,7 @@
                         <control:AllToursControl DataContext="{Binding ToursMainViewModel.AllToursViewModel}"
                                                  Tourist="{Binding Tourist}"/>
                     </TabItem>
-                    <TabItem Style="{StaticResource ChildTabStyle}">
+                    <TabItem x:Name="MyToursTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="Ctrl + 2: Moje ture">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -54,7 +63,7 @@
                                                 Tourist="{Binding Tourist}"/>
                     </TabItem>
 
-                    <TabItem Style="{StaticResource ChildTabStyle}">
+                    <TabItem x:Name="TourRequestsTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="Ctrl + 3: Zahtev ture">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -65,10 +74,9 @@
                         </TabItem.HeaderTemplate>
                         <control:TourRequestsControl DataContext="{Binding ToursMainViewModel.TourRequestsViewModel}"/>
                     </TabItem>
-
                 </TabControl>
             </TabItem>
-            <TabItem Style="{StaticResource ParentTabStyle}">
+            <TabItem x:Name="DrivesTabItem" Style="{StaticResource ParentTabStyle}" ToolTip="Ctrl + 4: Vožnje">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -78,7 +86,7 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <TabControl>
-                    <TabItem Style="{StaticResource ChildTabStyle}">
+                    <TabItem x:Name="MyDrivesTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="Ctrl + 4: Vožnje">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -99,13 +107,13 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10,-130,0,0">
-            <Button Style="{StaticResource SmallButton}" Width="175" Command="{Binding ChangeLanguageCommand}">
+            <Button Style="{StaticResource SmallButton}" Width="175" Command="{Binding ChangeLanguageCommand}" ToolTip="Ctrl + L: Promeni jezik">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Resources/Images/Tourist/language.png" Width="25" Height="25" Margin="0,0,10,0"/>
                     <TextBlock Text="Promeni jezik"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource SmallButton}" Command="{Binding ChangeThemeCommand}">
+            <Button Style="{StaticResource SmallButton}" Command="{Binding ChangeThemeCommand}" ToolTip="Ctrl + T: Promeni temu">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Resources/Images/Tourist/theme.png" Width="25" Height="25" Margin="0,0,10,0"/>
                     <TextBlock Text="Promeni temu"/>

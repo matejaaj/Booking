@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Style="{StaticResource HeaderTextStyle}" 
+        <TextBlock Style="{StaticResource HeaderTextStyle}"
                    Text="Sve ture"
 
                    Margin="20"/>
@@ -55,7 +55,9 @@
                                            Stretch="Fill"/>
 
 
-                                    <Button Style="{StaticResource DefaultButton}" Click="MoreDetails_Click" Tag="{Binding}">
+                                    <Button Style="{StaticResource DefaultButton}"
+                                            Command="{Binding DataContext.ShowTourDetailsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="30" Height="30" Margin="0,0,10,0"/>
                                             <TextBlock Text="Više detalja"/>

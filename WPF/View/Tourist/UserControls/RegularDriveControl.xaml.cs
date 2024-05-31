@@ -27,19 +27,6 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             InitializeComponent();
         }
 
-        /*        public void btnReserve_Click(object sender, RoutedEventArgs e)
-                {
-                    if (DataContext is RegularDriveFormViewModel viewModel)
-                    {
-                        viewModel.ReserveRegularDrive();
-
-
-
-                        Window parentWindow = Window.GetWindow(this);
-                        parentWindow?.Close();
-                    }
-                }*/
-
         private void Minute_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var autoCompleteBox = sender as AutoCompleteBox;

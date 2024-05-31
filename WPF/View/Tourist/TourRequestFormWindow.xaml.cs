@@ -51,5 +51,14 @@ namespace BookingApp.WPF.View.Tourist
             MessageBox.Show("Form submitted successfully!");
             this.Close();
         }
+
+        private void AutoCompleteBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var autoCompleteBox = sender as AutoCompleteBox;
+            if (autoCompleteBox != null)
+            {
+                autoCompleteBox.SelectedItem = new KeyValuePair<int,string>();
+            }
+        }
     }
 }

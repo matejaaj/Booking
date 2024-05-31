@@ -18,6 +18,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 _complexTourRequest = value;
                 OnPropertyChanged(nameof(ComplexTourRequest));
                 OnPropertyChanged(nameof(CurrentTourRequest));
+                OnPropertyChanged(nameof(CurrentIndexDisplay));
             }
         }
 
@@ -26,33 +27,27 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public ICommand NextCommand { get; }
         public ICommand PreviousCommand { get; }
 
+        public string CurrentIndexDisplay => $"{_currentIndex + 1} / {ComplexTourRequest.TourSegments.Count}";
+
         public ComplexTourRequestDetailsViewModel()
         {
-            NextCommand = new RelayCommand(_ => Next(), _ => CanGoNext());
-            PreviousCommand = new RelayCommand(_ => Previous(), _ => CanGoPrevious());
+            NextCommand = new RelayCommand(_ => Next());
+            PreviousCommand = new RelayCommand(_ => Previous());
         }
 
         private void Next()
         {
-            if (CanGoNext())
-            {
-                _currentIndex++;
-                OnPropertyChanged(nameof(CurrentTourRequest));
-            }
+            _currentIndex = (_currentIndex + 1) % ComplexTourRequest.TourSegments.Count;
+            OnPropertyChanged(nameof(CurrentTourRequest));
+            OnPropertyChanged(nameof(CurrentIndexDisplay));
         }
-
-        private bool CanGoNext() => _currentIndex < ComplexTourRequest.TourSegments.Count - 1;
 
         private void Previous()
         {
-            if (CanGoPrevious())
-            {
-                _currentIndex--;
-                OnPropertyChanged(nameof(CurrentTourRequest));
-            }
+            _currentIndex = (_currentIndex - 1 + ComplexTourRequest.TourSegments.Count) % ComplexTourRequest.TourSegments.Count;
+            OnPropertyChanged(nameof(CurrentTourRequest));
+            OnPropertyChanged(nameof(CurrentIndexDisplay));
         }
-
-        private bool CanGoPrevious() => _currentIndex > 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

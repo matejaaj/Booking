@@ -6,30 +6,33 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         mc:Ignorable="d"
         Title="Zahtev za turu" Height="600" Width="500"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource PrimaryBackground}">
     <Window.Resources>
 
         <Style x:Key="BoldTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
         <Style x:Key="NormalTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
         <Style x:Key="StackPanelStyle" TargetType="StackPanel">
             <Setter Property="Margin" Value="0, 25,0,0"/>
             <Setter Property="Orientation" Value="Horizontal"/>
         </Style>
         <Style x:Key="BorderStyle" TargetType="Border">
-            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushColor}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="10"/>
         </Style>
     </Window.Resources>
     <Grid Margin="10">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <Border Style="{StaticResource BorderStyle}">
+            <Border Style="{StaticResource BorderStyle}" Background="{DynamicResource SecondaryBackground}" Padding="30">
                 <StackPanel>
                     <StackPanel Style="{StaticResource StackPanelStyle}" Margin="0 5 0 0">
                         <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Status: " />

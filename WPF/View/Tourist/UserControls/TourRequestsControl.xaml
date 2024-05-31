@@ -27,20 +27,19 @@
                        VerticalAlignment="Center"/>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="-70,0,0,0">
-                <Button Style="{StaticResource DefaultButton}" Click="OpenTourRequestForm_Click" Margin="5,0">
+                <Button Style="{StaticResource DefaultButton}" Command="{Binding OpenTourRequestFormCommand}" Margin="5,0">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="pack://application:,,,/Resources/Images/Tourist/add.png" Width="25" Height="25" Margin="0,0,10,0"/>
                         <TextBlock Text="Kreiraj zahtev"/>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource DefaultButton}" Click="OpenRequestStatistics_Click" Margin="5,0">
+                <Button Style="{StaticResource DefaultButton}" Command="{Binding OpenRequestStatisticsCommand}" Margin="5,0">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="pack://application:,,,/Resources/Images/Tourist/stats.png" Width="25" Height="25" Margin="0,0,10,0"/>
                         <TextBlock Text="Statistika zahteva"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
-
         </Grid>
 
         <ScrollViewer Grid.Row="1">
@@ -74,14 +73,12 @@
                                         <Run Text="{Binding Status}"/>
                                     </TextBlock>
 
-                                    <Button Style="{StaticResource DefaultButton}" HorizontalAlignment="Center" Tag="{Binding}" Click="SimpleRequestDetails_Click">
+                                    <Button Style="{StaticResource DefaultButton}" HorizontalAlignment="Center" Command="{Binding DataContext.ShowSimpleRequestDetailsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="25" Height="25" Margin="0,0,10,0"/>
                                             <TextBlock Text="Više detalja"/>
                                         </StackPanel>
                                     </Button>
-
-
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -108,17 +105,17 @@
                                         <Run Text="{Binding Status}"/>
                                     </TextBlock>
 
-                                    <Button Content="Više detalja"
-                                            HorizontalAlignment="Center"
-                                            Tag="{Binding}"
-                                            Click="ComplexRequestDetails_Click"
-                                            Style="{StaticResource DefaultButton}"/>
+                                    <Button Style="{StaticResource DefaultButton}" HorizontalAlignment="Center" Command="{Binding DataContext.ShowComplexRequestDetailsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Više detalja"/>
+                                        </StackPanel>
+                                    </Button>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-
             </StackPanel>
         </ScrollViewer>
     </Grid>
