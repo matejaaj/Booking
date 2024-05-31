@@ -52,7 +52,7 @@ namespace BookingApp.WPF.View.Guest
 
         private void ShowForum(object sender, RoutedEventArgs e)
         {
-            // Logika za prikaz foruma
+            ContentFrame.Navigate(new ForumForm(Guest));//Guest
         }
         private void ShowSuperGuestPage(object sender, RoutedEventArgs e)
         {
