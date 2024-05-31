@@ -13,12 +13,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using BookingApp.Application.UseCases.Factories;
+using System.Windows.Input;
+using BookingApp.Commands;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class TourReservationFormViewModel : INotifyPropertyChanged
     {
         private TourReservationFactory _tourReservationFactory;
+
 
         private int _touristId;
         private TourInstance _selectedTourInstance;
@@ -33,9 +36,10 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourGuestService _tourGuestService;
         private VoucherService _voucherService;
 
+        public ICommand SubmitCommand { get; }
+        public ICommand CancelCommand { get; }
 
         public ObservableCollection<KeyValuePair<int, string>> StartTimes { get; set; } = new ObservableCollection<KeyValuePair<int, string>>();
-        public ObservableCollection<int> NumberOfPeopleOptions { get; set; } = new ObservableCollection<int> { 1, 2, 3 };
         public ObservableCollection<KeyValuePair<int, string>> Vouchers { get; set; } = new ObservableCollection<KeyValuePair<int, string>>();
         public ObservableCollection<TourGuestInputViewModel> GuestInputs { get; } = new ObservableCollection<TourGuestInputViewModel>();
 
@@ -50,6 +54,18 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 OnStartTimeChanged();
             }
         }
+
+        private bool _isNumberOfPeopleEnabled;
+        public bool IsNumberOfPeopleEnabled
+        {
+            get => _isNumberOfPeopleEnabled;
+            set
+            {
+                _isNumberOfPeopleEnabled = value;
+                OnPropertyChanged(nameof(IsNumberOfPeopleEnabled));
+            }
+        }
+
         public KeyValuePair<int, string>? SelectedVoucher
         {
             get => _selectedVoucher;
@@ -81,6 +97,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _selectedTour = selectedTour;
             InitializeServices();
             FillCollections();
+            SubmitCommand = new RelayCommand(_ => SaveReservation(), _ => CanSubmit());
+            CancelCommand = new RelayCommand(_ => Cancel());
         }
         private void InitializeServices()
         {
@@ -105,13 +123,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 StartTimes.Add(new KeyValuePair<int, string>(instance.Id, instance.StartTime.ToString("g", CultureInfo.InvariantCulture)));
             }
         }
-        private void FillNumberOfPeopleOptions()
-        {
-            NumberOfPeopleOptions.Clear();
-            NumberOfPeopleOptions.Add(1);
-            NumberOfPeopleOptions.Add(2);
-            NumberOfPeopleOptions.Add(3);
-        }
+
         private void FillVouchers()
         {
             var vouchers = _voucherService.GetVouchersByTouristId(_touristId);
@@ -122,10 +134,17 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
         private void OnStartTimeChanged()
         {
-            var selectedId = _selectedStartTime.Value.Key;
-            _selectedTourInstance = _tourInstanceService.GetById(selectedId);
-            FillNumberOfPeopleOptions();
+            if (_selectedStartTime.HasValue)
+            {
+                var selectedId = _selectedStartTime.Value.Key;
+                _selectedTourInstance = _tourInstanceService.GetById(selectedId);
+                NumberOfPeople = 0;
+                OnPropertyChanged(nameof(NumberOfPeople));
+            }
+            IsNumberOfPeopleEnabled = _selectedStartTime.HasValue;
         }
+
+
         private void CheckIfFull()
         {
             if(_selectedTourInstance == null)
@@ -174,6 +193,19 @@ namespace BookingApp.WPF.ViewModel.Tourist
             MessageBox.Show("Reservation successful");
  
         }
+
+        private void Cancel()
+        {
+            // Logic to close the window
+            System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this)?.Close();
+        }
+
+        private bool CanSubmit()
+        {
+            // Logic to determine if the submit action can be executed
+            return _selectedTourInstance != null && NumberOfPeople > 0 && GuestInputs.All(guest => !string.IsNullOrWhiteSpace(guest.FirstName) && !string.IsNullOrWhiteSpace(guest.LastName) && guest.Age > 0);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {

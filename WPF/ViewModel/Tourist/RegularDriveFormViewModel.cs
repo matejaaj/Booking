@@ -1,34 +1,49 @@
-﻿using BookingApp.Application.UseCases;
+﻿
+
+using BookingApp.Application.UseCases;
 using BookingApp.Application;
 using BookingApp.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookingApp.Domain.Model;
 using System.Windows;
+using System.Windows.Input;
+using BookingApp.Commands;
+using BookingApp.Domain.Model;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class RegularDriveFormViewModel : BaseDriveFormViewModel
     {
-        private VehicleService _vehicleService;
-        private DetailedLocationService _detailedLocationService;
-        private LocationService _locationService;
-        private DriveReservationService _driveReservationService;
-        private UserService _userService;
-        private User _tourist;
+        private readonly VehicleService _vehicleService;
+        private readonly DetailedLocationService _detailedLocationService;
+        private readonly LocationService _locationService;
+        private readonly DriveReservationService _driveReservationService;
+        private readonly UserService _userService;
+        private readonly User _tourist;
 
 
         private ObservableCollection<KeyValuePair<int, string>> _drivers = new ObservableCollection<KeyValuePair<int, string>>();
         private KeyValuePair<int, string> _selectedDriver;
 
-        public ObservableCollection<KeyValuePair<int, string>> Drivers { get => _drivers; }
-        public KeyValuePair<int, string> SelectedDriver { get => _selectedDriver; set => _selectedDriver = value; }
+        public ObservableCollection<KeyValuePair<int, string>> Drivers => _drivers;
 
-        public RegularDriveFormViewModel(User user, UserService userService, VehicleService vehicleService, DetailedLocationService detailedLocationService, LocationService locationService, DriveReservationService driveReservationService) 
+        [Required(ErrorMessage = "Izaberite vozača.")]
+        public KeyValuePair<int, string> SelectedDriver
+        {
+            get => _selectedDriver;
+            set
+            {
+                _selectedDriver = value;
+                OnPropertyChanged(nameof(SelectedDriver));
+            }
+        }
+
+        public ICommand ReserveCommand { get; }
+
+        public RegularDriveFormViewModel(User user, UserService userService, VehicleService vehicleService, DetailedLocationService detailedLocationService, LocationService locationService, DriveReservationService driveReservationService)
         {
             _userService = userService;
             _vehicleService = vehicleService;
@@ -36,11 +51,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _locationService = locationService;
             _driveReservationService = driveReservationService;
             _tourist = user;
+
+            ReserveCommand = new RelayCommand(ReserveRegularDrive);
         }
 
         public void FillDrivers(List<int> driverIds)
         {
-            UserService _userService = new UserService(Injector.CreateInstance<IUserRepository>());
             var drivers = _userService.GetByIds(driverIds);
             Drivers.Clear();
             foreach (var driver in drivers)
@@ -48,7 +64,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 Drivers.Add(new KeyValuePair<int, string>(driver.Id, driver.Username));
             }
         }
-
 
         public void UpdateDriverList()
         {
@@ -58,8 +73,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
             FillDrivers(drivers);
         }
 
-        public void ReserveRegularDrive()
+        public void ReserveRegularDrive(object parameter)
         {
+
             DateTime departure = CreateDateTimeFromSelections();
 
             DetailedLocation start = new DetailedLocation(SelectedCountry.Key, StartAddress);
@@ -71,6 +87,11 @@ namespace BookingApp.WPF.ViewModel.Tourist
             DriveReservation reservation = new DriveReservation(start.Id, end.Id, departure, SelectedDriver.Key, _tourist.Id, 2, 0, 0);
             _driveReservationService.Save(reservation);
             MessageBox.Show("Rezervacija uspešno izvršena!");
+
+            if (parameter is Window window)
+            {
+                window.Close();
+            }
         }
     }
 }

@@ -31,13 +31,10 @@ namespace BookingApp.WPF.View.Tourist
             InitializeComponent();
             ViewModel = new TouristTabsViewModel(user);
 
+            ViewModel.RequestClose += (s, e) => this.Close();
             DataContext = ViewModel;
         }
 
-        private void ChangeTheme_click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.ChangeTheme();
-        }
 
 
     }

@@ -44,7 +44,9 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             var tour = button.Tag as TourDTO;
             if (tour != null)
             {
-
+                var window = new TourDetailsWindow(tour, Tourist);
+                window.Show();
+                
             }
 
         }

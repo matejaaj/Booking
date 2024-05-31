@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using BookingApp.Application;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.WPF.ViewModel.Tourist;
+using BookingApp.DTO;
 
 namespace BookingApp.WPF.View.Tourist.UserControls
 {
@@ -43,9 +44,35 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             viewModel.OpenStatisticsWindow();
         }
 
-        private void MoreDetails_Click(object sender, RoutedEventArgs e)
+        private void SimpleRequestDetails_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Test");
+            var button = sender as Button;
+            if (button == null)
+                return;
+
+            var tourRequest = button.Tag as TourRequestDTO;
+            if (tourRequest == null)
+                return;
+
+
+            SimpleTourRequestDetails detailsWindow = new SimpleTourRequestDetails(tourRequest);
+            detailsWindow.Show(); 
         }
+
+
+        private void ComplexRequestDetails_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button == null)
+                return;
+
+            var complexTourRequest = button.Tag as ComplexTourRequestDTO;
+            if (complexTourRequest == null)
+                return;
+
+            ComplexTourRequestDetails detailsWindow = new ComplexTourRequestDetails(complexTourRequest);
+            detailsWindow.Show();
+        }
+
     }
 }

@@ -53,11 +53,18 @@ namespace BookingApp.Application.UseCases
             return _tourRequestSegmentRepository.GetAll().FirstOrDefault(request => request.TourRequestId == id);
         }
 
-        public void MarkAsAccepted(TourRequestSegment tourRequest)
+
+        public List<TourRequestSegment> GetAllByRequestId(int id)
+        {
+            return _tourRequestSegmentRepository.GetAll().Where(request => request.TourRequestId == id).ToList();
+        }
+
+        public void MarkAsAccepted(TourRequestSegment tourRequest, int guideId)
         {
             var request = _tourRequestSegmentRepository.GetById(tourRequest.Id);
             request.IsAccepted = TourRequestStatus.ACCEPTED;
             request.AcceptedDate = tourRequest.AcceptedDate;
+            request.GuideId = guideId;
             Update(request);
         }
 
@@ -166,6 +173,27 @@ namespace BookingApp.Application.UseCases
             int mostFrequentLocationId = locationCounts.OrderByDescending(pair => pair.Value).First().Key;
 
             return (mostFrequentLanguageId, mostFrequentLocationId);
+        }
+
+        public List<TourRequestSegment> GetAvailableRequestsForGuide(User user)
+        {
+            List<TourRequestSegment> simpleRequests = GetAll();
+
+            List<TourRequestSegment> availableRequests = simpleRequests
+                .Where(r => r.IsAccepted != TourRequestStatus.CANCELED)
+                .ToList();
+
+            var acceptedRequestsByGuide = availableRequests
+                .Where(r => r.IsAccepted == TourRequestStatus.ACCEPTED && r.GuideId == user.Id)
+                .ToList();
+
+            var idsToRemove = acceptedRequestsByGuide.Select(r => r.TourRequestId).ToHashSet();
+
+            availableRequests = availableRequests
+                .Where(r => r.IsAccepted == TourRequestStatus.PENDING || !idsToRemove.Contains(r.TourRequestId))
+                .ToList();
+
+            return availableRequests;
         }
     }
 }

@@ -41,7 +41,10 @@ namespace BookingApp.Application
         { typeof(IRenovationRepository), new RenovationRepository() },
         { typeof(IRenovationRecommendationRepository), new RenovationRecommendationRepository()},
         { typeof(ISuperGuestRepository), new SuperGuestRepository()},
-        { typeof(INotificationRepository), new NotificationRepository()}
+        { typeof(INotificationRepository), new NotificationRepository()},
+        { typeof(IForumRepository), new ForumRepository()},
+        { typeof(IForumCommentRepository), new ForumCommentRepository()},
+        { typeof(ISuperGuideRepository), new SuperGuideRepository()}
     };
         
         public static T CreateInstance<T>()

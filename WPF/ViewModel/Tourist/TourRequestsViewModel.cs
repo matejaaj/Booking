@@ -11,13 +11,17 @@ using BookingApp.DTO;
 using BookingApp.DTO.Factories;
 using BookingApp.WPF.View.Tourist;
 
+
 namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class TourRequestsViewModel
     {
         private User _user;
-        public ObservableCollection<TourRequestDTO> Requests { get; private set; }
+        public ObservableCollection<TourRequestDTO> SimpleRequests { get; private set; }
+        public ObservableCollection<ComplexTourRequestDTO> ComplexRequests { get; private set; }
+
         private TourRequestDTOFactory dtoFactory;
+        private TourRequestExpirationChecker _expirationChecker;
 
         private LocationService _locationService;
         private LanguageService _languageService;
@@ -34,7 +38,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _user = user;
 
             dtoFactory = new TourRequestDTOFactory(locationService, languageService, guestService, tourSegmentService);
-            Requests = new ObservableCollection<TourRequestDTO>();
+            _expirationChecker = new TourRequestExpirationChecker(_tourRequestService, tourSegmentService);
+            SimpleRequests = new ObservableCollection<TourRequestDTO>();
+            ComplexRequests = new ObservableCollection<ComplexTourRequestDTO>();
 
             CheckForExpiredRequests();
             UpdateTourRequests();
@@ -42,16 +48,24 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         private void CheckForExpiredRequests()
         {
-            _tourRequestService.CheckExpiredSimpleRequests(_tourSegmentService.GetAll());
+            _expirationChecker.CheckAndExpireRequests();
         }
 
         public void UpdateTourRequests()
         {
-            Requests.Clear();
-            var requests = _tourRequestService.GetSimpleRequestsForUser(_user.Id);
-            foreach (var dto in dtoFactory.CreateDTOs(requests))
+            ComplexRequests.Clear();
+            var complexRequests = _tourRequestService.GetComplexRequestsForUser(_user.Id);
+            foreach (var dto in dtoFactory.CreateComplexTourDTOs(complexRequests))
             {
-                Requests.Add(dto);
+                ComplexRequests.Add(dto);
+            }
+
+
+            SimpleRequests.Clear();
+            var simpleRequests = _tourRequestService.GetSimpleRequestsForUser(_user.Id);
+            foreach (var dto in dtoFactory.CreateSimpleTourDTOs(simpleRequests))
+            {
+                SimpleRequests.Add(dto);
             }
         }
 
@@ -59,10 +73,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public void OpenFormWindow()
         {
             var tourRequestFormWindow = new TourRequestFormWindow(_user, _locationService, _languageService, _tourRequestService, _tourSegmentService, _tourGuestService);
-
-            // Postavljanje događaja Closed da pozove UpdateTourRequests
             tourRequestFormWindow.Closed += (sender, args) => UpdateTourRequests();
-
             tourRequestFormWindow.Show();
         }
 

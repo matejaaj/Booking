@@ -31,7 +31,7 @@ namespace BookingApp.WPF.ViewModel.Guide
 
             if (IsCancellationAllowed())
             {
-                _tourInstanceService.CancelTour(SelectedInstance);
+                _tourInstanceService.CancelTour(SelectedInstance, 1);
                 MessageBox.Show("Successfully canceled!");
             }
             else
