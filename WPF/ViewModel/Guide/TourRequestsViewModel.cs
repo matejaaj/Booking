@@ -137,6 +137,7 @@ namespace BookingApp.WPF.ViewModel.Guide
         private LocationService _locationService;
         private LanguageService _languageService;
         private TourRequestDTOFactory dtoFactory;
+        private NotificationService _notificationService;
 
         private User user { get; set; }
 
@@ -174,6 +175,7 @@ namespace BookingApp.WPF.ViewModel.Guide
             _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
             _tourRequestService = new TourRequestService(Injector.CreateInstance<ITourRequestRepository>());
             _segmentService = new TourRequestSegmentService(Injector.CreateInstance<ITourRequestSegmentRepository>());
+            _notificationService = new NotificationService(Injector.CreateInstance<INotificationRepository>());
         }
 
         public void Filter()
@@ -204,12 +206,18 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         public void Accept()
         {
-            if(SelectedDate != null)
+            if(SelectedDate != null && SelectedRequest != null)
             {
                 TourRequestSegment request = SelectedRequest.ToRequest();
                 request.Id = SelectedRequest.Id;
                 request.AcceptedDate = SelectedDate;
                 _segmentService.MarkAsAccepted(request, user.Id);
+
+                TourRequest tourRequest = _tourRequestService.GetById(request.TourRequestId);
+                string text = "Prihvacen zahtev za turu na lokaciji " + SelectedRequest.Location + " datuma : " + SelectedDate.ToString();
+
+                Notification notification = new Notification("Prihvacen zahtev", text, DateTime.Now, tourRequest.TouristId);
+                _notificationService.Save(notification);
 
                 var itemsToRemove = TourRequests.Where(r => request.TourRequestId == r.TourRequestId).ToList();
                 foreach (var item in itemsToRemove)
