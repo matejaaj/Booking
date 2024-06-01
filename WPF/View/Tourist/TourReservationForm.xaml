@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression.blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.View.Tourist"
+        xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title="Rezervacija ture" Height="600" Width="550"
+        Title="{resources:Loc TourReservationWindowTittle}" Height="600" Width="550"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryBackground}">
 
@@ -23,13 +24,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Izaberite datum:" Grid.Row="0" Grid.Column="0" Margin="40,0,0,15" FontSize="16"
+        <Label Content="{resources:Loc Date}" Grid.Row="0" Grid.Column="0" Margin="40,0,0,15" FontSize="16"
                Foreground="{DynamicResource PrimaryTextColor}"/>
         <ComboBox ItemsSource="{Binding StartTimes}" DisplayMemberPath="Value" SelectedValuePath="Key"
                   SelectedItem="{Binding SelectedStartTime}" Grid.Row="0" Grid.Column="1" Margin="0,0,60,15"
                   Width="169" FontSize="16" Style="{StaticResource CustomComboBoxStyle}"/>
 
-        <Label Content="Unesite broj ljudi:" Grid.Row="1" Grid.Column="0" Margin="40,0,0,15" FontSize="16"
+        <Label Content="{resources:Loc NumberOfPeople}" Grid.Row="1" Grid.Column="0" Margin="40,0,0,15" FontSize="16"
                Foreground="{DynamicResource PrimaryTextColor}"/>
         <TextBox Text="{Binding NumberOfPeople, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="1" Grid.Column="1" Margin="19,0,60,15" FontSize="16"
@@ -41,13 +42,13 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                            <Label Content="Ime:" VerticalAlignment="Center" Margin="0 5 5,0" FontSize="16"
+                            <Label Content="{resources:Loc InputNameGuest}" VerticalAlignment="Center" Margin="0 5 5,0" FontSize="16"
                                    Foreground="{DynamicResource PrimaryTextColor}"/>
                             <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="0 0 5 5" FontSize="16" Style="{StaticResource FormInput}"/>
-                            <Label Content="Prezime:" VerticalAlignment="Center" Margin="5,0" FontSize="16"
+                            <Label Content="{resources:Loc InputSurnameGuest}" VerticalAlignment="Center" Margin="5,0" FontSize="16"
                                    Foreground="{DynamicResource PrimaryTextColor}"/>
                             <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5" FontSize="16" Style="{StaticResource FormInput}"/>
-                            <Label Content="Godine:" VerticalAlignment="Center" Margin="5,0" FontSize="16"
+                            <Label Content="{resources:Loc InputAgeGuest}" VerticalAlignment="Center" Margin="5,0" FontSize="16"
                                    Foreground="{DynamicResource PrimaryTextColor}"/>
                             <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" Width="25" Margin="5" FontSize="16" Style="{StaticResource FormInput}"/>
                         </StackPanel>
@@ -56,15 +57,15 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <Label Content="Vaučer:" Grid.Row="4" Grid.Column="0" Margin="40,0,0,15" FontSize="16"
+        <Label Content="{resources:Loc InputVoucher}" Grid.Row="4" Grid.Column="0" Margin="40,0,0,15" FontSize="16"
                Foreground="{DynamicResource PrimaryTextColor}"/>
         <ComboBox ItemsSource="{Binding Vouchers}" DisplayMemberPath="Value" SelectedValuePath="Key"
                   SelectedItem="{Binding SelectedVoucher}" Grid.Row="4" Grid.Column="1"
                   Width="169" Margin="0,0,60,15" FontSize="16" Style="{StaticResource CustomComboBoxStyle}"/>
 
         <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,20,20,20">
-            <Button Content="Rezerviši" FontSize="16" Style="{DynamicResource SmallButton}" Command="{Binding SubmitCommand}" Margin="10"/>
-            <Button Content="Odustani" FontSize="16" Style="{DynamicResource SmallButton}" Command="{Binding CancelCommand}" Margin="10"/>
+            <Button Content="{resources:Loc BookTourButton}" FontSize="16" Style="{DynamicResource SmallButton}" Command="{Binding SubmitCommand}" Margin="10"/>
+            <Button Content="{resources:Loc CancelButton}" FontSize="16" Style="{DynamicResource SmallButton}" Command="{Binding CancelCommand}" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>

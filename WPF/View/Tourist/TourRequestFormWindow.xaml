@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
+        xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title="Zatrazi turu" Height="600" Width="630"
+        Title="{resources:Loc TourRequestFormTittle}" Height="600" Width="630"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryBackground}">
 
@@ -27,12 +28,12 @@
                     <DataTemplate>
                         <StackPanel Margin="20,0,20,20">
                             <DockPanel>
-                                <Button Content="Ukloni" Margin="5" DockPanel.Dock="Right"
+                                <Button Content="{resources:Loc Remove}" Margin="5" DockPanel.Dock="Right"
                                         HorizontalAlignment="Right"
                                         Click="RemoveSegment_Click" Width="auto" Height="30"
                                         Style="{StaticResource SmallButton}" FontSize="16"
-                                        Foreground="{DynamicResource PrimaryTextColor}"/>
-                                <Expander Header="Deo ture" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="5"
+                                        Foreground="{DynamicResource BlackTextColor}"/>
+                                <Expander Header="{resources:Loc TourSegment}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="5"
                                           Foreground="{DynamicResource PrimaryTextColor}" FontSize="16">
                                     <StackPanel Margin="40  10 10 0">
                                         <Grid>
@@ -48,7 +49,9 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Label Content="Unesite državu:" Grid.Row="0" Grid.Column="0" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" Margin="0 0 140 0"/>
+                                            <Label Content="{resources:Loc Country}" Grid.Row="0" Grid.Column="0" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"
+                                                   Width="123"
+                                                   Margin="0 0 140 0"/>
                                             <controls:AutoCompleteBox ItemsSource="{Binding Countries}"
                                                                       SelectedItem="{Binding SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                                       ValueMemberPath="Value"
@@ -63,7 +66,7 @@
                                                 </controls:AutoCompleteBox.ItemTemplate>
                                             </controls:AutoCompleteBox>
 
-                                            <Label Content="Unesite grad:" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+                                            <Label Content="{resources:Loc City}" Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
                                             <controls:AutoCompleteBox ItemsSource="{Binding Cities}"
                                                                       SelectedItem="{Binding SelectedCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                                       ValueMemberPath="Value"
@@ -78,7 +81,7 @@
                                                 </controls:AutoCompleteBox.ItemTemplate>
                                             </controls:AutoCompleteBox>
 
-                                            <Label Content="Unesite jezik" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+                                            <Label Content="{resources:Loc Language}" Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
                                             <controls:AutoCompleteBox ItemsSource="{Binding Languages}"
                                                                       SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                                       ValueMemberPath="Value"
@@ -93,7 +96,7 @@
                                                 </controls:AutoCompleteBox.ItemTemplate>
                                             </controls:AutoCompleteBox>
 
-                                            <Label Content="Unesite opis:" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+                                            <Label Content="{resources:Loc Description}" Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
                                             <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
                                                      Margin="0,0,0,15" Height="80" TextWrapping="Wrap"
                                                      VerticalScrollBarVisibility="Auto" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
@@ -101,14 +104,18 @@
                                         </Grid>
 
                                         <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                                            <Label Content="Od:" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+                                            <Label Content="{resources:Loc From}"
+                                                   Width="55"
+                                                   Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
                                             <DatePicker SelectedDate="{Binding FromDate}" Margin="5" Style="{StaticResource FormDatePicker}" Width="160"/>
-                                            <Label Content="Do:" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" Margin="20 0 0 0"/>
+                                            <Label Content="{resources:Loc To}"
+                                                   Width="30"
+                                                   Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" Margin="10 0 0 0"/>
                                             <DatePicker SelectedDate="{Binding ToDate}" Margin="5" Style="{StaticResource FormDatePicker}" Width="160"/>
                                         </StackPanel>
 
                                         <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                                            <Label Content="Unesite broj ljudi:" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" VerticalAlignment="Center"/>
+                                            <Label Content="{resources:Loc NumberOfPeople}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" VerticalAlignment="Center"/>
                                             <TextBox Text="{Binding NumberOfPeople, UpdateSourceTrigger=PropertyChanged}"
                                                      Width="30" Margin="10,0,0,0" HorizontalAlignment="Left"
                                                      VerticalAlignment="Center" MaxLength="2"
@@ -118,12 +125,12 @@
                                         <ItemsControl ItemsSource="{Binding GuestInputs}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,15">
-                                                        <Label Content="Ime:" Width="auto" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                                        <Label Content="{resources:Loc InputNameGuest}" Width="auto" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
                                                         <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Width="70" Margin="5" Style="{StaticResource FormInput}" FontSize="16"/>
-                                                        <Label Content="Prezime:" Width="auto" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+                                                        <Label Content="{resources:Loc InputSurnameGuest}" Width="auto" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
                                                         <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5" Style="{StaticResource FormInput}" FontSize="16"/>
-                                                        <Label Content="Godine:" Width="auto" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+                                                        <Label Content="{resources:Loc InputAgeGuest}" Width="auto" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
                                                         <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" Width="30" Margin="5" Style="{StaticResource FormInput}" FontSize="16"/>
                                                     </StackPanel>
                                                 </DataTemplate>
@@ -138,8 +145,8 @@
             </ItemsControl>
 
             <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,20,20,20">
-                <Button Content="Dodaj deo ture" Margin="10" Click="AddSegment_Click" Style="{StaticResource SmallButton}" FontSize="16"/>
-                <Button Content="Potvrdi" Margin="10" Click="Submit_Click" Style="{StaticResource SmallButton}" FontSize="16"/>
+                <Button Content="{resources:Loc AddTourSegment}" Margin="10" Click="AddSegment_Click" Style="{StaticResource SmallButton}" FontSize="16"/>
+                <Button Content="{resources:Loc SubmitRequest}" Margin="10" Click="Submit_Click" Style="{StaticResource SmallButton}" FontSize="16"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:resources="clr-namespace:BookingApp"
              mc:Ignorable="d"
              Style="{StaticResource UserControlStyle}"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -13,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Style="{StaticResource HeaderTextStyle}"
-                   Text="Sve ture"
+                   Text="{resources:Loc AllTours}"
 
                    Margin="20"/>
 
@@ -60,7 +61,7 @@
                                             CommandParameter="{Binding}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="30" Height="30" Margin="0,0,10,0"/>
-                                            <TextBlock Text="Više detalja"/>
+                                            <TextBlock Text="{resources:Loc MoreDetails}"/>
                                         </StackPanel>
                                     </Button>
 

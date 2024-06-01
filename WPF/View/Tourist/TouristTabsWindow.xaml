@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         xmlns:control="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
+        xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Booking" Width="1320" Height="743"
@@ -33,7 +34,7 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="pack://application:,,,/Resources/Images/Tourist/map.png" Width="30" Height="20" Margin="0,0,10,0"/>
-                            <TextBlock Text="Ture"/>
+                            <TextBlock Text="{resources:Loc TourMainTab}"/>
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
@@ -43,7 +44,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="pack://application:,,,/Resources/Images/Tourist/map.png" Width="30" Height="20" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Sve ture"/>
+                                    <TextBlock Text="{resources:Loc AllTours}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </TabItem.HeaderTemplate>
@@ -55,7 +56,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="pack://application:,,,/Resources/Images/Tourist/saved.png" Width="25" Height="25" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Moje ture"/>
+                                    <TextBlock Text="{resources:Loc MyTours}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </TabItem.HeaderTemplate>
@@ -68,7 +69,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="pack://application:,,,/Resources/Images/Tourist/request.png" Width="20" Height="20" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Zahtev ture"/>
+                                    <TextBlock Text="{resources:Loc TourRequest}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </TabItem.HeaderTemplate>
@@ -81,7 +82,7 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="pack://application:,,,/Resources/Images/Tourist/car.png" Width="25" Height="25" Margin="0,0,10,0"/>
-                            <TextBlock Text="Taksi"/>
+                            <TextBlock Text="{resources:Loc DriveMainTab}"/>
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
@@ -110,19 +111,19 @@
             <Button Style="{StaticResource SmallButton}" Width="175" Command="{Binding ChangeLanguageCommand}" ToolTip="Ctrl + L: Promeni jezik">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Resources/Images/Tourist/language.png" Width="25" Height="25" Margin="0,0,10,0"/>
-                    <TextBlock Text="Promeni jezik"/>
+                    <TextBlock Text="{resources:Loc ChangeLanguage}"/>
                 </StackPanel>
             </Button>
             <Button Style="{StaticResource SmallButton}" Command="{Binding ChangeThemeCommand}" ToolTip="Ctrl + T: Promeni temu">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Resources/Images/Tourist/theme.png" Width="25" Height="25" Margin="0,0,10,0"/>
-                    <TextBlock Text="Promeni temu"/>
+                    <TextBlock Text="{resources:Loc ChangeTheme}"/>
                 </StackPanel>
             </Button>
             <Button Style="{StaticResource SmallButton}" Command="{Binding LogoutCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Resources/Images/Tourist/logout.png" Width="25" Height="25" Margin="0,0,10,0"/>
-                    <TextBlock Text="Odjavi se"/>
+                    <TextBlock Text="{resources:Loc Logout}"/>
                 </StackPanel>
             </Button>
         </StackPanel>

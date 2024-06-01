@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using BookingApp.Application;
-using BookingApp.Application.UseCases;
 using BookingApp.Commands;
+using BookingApp.DTO;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
-using BookingApp.DTO;
-
 using BookingApp.Repository;
 using BookingApp.WPF.View;
+using BookingApp.Application.UseCases;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
@@ -42,7 +39,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public ObservableCollection<NotificationDTO> Notifications { get; private set; }
 
-
         private TourService _tourService;
         private TourInstanceService _tourInstanceService;
         private CheckpointService _checkpointService;
@@ -62,7 +58,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private PrivateTourGuestService _privateTourGuestService;
         private NotificationService _notificationService;
 
-
         public TouristTabsViewModel(User loggedUser)
         {
             Tourist = loggedUser;
@@ -72,10 +67,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
             InitializeCommands();
             UpdateNotifications();
 
-
-            ToursMainViewModel = new ToursMainTabViewModel(loggedUser, _tourService, _tourInstanceService, _checkpointService, _imageService,  _locationService, _languageService, _tourGuestService, _tourReservationService, _tourReviewService, _voucherService, _tourRequestService, _tourRequestSegmentService, _privateTourGuestService);
+            ToursMainViewModel = new ToursMainTabViewModel(loggedUser, _tourService, _tourInstanceService, _checkpointService, _imageService, _locationService, _languageService, _tourGuestService, _tourReservationService, _tourReviewService, _voucherService, _tourRequestService, _tourRequestSegmentService, _privateTourGuestService);
             DriveMainViewModel = new DriveMainTabViewModel(loggedUser, _driveReservationService, _userService, _detailedLocationService, _driverUnreliableReportService);
-
         }
 
         private void InitializeCommands()
@@ -102,22 +95,15 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _languageService = new LanguageService(Injector.CreateInstance<ILanguageRepository>());
             _voucherService = new VoucherService(Injector.CreateInstance<IVoucherRepository>());
             _tourReviewService = new TourReviewService(Injector.CreateInstance<ITourReviewRepository>());
-            _driveReservationService =
-                new DriveReservationService(Injector.CreateInstance<IDriveReservationRepository>());
-            _detailedLocationService =
-                new DetailedLocationService(Injector.CreateInstance<IDetailedLocationRepository>());
+            _driveReservationService = new DriveReservationService(Injector.CreateInstance<IDriveReservationRepository>());
+            _detailedLocationService = new DetailedLocationService(Injector.CreateInstance<IDetailedLocationRepository>());
             _userService = new UserService(Injector.CreateInstance<IUserRepository>());
-            _driverUnreliableReportService =
-                new DriverUnreliableReportService(Injector.CreateInstance<IDriverUnreliableReportRepository>());
+            _driverUnreliableReportService = new DriverUnreliableReportService(Injector.CreateInstance<IDriverUnreliableReportRepository>());
             _tourRequestService = new TourRequestService(Injector.CreateInstance<ITourRequestRepository>());
-            _tourRequestSegmentService =
-                new TourRequestSegmentService(Injector.CreateInstance<ITourRequestSegmentRepository>());
-            _privateTourGuestService =
-                new PrivateTourGuestService(Injector.CreateInstance<IPrivateTourGuestRepository>());
+            _tourRequestSegmentService = new TourRequestSegmentService(Injector.CreateInstance<ITourRequestSegmentRepository>());
+            _privateTourGuestService = new PrivateTourGuestService(Injector.CreateInstance<IPrivateTourGuestRepository>());
             _notificationService = new NotificationService(Injector.CreateInstance<INotificationRepository>());
-
         }
-
 
         private void UpdateNotifications()
         {
@@ -125,15 +111,14 @@ namespace BookingApp.WPF.ViewModel.Tourist
             var notifications = _notificationService.GetNotificationsForUser(Tourist.Id);
             foreach (var notification in notifications)
             {
-                NotificationDTO dto = new NotificationDTO(notification.Id, notification.Title, notification.Text,
-                    notification.DateIssued, notification.TargetUserId);
+                NotificationDTO dto = new NotificationDTO(notification.Id, notification.Title, notification.Text, notification.DateIssued, notification.TargetUserId);
                 Notifications.Add(dto);
             }
         }
 
-        public void DeleteNotification(int notificaitonId)
+        public void DeleteNotification(int notificationId)
         {
-            _notificationService.RemoveNotification(notificaitonId);
+            _notificationService.RemoveNotification(notificationId);
             UpdateNotifications();
         }
 
@@ -155,7 +140,22 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         private void ChangeLanguage()
         {
-            
+            if (TranslationSource.Instance != null && TranslationSource.Instance.CurrentCulture != null)
+            {
+                if (TranslationSource.Instance.CurrentCulture.Name == "en-US")
+                {
+                    TranslationSource.Instance.CurrentCulture = new CultureInfo("sr-LATN-CS");
+                }
+                else
+                {
+                    TranslationSource.Instance.CurrentCulture = new CultureInfo("en-US");
+                }
+            }
+            else
+            {
+                // Handle the case where TranslationSource.Instance or CurrentCulture is null
+                MessageBox.Show("Translation source or current culture is not initialized properly.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Logout()
@@ -164,7 +164,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             signIn.Show();
             RequestClose?.Invoke(this, EventArgs.Empty);
         }
-
 
         private void ShowAllTours()
         {
@@ -186,6 +185,4 @@ namespace BookingApp.WPF.ViewModel.Tourist
             ShowMyDrivesRequested?.Invoke(this, EventArgs.Empty);
         }
     }
-
 }
-

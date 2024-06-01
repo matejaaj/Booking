@@ -7,6 +7,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Resources\Languages\Resource1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\Languages\Resource1.resx" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<None Remove="Resources\Images\addIm.png" />
 		<None Remove="Resources\Images\addImage.png" />
@@ -333,5 +341,10 @@
     <Resource Include="Resources\Images\wizard2.png" />
     <Resource Include="Resources\Images\wizard3.png" />
     <Resource Include="Resources\Images\zuruckgehen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Languages\en-US\" />
+    <Folder Include="Resources\Languages\sr-LATN\" />
   </ItemGroup>
 </Project>

@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
+        xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title="ComplexTourRequestDetails" Height="600" Width="500"
+        Title="{resources:Loc RequestDetailsTittle}" Height="600" Width="500"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryBackground}">
     <Window.Resources>
@@ -48,7 +49,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Status celokupnog zahteva: " />
+            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc ComplexStatus}" />
             <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding ComplexTourRequest.Status}" />
         </StackPanel>
 
@@ -60,44 +61,44 @@
                             <StackPanel>
 
                                 <StackPanel Style="{StaticResource StackPanelStyle}" Margin="0 5 0 0">
-                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Status segmenta: " />
+                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Status}" />
                                     <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Status}" />
                                 </StackPanel>
 
                                 <StackPanel Style="{StaticResource StackPanelStyle}">
-                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Prihvacen datum: " />
+                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc AcceptedDate}" />
                                     <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding DisplayAcceptedDate}" />
                                 </StackPanel>
 
                                 <StackPanel Style="{StaticResource StackPanelStyle}">
-                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Lokacija: " />
+                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Location}" />
                                     <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Location}" TextWrapping="Wrap" />
                                 </StackPanel>
                                 <StackPanel Margin="0, 25, 0, 0">
-                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Opis: " />
+                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Description}" />
                                     <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Description}" TextWrapping="Wrap" />
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource StackPanelStyle}">
-                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Jezik: " />
+                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Language}" />
                                     <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Language}" />
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource StackPanelStyle}">
-                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Turisti: " />
+                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Tourists}" />
                                 </StackPanel>
                                 <ItemsControl ItemsSource="{Binding Guests}" Margin="10,0,0,0">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                                 <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Name}" />
-                                                <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text=", " />
+                                                <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{resources:Loc comma}" />
                                                 <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Age}" />
-                                                <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text=" godina" />
+                                                <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{resources:Loc age}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                                 <StackPanel Style="{StaticResource StackPanelStyle}">
-                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Opseg mogućeg održavanja: " />
+                                    <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Range}" />
                                     <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding FromDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
                                     <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text=" - " />
                                     <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding ToDate, StringFormat='{}{0:dd.MM.yyyy}'}" />

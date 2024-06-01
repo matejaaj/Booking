@@ -1,7 +1,9 @@
-﻿using System;
+﻿using BookingApp.WPF.View.Driver;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,5 +15,13 @@ namespace BookingApp
     /// </summary>
     public partial class App : System.Windows.Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            // Inicijalizacija kulture
+            TranslationSource.Instance.CurrentCulture = new CultureInfo("en-US");
+
+        }
     }
 }

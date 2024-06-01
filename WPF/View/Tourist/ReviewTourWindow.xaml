@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
+        xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title="Oceni turu" Height="600" Width="500"
+        Title= "{resources:Loc RateTourWindowTittle}" Height="600" Width="500"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryBackground}"
         FontSize="16">
@@ -27,7 +28,7 @@
                                 <TextBlock Text="{Binding Guest.Name}" FontWeight="Bold" Margin="0,0,0,5"
                                            Foreground="{DynamicResource PrimaryTextColor}"/>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                    <TextBlock Text="Ocenite turu od 1 do 5: " VerticalAlignment="Center"
+                                    <TextBlock Text= "{resources:Loc InputRateTour}" VerticalAlignment="Center"
                                                Foreground="{DynamicResource PrimaryTextColor}"/>
                                     <StackPanel Orientation="Horizontal">
                                         <RadioButton Content="1" GroupName="{Binding Guest.Id}" Margin="5,0"
@@ -47,13 +48,13 @@
                                                      Foreground="{DynamicResource PrimaryTextColor}"/>
                                     </StackPanel>
                                 </StackPanel>
-                                <TextBlock Text="Unesite komentar: " VerticalAlignment="Center"
+                                <TextBlock Text= "{resources:Loc InputComment}" VerticalAlignment="Center"
                                            Foreground="{DynamicResource PrimaryTextColor}"/>
                                 <TextBox Text="{Binding Comment}" Height="60" TextWrapping="Wrap" Margin="0,0,0,5"
                                          Style="{DynamicResource FormInput}"/>
                                 <StackPanel Orientation="Vertical">
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                        <TextBlock Text="Dodajte slike: " VerticalAlignment="Center"
+                                        <TextBlock Text= "{resources:Loc ImageInput}" VerticalAlignment="Center"
                                                    Foreground="{DynamicResource PrimaryTextColor}"/>
                                         <Button Content="+" Width="25" Height="25" VerticalAlignment="Center"
                                                 Margin="5,0,0,0" Padding="1"
@@ -67,10 +68,15 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border BorderBrush="{DynamicResource BorderBrushColor}" BorderThickness="1" Margin="5">
-                                                    <Image Source="{Binding}" Width="75" Height="75" Stretch="UniformToFill"
-                                                           MouseLeftButtonDown="Image_MouseLeftButtonDown" Tag="{Binding}"/>
-                                                </Border>
+                                                <Grid>
+                                                    <Border BorderBrush="{DynamicResource BorderBrushColor}" BorderThickness="1" Margin="5">
+                                                        <Image Source="{Binding}" Width="75" Height="75" Stretch="UniformToFill"
+                                                               Tag="{Binding}"/>
+                                                    </Border>
+                                                    <Image Source="pack://application:,,,/Resources/Images/delete.png"
+                                                           Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                                           MouseLeftButtonDown="Image_MouseLeftButtonDown" Tag="{Binding}" Margin="0,0,5,5"/>
+                                                </Grid>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
@@ -83,9 +89,9 @@
 
             <!-- Action Buttons -->
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Potvrdi ocene" Width="120" Click="ConfirmButton_Click" Margin="5,0,0,0"
+                <Button Content= "{resources:Loc Submit}" Width="120" Click="ConfirmButton_Click" Margin="5,0,0,0"
                         Style="{StaticResource SmallButton}"/>
-                <Button Content="Odustani" Width="120" Click="CancelButton_Click" Margin="5,0,0,0"
+                <Button Content= "{resources:Loc CancelButton}" Width="120" Click="CancelButton_Click" Margin="5,0,0,0"
                         Style="{StaticResource SmallButton}"/>
             </StackPanel>
         </Grid>
