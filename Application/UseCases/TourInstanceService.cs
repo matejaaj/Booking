@@ -181,6 +181,31 @@ namespace BookingApp.Application.UseCases
             }
             return earliest;
         }
+
+        public Dictionary<string, int> GetGuidedToursPerMonth(int guideId)
+        { 
+            List<string> months = new List<string>();
+            for (int i = 1; i < 13; i++)
+            {
+                months.Add(i.ToString());
+            }
+
+            Dictionary<string, int> toursPerMonth = new Dictionary<string, int>();
+            foreach (var month in months)
+            {
+                toursPerMonth.Add(month, 0);
+            }
+
+            foreach(var tour in GetAll())
+            {
+                if(tour.StartTime.AddYears(1) >= DateTime.Now && tour.GuideId == guideId)
+                {
+                    toursPerMonth[tour.StartTime.Month.ToString()]++;
+                }
+            }
+
+            return toursPerMonth;
+        }
     }
 
 }

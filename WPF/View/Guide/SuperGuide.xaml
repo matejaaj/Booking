@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
       xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
       mc:Ignorable="d"
       Title="SuperGuide" Height="450" Width="750">
@@ -58,8 +59,13 @@
         </Grid>
 
         <Border Grid.Row="2" Grid.Column="1" Margin="10" BorderBrush="Gray" BorderThickness="1">
-            <!-- Placeholder for the graph -->
-            <TextBlock Text="Graph will be displayed here" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <chartingToolkit:Chart Title="Number of Guided Tours">
+                <chartingToolkit:Chart.Axes>
+                    <chartingToolkit:CategoryAxis Title="Month" Orientation="X" />
+                    <chartingToolkit:LinearAxis Title="Total" Orientation="Y" />
+                </chartingToolkit:Chart.Axes>
+                <chartingToolkit:LineSeries ItemsSource="{Binding GuidedToursData}" IndependentValuePath="Key" DependentValuePath="Value" Title="Guided Tours"/>
+            </chartingToolkit:Chart>
         </Border>
     </Grid>
 </Page>

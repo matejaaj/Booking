@@ -5,6 +5,7 @@ using BookingApp.Domain.RepositoryInterfaces;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -101,11 +102,14 @@ namespace BookingApp.WPF.ViewModel.Guide
         private TourReviewService _tourReviewService;
         private SuperGuideService _superGuideService;
 
+        public ObservableCollection<KeyValuePair<string, int>> GuidedToursData { get; set; }
+
         public SuperGuideViewModel(User user)
         {
             InitializeServices();
             this.user = user;
             Languages = _languageService.GetAll();
+            GuidedToursData = new ObservableCollection<KeyValuePair<string, int>>(_tourInstanceService.GetGuidedToursPerMonth(user.Id));
         }
 
         private void InitializeServices()
