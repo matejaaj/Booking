@@ -72,7 +72,7 @@ namespace BookingApp.WPF.View
                             ownerMainWindow.Show();
                             break;
                         case Role.GUEST:
-                            GuestOverview guestOverview = new GuestOverview(user);
+                            GuestMainWindow guestOverview = new GuestMainWindow(user);
                             guestOverview.Show();
                             break;
                         case Role.GUIDE:
@@ -82,7 +82,7 @@ namespace BookingApp.WPF.View
                             mainWindow.Show();
                             break;
                         case Role.TOURIST:
-                            TouristMainWindow touristMainWindow = new TouristMainWindow(user);
+                            TouristTabsWindow touristMainWindow = new TouristTabsWindow(user);
                             touristMainWindow.Show();
                             break;
                         case Role.DRIVER:

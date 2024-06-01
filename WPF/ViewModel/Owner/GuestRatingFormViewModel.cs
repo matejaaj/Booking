@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
@@ -11,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
@@ -61,6 +63,9 @@ namespace BookingApp.WPF.ViewModel.Owner
                 }
             }
         }
+
+        public ICommand Confirm { get; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -73,34 +78,15 @@ namespace BookingApp.WPF.ViewModel.Owner
             _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
             _guestRatingService = new GuestRatingService(Injector.CreateInstance<IGuestRatingRepository>());
             _reservation = reservation;
+            Confirm = new RelayCommand(ConfirmClick);
         }
 
-        public void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        private void ConfirmClick(object obj)
         {
-            if (IsValid())
-            {
-                GuestRating newGuestRating = new GuestRating(_reservation.Id, Cleanliness, RulesRespect, Comment);
-                _guestRatingService.Save(newGuestRating);
-                _reservation.IsRated = true;
-                _accommodationReservationService.Update(_reservation);
-            }
-        }
-
-        private bool IsValid()
-        {
-            if (Cleanliness < 1 || Cleanliness > 5)
-            {
-                MessageBox.Show("Please enter a cleanliness rating between 1 and 5.");
-                return false;
-            }
-
-            if (RulesRespect < 1 || RulesRespect > 5)
-            {
-                MessageBox.Show("Please enter a rules respect rating between 1 and 5.");
-                return false;
-            }
-
-            return true;
+            GuestRating newGuestRating = new GuestRating(_reservation.Id, Cleanliness, RulesRespect, Comment);
+            _guestRatingService.Save(newGuestRating);
+            _reservation.IsRated = true;
+            _accommodationReservationService.Update(_reservation);
         }
     }
 }

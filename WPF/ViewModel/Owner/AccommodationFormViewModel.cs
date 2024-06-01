@@ -8,8 +8,10 @@ using BookingApp.WPF.View.Guide;
 using BookingApp.WPF.View.Owner;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -87,6 +89,34 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
+        private ObservableCollection<string> _pictures;
+        public ObservableCollection<string> Pictures
+        {
+            get => _pictures;
+            set
+            {
+                if (value != _pictures)
+                {
+                    _pictures = value;
+                    OnPropertyChanged(nameof(Pictures));
+                }
+            }
+        }
+
+        private string _picture;
+        public string Picture
+        {
+            get => _picture;
+            set
+            {
+                if (value != _picture)
+                {
+                    _picture = value;
+                    OnPropertyChanged(nameof(Picture));
+                }
+            }
+        }
+
         private int _maxGuests;
         public int MaxGuests
         {
@@ -145,6 +175,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         public AccommodationFormViewModel(Domain.Model.Owner owner, Window ownerWindow)
         {
             LoggedInOwner = owner;
+            Pictures = new ObservableCollection<string>();
             _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
             _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
             _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
@@ -180,9 +211,38 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private void AddImages(object obj)
         {
-            AddImage addImageWindow = new AddImage(images, _accommodationId, ImageResourceType.ACCOMMODATION, LoggedInOwner.Id);
-            addImageWindow.Owner = _ownerWindow;
-            addImageWindow.ShowDialog();
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.Filter = "Image files (*.jpg;*.jpeg;*.png;*.jfif)|*.jpg;*.jpeg;*.png;*.jfif";
+            dlg.Multiselect = true;
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                string[] selectedFiles = dlg.FileNames;
+
+                string destinationFolder = @"../../../Resources/Images/";
+
+                if (!Directory.Exists(destinationFolder))
+                {
+                    Directory.CreateDirectory(destinationFolder);
+                }
+
+                foreach (string file in selectedFiles)
+                {
+                    string destinationFilePath = Path.Combine(destinationFolder, Path.GetFileName(file));
+                    Domain.Model.Image newImage = new Domain.Model.Image(destinationFilePath, _accommodationId, ImageResourceType.ACCOMMODATION, LoggedInOwner.Id);
+                    if (_imageService.GetAll().Find(i => i.Path == newImage.Path) == null)
+                    {
+                        _imageService.Save(newImage);
+                    }
+                    //File.Copy(file, destinationFilePath);
+                    Pictures.Add(file);
+                }
+
+               
+            }
         }
 
         private void ShowImages(object obj)

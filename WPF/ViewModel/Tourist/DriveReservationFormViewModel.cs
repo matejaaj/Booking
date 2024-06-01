@@ -30,7 +30,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             Tourist = loggedUser;
             InitializeServices();
             InitializeViewModels();
-            CheckForDriverAssignment();
+           // CheckForDriverAssignment();
         }
 
         private void InitializeViewModels()

@@ -69,7 +69,7 @@
                         <TextBlock Text="Super-Owner" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Row="8" Padding="5" Margin="5,0,0,20" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                <Button Command="{Binding ShowForumCommand}" Grid.Row="8" Padding="5" Margin="5,0,0,20" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/forum.png" Width="25" Height="25"/>
                         <TextBlock Text="Forum" FontSize="23" Margin="5,0,0,0"/>
@@ -118,6 +118,7 @@
                                 <Setter Property="Padding" Value="0" />
                                 <Setter Property="Margin" Value="0,5,0,0" />
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Width" Value="193"/>
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListViewItem">
@@ -132,8 +133,8 @@
                                                         <RowDefinition Height="Auto"/>
                                                         <RowDefinition Height="Auto"/>
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Text="{Binding Title}" FontSize="13" FontWeight="Bold" Grid.Row="0" HorizontalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Text}" FontSize="8" TextWrapping="Wrap" FontWeight="DemiBold" Grid.Row="1"  HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Title}" FontSize="14" FontWeight="Bold" Grid.Row="0" HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Text}" FontSize="10" TextWrapping="Wrap" FontWeight="DemiBold" Grid.Row="1" TextAlignment="Center" HorizontalAlignment="Center"/>
                                                 </Grid>
                                             </Border>
                                             <ControlTemplate.Triggers>

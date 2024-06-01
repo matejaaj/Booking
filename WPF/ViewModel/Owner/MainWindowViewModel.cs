@@ -63,6 +63,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         public ICommand GoBackCommand { get; }
         public ICommand ShowNotificationsCommand { get; }
         public ICommand HideNotificationsCommand { get; }
+        public ICommand ShowForumCommand { get; }
         public ICommand ItemClickedCommand { get; private set; }
         private static AccommodationService _accommodationService;
         private static AccommodationReservationService _accommodationReservationService;
@@ -70,7 +71,8 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static LocationService _locationService;
         private static ImageService _imageService;
         private static OwnerService _ownerService;
-
+        private static SuggestionService _suggestionService;
+        private static ForumService _forumService;
         private Visibility _sideMenuVisibility = Visibility.Collapsed;
         private OwnerMainWindow _ownerMainWindow;
 
@@ -129,11 +131,16 @@ namespace BookingApp.WPF.ViewModel.Owner
             ShowNotificationsCommand = new RelayCommand(ShowNotifications);
             HideNotificationsCommand = new RelayCommand(HideNotifications);
             ItemClickedCommand = new RelayCommand(ExecuteItemClicked);
+            ShowForumCommand = new RelayCommand(ShowForum);
 
+            Notifications = new List<Notification>();
             StartUp();            
             InitializeServices();
             NotifyMissingRatings();
+            NotifySuggestions();
+            NotifyNewForum();
         }
+
 
         private void StartUp()
         {
@@ -155,14 +162,15 @@ namespace BookingApp.WPF.ViewModel.Owner
             _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
             _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
             _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>(), _imageService, _locationService);
-            _accommodationReservationService = new AccommodationReservationService(Injector.CreateInstance<IAccommodationReservationRepository>());
+            _accommodationReservationService = new AccommodationReservationService(_accommodationService, Injector.CreateInstance<IAccommodationReservationRepository>());
             _accommodationAndOwnerRatingService = new AccommodationAndOwnerRatingService(_accommodationReservationService, Injector.CreateInstance<IAccommodationAndOwnerRatingRepository>());
             _ownerService = new OwnerService(Injector.CreateInstance<IOwnerRepository>());
+            _suggestionService = new SuggestionService(_locationService, _accommodationService, _accommodationReservationService);
+            _forumService = new ForumService(Injector.CreateInstance<IForumRepository>());
         }
 
         public void NotifyMissingRatings()
         {
-            Notifications = new List<Notification>();
             var missingRatingReservations = _accommodationReservationService.GetRecentUnratedReservations(_accommodationService.GetByUser(LoggedInOwner));
             if (missingRatingReservations.Any())
             {
@@ -172,12 +180,29 @@ namespace BookingApp.WPF.ViewModel.Owner
                     Notifications.Add(new Notification("Missing Rating!", $"Reservation in {accommodation.Name} is missing a rating", DateTime.Today, accommodation.AccommodationId));
                 }
                 NotificationImageSource = "../../../Resources/Images/notifications1.png";
-                /*MessageBox.Show("You have recent unrated reservations",
-                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);*/
             }
             else
             {
                 NotificationImageSource = "../../../Resources/Images/notifications.png";
+            }
+        }
+
+        public void NotifySuggestions()
+        {
+            Location popularLocation = _suggestionService.GetMostPopularLocation(LoggedInOwner);
+            Location unpopularLocation = _suggestionService.GetLeastPopularLocation(LoggedInOwner);
+            Notifications.Add(new Notification("New Opportunity!", $"High demand detected! Consider opening a new Accommodation at {popularLocation}", DateTime.Today, -1));
+            Notifications.Add(new Notification("Low Demand!", $"Low demand alert! Consider closing Accommodations at {unpopularLocation}", DateTime.Today, -1));
+        }
+
+        private void NotifyNewForum()
+        {
+            List<int> locationIds = _accommodationService.GetLocationIdsByOwner(LoggedInOwner);
+            List<Forum> newForum = _forumService.GetNewForumsByLocationIds(locationIds);
+            foreach(var f in newForum)
+            {
+                Location location = _locationService.GetLocationById(f.LocationId);
+                Notifications.Add(new Notification("New Forum!", $"New forum alert! A user started a forum at {location}", DateTime.Today, f.Id));
             }
         }
 
@@ -262,9 +287,15 @@ namespace BookingApp.WPF.ViewModel.Owner
             PageName = "Super-Owner";
             MainFrame.Navigate(new SuperOwnerPage(LoggedInOwner));
             SideMenuVisibility = Visibility.Collapsed;
-        }
 
-        private void LogOut(object parameter)
+        }
+        private void ShowForum(object parameter)
+        {
+            PageName = "Forum";
+            MainFrame.Navigate(new ViewForumsPage(LoggedInOwner));
+            SideMenuVisibility = Visibility.Collapsed;
+        }
+            private void LogOut(object parameter)
         {
             SignInForm signInForm = new SignInForm();
             signInForm.Show();
@@ -274,6 +305,13 @@ namespace BookingApp.WPF.ViewModel.Owner
         private void ExecuteItemClicked(object selectedItem)
         {
             var selectedNotification = (Notification)selectedItem;
+            if(selectedNotification.TargetUserId == -1)
+            {
+                return;
+            }else if (selectedNotification.Title.Equals("New Forum!"))
+            {
+                return;
+            }
             AccommodationPageDTO accommodation = _accommodationService.GetDisplayDTOById(selectedNotification.TargetUserId);
             PageName = "Accommodations";
             MainFrame.Navigate(new ViewAccommodationPage(accommodation));

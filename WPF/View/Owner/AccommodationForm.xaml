@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Owner"
         xmlns:val="clr-namespace:BookingApp.Validation"
         mc:Ignorable="d"
-        Title="Create new accommodation" Height="350" Width="400" WindowStartupLocation="CenterOwner">
+        Title="Create new accommodation" Height="400" Width="400" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -191,8 +191,8 @@
                 </Validation.ErrorTemplate>
             </TextBox>
 
-            <Label Content="Images" Grid.Row="6" FontSize="12" VerticalAlignment="Center"/>
-            <Button x:Name="btnAddImage" Grid.Row="6" Grid.Column="1" Content="Add image" HorizontalAlignment="Left" Margin="30,10,0,10" Width="90" Command="{Binding AddImagesCommand}">
+            <ListBox Margin="0,10,0,10" BorderThickness="1.5" BorderBrush="Black" x:Name="MyListBox" ItemsSource="{Binding Pictures, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Width="150" Height="78"/>
+            <Button x:Name="btnAddImage" Grid.Row="6" Grid.Column="0" Content="Add image" HorizontalAlignment="Left" Margin="30,20,0,10" Width="90" Command="{Binding AddImagesCommand}">
                 
             </Button>
         </Grid>
