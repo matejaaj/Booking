@@ -1,4 +1,5 @@
 ﻿using BookingApp.Application.Events;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Repository;
 using BookingApp.WPF.View.Driver;
@@ -7,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -27,6 +30,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         private readonly LocationRepository _locationRepository;
         private readonly LanguageRepository _languageRepository;
         private readonly ImageRepository _imageRepository;
+        private readonly ImageService _imageService;
 
         public List<Domain.Model.Image> images { get; set; }
         public ObservableCollection<Location> locations { get; set; }
@@ -49,6 +53,19 @@ namespace BookingApp.WPF.ViewModel.Driver
             }
         }
 
+        private ObservableCollection<string> _pictures;
+        public ObservableCollection<string> Pictures
+        {
+            get => _pictures;
+            set
+            {
+                if (value != _pictures)
+                {
+                    _pictures = value;
+                    OnPropertyChanged(nameof(Pictures));
+                }
+            }
+        }
 
 
         private int _maxPassengers;
@@ -95,6 +112,8 @@ namespace BookingApp.WPF.ViewModel.Driver
             _vehicleId = _repository.NextId();
             _imageRepository = new ImageRepository();
             images = new List<Domain.Model.Image>();
+            _imageService = new ImageService();
+            Pictures = new ObservableCollection<string>();
         }
 
         public void btnConfirm_Click(object sender, RoutedEventArgs e)
@@ -121,24 +140,58 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void btnAddImage_Click(object sender, RoutedEventArgs e, Page owner)
         {
-            AddImage addImageWindow = new AddImage(images, _vehicleId, ImageResourceType.VEHICLE);
-            owner.NavigationService.Navigate(addImageWindow);
+            AddImages(sender);   
         }
 
         public void btnShowImages_Click(object sender, RoutedEventArgs e, Page owner)
         {
-            ShowImage showImagesWindow = new ShowImage(images);
-            owner.NavigationService.Navigate(showImagesWindow);
+            
         }
 
         public bool ValidateInputs()
         {
-            if (MaxPassengers == null || SelectedLanguages.Count == 0 || SelectedLocations.Count == 0 || MaxPassengers <= 0)
+            if (SelectedLanguages.Count == 0 || SelectedLocations.Count == 0 || MaxPassengers <= 0)
             {
                 MainWindow.EventAggregator.Publish(new ShowMessageEvent("Please ensure all fields are correctly filled and at least one language and location are selected.", "Error"));
                 return false;
             }
             return true;
         }
+
+        private void AddImages(object obj)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.Filter = "Image files (*.jpg;*.jpeg;*.png;*.jfif)|*.jpg;*.jpeg;*.png;*.jfif";
+            dlg.Multiselect = true;
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                string[] selectedFiles = dlg.FileNames;
+
+                string destinationFolder = @"../../../Resources/Images/";
+
+                if (!Directory.Exists(destinationFolder))
+                {
+                    Directory.CreateDirectory(destinationFolder);
+                }
+
+                foreach (string file in selectedFiles)
+                {
+                    string destinationFilePath = Path.Combine(destinationFolder, Path.GetFileName(file));
+                    Domain.Model.Image newImage = new Domain.Model.Image(destinationFilePath, _vehicleId, ImageResourceType.VEHICLE, _userId);
+                    if (_imageService.GetAll().Find(i => i.Path == newImage.Path) == null)
+                    {
+                        _imageService.Save(newImage);
+                    }
+                    //File.Copy(file, destinationFilePath);
+                    Pictures.Add(file);
+                }
+            }
+        }
     }
+
+    
 }
