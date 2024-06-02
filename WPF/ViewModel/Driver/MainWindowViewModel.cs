@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using BookingApp.Application.UseCases;
+using BookingApp.LogicServices.Driver;
 
 namespace BookingApp.WPF.ViewModel.Driver
 {
@@ -36,6 +37,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             }
         }
 
+        private LocStateUpdateService locationStateService { get; set; }
 
         public MainWindowViewModel(User u)
         {
@@ -43,6 +45,8 @@ namespace BookingApp.WPF.ViewModel.Driver
             Korisnik = u;
             driveReservationService = new DriveReservationService();
             IsNotVisible = Visibility.Hidden;
+            locationStateService = new LocStateUpdateService(u.Id);
+            locationStateService.CheckState();
         }
 
         public void ShowCreateVehicleForm(object sender, RoutedEventArgs e, Page owner)
@@ -56,6 +60,7 @@ namespace BookingApp.WPF.ViewModel.Driver
         public void VehicleForm_VehicleAdded(object? sender, EventArgs e)
         {
             isNotVisible = Visibility.Visible;
+            locationStateService.CheckState();
         }
 
         public void btnStats_Click(object sender, RoutedEventArgs e, Page owner)
@@ -68,6 +73,32 @@ namespace BookingApp.WPF.ViewModel.Driver
         public void ChangeVisibility(Visibility visibility)
         {
             IsNotVisible = visibility;
+        }
+
+        internal void btnData_Click(object sender, RoutedEventArgs e, Page currentPage)
+        {
+            PersonalData personalDataPage = new PersonalData();
+
+            
+            currentPage.NavigationService.Navigate(personalDataPage);
+        }
+
+        internal void btnVacatioRequest_Click(object sender, RoutedEventArgs e, Page currentPage)
+        {
+            VacationRequest vacationRequest = new VacationRequest(DriverID);
+            currentPage.NavigationService.Navigate(vacationRequest);
+        }
+
+        internal void btnVacationReports_Click(object sender, RoutedEventArgs e, Page currentPage)
+        {
+            VacationReports vacationReports = new VacationReports(DriverID);
+            currentPage.NavigationService.Navigate(vacationReports);
+        }
+
+        internal void btnTutorial_Click(object sender, RoutedEventArgs e, Page currentPage)
+        {
+            Tutorial tutorial = new Tutorial();
+            currentPage.NavigationService.Navigate(tutorial);
         }
     }
 }

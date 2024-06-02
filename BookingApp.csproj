@@ -10,6 +10,7 @@
 	<ItemGroup>
 		<None Remove="Resources\Images\addIm.png" />
 		<None Remove="Resources\Images\addImage.png" />
+		<None Remove="Resources\Images\addressIcon.png" />
 		<None Remove="Resources\Images\babinobrdo1.jpg" />
 		<None Remove="Resources\Images\babinobrdo2.jpg" />
 		<None Remove="Resources\Images\cancel.png" />
@@ -27,7 +28,10 @@
 		<None Remove="Resources\Images\eden.jpg" />
 		<None Remove="Resources\Images\eden1.jpg" />
 		<None Remove="Resources\Images\edit.png" />
+		<None Remove="Resources\Images\emailIcon.png" />
+		<None Remove="Resources\Images\emergencyIcon.png" />
 		<None Remove="Resources\Images\forum.png" />
+		<None Remove="Resources\Images\genderIcon.png" />
 		<None Remove="Resources\Images\forum1.png" />
 		<None Remove="Resources\Images\goBack.png" />
 		<None Remove="Resources\Images\help.png" />
@@ -42,9 +46,12 @@
 		<None Remove="Resources\Images\Map.jpg" />
 		<None Remove="Resources\Images\menu.png" />
 		<None Remove="Resources\Images\menuBar.png" />
+		<None Remove="Resources\Images\nameIcon.png" />
 		<None Remove="Resources\Images\nacional.jpg" />
 		<None Remove="Resources\Images\nacional1.jpg" />
 		<None Remove="Resources\Images\notifications.png" />
+		<None Remove="Resources\Images\pdfIcon.png" />
+		<None Remove="Resources\Images\phoneIcon.png" />
 		<None Remove="Resources\Images\notifications1.png" />
 		<None Remove="Resources\Images\pickup.png" />
 		<None Remove="Resources\Images\raspad.jpg" />
@@ -60,6 +67,8 @@
 		<None Remove="Resources\Images\stats.png" />
 		<None Remove="Resources\Images\status.png" />
 		<None Remove="Resources\Images\taxi.png" />
+		<None Remove="Resources\Images\taxi1.jpeg" />
+		<None Remove="Resources\Images\taxi2.jpeg" />
 		<None Remove="Resources\Images\time.png" />
 		<None Remove="Resources\Images\superhero.png" />
 		<None Remove="Resources\Images\superowner.png" />
@@ -69,7 +78,9 @@
 		<None Remove="Resources\Images\usefulForum.png" />
 		<None Remove="Resources\Images\userData.png" />
 		<None Remove="Resources\Images\userProfile.png" />
+		<None Remove="Resources\Images\vacationIcon.png" />
 		<None Remove="Resources\Images\vacations.png" />
+		<None Remove="Resources\Images\VideoTutorial.jpg" />
 		<None Remove="Resources\Images\view.png" />
 		<None Remove="Resources\Images\wizard1.png" />
 		<None Remove="Resources\Images\wizard2.png" />
@@ -254,6 +265,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\addIm.png" />
+    <Resource Include="Resources\Images\addressIcon.png" />
     <Resource Include="Resources\Images\babinobrdo1.jpg" />
     <Resource Include="Resources\Images\babinobrdo2.jpg" />
     <Resource Include="Resources\Images\cancel.png" />
@@ -264,9 +276,12 @@
     <Resource Include="Resources\Images\babinobrdo.jpg" />
     <Resource Include="Resources\Images\carReg.png" />
     <Resource Include="Resources\Images\check.png" />
+    <Resource Include="Resources\Images\emailIcon.png" />
+    <Resource Include="Resources\Images\emergencyIcon.png" />
     <Resource Include="Resources\Images\eden.jpg" />
     <Resource Include="Resources\Images\eden1.jpg" />
     <Resource Include="Resources\Images\forum.png" />
+    <Resource Include="Resources\Images\genderIcon.png" />
     <Resource Include="Resources\Images\goBack.png" />
     <Resource Include="Resources\Images\help.png" />
     <Resource Include="Resources\Images\home.png" />
@@ -277,9 +292,12 @@
     <Resource Include="Resources\Images\location.png" />
     <Resource Include="Resources\Images\Map.jpg" />
     <Resource Include="Resources\Images\menuBar.png" />
+    <Resource Include="Resources\Images\nameIcon.png" />
     <Resource Include="Resources\Images\nacional.jpg" />
     <Resource Include="Resources\Images\nacional1.jpg" />
     <Resource Include="Resources\Images\notifications.png" />
+    <Resource Include="Resources\Images\pdfIcon.png" />
+    <Resource Include="Resources\Images\phoneIcon.png" />
     <Resource Include="Resources\Images\notifications1.png" />
     <Resource Include="Resources\Images\pickup.png" />
     <Resource Include="Resources\Images\raspad.jpg" />
@@ -294,6 +312,8 @@
     <Resource Include="Resources\Images\stats.png" />
     <Resource Include="Resources\Images\status.png" />
     <Resource Include="Resources\Images\taxi.png" />
+    <Resource Include="Resources\Images\taxi1.jpeg" />
+    <Resource Include="Resources\Images\taxi2.jpeg" />
     <Resource Include="Resources\Images\time.png" />
     <Resource Include="Resources\Images\superhero.png" />
     <Resource Include="Resources\Images\superowner.png" />
@@ -303,7 +323,9 @@
     <Resource Include="Resources\Images\usefulForum.png" />
     <Resource Include="Resources\Images\userData.png" />
     <Resource Include="Resources\Images\userProfile.png" />
+    <Resource Include="Resources\Images\vacationIcon.png" />
     <Resource Include="Resources\Images\vacations.png" />
+    <Resource Include="Resources\Images\VideoTutorial.jpg" />
     <Resource Include="Resources\Images\wizard1.png" />
     <Resource Include="Resources\Images\wizard2.png" />
     <Resource Include="Resources\Images\wizard3.png" />

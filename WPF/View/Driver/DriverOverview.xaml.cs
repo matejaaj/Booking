@@ -43,5 +43,9 @@ namespace BookingApp.WPF.View.Driver
             VM.ViewDrive_Respond(sender, e);
         }
 
+        public void OnLoad(object? sender, EventArgs e)
+        {
+            VM.UpdateReservationList();
+        }
     }
 }

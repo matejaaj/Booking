@@ -39,6 +39,10 @@ namespace BookingApp.Application
         { typeof(ITourRequestRepository), new TourRequestRepository() },
         { typeof(IDriverUnreliableReportRepository), new DriverUnreliableReportRepository() },
         { typeof(IRenovationRepository), new RenovationRepository() },
+        { typeof(IDriverOnVacationRepository), new DriverOnVacationReposiroty() },
+        { typeof(IVacationStatusRepository), new VacationStatusRepository() },
+        { typeof(IVacationTypeRepository), new VacationTypeRepository() },
+        { typeof(ILocationStateRepository), new LocationStateRepository() },
         { typeof(IRenovationRecommendationRepository), new RenovationRecommendationRepository()},
         { typeof(ISuperGuestRepository), new SuperGuestRepository()},
         { typeof(INotificationRepository), new NotificationRepository()},
@@ -57,6 +61,14 @@ namespace BookingApp.Application
             }
 
             throw new ArgumentException($"No implementation found for type {type}");
+        }
+
+        public static void init()
+        {
+            foreach (var item in _implementations)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

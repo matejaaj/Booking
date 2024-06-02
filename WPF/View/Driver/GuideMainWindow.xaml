@@ -51,12 +51,13 @@
                     </StackPanel>
                 </Button>
                 <Separator Visibility="Hidden" Width="230"/>
-                <TextBlock Text="Today's Ride"
-                   FontSize="18"
-                   Foreground="Black"
-                   VerticalAlignment="Center"
-                   Margin="5,0,10,0" 
-                   FontFamily="Arial" />
+                <TextBlock x:Name="lbl_Page" Text="Today's Ride"
+                    FontSize="18"
+                    Foreground="Black"
+                    VerticalAlignment="Center"
+                    Margin="5,0,10,0" 
+                    FontFamily="Arial" 
+                    Width="102.486666666667"/>
                 <Button Click="btnHome_Click" HorizontalAlignment="Right">
                     <Image Source="../../../Resources/Images/home.png" Width="25" Height="30"/>
                 </Button>
@@ -78,9 +79,9 @@
                 </StackPanel>
 
 
-                <Button Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+                <Button Click="btn_LogOff" Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
 
-                <!-- Ostale stavke menija -->
+                
                 <Button Click="ShowCreateVehicleForm" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/carReg.png" Width="25" Height="25"/>
@@ -99,28 +100,28 @@
                         <TextBlock Text="Notifications" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Click="btnVacatioRequest_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/vacations.png" Width="25" Height="25"/>
                         <TextBlock Text="Vacation Requests" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
+                <Button Click="btnVacationReports_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/reports.png" Width="25" Height="25"/>
                         <TextBlock Text="Vacation Reports" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                <Button Click="btnData_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/userData.png" Width="25" Height="25"/>
                         <TextBlock Text="Personal Data" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Padding="5" Margin="5,57,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                <Button Click="btnTutorial_Click" Padding="5" Margin="5,57,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/tutorial.png" Width="25" Height="25"/>
-                        <TextBlock Text="Tutorijal" FontSize="16" Margin="5,0,0,0"/>
+                        <TextBlock Text="Tutorial" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
             </StackPanel>

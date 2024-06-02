@@ -1,0 +1,67 @@
+﻿<Page x:Class="BookingApp.WPF.View.Driver.VacationRequest"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" Width="936"
+      Title="VacationRequest">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,20">
+            <Image Source="../../../Resources/Images/vacationIcon.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBlock Text="Vacation Request" FontSize="23" FontWeight="Bold" VerticalAlignment="Center"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Beginning Date" VerticalAlignment="Center" FontSize="15"/>
+                <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="50,10,-49,5" />
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="0,0,0,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Ending Date" VerticalAlignment="Center" FontSize="15"/>
+                <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="72,10,-72,5"/>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Margin="0,0,0,20" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Vacation type" VerticalAlignment="Center" FontSize="15"/>
+                <ComboBox ItemsSource="{Binding VacTypes}" SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="60,10,-61,5">
+                </ComboBox>
+            </Grid>
+        </StackPanel>
+
+        <TextBlock Grid.Row="3" TextWrapping="WrapWithOverflow" Margin="265,71,288,77" FontSize="15"
+                   Text="NAPOMENA: Zahtev za odmor se moze podneti minimum 48h pre odabranog datuma. U slucaju da vam ne nadjemo adekvatnu zamenu sto se tice voznji vas zahtev za odmor ce biti odbijen!" />
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            <Button Content="Cancel" Margin="10" Width="100" Click="Button_Click"/>
+            <Button Content="Confirm" Margin="10" Width="100" Click="Button_Click_Confirm"/>
+        </StackPanel>
+    </Grid>
+</Page>
