@@ -28,10 +28,5 @@ namespace BookingApp.WPF.View.Owner
             viewModel = new ViewRenovationsViewModel(loggedInOwner);
             DataContext = viewModel;
         }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.CancelButton_Click(sender, e);
-        }
     }
 }

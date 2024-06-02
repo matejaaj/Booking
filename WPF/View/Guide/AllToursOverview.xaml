@@ -1,25 +1,27 @@
-﻿<Window x:Class="BookingApp.WPF.View.Guide.AllToursOverview"
+﻿<Page x:Class="BookingApp.WPF.View.Guide.AllToursOverview"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
-        Title="AllToursOverview" Height="450" Width="800">
+        Title="AllToursOverview" Height="450" Width="750" Style="{StaticResource GuidePageStyle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="12.9"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="160"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="190"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding AllTours}"
+        <StackPanel Grid.Row="0">
+            <DataGrid ItemsSource="{Binding AllTours}" Style="{StaticResource GuideDataGridStyle}"
               SelectedItem="{Binding SelectedTour}"
               IsReadOnly="True" SelectionMode="Single" 
-              AutoGenerateColumns="False" Height="200" HeadersVisibility="Column" FontSize="13" Width="804">
+              AutoGenerateColumns="False" Height="200" HeadersVisibility="Column" FontSize="13" Width="750" Background="#F5EFE6">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
@@ -31,21 +33,19 @@
             </DataGrid>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="5">
-            <TextBlock Text="Description:" FontWeight="Bold"/>
-            <TextBlock Text="{Binding SelectedTour.Description}" TextWrapping="Wrap" Margin="5"/>
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="5,5,5,145" Height="100" Grid.RowSpan="5">
+            <Label Style="{StaticResource GuideLabelStyle}" Content="Description:" FontWeight="Bold"/>
+            <TextBlock Style="{StaticResource GuideTextBlockStyle}" Text="{Binding SelectedTour.Description}" TextWrapping="Wrap" Height="31"/>
         </StackPanel>
 
-        <ListView Grid.Row="3" ItemsSource="{Binding SelectedTourCheckpoints}" Height="180" Margin="5">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Checkpoints" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid Style="{StaticResource GuideDataGridStyle}" Grid.Row="5" ItemsSource="{Binding SelectedTourCheckpoints}" Background="#F5EFE6" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True" IsReadOnly="True" Margin="0,63,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Checkpoints" Binding="{Binding Name}" Width="200"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
-        <Button Grid.Row="4" Width="150" Content="Cancel Tour" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Click="btnCancelTour_Click"/>
-        <Button Grid.Row="4" Width="150" Content="Advanced Statistics" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Click="btnAdvancedStatistics_Click"/>
-        <Button Grid.Row="4" Width="150" Content="Show Reviews" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Click="btnShowReviews_Click"/>
+        <Button Style="{StaticResource GuideButtonStyle}" Grid.Row="6" Width="150" Content="Cancel Tour" HorizontalAlignment="Left" Margin="590,0,0,0" Click="btnCancelTour_Click"/>
+        <Button Style="{StaticResource GuideButtonStyle}" Grid.Row="6" Width="150" Content="Advanced Statistics" HorizontalAlignment="Left" Margin="10,0,0,0" Click="btnAdvancedStatistics_Click"/>
+        <Button Style="{StaticResource GuideButtonStyle}" Grid.Row="6" Width="150" Content="Show Reviews" Click="btnShowReviews_Click"/>
     </Grid>
-</Window>
+</Page>

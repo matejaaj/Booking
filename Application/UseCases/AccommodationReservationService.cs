@@ -15,7 +15,7 @@ namespace BookingApp.Application.UseCases
     {
         private readonly IAccommodationReservationRepository _accommodationReservationRepository;
         private AccommodationService accommodationService;
-
+        private ReservationModificationRequestService modificationService;
         public AccommodationReservationService(IAccommodationReservationRepository accommodationReservationRepository)
         {
             _accommodationReservationRepository = accommodationReservationRepository;
@@ -26,7 +26,12 @@ namespace BookingApp.Application.UseCases
             this.accommodationService = accommodationService;
             _accommodationReservationRepository = accommodationReservationRepository;
         }
-
+        public AccommodationReservationService(ReservationModificationRequestService modificationService ,AccommodationService accommodationService, IAccommodationReservationRepository accommodationReservationRepository)
+        {
+            this.modificationService = modificationService;
+            this.accommodationService = accommodationService;
+            _accommodationReservationRepository = accommodationReservationRepository;
+        }
         public List<AccommodationReservation> GetAll()
         {
             return _accommodationReservationRepository.GetAll();
@@ -34,12 +39,12 @@ namespace BookingApp.Application.UseCases
 
         public AccommodationReservation Save(AccommodationReservation accommodationReservation)
         {
-           return _accommodationReservationRepository.Save(accommodationReservation);
+            return _accommodationReservationRepository.Save(accommodationReservation);
         }
 
         public void Delete(AccommodationReservation accommodationReservation)
         {
-           _accommodationReservationRepository.Delete(accommodationReservation);
+            _accommodationReservationRepository.Delete(accommodationReservation);
         }
 
         public AccommodationReservation Update(AccommodationReservation accommodationReservation)
@@ -49,7 +54,7 @@ namespace BookingApp.Application.UseCases
 
         public List<AccommodationReservation> GetByUser(User user)
         {
-           return _accommodationReservationRepository.GetByUser(user);
+            return _accommodationReservationRepository.GetByUser(user);
         }
 
         public List<AccommodationReservation> GetByAccommodationIds(List<int> accommodationIds)
@@ -73,11 +78,11 @@ namespace BookingApp.Application.UseCases
             return _accommodationReservationRepository.GetByReservationId(id);
         }
 
-        public List<AccommodationReservation> GetUnratedReservations(ObservableCollection<Accommodation> accommodations)
+        public List<AccommodationReservation> GetRecentUnratedReservations(List<Accommodation> accommodations)
         {
             var accommodationIds = accommodations.Select(a => a.AccommodationId).ToList();
             List<AccommodationReservation> OwnerAccommodationReservations = GetByAccommodationIds(accommodationIds);
-            return OwnerAccommodationReservations.Where(reservation => (DateTime.Now - reservation.EndDate).TotalDays <= 5 && 
+            return OwnerAccommodationReservations.Where(reservation => (DateTime.Now - reservation.EndDate).TotalDays <= 5 &&
             reservation.EndDate < DateTime.Now && reservation.IsRated == false).ToList();
         }
 
@@ -85,7 +90,7 @@ namespace BookingApp.Application.UseCases
         {
             var bookings = new List<BookingDTO>();
             var allReservations = GetByAccommodation(accommodation);
-            foreach(var reservation in allReservations)
+            foreach (var reservation in allReservations)
             {
                 if (IsReservationRecent(reservation, accommodation))
                 {
@@ -168,11 +173,76 @@ namespace BookingApp.Application.UseCases
             return (reservation.StartDate == oldStartDate && reservation.EndDate == oldEndDate);
         }
 
-        internal List<AccommodationReservation> GetByOwner(Owner loggedInOwner)
+        public List<AccommodationReservation> GetByOwner(Owner loggedInOwner)
         {
             var accommodations = accommodationService.GetByUser(loggedInOwner);
             var accommodationIds = accommodations.Select(a => a.AccommodationId).ToList();
             return _accommodationReservationRepository.GetByAccommodationIds(accommodationIds);
         }
+
+        public bool CancelReservation(AccommodationReservation reservation)
+        {
+            Accommodation accommodation = accommodationService.GetById(reservation.AccommodationId);
+            int cancellationThreshold = accommodation.CancelThershold;
+            int daysUntilReservationStart = (int)(reservation.StartDate - DateTime.Now).TotalDays;
+            if ((daysUntilReservationStart > 1 || daysUntilReservationStart > cancellationThreshold) && !reservation.IsCancelled)
+            {
+                reservation.IsCancelled = true;
+                _accommodationReservationRepository.Update(reservation);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public List<ReservationDisplayDTO> FindReservationInfos(List<AccommodationReservation> reservations)
+        {
+            List<ReservationDisplayDTO> reservationInfos = new List<ReservationDisplayDTO>();
+            foreach (var reservation in reservations)
+            {
+                if (!reservation.IsCancelled)
+                {
+                    var accommodation = accommodationService.GetById(reservation.AccommodationId);
+                    var accommodationName = accommodation != null ? accommodation.Name : "Unknown";
+
+                    var modificationRequest = modificationService.GetByReservationId(reservation.Id);
+
+                    var reservationDto = new ReservationDisplayDTO(
+                        accommodationName, reservation.StartDate, reservation.EndDate,
+                        reservation, modificationRequest?.OwnerComment ?? "",
+                        modificationRequest?.Status.ToString() ?? "");
+
+                    reservationInfos.Add(reservationDto);
+                }
+            }
+            return reservationInfos;
+        }
+        public List<(DateTime, DateTime)> GenerateDateRanges(DateTime startDate, DateTime endDate, int days, List<AccommodationReservation> reservations)
+        {
+            var dateRanges = new List<(DateTime, DateTime)>();
+            DateTime currentStartDate = startDate;
+            DateTime currentEndDate = startDate.AddDays(days - 1);
+
+            while (currentEndDate <= endDate)
+            {
+                if (!IsReserved(currentStartDate, currentEndDate, reservations))
+                    dateRanges.Add((currentStartDate, currentEndDate));
+
+                currentStartDate = currentStartDate.AddDays(1);
+                currentEndDate = currentStartDate.AddDays(days - 1);
+            }
+
+            return dateRanges;
+        }
+
+        private bool IsReserved(DateTime startDate, DateTime endDate, List<AccommodationReservation> reservations)
+        {
+            return reservations.Any(reservation =>
+                (startDate <= reservation.EndDate && endDate >= reservation.StartDate) ||
+                (startDate >= reservation.StartDate && endDate <= reservation.EndDate));
+        }
+
     }
+
 }

@@ -5,36 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
-        Title="AddImage" Height="100" Width="400"
-        WindowStartupLocation="CenterOwner">
+        Title="Add Images" Height="400" Width="400"
+        WindowStartupLocation="CenterOwner" Style="{StaticResource GuideWindowStyle}">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="83*"/>
-            <ColumnDefinition Width="17*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <Grid Grid.Column="1" Margin="10,10,10,10" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Margin="10">
+            <Label Style="{StaticResource GuideLabelStyle}" Content="Path (Alt + P):"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Style="{StaticResource GuideTextBoxStyle}" Name="txtSource" Text="{Binding Path=Source, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                <Button Style="{StaticResource GuideButtonStyle}" Content="Add (Ctrl + A)" Click="btnAddImage_Click" Margin="70,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <DataGrid  Style="{StaticResource GuideDataGridStyle}" Grid.Row="1" ItemsSource="{Binding Images}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Path" Binding="{Binding Path}" Width="*"/>
+                <DataGridTemplateColumn Header="Remove" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Remove"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
-            <Label Content="Image source" Grid.Row="0"/>
-            <TextBox Name="txtSource" Text="{Binding Path=Source, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
-            
-            
-
-        </Grid>
-
-            <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="120,0,0,10">
-            <Button Name="btnConfirm" Content="Confirm" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />
-            <Button Name="btnCancel" Content="Cancel" Width="75" Click="btnCancel_Click" />
+        <!-- Buttons for Save and Cancel -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Style="{StaticResource GuideButtonStyle}" Content="Save (Ctrl + S)" Click="btnConfirm_Click"  Width="100" Margin="0,0,10,0"/>
         </StackPanel>
     </Grid>
 </Window>

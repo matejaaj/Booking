@@ -7,54 +7,116 @@
         xmlns:control="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Booking"  Width="1320" Height="743"
+        Title="Booking" Width="1320" Height="743"
         Background="{DynamicResource PrimaryBackground}">
-
-
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TabControl Grid.Row="0" TabStripPlacement="Left"
                     Background="{DynamicResource PrimaryBackground}">
-            <TabItem Header="Ture" Style="{StaticResource ParentTabStyle}">
+            <TabItem Style="{StaticResource ParentTabStyle}">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="pack://application:,,,/Resources/Images/Tourist/map.png" Width="30" Height="20" Margin="0,0,10,0"/>
+                            <TextBlock Text="Ture"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
                 <TabControl>
-                    <TabItem Header="Sve ture" Style="{StaticResource ChildTabStyle}">
+                    <TabItem Style="{StaticResource ChildTabStyle}">
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="pack://application:,,,/Resources/Images/Tourist/map.png" Width="30" Height="20" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Sve ture"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
                         <control:AllToursControl DataContext="{Binding ToursMainViewModel.AllToursViewModel}"
                                                  Tourist="{Binding Tourist}"/>
                     </TabItem>
-                    <TabItem Header="Moje ture" Style="{StaticResource ChildTabStyle}">
+                    <TabItem Style="{StaticResource ChildTabStyle}">
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="pack://application:,,,/Resources/Images/Tourist/saved.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Moje ture"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
                         <control:MyToursControl DataContext="{Binding ToursMainViewModel.MyToursViewModel}"
                                                 Tourist="{Binding Tourist}"/>
                     </TabItem>
 
-                    <TabItem Header="Zahtev ture" Style="{StaticResource ChildTabStyle}">
+                    <TabItem Style="{StaticResource ChildTabStyle}">
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="pack://application:,,,/Resources/Images/Tourist/request.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Zahtev ture"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
                         <control:TourRequestsControl DataContext="{Binding ToursMainViewModel.TourRequestsViewModel}"/>
                     </TabItem>
 
                 </TabControl>
             </TabItem>
-            <TabItem Header="Taksi" Style="{StaticResource ParentTabStyle}">
+            <TabItem Style="{StaticResource ParentTabStyle}">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="pack://application:,,,/Resources/Images/Tourist/car.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                            <TextBlock Text="Taksi"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
                 <TabControl>
-                    <TabItem Header="Moje vožnje" Style="{StaticResource ChildTabStyle}"
-                             >
+                    <TabItem Style="{StaticResource ChildTabStyle}">
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="pack://application:,,,/Resources/Images/Tourist/car.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Vožnje"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
                         <control:DriveReservationControl DataContext="{Binding DriveMainViewModel}"
-                                                         Tourist="{Binding Tourist}"       />
+                                                         Tourist="{Binding Tourist}" />
                     </TabItem>
                 </TabControl>
             </TabItem>
         </TabControl>
 
-        <!-- Buttons at the bottom -->
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="3,-100,0,0">
-            <Button Content="Promeni jezik"  Style="{StaticResource SmallButton}"
-                    Width="130"/>
-            <Button Content="Promeni temu" Style="{StaticResource SmallButton}"
-                    Click="ChangeTheme_click"/>
-            <Button Content="Odjavi se" Style="{StaticResource SmallButton}"/>
+        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Left" Margin="0,-600,0,0">
+            <control:NotificationControl/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10,-130,0,0">
+            <Button Style="{StaticResource SmallButton}" Width="175" Command="{Binding ChangeLanguageCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Resources/Images/Tourist/language.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                    <TextBlock Text="Promeni jezik"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource SmallButton}" Command="{Binding ChangeThemeCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Resources/Images/Tourist/theme.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                    <TextBlock Text="Promeni temu"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource SmallButton}" Command="{Binding LogoutCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Resources/Images/Tourist/logout.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                    <TextBlock Text="Odjavi se"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

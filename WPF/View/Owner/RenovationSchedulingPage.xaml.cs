@@ -22,21 +22,11 @@ namespace BookingApp.WPF.View.Owner
     public partial class RenovationSchedulingPage : Page
     {
         public static RenovationSchedulingViewModel viewModel { get; set; }
-        public RenovationSchedulingPage(Domain.Model.Accommodation accommodation)
+        public RenovationSchedulingPage(Domain.Model.Accommodation accommodation, DTO.AccommodationPageDTO selectedAccommodation)
         {
             InitializeComponent();
-            viewModel = new RenovationSchedulingViewModel(accommodation);
+            viewModel = new RenovationSchedulingViewModel(accommodation, selectedAccommodation, this);
             DataContext = viewModel;
-        }
-
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.SearchButton_Click(sender, e);    
-        }
-
-        private void ScheduleButton_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.ScheduleButton_Click(sender, e, this);
         }
     }
 }

@@ -76,5 +76,23 @@ namespace BookingApp.Application.UseCases
             }
             return reviews;
         }
+
+        public Double GetAverageGrade(List<int> instanceIds)
+        {
+            var reviews = GetAll();
+            double avg = 0.0;
+            int totalReviews = 0;
+            int sum = 0;
+            foreach(var review in reviews)
+            {
+                if(review.IsValid && instanceIds.Any(i => i == review.TourInstanceId)){
+                    totalReviews++;
+                    sum += review.Rating;
+                }
+            }
+            if(totalReviews != 0)
+                avg = (double)sum / totalReviews;
+            return avg;
+        }
     }
 }

@@ -87,7 +87,7 @@
                                     </Grid.RowDefinitions>
                                     <TextBlock Text="{Binding AccommodationNameAndLocation}" Grid.Row="0"  HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,5,0,0"/>
                                     <TextBlock Text="{Binding TimeSpan}" Grid.Row="1"  HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,5,0,0"/>
-                                    <Button Click="CancelButton_Click" Width="100" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" FontSize="16" Margin="0,15,0,0"/>
+                                    <Button Command="{Binding DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}" Width="100" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" FontSize="16" Margin="0,15,0,0"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>

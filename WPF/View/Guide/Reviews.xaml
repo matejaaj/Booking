@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
-        Title="Reviews" Height="450" Width="600">
+        Title="Reviews" Height="450" Width="600" Style="{StaticResource GuideWindowStyle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Reviews}"
+            <DataGrid ItemsSource="{Binding Reviews}" Style="{StaticResource GuideDataGridStyle}"
           SelectedItem="{Binding SelectedReview}"
           IsReadOnly="True" SelectionMode="Single" 
           AutoGenerateColumns="False" Height="200" HeadersVisibility="Column" FontSize="13" Width="600">
@@ -28,10 +28,10 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="5">
-            <TextBlock Text="Review commnet:" FontWeight="Bold"/>
-            <TextBlock Text="{Binding SelectedReview.Comment}" TextWrapping="Wrap" Margin="5"/>
+            <Label Style="{StaticResource GuideLabelStyle}" Content="Review commnet:" FontWeight="Bold"/>
+            <TextBlock Style="{StaticResource GuideTextBlockStyle}" Text="{Binding SelectedReview.Comment}" TextWrapping="Wrap" Margin="5"/>
         </StackPanel>
 
-        <Button Grid.Row="3" Width="150" Content="Report review" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Click="btnReportReview_Click"/>
+        <Button Style="{StaticResource GuideButtonStyle}" Grid.Row="3" Width="150" Content="Report review" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Click="btnReportReview_Click"/>
     </Grid>
 </Window>

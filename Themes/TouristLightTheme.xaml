@@ -5,4 +5,8 @@
     <SolidColorBrush x:Key="ButtonBackground" Color="#92C7CF"/>
     <SolidColorBrush x:Key="BorderBrushColor" Color="#92C7CF"/>
     <SolidColorBrush x:Key="SelectedTabBackground" Color="#FBF9F1"/>
+    <SolidColorBrush x:Key="PrimaryTextColor" Color="#000000"/>
+    <SolidColorBrush x:Key="BlackTextColor" Color="#000000"/>
+    <BitmapImage x:Key="LeftImageSource" UriSource="pack://application:,,,/Resources/Images/Tourist/left.png"/>
+    <BitmapImage x:Key="NextImageSource" UriSource="pack://application:,,,/Resources/Images/Tourist/next.png"/>
 </ResourceDictionary>

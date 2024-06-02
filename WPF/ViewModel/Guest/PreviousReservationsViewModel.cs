@@ -7,57 +7,41 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows;
+using BookingApp.Application;
+using BookingApp.Domain.RepositoryInterfaces;
 
 namespace BookingApp.WPF.ViewModel.Guest
 {
     public class PreviousReservationsViewModel : INotifyPropertyChanged
     {
-        private readonly AccommodationReservationService _reservationService;
-        private readonly AccommodationService _accommodationService;
-        private readonly ReservationModificationRequestService _modificationRequestService;
+        private  AccommodationReservationService _reservationService;
+        private  AccommodationService _accommodationService;
+        private  ReservationModificationRequestService _modificationRequestService;
         private User _guest;
         public List<ReservationDisplayDTO> ReservationInfos { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PreviousReservationsViewModel(User guest, AccommodationReservationService reservationService, AccommodationService accommodationService, ReservationModificationRequestService modificationRequestService)
+        public PreviousReservationsViewModel(User guest)
         {
             _guest = guest;
-            _reservationService = reservationService;
-            _accommodationService = accommodationService;
-            _modificationRequestService = modificationRequestService;
+            InitializeServices();
 
             LoadReservations();
+        }
+
+        private void InitializeServices()
+        {
+            _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
+            _modificationRequestService = new ReservationModificationRequestService(Injector.CreateInstance<IReservationModificationRequestRepository>());
+            _reservationService = new AccommodationReservationService(_modificationRequestService,_accommodationService, Injector.CreateInstance<IAccommodationReservationRepository>());
         }
 
         private void LoadReservations()
         {
             var reservations = _reservationService.GetByUser(_guest);
-            ReservationInfos = FindReservationInfos(reservations);
+            ReservationInfos = _reservationService.FindReservationInfos(reservations);
             OnPropertyChanged(nameof(ReservationInfos));
-        }
-
-        private List<ReservationDisplayDTO> FindReservationInfos(List<AccommodationReservation> reservations)
-        {
-            List<ReservationDisplayDTO> reservationInfos = new List<ReservationDisplayDTO>();
-            foreach (var reservation in reservations)
-            {
-                if (!reservation.IsCancelled)
-                {
-                    var accommodation = _accommodationService.GetById(reservation.AccommodationId);
-                    var accommodationName = accommodation != null ? accommodation.Name : "Unknown";
-
-                    var modificationRequest = _modificationRequestService.GetByReservationId(reservation.Id);
-
-                    var reservationDto = new ReservationDisplayDTO(
-                        accommodationName, reservation.StartDate, reservation.EndDate,
-                        reservation, modificationRequest?.OwnerComment ?? "",
-                        modificationRequest?.Status.ToString() ?? "");
-
-                    reservationInfos.Add(reservationDto);
-                }
-            }
-            return reservationInfos;
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -103,13 +87,9 @@ namespace BookingApp.WPF.ViewModel.Guest
 
         public void CancelReservation(ReservationDisplayDTO reservationDto)
         {
-            Accommodation accommodation = _accommodationService.GetById(reservationDto.Reservation.AccommodationId);
-            int cancellationThreshold = accommodation.CancelThershold;
-            int daysUntilReservationStart = (int)(reservationDto.Reservation.StartDate - DateTime.Now).TotalDays;
-            if ((daysUntilReservationStart > 1 || daysUntilReservationStart > cancellationThreshold) && reservationDto.Reservation.IsCancelled == false)
+            var flag = _reservationService.CancelReservation(reservationDto.Reservation);
+            if (flag)
             {
-                reservationDto.Reservation.IsCancelled = true;
-                _reservationService.Update(reservationDto.Reservation);
                 MessageBox.Show("Reservation successfully canceled.");
             }
             else

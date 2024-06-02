@@ -17,6 +17,8 @@
         <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
         <Setter Property="Margin" Value="5"/>
         <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
+        <!-- Fixed text color to black -->
     </Style>
 
     <Style x:Key="SmallButton" TargetType="Button">
@@ -24,6 +26,8 @@
         <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
         <Setter Property="Margin" Value="5"/>
         <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
+        <!-- Fixed text color to black -->
     </Style>
 
     <!-- Globalni stil za TextBlock koji se koristi za naslove -->
@@ -31,33 +35,44 @@
         <Setter Property="FontSize" Value="24"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        <!-- Added for text color -->
     </Style>
 
     <Style x:Key="ItemHeaderTextStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        <!-- Added for text color -->
     </Style>
 
     <Style x:Key="UserControlStyle" TargetType="UserControl">
         <Setter Property="Background" Value="{DynamicResource PrimaryBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        <!-- Added for text color -->
     </Style>
-
 
     <Style x:Key="DriveItemHeaderTextStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        <!-- Added for text color -->
     </Style>
 
     <Style x:Key="ParentTabStyle" TargetType="TabItem">
         <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Width" Value="150"/>
+        <Setter Property="Width" Value="200"/>
         <Setter Property="Height" Value="25"/>
         <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
+        <!-- Fixed text color to black -->
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="{DynamicResource SelectedTabBackground}"/>
+                <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
+                <!-- Fixed text color to black -->
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -67,17 +82,147 @@
         <Setter Property="Width" Value="125"/>
         <Setter Property="Height" Value="25"/>
         <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
+        <!-- Fixed text color to black -->
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="{DynamicResource SelectedTabBackground}"/>
+                <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
+                <!-- Fixed text color to black -->
             </Trigger>
         </Style.Triggers>
     </Style>
 
-
     <Style x:Key="FormLabel" TargetType="Label">
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="Margin" Value="40,0,0,15"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        <!-- Added for text color -->
+    </Style>
+
+
+    <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryTextColor}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <ToggleButton Name="ToggleButton"
+                                      Grid.Column="2"
+                                      Focusable="false"
+                                      IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      ClickMode="Press">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border Name="Border"
+                                            Background="{DynamicResource SecondaryBackground}"
+                                            BorderBrush="{DynamicResource PrimaryTextColor}"
+                                            BorderThickness="1">
+                                        <Path Name="Arrow"
+                                              Fill="{DynamicResource PrimaryTextColor}"
+                                              Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="true">
+                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+                                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource PrimaryTextColor}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryBackground}"/>
+                                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource PrimaryTextColor}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource DisabledBackgroundBrush}"/>
+                                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource DisabledForegroundBrush}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <ContentPresenter
+                            Name="ContentSite"
+                            IsHitTestVisible="False"
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="3,3,23,3"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left" />
+                        <TextBox x:Name="PART_EditableTextBox"
+                                 Style="{x:Null}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Center"
+                                 Margin="3,3,23,3"
+                                 Focusable="True"
+                                 Background="{DynamicResource SecondaryBackground}"
+                                 Foreground="{DynamicResource PrimaryTextColor}"
+                                 Visibility="Hidden"
+                                 IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                        <Popup Name="Popup"
+                               Placement="Bottom"
+                               IsOpen="{TemplateBinding IsDropDownOpen}"
+                               AllowsTransparency="True"
+                               Focusable="False"
+                               PopupAnimation="Slide">
+                            <Grid Name="DropDown"
+                                  SnapsToDevicePixels="True"
+                                  MinWidth="{TemplateBinding ActualWidth}"
+                                  MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border x:Name="DropDownBorder"
+                                        Background="{DynamicResource SecondaryBackground}"
+                                        BorderBrush="{DynamicResource PrimaryTextColor}"
+                                        BorderThickness="1"/>
+                                <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                </ScrollViewer>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                        </Trigger>
+                        <Trigger Property="IsGrouping" Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </Trigger>
+                        <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                            <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="4"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Stil za ComboBoxItem -->
+    <Style x:Key="CustomComboBoxItemStyle" TargetType="ComboBoxItem">
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource PrimaryBackground}"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FormInput" TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Margin" Value="5"/>
     </Style>
 
 </ResourceDictionary>

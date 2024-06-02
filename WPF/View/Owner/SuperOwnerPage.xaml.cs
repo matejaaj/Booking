@@ -28,10 +28,5 @@ namespace BookingApp.WPF.View.Owner
             viewModel = new SuperOwnerViewModel(loggedInOwner);
             DataContext = viewModel;
         }
-
-        private void SuperOwner_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.SuperOwnerButton(sender, e);
-        }
     }
 }

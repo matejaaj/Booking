@@ -49,6 +49,7 @@ namespace BookingApp.WPF.View.Tourist
         {
             ViewModel.Submit();
             MessageBox.Show("Form submitted successfully!");
+            this.Close();
         }
     }
 }

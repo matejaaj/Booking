@@ -206,7 +206,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         protected void FillMinutes()
         {
-            Minutes = new ObservableCollection<string>(new List<string> { "00", "15", "30", "45" });
+            Minutes = new ObservableCollection<string>(Enumerable.Range(0, 59).Select(i => i.ToString("00")));
         }
 
         public DateTime CreateDateTimeFromSelections()

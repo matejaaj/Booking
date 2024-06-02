@@ -1,0 +1,19 @@
+﻿<Page x:Class="BookingApp.WPF.View.Guest.ShowRatings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:BookingApp.WPF.View.Guest"
+      mc:Ignorable="d"
+      Title="ShowRatings">
+    <Grid>
+        <DataGrid ItemsSource="{Binding GuestsRating}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Accommodation Name" Binding="{Binding AccommodationName}" Width="auto"/>
+                <DataGridTextColumn Header="Cleanliness" Binding="{Binding Cleanliness}" Width="Auto"/>
+                <DataGridTextColumn Header="Rules Respect" Binding="{Binding RulesRespect}" Width="Auto"/>
+                <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

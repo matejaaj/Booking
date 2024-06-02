@@ -16,5 +16,7 @@ namespace BookingApp.Domain.RepositoryInterfaces
         void SaveMultiple(List<PrivateTourGuest> tourGuests);
         void Delete(PrivateTourGuest tourGuest);
         PrivateTourGuest Update(PrivateTourGuest tourGuest);
+
+        List<PrivateTourGuest> GetAllByTourRequestSegmentId(int segmentId);
     }
 }

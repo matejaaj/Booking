@@ -1,19 +1,20 @@
-﻿using BookingApp.Repository;
+﻿using BookingApp.Domain.Model;
+using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.Repository;
+using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Syncfusion.Windows.Shared;
-using BookingApp.Domain.Model;
-using BookingApp.Domain.RepositoryInterfaces;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace BookingApp.WPF.View.Guest
 {
-    public partial class GuestOverview : Window, INotifyPropertyChanged
+    public partial class GuestOverview : Page, INotifyPropertyChanged
     {
         private AccommodationReservationRepository _accommodationReservationRepository = new AccommodationReservationRepository();
         private ReservationModificationRequestRepository _reservationModificationRequestRepository = new ReservationModificationRequestRepository();
@@ -60,8 +61,16 @@ namespace BookingApp.WPF.View.Guest
 
         private void TypeToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            TypePopup.IsOpen = true;
+            if (TypePopup.IsOpen)
+            {
+                TypePopup.IsOpen = false;
+            }
+            else
+            {
+                TypePopup.IsOpen = true;
+            }
         }
+
         private void ToggleType(object parameter)
         {
             string type = parameter as string;
@@ -127,12 +136,6 @@ namespace BookingApp.WPF.View.Guest
             var selectedAccommodation = (sender as Button)?.DataContext as Accommodation;
             AccommodationReservationForm reservationAccommodationWindow = new AccommodationReservationForm(selectedAccommodation, LoggedInGuest);
             reservationAccommodationWindow.Show();
-        }
-
-        private void PreviousReservations_Click(object sender, RoutedEventArgs e)
-        {
-            PreviousReservations reservationsWindow = new PreviousReservations(LoggedInGuest);
-            reservationsWindow.Show();
         }
 
     }

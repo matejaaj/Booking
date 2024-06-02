@@ -1,49 +1,69 @@
-﻿<Window x:Class="BookingApp.WPF.View.Guide.Statistics"
+﻿<Page x:Class="BookingApp.WPF.View.Guide.Statistics"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
+      xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+
         mc:Ignorable="d"
-        Title="Statistics" Height="450" Width="800">
+        Title="Statistics" Height="470" Width="800" Style="{StaticResource GuidePageStyle}">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="5">
-            <GroupBox Header="MOST VISITED TOUR" FontWeight="Bold">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <Label Content="Year:"/>
-                        <ComboBox SelectedIndex="0" Width="100" HorizontalAlignment="Right" ItemsSource="{Binding TourYears}" SelectedItem="{Binding Path=SelectedTourYear, UpdateSourceTrigger=PropertyChanged}">
-                        </ComboBox>
-                    </StackPanel>
-                    <Button Content="Search" Margin="5" Width="100" HorizontalAlignment="Right" Click="btnSearchTours_Click"/>
-                    <StackPanel Margin="5">
-                        <TextBlock FontWeight="Bold" Text="Tour Name:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Name}" />
-                        <TextBlock FontWeight="Bold" Text="Location:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Location}"/>
-                        <TextBlock FontWeight="Bold" Text="Language:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Language}"/>
-                        <TextBlock FontWeight="Bold" Text="Capacity:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Capacity}"/>
-                        <TextBlock FontWeight="Bold" Text="Duration:"/>
-                        <TextBlock Text="{Binding MostVisitedTour.Duration}"/>
-                    </StackPanel>
-                    <TextBlock Text="Description:" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding MostVisitedTour.Description}" TextWrapping="Wrap" Margin="5" Height="100"/>
-                </StackPanel>
-            </GroupBox>
-        </StackPanel>
+        <GroupBox Header="MOST VISITED TOUR" FontWeight="Bold" Style="{StaticResource GuideGroupBoxStyle}">
+            <Grid Margin="5" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="36.617"/>
+                    <ColumnDefinition Width="38.383"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="1" Margin="5">
-            <GroupBox Header="REQUESTS" FontWeight="Bold">
+                <Label Style="{StaticResource GuideLabelStyle}" Content="Year:" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+                <ComboBox Style="{StaticResource GuideComboBoxStyle}" SelectedIndex="0" Width="115" HorizontalAlignment="Left" VerticalAlignment="Center"
+            ItemsSource="{Binding TourYears}" SelectedItem="{Binding Path=SelectedTourYear, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Margin="79,0,0,0"/>
+                <Button Style="{StaticResource GuideButtonStyle}" Content="Search" Width="100" HorizontalAlignment="Left" Grid.Column="3" Click="btnSearchTours_Click" Margin="57,0,0,0"/>
+
+                <Label Content="Tour Name:" FontWeight="Bold" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource GuideLabelStyle}"/>
+                <Label Content="{Binding MostVisitedTour.Name}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" Style="{StaticResource GuideLabelStyle}"/>
+
+                <Label Content="Location:" FontWeight="Bold" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource GuideLabelStyle}"/>
+                <Label Content="{Binding MostVisitedTour.Location}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Style="{StaticResource GuideLabelStyle}"/>
+
+                <Label Content="Language:" FontWeight="Bold" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource GuideLabelStyle}"/>
+                <Label Content="{Binding MostVisitedTour.Language}" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right" Style="{StaticResource GuideLabelStyle}"/>
+
+                <Label Content="Capacity:" FontWeight="Bold" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource GuideLabelStyle}"/>
+                <Label Content="{Binding MostVisitedTour.MaximumCapacity}" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Right"  Style="{StaticResource GuideLabelStyle}"/>
+
+                <Label Content="Duration:" FontWeight="Bold" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource GuideLabelStyle}"/>
+                <Label Content="{Binding MostVisitedTour.DurationHours}" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Right"  Style="{StaticResource GuideLabelStyle}"/>
+
+                <TextBlock Text="Description:" FontWeight="Bold" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"  Style="{StaticResource GuideTextBlockStyle}"/>
+                <TextBlock Text="{Binding MostVisitedTour.Description}" TextWrapping="Wrap" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" Margin="5, 30, 5, 5" Height="Auto" Style="{StaticResource GuideTextBlockStyle}"/>
+
+            </Grid>
+        </GroupBox>
+
+
+        <StackPanel Grid.Column="1">
+            <GroupBox Header="REQUESTS" FontWeight="Bold" Style="{StaticResource GuideGroupBoxStyle}">
                 <StackPanel Height="416">
-                    <Grid Margin="5" Height="105">
+                    <Grid Margin="5" Height="115">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -52,35 +72,42 @@
 
                         <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,10,0">
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                <Label Content="Location:" VerticalAlignment="Center"/>
-                                <ComboBox Width="150" Margin="5,0,0,0" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}"/>
+                                <Label Style="{StaticResource GuideLabelStyle}" Content="Location:" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                <ComboBox Style="{StaticResource GuideComboBoxStyle}" Height="30" Width="150" Margin="5,0,0,0" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                <Label Content="Language:" VerticalAlignment="Center"/>
-                                <ComboBox Width="150" Margin="5,0,0,0" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}"/>
+                                <Label Style="{StaticResource GuideLabelStyle}" Content="Language:" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                <ComboBox Style="{StaticResource GuideComboBoxStyle}" Height="30" Width="150" Margin="5,0,0,0" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                <Label Content="Year:" VerticalAlignment="Center"/>
-                                <ComboBox Width="150" Margin="5,0,0,0" ItemsSource="{Binding RequestYears}" SelectedItem="{Binding SelectedRequestYear}"/>
+                                <Label Style="{StaticResource GuideLabelStyle}" Content="Year:" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                <ComboBox Style="{StaticResource GuideComboBoxStyle}" Height="30" Width="150" Margin="5,0,0,0" ItemsSource="{Binding RequestYears}" SelectedItem="{Binding SelectedRequestYear}"/>
                             </StackPanel>
                         </StackPanel>
 
-                        <Button Grid.Column="2" Content="Search" Margin="5" Width="100" VerticalAlignment="Top" Click="btnSearchRequests_Click"/>
+                        <Button Style="{StaticResource GuideButtonStyle}" Grid.Column="2" Content="Search" Margin="5" Width="100" VerticalAlignment="Top" Click="btnSearchRequests_Click"/>
                     </Grid>
-                    <charting:Chart x:Name="BarChartVisits" Height="246">
-                        <charting:BarSeries
-                    Title="requests" 
-                    ItemsSource="{Binding YearlyOrMonthlyVisits}"
-                    IndependentValuePath="Key"
-                    DependentValuePath="Value"/>
-                    </charting:Chart>
+                    <chartingToolkit:Chart x:Name="BarChartVisits" Height="236" Background="#FCFFF5" Foreground="#2C3E50" Title="Number of Visits">
+                        <chartingToolkit:Chart.Axes>
+                            <chartingToolkit:CategoryAxis Title="Visits" Orientation="X" Foreground="#2C3E50"/>
+                            <chartingToolkit:LinearAxis Title="Time Period" Orientation="Y" Foreground="#2C3E50"/>
+                        </chartingToolkit:Chart.Axes>
+                        <chartingToolkit:BarSeries
+                        Title="Requests"
+                        ItemsSource="{Binding YearlyOrMonthlyVisits}"
+                        IndependentValuePath="Key"
+                        DependentValuePath="Value"
+                        Background="#3E606F"
+                        Foreground="#91AA9D"/>
+                    </chartingToolkit:Chart>
+
 
                     <StackPanel Orientation="Horizontal" Margin="5">
-                        <Label Content="Number of requests in selected year:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding NumberOfRequestsInSelectedYear}" Background="LightGray" Padding="5" Width="146" Margin="5,0,0,0"/>
+                        <Label Style="{StaticResource GuideLabelStyle}" Content="Number of requests in selected year:" FontWeight="Bold" Margin="0,0,0,0"/>
+                        <Label Style="{StaticResource GuideLabelStyle}" Content="{Binding NumberOfRequestsInSelectedYear}" Width="88" Margin="0,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
     </Grid>
-</Window>
+</Page>

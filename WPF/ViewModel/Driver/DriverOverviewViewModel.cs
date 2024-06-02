@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using BookingApp.Domain.RepositoryInterfaces;
 
 namespace BookingApp.WPF.ViewModel.Driver
 {
@@ -22,6 +23,9 @@ namespace BookingApp.WPF.ViewModel.Driver
     {
         public List<Location> locations { get; set; }
         public GroupDriveService groupDriveService { get; set; }
+        public NotificationService notificationService { get; set; }
+
+        public UserService userService { get; set; }
 
         public DriveReservation SelectedReservation { get; set; }
         public bool canCancel { get; set; }
@@ -120,6 +124,8 @@ namespace BookingApp.WPF.ViewModel.Driver
             driveReservationService = new DriveReservationService();
             groupDriveService = new GroupDriveService(DriverId, DataGrid_Refresh);
             DriveReservations = new ObservableCollection<DriveReservation>(driveReservationService.GetByDriver(driver.Id));
+            userService = new UserService(Injector.CreateInstance<IUserRepository>());
+            notificationService = new NotificationService(Injector.CreateInstance<INotificationRepository>());
             _locationRepository = new LocationRepository();
             vehicleService = new VehicleService();
             locations = _locationRepository.GetAll();
@@ -217,16 +223,32 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void ViewDrive_Respond(object? sender, EventArgs e)
         {
-            if (!ValidateInput(() => (SelectedReservation.DriveReservationStatusId == 1 || SelectedReservation.DriveReservationStatusId == 14), "You can't confirm this one!"))
+            if (!ValidateInput(() => (SelectedReservation.DriveReservationStatusId == 1 || SelectedReservation.DriveReservationStatusId == 14 || SelectedReservation.DriveReservationStatusId == 12), "You can't confirm this one!"))
             {
                 return;
             }
-            SelectedReservation.DriveReservationStatusId = 2;
+            SelectedReservation.DriveReservationStatusId = 13;
             driveReservationService.Update(SelectedReservation);
+            SendNotification(SelectedReservation);
             DataGrid_Refresh(sender, e);
         }
 
-
+        private void SendNotification(DriveReservation reservation)
+        {
+            string title = "Pronadjen vozač";
+            string text = "Pronađen vozać " +
+                          userService.GetById(reservation.DriverId).Username +
+                          " za  vožnju za " +
+                          reservation.DepartureTime.ToString("HH:mm dd.MM.yyyy");
+            Notification notification = new Notification()
+            {
+                DateIssued = DateTime.Now,
+                Title = title,
+                Text = text,
+                TargetUserId = reservation.TouristId
+            };
+            notificationService.Save(notification);
+        }
 
         public void ViewDrive_Cancel(object? sender, EventArgs e)
         {
@@ -315,6 +337,7 @@ namespace BookingApp.WPF.ViewModel.Driver
                 MainWindow.EventAggregator.Publish(new ShowMessageEvent("Congratulations!\nYou are now getting paid more!", "Notification"));
             driveReservationService.Update(reservation);
             UpdateReservationList();
+            SendNotification(reservation);
         }
 
         public void btnDrive_Click(object sender, RoutedEventArgs e, Page owner)

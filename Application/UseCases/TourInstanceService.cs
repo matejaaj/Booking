@@ -85,26 +85,35 @@ namespace BookingApp.Application.UseCases
             }
         }
 
-        public void CancelTour(TourInstance SelectedInstance)
+        public void QuitJob(User user)
         {
-            IssueVouchersToTourParticipants(SelectedInstance);
+            var instances = GetAll().Where(t => t.GuideId == user.Id).ToList();
+            foreach(var instance in instances)
+            {
+                CancelTour(instance, 2);
+            }
+        }
+
+        public void CancelTour(TourInstance SelectedInstance, int voucherDuration)
+        {
+            IssueVouchersToTourParticipants(SelectedInstance, voucherDuration);
             Delete(SelectedInstance);
         }
 
-        private void IssueVouchersToTourParticipants(TourInstance SelectedInstance)
+        private void IssueVouchersToTourParticipants(TourInstance SelectedInstance, int voucherDuration)
         {
             List<TourReservation> allToursReservations = _tourReservationService.GetAll();
             foreach (var tourReservation in allToursReservations)
             {
                 if (tourReservation.TourInstanceId == SelectedInstance.Id)
                 {
-                    IssueVoucher(tourReservation.UserId);
+                    IssueVoucher(tourReservation.UserId, voucherDuration);
                 }
             }
         }
-        private void IssueVoucher(int userId)
+        private void IssueVoucher(int userId, int voucherDuration )
         {
-            Voucher voucher = new Voucher(userId, DateTime.Now.AddYears(1));
+            Voucher voucher = new Voucher(userId, DateTime.Now.AddYears(voucherDuration));
             _voucherService.Save(voucher);
         }
 
@@ -171,6 +180,31 @@ namespace BookingApp.Application.UseCases
                     earliest = instance.StartTime.Year;
             }
             return earliest;
+        }
+
+        public Dictionary<string, int> GetGuidedToursPerMonth(int guideId)
+        { 
+            List<string> months = new List<string>();
+            for (int i = 1; i < 13; i++)
+            {
+                months.Add(i.ToString());
+            }
+
+            Dictionary<string, int> toursPerMonth = new Dictionary<string, int>();
+            foreach (var month in months)
+            {
+                toursPerMonth.Add(month, 0);
+            }
+
+            foreach(var tour in GetAll())
+            {
+                if(tour.StartTime.AddYears(1) >= DateTime.Now && tour.GuideId == guideId)
+                {
+                    toursPerMonth[tour.StartTime.Month.ToString()]++;
+                }
+            }
+
+            return toursPerMonth;
         }
     }
 

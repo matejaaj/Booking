@@ -4,13 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookingApp.WPF.View.Owner"
+      xmlns:commands="clr-namespace:BookingApp.Commands"
       xmlns:guest="clr-namespace:BookingApp.WPF.View.Guest"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="ViewAccommodationPage">
     <Page.Resources>
-        <guest:LocationConverter x:Key="LocationConverter" />
-
         <Style x:Key="RoundedButton" TargetType="Button">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="Foreground" Value="Black"/>
@@ -56,7 +55,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Image Grid.Row="0" Source="../../../Resources/Images/babinobrdo.jpg" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,20,20,20"/>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Row="0" Source="{Binding CurrentImage}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,20,20,0"/>
+                <Button Margin="3" Background="Transparent" Grid.Row="0" Content="←" Command="{Binding PreviousImageCommand}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Margin="3" Background="Transparent" Grid.Row="0" Content="→" Command="{Binding NextImageCommand}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
 
             <Border Grid.Row="1" Margin="20" BorderBrush="Gray" BorderThickness="1">
                 <StackPanel Margin="10">
@@ -66,35 +73,35 @@
                         </Style>
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Name:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.Name}" Margin="5,0"/>
+                        <TextBlock Text="Name:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.Name}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Location:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Path=Accommodation.LocationId , Converter={StaticResource LocationConverter}}" Margin="5,0"/>
+                        <TextBlock Text="Location:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.Location}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Type:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.Type}" Margin="5,0"/>
+                        <TextBlock Text="Type:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.Type}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Capacity:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.MaxGuests}" Margin="5,0"/>
+                        <TextBlock Text="Capacity:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.MaxGuests}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Minimum Reservation Days:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.MinReservations}" Margin="5,0"/>
+                        <TextBlock Text="Minimum Reservation Days:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.MinReservations}" Margin="5,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Cancellation Window:" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Accommodation.CancelThershold}" Margin="5,0"/>
+                        <TextBlock Text="Cancellation Window:" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Text="{Binding SelectedAccommodation.CancelThershold}" Margin="5,0"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Click="Statistics_Click" Content="Statistics" Style="{StaticResource RoundedButton}" Margin="0,0,10,0"/>
-                <Button Click="RenovateAccommodation_Click" Content="Renovate" Style="{StaticResource RoundedButton}" Margin="10,0,0,0"/>
+                <Button Command="{Binding StatisticsCommand}" Content="Statistics" Style="{StaticResource RoundedButton}" Margin="0,0,10,0"/>
+                <Button Command="{Binding RenovationCommand}" Content="Renovate" Style="{StaticResource RoundedButton}" Margin="10,0,0,0"/>
             </StackPanel>
 
             <TabControl Grid.Row="3" Margin="0,10,0,0">
@@ -116,7 +123,6 @@
                             BorderThickness="1"
                             ItemsSource="{Binding RecentAccommodationReservations}"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            SelectionChanged="RecentReservationsListBox_SelectionChanged"
                             SelectionMode="Single">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
@@ -124,6 +130,7 @@
                                     <Setter Property="Padding" Value="0" />
                                     <Setter Property="Margin" Value="5,5,5,5" />
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="commands:ListViewItemClickedBehavior.Command" Value="{Binding DataContext.ItemClickedCommand, RelativeSource={RelativeSource AncestorType=ListView}}" />
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>

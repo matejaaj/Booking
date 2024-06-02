@@ -12,21 +12,46 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Controls;
+using BookingApp.Domain.Model;
 
 namespace BookingApp.WPF.View.Guide
 {
     /// <summary>
     /// Interaction logic for TourRequests.xaml
     /// </summary>
-    public partial class TourRequests : Window
+    public partial class TourRequests : Page
     {
         private readonly TourRequestsViewModel _viewModel;
+        private User User { get; set; }
 
-        public TourRequests()
+        public static readonly DependencyProperty PageTitleProperty = DependencyProperty.Register(
+            "PageTitle", typeof(string), typeof(TourRequests), new PropertyMetadata(default(string)));
+
+        public string PageTitle
+        {
+            get { return (string)GetValue(PageTitleProperty); }
+            set { SetValue(PageTitleProperty, value); }
+        }
+
+        public static readonly DependencyProperty PageIconProperty = DependencyProperty.Register(
+            "PageIcon", typeof(string), typeof(TourRequests), new PropertyMetadata(default(string)));
+
+        public string PageIcon
+        {
+            get { return (string)GetValue(PageIconProperty); }
+            set { SetValue(PageIconProperty, value); }
+        }
+
+
+        public TourRequests(User user)
         {
             InitializeComponent();
-            _viewModel = new TourRequestsViewModel();
+            _viewModel = new TourRequestsViewModel(user);
             DataContext = _viewModel;
+            this.PageIcon = "../../../Resources/Images/Guide/personal.png";
+            this.PageTitle = "REQUESTS";
+            User = user;
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

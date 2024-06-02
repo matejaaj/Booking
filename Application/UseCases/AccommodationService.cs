@@ -17,10 +17,20 @@ namespace BookingApp.Application.UseCases
         private readonly IAccommodationRepository _accommodationRepository;
         private AccommodationReservationService _accommodationReservationService;
         private ReservationModificationRequestService _reservationModificationRequestService;
+        private RenovationRecommendationService _renovationRecommendationService;
+        private LocationService _locationService;
+        private ImageService _imageService;
 
         public AccommodationService(IAccommodationRepository accommodationRepository)
         {
             _accommodationRepository = accommodationRepository;
+        }
+
+        public AccommodationService(IAccommodationRepository accommodationRepository, ImageService imageService, LocationService locationService)
+        {
+            _accommodationRepository = accommodationRepository;
+            _locationService = locationService;
+            _imageService = imageService;
         }
 
         public AccommodationService(AccommodationReservationService accommodationReservationService, ReservationModificationRequestService reservationModificationRequestService, IAccommodationRepository accommodationRepository)
@@ -28,6 +38,14 @@ namespace BookingApp.Application.UseCases
             _accommodationRepository = accommodationRepository;
             _accommodationReservationService = accommodationReservationService;
             _reservationModificationRequestService = reservationModificationRequestService;
+        }
+
+        public AccommodationService(AccommodationReservationService accommodationReservationService, ReservationModificationRequestService reservationModificationRequestService, RenovationRecommendationService renovationRecommendationService, IAccommodationRepository accommodationRepository)
+        {
+            _accommodationRepository = accommodationRepository;
+            _accommodationReservationService = accommodationReservationService;
+            _reservationModificationRequestService = reservationModificationRequestService;
+            _renovationRecommendationService = renovationRecommendationService;
         }
 
         public AccommodationService()
@@ -86,6 +104,7 @@ namespace BookingApp.Application.UseCases
                         bookingsNum++;
                         if (b.IsCancelled) cancelations++;
                         reschedulings += _reservationModificationRequestService.GetAllAcceptedWithReservationId(b.Id).Count();
+                        renovationSuggestions += _renovationRecommendationService.GetAllWithReservationId(b.Id).Count();
                         totalDays += (int)(b.EndDate - b.StartDate).TotalDays;
                     }
                 }
@@ -113,6 +132,7 @@ namespace BookingApp.Application.UseCases
                         bookingsNum++;
                         if (b.IsCancelled) cancelations++;
                         reschedulings += _reservationModificationRequestService.GetAllAcceptedWithReservationId(b.Id).Count();
+                        renovationSuggestions += _renovationRecommendationService.GetAllWithReservationId(b.Id).Count();
                         totalDays += (int)(b.EndDate - b.StartDate).TotalDays;
                     }
                 }
@@ -131,6 +151,36 @@ namespace BookingApp.Application.UseCases
         {
             var retValue = monthlyStats.OrderByDescending(stat => stat.Busyness).FirstOrDefault();
             return retValue.Month.ToString();
+        }
+        public List<AccommodationPageDTO> GetByUserWithLocationAndImage(User loggedInOwner)
+        {
+            var accommodations = _accommodationRepository.GetByUser(loggedInOwner);
+            List<AccommodationPageDTO> retValue = new List<AccommodationPageDTO>();
+            foreach (var a in accommodations)
+            {
+                var location = _locationService.GetLocationById(a.LocationId);
+                List<Image> images = _imageService.GetImagesByEntityAndType(a.AccommodationId, ImageResourceType.ACCOMMODATION);
+                var imagePaths = images?.Select(i => i.Path).ToList() ?? new List<string>();
+                retValue.Add(new AccommodationPageDTO(a, location, imagePaths));
+            }
+            return retValue;
+        }
+
+        public AccommodationPageDTO GetDisplayDTOById(int targetUserId)
+        {
+            var accommodation = _accommodationRepository.GetById(targetUserId);
+            var location = _locationService.GetLocationById(accommodation.LocationId);
+            List<Image> images = _imageService.GetImagesByEntityAndType(accommodation.AccommodationId, ImageResourceType.ACCOMMODATION);
+            var imagePaths = images?.Select(i => i.Path).ToList() ?? new List<string>();
+            return new AccommodationPageDTO(accommodation, location, imagePaths);
+        }
+
+        internal List<int> GetLocationIdsByOwner(Owner loggedInOwner)
+        {
+            var accommodations = GetByUser(loggedInOwner);
+            List<int> ids = accommodations.Select(a => a.LocationId).Distinct().ToList();
+
+            return ids;
         }
     }
 }

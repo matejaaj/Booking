@@ -17,9 +17,9 @@ namespace BookingApp.Application.UseCases
             _imageRepository = Injector.CreateInstance<IImageRepository>();
         }
 
-        public ImageService(IImageRepository image)
+        public ImageService(IImageRepository imageRepository)
         {
-            _imageRepository = image;
+            _imageRepository = imageRepository;
         }
 
         public List<Image> GetAll()

@@ -13,5 +13,6 @@ namespace BookingApp.Domain.RepositoryInterfaces
         List<User> GetByIds(List<int> ids);
         List<User> GetAll();
         User GetById(int id);
+        void Delete(User user);
     }
 }

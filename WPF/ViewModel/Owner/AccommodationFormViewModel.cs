@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.Repository;
@@ -7,13 +8,16 @@ using BookingApp.WPF.View.Guide;
 using BookingApp.WPF.View.Owner;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Xml.Linq;
 
 namespace BookingApp.WPF.ViewModel.Owner
@@ -25,6 +29,7 @@ namespace BookingApp.WPF.ViewModel.Owner
 
         private readonly AccommodationService _accommodationService;
         private readonly LocationService _locationService;
+        private readonly ImageService _imageService;
         public List<Location> locations { get; set; }
         public List<Domain.Model.Image> images { get; set; }
 
@@ -70,7 +75,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        private string _type;
+        private string _type = "House";
         public string Type
         {
             get => _type;
@@ -80,6 +85,34 @@ namespace BookingApp.WPF.ViewModel.Owner
                 {
                     _type = value;
                     OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<string> _pictures;
+        public ObservableCollection<string> Pictures
+        {
+            get => _pictures;
+            set
+            {
+                if (value != _pictures)
+                {
+                    _pictures = value;
+                    OnPropertyChanged(nameof(Pictures));
+                }
+            }
+        }
+
+        private string _picture;
+        public string Picture
+        {
+            get => _picture;
+            set
+            {
+                if (value != _picture)
+                {
+                    _picture = value;
+                    OnPropertyChanged(nameof(Picture));
                 }
             }
         }
@@ -127,6 +160,10 @@ namespace BookingApp.WPF.ViewModel.Owner
         }
 
         private int _accommodationId;
+        public ICommand ConfirmCommand { get; }
+        public ICommand CancelCommand { get; }
+        public ICommand AddImagesCommand { get; }
+        public ICommand ShowImagesCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -138,33 +175,79 @@ namespace BookingApp.WPF.ViewModel.Owner
         public AccommodationFormViewModel(Domain.Model.Owner owner, Window ownerWindow)
         {
             LoggedInOwner = owner;
+            Pictures = new ObservableCollection<string>();
             _accommodationService = new AccommodationService(Injector.CreateInstance<IAccommodationRepository>());
             _locationService = new LocationService(Injector.CreateInstance<ILocationRepository>());
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
             locations = _locationService.GetAll();
+            SelectedLocation = locations[0];
             images = new List<Domain.Model.Image>();
             _accommodationId = _accommodationService.NextId();
             _ownerWindow = ownerWindow;
+
+            ConfirmCommand = new RelayCommand(Confirm);
+            CancelCommand = new RelayCommand(Cancel);
+            AddImagesCommand = new RelayCommand(AddImages);
+            ShowImagesCommand = new RelayCommand(ShowImages);
         }
 
-        public void btnConfirm_Click(object sender, RoutedEventArgs e)
+        private void Confirm(object obj)
         {
-                Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
-                Accommodation savedAccommodation = _accommodationService.Save(newAccommodation);
-                OwnerOverviewViewModel.Accommodations.Add(savedAccommodation);
+            Accommodation newAccommodation = new Accommodation(AccommodationName, SelectedLocation.Id, Type.ToUpper(), MaxGuests, MinReservations, CancelThershold, LoggedInOwner.Id);
+            List<Image> images = _imageService.GetImagesByEntityAndType(newAccommodation.AccommodationId, ImageResourceType.ACCOMMODATION);
+            var imageIds = images?.Select(i => i.Id).ToList() ?? new List<int>();
+            var imagePaths = images?.Select(i => i.Path).ToList() ?? new List<string>();
+            var location = _locationService.GetLocationById(newAccommodation.LocationId);
+            newAccommodation.ImageIds = imageIds;
+            Accommodation savedAccommodation = _accommodationService.Save(newAccommodation);
+
+            _ownerWindow.Close();
         }
 
-        public void btnAddImage_Click(object sender, RoutedEventArgs e)
+        private void Cancel(object obj)
         {
-            AddImage addImageWindow = new AddImage(images, _accommodationId, ImageResourceType.ACCOMMODATION);
-            addImageWindow.Owner = _ownerWindow;
-            addImageWindow.ShowDialog();
+            _ownerWindow.Close();
         }
 
-        public void btnShowImages_Click(object sender, RoutedEventArgs e)
+        private void AddImages(object obj)
         {
-            ShowImages showImagesWindow = new ShowImages(images);
-            showImagesWindow.Owner = _ownerWindow;
-            showImagesWindow.ShowDialog();
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.Filter = "Image files (*.jpg;*.jpeg;*.png;*.jfif)|*.jpg;*.jpeg;*.png;*.jfif";
+            dlg.Multiselect = true;
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                string[] selectedFiles = dlg.FileNames;
+
+                string destinationFolder = @"../../../Resources/Images/";
+
+                if (!Directory.Exists(destinationFolder))
+                {
+                    Directory.CreateDirectory(destinationFolder);
+                }
+
+                foreach (string file in selectedFiles)
+                {
+                    string destinationFilePath = Path.Combine(destinationFolder, Path.GetFileName(file));
+                    Domain.Model.Image newImage = new Domain.Model.Image(destinationFilePath, _accommodationId, ImageResourceType.ACCOMMODATION, LoggedInOwner.Id);
+                    if (_imageService.GetAll().Find(i => i.Path == newImage.Path) == null)
+                    {
+                        _imageService.Save(newImage);
+                    }
+                    //File.Copy(file, destinationFilePath);
+                    Pictures.Add(file);
+                }
+
+               
+            }
+        }
+
+        private void ShowImages(object obj)
+        {
+            throw new NotImplementedException();
         }
     }
 

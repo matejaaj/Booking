@@ -28,7 +28,7 @@ namespace BookingApp.WPF.View.Guest
         public RequestModification(AccommodationReservation reservation)
         {
             InitializeComponent();
-            _viewModel = new RequestModificationViewModel(reservation, new ReservationModificationRequestService(Injector.CreateInstance<IReservationModificationRequestRepository>()));
+            _viewModel = new RequestModificationViewModel(reservation);
             DataContext = _viewModel;
         }
 
@@ -37,7 +37,6 @@ namespace BookingApp.WPF.View.Guest
             DateTime newStartDate = StartDatePicker.SelectedDate ?? DateTime.MinValue;
             DateTime newEndDate = EndDatePicker.SelectedDate ?? DateTime.MinValue;
             _viewModel.SendRequest(newStartDate, newEndDate);
-            StatusTextBlock.Text = _viewModel.StatusMessage;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

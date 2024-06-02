@@ -1,6 +1,11 @@
-﻿using System;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
+using BookingApp.Domain.RepositoryInterfaces;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -14,9 +19,12 @@ namespace BookingApp.WPF.ViewModel.Guide
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public ObservableCollection<Domain.Model.Image> Images { get; set; }
         private List<Domain.Model.Image> _images;
         private int _entityId;
+        private int _userId;
         private ImageResourceType _imageResourceType;
+        private ImageService _imageService;
 
         private string _source;
         public string Source
@@ -32,24 +40,27 @@ namespace BookingApp.WPF.ViewModel.Guide
             }
         }
 
-        public AddImageViewModel(List<Domain.Model.Image> images, int entityId, ImageResourceType imageResourceType)
+        public AddImageViewModel(List<Domain.Model.Image> images, int entityId, ImageResourceType imageResourceType, int userId)
         {
+            Images = new ObservableCollection<Domain.Model.Image>(images);
             _images = images;
             _entityId = entityId;
             _imageResourceType = imageResourceType;
+            _userId = userId;
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
         }
 
-        public void Confirm()
+        public void AddImage()
         {
             if (!string.IsNullOrEmpty(Source))
             {
-                Domain.Model.Image newImage = new Domain.Model.Image(_source, _entityId, _imageResourceType, -1);
+                Domain.Model.Image newImage = new Domain.Model.Image(_source, _entityId, _imageResourceType, _userId);
+                Images.Add(newImage);
                 _images.Add(newImage);
-                MessageBox.Show("Successfully added.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                MessageBox.Show("Not added", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (_imageService.GetAll().Find(i => i.Path == newImage.Path)==null)
+                {
+                    _imageService.Save(newImage);
+                }
             }
         }
     }
