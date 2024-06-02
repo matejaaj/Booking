@@ -113,6 +113,21 @@ namespace BookingApp.DTO
             }
         }
 
+        private bool isCancelled { get; set; }
+
+        public bool IsCancelled
+        {
+            get { return isCancelled; }
+            set
+            {
+                if (isCancelled != value)
+                {
+                    isCancelled = value;
+                    OnPropertyChanged("IsCancelled");
+                }
+            }
+        }
+
         public ForumDisplayOwnerDTO(User guest, Location location, Forum forum)
         {
             GuestName = guest.Username;
@@ -120,6 +135,7 @@ namespace BookingApp.DTO
             DateOpened = forum.DateOpened.ToString("dd.MM.yyyy");
             Display = "Opened by " + guest.Username + " on " + DateOpened;
             Id = forum.Id;
+            IsCancelled = forum.IsCancelled;
             IsUseful = forum.IsUsefull;
             if (IsUseful)
             {
