@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
         Title="Add Images" Height="400" Width="400"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner" Style="{StaticResource GuideWindowStyle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,14 +15,14 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="10">
-            <Label Content="Path (Alt + P):" FontWeight="Bold"/>
+            <Label Style="{StaticResource GuideLabelStyle}" Content="Path (Alt + P):"/>
             <StackPanel Orientation="Horizontal">
-                <TextBox Name="txtSource" Text="{Binding Path=Source, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
-                <Button Content="Add (Ctrl + A)" Click="btnAddImage_Click" Margin="5,0,0,0"/>
+                <TextBox Style="{StaticResource GuideTextBoxStyle}" Name="txtSource" Text="{Binding Path=Source, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                <Button Style="{StaticResource GuideButtonStyle}" Content="Add (Ctrl + A)" Click="btnAddImage_Click" Margin="70,0,0,0"/>
             </StackPanel>
         </StackPanel>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Images}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+        <DataGrid  Style="{StaticResource GuideDataGridStyle}" Grid.Row="1" ItemsSource="{Binding Images}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Path" Binding="{Binding Path}" Width="*"/>
                 <DataGridTemplateColumn Header="Remove" Width="100">
@@ -37,7 +37,7 @@
 
         <!-- Buttons for Save and Cancel -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="Save (Ctrl + S)" Click="btnConfirm_Click"  Width="100" Margin="0,0,10,0"/>
+            <Button Style="{StaticResource GuideButtonStyle}" Content="Save (Ctrl + S)" Click="btnConfirm_Click"  Width="100" Margin="0,0,10,0"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Add Start Date" Height="400" Width="520"
-        WindowStartupLocation="CenterOwner">
+        Title="Add Start Date" Height="400" Width="600"
+        WindowStartupLocation="CenterOwner" Style="{StaticResource GuideWindowStyle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,14 +16,14 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="10" Orientation="Horizontal">
-            <Label Content="Date (Alt + D):" FontWeight="Bold"/>
+            <Label Style="{StaticResource GuideLabelStyle}" Content="Date (Alt + D):" FontWeight="Bold"/>
             <DatePicker Name="dpDate" SelectedDate="{Binding SelectedDate}" Width="120"/>
-            <Label Content="Time (Alt + T):" FontWeight="Bold" Margin="10,0,0,0"/>
-            <xctk:TimePicker Name="tpTime" Value="{Binding SelectedTime, Mode=TwoWay, PresentationTraceSources.TraceLevel=High}" Format="Custom" FormatString="HH:mm"/>
-            <Button Content="Add (Ctrl + A)" Click="btnAdd_Click" Margin="10,0,0,0" HorizontalAlignment="Right"/>
+            <Label Style="{StaticResource GuideLabelStyle}" Content="Time (Alt + T):" FontWeight="Bold" Margin="10,0,0,0"/>
+            <xctk:TimePicker Name="tpTime" Value="{Binding SelectedTime, Mode=TwoWay, PresentationTraceSources.TraceLevel=High}" Format="Custom" FormatString="HH:mm" Width="100"/>
+            <Button Style="{StaticResource GuideButtonStyle}" Margin="20,0,0,0" Content="Add (Ctrl + A)" Click="btnAdd_Click"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding StartDates}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+        <DataGrid Style="{StaticResource GuideDataGridStyle}" Grid.Row="1" ItemsSource="{Binding StartDates}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding StartTime.Date, StringFormat=\{0:dd/MM/yyyy\}}" Width="*"/>
                 <DataGridTextColumn Header="Time" Binding="{Binding StartTime.TimeOfDay}" Width="100"/>
@@ -38,7 +38,7 @@
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="Save (Ctrl + S)" Click="btnConfirm_Click" Width="100" Margin="0,0,10,0"/>
+            <Button Style="{StaticResource GuideButtonStyle}" Content="Save (Ctrl + S)" Click="btnConfirm_Click" Width="100" Margin="0,0,10,0"/>
         </StackPanel>
     </Grid>
 </Window>

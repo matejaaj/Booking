@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
         Title="Add Checkpoint" Height="400" Width="400"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner" Style="{StaticResource GuideWindowStyle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -21,12 +21,12 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Checkpoint Name" Grid.Column="0"/>
-            <TextBox Name="txtName" Text="{Binding Path=CheckpointName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="0,5,10,5"/>
-            <Button Content="Add" Width="100" Grid.Column="2" Click="btnAdd_Click" Margin="0,5,0,5"/>
+            <Label Style="{StaticResource GuideLabelStyle}" Content="Checkpoint Name" Grid.Column="0"/>
+            <TextBox Style="{StaticResource GuideTextBoxStyle}" Name="txtName" Text="{Binding Path=CheckpointName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="0,5,10,5"/>
+            <Button Style="{StaticResource GuideButtonStyle}" Content="Add" Width="100" Grid.Column="2" Click="btnAdd_Click" Margin="0,5,0,5"/>
         </Grid>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Checkpoints}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+        <DataGrid  Style="{StaticResource GuideDataGridStyle}" Grid.Row="1" ItemsSource="{Binding Checkpoints}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                 <DataGridTemplateColumn Header="Remove" Width="100">
@@ -40,7 +40,7 @@
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Name="btnConfirm" Content="Save" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />
+            <Button Style="{StaticResource GuideButtonStyle}" Name="btnConfirm" Content="Save" Width="75" Margin="0,0,10,0" Click="btnConfirm_Click" />
         </StackPanel>
     </Grid>
 </Window>

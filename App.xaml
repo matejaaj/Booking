@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/TouristLightTheme.xaml"/>
                 <ResourceDictionary Source="Styles/TouristStyles.xaml"/>
+                <ResourceDictionary Source="Styles/GuideStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
