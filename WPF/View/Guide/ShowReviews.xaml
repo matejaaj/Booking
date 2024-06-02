@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         mc:Ignorable="d"
-        Title="ShowReviews" Height="450" Width="400">
+        Title="ShowReviews" Height="450" Width="400" Style="{StaticResource GuideWindowStyle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding TourInstances}"
+            <DataGrid ItemsSource="{Binding TourInstances}" Style="{StaticResource GuideDataGridStyle}"
   SelectedItem="{Binding SelectedInstance}"
   IsReadOnly="True" SelectionMode="Single" 
   AutoGenerateColumns="False" Height="400" HeadersVisibility="Column" FontSize="13">
@@ -25,6 +25,6 @@
             </DataGrid>
         </StackPanel>
 
-        <Button Grid.Row="1" Width="150" Content="Show Reviews" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Click="btnShowReviews_Click"/>
+        <Button Style="{StaticResource GuideButtonStyle}" Grid.Row="1" Width="150" Content="Show Reviews" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Click="btnShowReviews_Click"/>
     </Grid>
 </Window>

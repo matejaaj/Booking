@@ -59,5 +59,10 @@ namespace BookingApp.WPF.View.Guide
         {
             ContentFrame.Navigate(new Home(user, this));
         }
+
+        private void ContentFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
+        }
     }
 }

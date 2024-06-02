@@ -180,28 +180,21 @@ namespace BookingApp.WPF.ViewModel.Guide
 
         public void Filter()
         {
-            List<TourRequest> simpleRequests = _tourRequestService.GetSimpleRequests();
-            List<TourRequestDTO> tourRequestDTOs = dtoFactory.CreateSimpleTourDTOs(simpleRequests);
+            List<TourRequest> requests = _tourRequestService.GetAll();
+                List<TourRequestDTO> tourRequestDTOs = dtoFactory.CreateSimpleTourDTOs(requests);
 
-            var filteredRequests = tourRequestDTOs
-                .Where(req =>
-                    (SelectedLanguage == null || req.LanguageId == SelectedLanguage.Id) &&
-                    (SelectedLocation == null || req.LocationId == SelectedLocation.Id) &&
-                    (req.FromDate.Date >= SelectedFirstDate.Date && req.ToDate.Date <= SelectedSecondDate.Date) &&
-                    req.Capacity <= Capacity
-                ).ToList();
-
-
-            TourRequests.Clear();
-            foreach (var request in filteredRequests)
-            {
-                TourRequests.Add(request);
-            }
-
-            if (TourRequests.Count == 0)
-            {
-                MessageBox.Show("No matching records found.");
-            }
+                var filteredRequests = tourRequestDTOs
+                    .Where(req =>
+                        (SelectedLanguage == null || req.LanguageId == SelectedLanguage.Id) &&
+                        (SelectedLocation == null || req.LocationId == SelectedLocation.Id) &&
+                        (req.FromDate.Date >= SelectedFirstDate.Date && req.ToDate.Date <= SelectedSecondDate.Date) &&
+                        req.Capacity <= Capacity
+                    ).ToList();
+                TourRequests.Clear();
+                foreach (var request in filteredRequests)
+                {
+                    TourRequests.Add(request);
+                }
         }
 
         public void Accept()

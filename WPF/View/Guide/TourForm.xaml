@@ -6,7 +6,7 @@
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
       mc:Ignorable="d"
-      Title="TourForm" Height="500" Width="750">
+      Title="TourForm" Height="500" Width="750" Style="{StaticResource GuidePageStyle}">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,9 +20,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Recommended" Grid.Column="1" HorizontalAlignment="left" Margin="0,0,10,0" Width="120" Click="btnRecomended_Click"/>
+            <Button Style="{StaticResource GuideButtonStyle}" Content="Recommended" Grid.Column="1" HorizontalAlignment="left" Margin="0,0,10,0" Width="170" Click="btnRecomended_Click"/>
 
-            <Label Content="Description (Alt + E):" Grid.Column="1" HorizontalAlignment="Right" Margin="130,0,80,0" FontWeight="Bold"/>
+            <Label Style="{StaticResource GuideLabelStyle}" Content="Description (Alt + E):" Grid.Column="1" HorizontalAlignment="Right" Margin="130,0,80,0" FontWeight="Bold"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -48,39 +48,39 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Name (Alt + N):" FontWeight="Bold" Grid.Row="0" Grid.Column="0"/>
-                <TextBox Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="5"/>
+                <Label Style="{StaticResource GuideLabelStyle}" Content="Name (Alt + N):" FontWeight="Bold" Grid.Row="0" Grid.Column="0"/>
+                <TextBox  Style="{StaticResource GuideTextBoxStyle}" Text="{Binding Path=TourName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="5"/>
 
-                <Label Content="Location (Alt + L):" FontWeight="Bold" Grid.Row="1" Grid.Column="0"/>
-                <ComboBox IsTextSearchEnabled="True" ItemsSource="{Binding Locations}" SelectedItem="{Binding Path=SelectedLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          Grid.Row="1" Grid.Column="1" Margin="5" Width="150" HorizontalAlignment="Right"/>
+                <Label Style="{StaticResource GuideLabelStyle}" Content="Location (Alt + L):" FontWeight="Bold" Grid.Row="1" Grid.Column="0"/>
+                <ComboBox Style="{StaticResource GuideComboBoxStyle}" ItemsSource="{Binding Locations}" SelectedItem="{Binding Path=SelectedLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Right"/>
 
-                <Label Content="Language (Alt + G):" FontWeight="Bold" Grid.Row="2" Grid.Column="0"/>
-                <ComboBox IsTextSearchEnabled="True" ItemsSource="{Binding Languages}" SelectedItem="{Binding Path=SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          Grid.Row="2" Grid.Column="1" Margin="5" Width="150" HorizontalAlignment="Right"/>
+                <Label Style="{StaticResource GuideLabelStyle}" Content="Language (Alt + G):" FontWeight="Bold" Grid.Row="2" Grid.Column="0"/>
+                <ComboBox Style="{StaticResource GuideComboBoxStyle}" ItemsSource="{Binding Languages}" SelectedItem="{Binding Path=SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Grid.Row="2" Grid.Column="1" Width="150" HorizontalAlignment="Right"/>
 
-                <Label Content="Capacity (Alt + C):" FontWeight="Bold" Grid.Row="3" Grid.Column="0"/>
-                <TextBox Text="{Binding Path=Capacity, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="5"/>
+                <Label Style="{StaticResource GuideLabelStyle}" Content="Capacity (Alt + C):" FontWeight="Bold" Grid.Row="3" Grid.Column="0"/>
+                <TextBox Style="{StaticResource GuideTextBoxStyle}" Text="{Binding Path=Capacity, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="5"/>
 
-                <Label Content="Duration hours (Alt + D):" FontWeight="Bold" Grid.Row="4" Grid.Column="0"/>
-                <TextBox Text="{Binding Path=DurationHours, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="5"/>
+                <Label Style="{StaticResource GuideLabelStyle}" Content="Duration hours (Alt + D):" FontWeight="Bold" Grid.Row="4" Grid.Column="0"/>
+                <TextBox Style="{StaticResource GuideTextBoxStyle}" Text="{Binding Path=DurationHours, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="5"/>
 
-                <Label Content="Checkpoints:" FontWeight="Bold" Grid.Row="5" Grid.Column="0"/>
-                <Button Content="Add checkpoint (Ctrl + K)" Grid.Row="5" Grid.Column="1" HorizontalAlignment="right" Margin="5" Width="150" Click="btnAddCheckpoints_Click"/>
+                <Label Style="{StaticResource GuideLabelStyle}" Content="Checkpoints:" FontWeight="Bold" Grid.Row="5" Grid.Column="0"/>
+                <Button Style="{StaticResource GuideButtonStyle}" Content="Add checkpoint (Ctrl + K)" Grid.Row="5" Grid.Column="1" HorizontalAlignment="right" Margin="5" Width="170" Click="btnAddCheckpoints_Click"/>
 
-                <Label Content="Images:" FontWeight="Bold" Grid.Row="6" Grid.Column="0"/>
-                <Button Content="Add images (Ctrl + I)" Grid.Row="6" Grid.Column="1" HorizontalAlignment="right" Width="150" Margin="5" Click="btnAddImage_Click"/>
+                <Label Style="{StaticResource GuideLabelStyle}" Content="Images:" FontWeight="Bold" Grid.Row="6" Grid.Column="0"/>
+                <Button  Style="{StaticResource GuideButtonStyle}" Content="Add images (Ctrl + I)" Grid.Row="6" Grid.Column="1" HorizontalAlignment="right" Width="170" Margin="5" Click="btnAddImage_Click"/>
 
-                <Label Content="Start date:" FontWeight="Bold" Grid.Row="7" Grid.Column="0"/>
-                <Button Content="Add date (Ctrl + D)" Grid.Row="7" Grid.Column="1" HorizontalAlignment="right" Margin="5" Width="150" Click="btnAddStartDate_Click"/>
+                <Label Style="{StaticResource GuideLabelStyle}" Content="Start date:" FontWeight="Bold" Grid.Row="7" Grid.Column="0"/>
+                <Button Style="{StaticResource GuideButtonStyle}" Content="Add date (Ctrl + D)" Grid.Row="7" Grid.Column="1" HorizontalAlignment="right" Margin="5" Width="170" Click="btnAddStartDate_Click"/>
             </Grid>
 
 
             <Border Grid.Column="1" BorderThickness="1" Padding="5">
-                <TextBox Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                <TextBox Style="{StaticResource GuideTextBoxStyle}" Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
             </Border>
         </Grid>
 
-        <Button Content="SAVE (Ctrl + S)" Grid.Row="2" HorizontalAlignment="Right" Margin="10,0,10,0" Width="120" Click="btnConfirm_Click"/>
+        <Button Style="{StaticResource GuideButtonStyle}" Content="SAVE (Ctrl + S)" Grid.Row="2" HorizontalAlignment="Right" Margin="10,0,10,0" Width="120" Click="btnConfirm_Click"/>
     </Grid>
 </Page>

@@ -6,7 +6,7 @@
       xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
       xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
       mc:Ignorable="d"
-      Title="SuperGuide" Height="450" Width="750">
+      Title="SuperGuide" Height="450" Width="750" Style="{StaticResource GuidePageStyle}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,22 +19,22 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
-            <Label Content="Language (Alt + G):" VerticalAlignment="Center"/>
-            <ComboBox Width="120" Margin="5,0,0,0" Height="25"  IsTextSearchEnabled="True" ItemsSource="{Binding Languages}" SelectedItem="{Binding Path=SelectedLanguage, UpdateSourceTrigger=PropertyChanged}">
+            <Label Style="{StaticResource GuideLabelStyle}" Content="Language (Alt + G):" VerticalAlignment="Center"/>
+            <ComboBox Style="{StaticResource GuideComboBoxStyle}" Width="120" Margin="5,0,0,0" Height="25"  IsTextSearchEnabled="True" ItemsSource="{Binding Languages}" SelectedItem="{Binding Path=SelectedLanguage, UpdateSourceTrigger=PropertyChanged}">
             </ComboBox>
         </StackPanel>
 
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Status}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
 
-        <Border Grid.Row="1" Grid.Column="1" Margin="10" BorderBrush="Black" BorderThickness="1" Padding="10">
+        <Border Grid.Row="1" Grid.Column="1" Margin="10" BorderBrush="#91AA9D" BorderThickness="2" Padding="5" Background="#FCFFF5">
             <StackPanel>
-                <TextBlock Text="Minimal requirements:" FontWeight="Bold"/>
-                <TextBlock Text="Number of guided tours: 20"/>
-                <TextBlock Text="Average grade: 4.0"/>
+                <Label Content="Minimum number of guided tours: 20" Style="{StaticResource GuideLabelStyle}" Margin="0,0,0,0"/>
+                <Label Content="Minimum average grade: 4.0" Style="{StaticResource GuideLabelStyle}" Margin="0,0,0,0"/>
             </StackPanel>
         </Border>
 
-        <Button Grid.Row="1" Grid.Column="0" Content="Show progress (Ctrl + S)" HorizontalAlignment="Left" Margin="10" Padding="5" Height="40" Click="btn_ShowProgress"/>
+
+        <Button Style="{StaticResource GuideButtonStyle}" Grid.Row="1" Grid.Column="0" Content="Show progress (Ctrl + S)" HorizontalAlignment="Left" Margin="10" Padding="5" Height="40" Click="btn_ShowProgress"/>
 
         <Grid Grid.Row="2" Grid.Column="0">
             <Grid.ColumnDefinitions>
@@ -48,24 +48,26 @@
                 <RowDefinition Height="60"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Status valid to:" FontWeight="Bold"/>
-            <TextBlock FontSize="24" Text="{Binding ValidTo}" FontWeight="Bold" Grid.Column="1" Grid.Row="0"/>
+            <Label Content="Status valid to:" FontWeight="Bold" Style="{StaticResource GuideLabelStyle}"/>
+            <Label Content="{Binding ValidTo}" FontSize="24" FontWeight="Bold" Grid.Column="1" Grid.Row="0" Style="{StaticResource GuideLabelStyle}"/>
 
-            <TextBlock Text="Number of guided tours:" FontWeight="Bold" Grid.Row="1"/>
-            <TextBlock FontSize="24" Text="{Binding NumberOfGuidedTours}" FontWeight="Bold" Name="GuidedToursCount" Grid.Column="1" Grid.Row="1"/>
+            <Label Content="Number of guided tours:" FontWeight="Bold" Grid.Row="1" Style="{StaticResource GuideLabelStyle}"/>
+            <Label Content="{Binding NumberOfGuidedTours}" FontSize="24" FontWeight="Bold" Name="GuidedToursCount" Grid.Column="1" Grid.Row="1" Style="{StaticResource GuideLabelStyle}"/>
 
-            <TextBlock Text="Average grade:" FontWeight="Bold" Margin="10,0,0,0" Grid.Row="2"/>
-            <TextBlock Text="{Binding AverageGrade, StringFormat={}{0:F2}}" FontSize="24" FontWeight="Bold" Name="AverageGrade" Grid.Column="1" Grid.Row="2"/>
+            <Label Content="Average grade:" FontWeight="Bold" Margin="10,0,0,0" Grid.Row="2" Style="{StaticResource GuideLabelStyle}"/>
+            <Label Content="{Binding AverageGrade, StringFormat={}{0:F2}}" FontSize="24" FontWeight="Bold" Name="AverageGrade" Grid.Column="1" Grid.Row="2" Style="{StaticResource GuideLabelStyle}"/>
+
         </Grid>
 
-        <Border Grid.Row="2" Grid.Column="1" Margin="10" BorderBrush="Gray" BorderThickness="1">
-            <chartingToolkit:Chart Title="Number of Guided Tours">
+        <Border Grid.Row="2" Grid.Column="1" Margin="10" BorderBrush="#91AA9D" BorderThickness="2" Padding="10" Background="#FCFFF5">
+            <chartingToolkit:Chart Title="Number of Guided Tours" Background="#FCFFF5" Foreground="#2C3E50">
                 <chartingToolkit:Chart.Axes>
-                    <chartingToolkit:CategoryAxis Title="Month" Orientation="X" />
-                    <chartingToolkit:LinearAxis Title="Total" Orientation="Y" />
+                    <chartingToolkit:CategoryAxis Title="Month" Orientation="X" Foreground="#2C3E50" />
+                    <chartingToolkit:LinearAxis Title="Total" Orientation="Y" Foreground="#2C3E50" />
                 </chartingToolkit:Chart.Axes>
-                <chartingToolkit:LineSeries ItemsSource="{Binding GuidedToursData}" IndependentValuePath="Key" DependentValuePath="Value" Title="Guided Tours"/>
+                <chartingToolkit:LineSeries ItemsSource="{Binding GuidedToursData}" IndependentValuePath="Key" DependentValuePath="Value" Title="Guided Tours" Background="#3E606F" Foreground="#91AA9D"/>
             </chartingToolkit:Chart>
         </Border>
+
     </Grid>
 </Page>

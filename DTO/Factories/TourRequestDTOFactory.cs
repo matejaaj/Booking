@@ -25,11 +25,15 @@ namespace BookingApp.DTO.Factories
 
         public List<TourRequestDTO> CreateSimpleTourDTOs(List<TourRequest> requests)
         {
-            return requests.Select(request =>
+            return requests
+            .Where(request => _tourSegmentService.GetByRequestId(request.Id) != null)
+            .Select(request =>
             {
                 var segment = _tourSegmentService.GetByRequestId(request.Id);
                 return CreateTourRequestDTO(segment);
-            }).ToList();
+            })
+            .ToList();
+
         }
 
         public List<TourRequestDTO> GetRequestDTOs(List<TourRequestSegment> requests)
