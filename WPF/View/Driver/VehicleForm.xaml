@@ -6,7 +6,7 @@
       xmlns:Syncfusion="http://schemas.syncfusion.com/wpf" 
       x:Class="BookingApp.WPF.View.Driver.VehicleForm"
       mc:Ignorable="d"
-      Title="Register new vehicle" Height="550" Width="936">
+      Title="Register new vehicle" Height="570" Width="936">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- GroupBox for Vehicle Registration -->
+        
         <GroupBox Header="Vehicle Registration" FontWeight="DemiBold" Margin="10,0,10,10" FontSize="18" Grid.RowSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -119,9 +119,7 @@
                 <Label Content="Images:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Margin="0,39,22,0"/>
                 <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="161,0,0,0">
                     <ListBox Margin="0,10,0,10" BorderThickness="1.5" BorderBrush="Black" x:Name="MyListBox" ItemsSource="{Binding Pictures, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6" Width="150" Height="78"/>
-                    <Button Click="btnAddImage_Click" x:Name="btnAddImage" Grid.Row="6" Grid.Column="0" Content="Add image" HorizontalAlignment="Left" Margin="30,20,0,10" Width="90" Command="{Binding AddImagesCommand}">
-
-                    </Button>
+                    <Button Click="btnAddImage_Click" x:Name="btnAddImage" Grid.Row="6" Grid.Column="0" Content="Add image" Margin="30,20,0,10" Width="124" Command="{Binding AddImagesCommand}" Height="41"/>
                 </StackPanel>
                 <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10,5,227,2" Grid.ColumnSpan="2" Grid.RowSpan="2">
                     <Image Source="../../../Resources/Images/insertImage.png" Width="180" Height="175"/>
@@ -130,7 +128,7 @@
                     <Image Source="../../../Resources/Images/insertImage.png" Width="90" Height="103"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20">
+                <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,20">
                     <Button Content="Cancel" Click="btnCancel_Click" Margin="0,0,10,0" Width="90" Height="35" FontSize="14">
                         <Button.Style>
                             <Style TargetType="Button">

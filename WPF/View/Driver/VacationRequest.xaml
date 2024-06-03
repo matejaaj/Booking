@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
       mc:Ignorable="d" 
-      d:DesignHeight="550" Width="936"
+      d:DesignHeight="570" Width="936"
       Title="VacationRequest">
 
     <Grid Margin="20">
@@ -21,7 +21,7 @@
             <Image Source="../../../Resources/Images/vacationIcon.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
             <TextBlock Text="Vacation Request" FontSize="23" FontWeight="Bold" VerticalAlignment="Center"/>
         </StackPanel>
-        
+
         <StackPanel Grid.Row="1" Margin="0,0,0,20">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -56,12 +56,41 @@
             </Grid>
         </StackPanel>
 
-        <TextBlock Grid.Row="3" TextWrapping="WrapWithOverflow" Margin="265,71,288,77" FontSize="15"
-                   Text="NAPOMENA: Zahtev za odmor se moze podneti minimum 48h pre odabranog datuma. U slucaju da vam ne nadjemo adekvatnu zamenu sto se tice voznji vas zahtev za odmor ce biti odbijen!" />
+        <TextBlock Grid.Row="3" TextWrapping="WrapWithOverflow" Margin="265,71,288,10" FontSize="15"
+                   Text="NAPOMENA: Zahtev za odmor se moze podneti minimum 48h pre odabranog datuma. 
+                   U slucaju da vam ne nadjemo adekvatnu zamenu sto se tice voznji vas zahtev za odmor ce biti odbijen!" Grid.RowSpan="2" />
 
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-            <Button Content="Cancel" Margin="10" Width="100" Click="Button_Click"/>
-            <Button Content="Confirm" Margin="10" Width="100" Click="Button_Click_Confirm"/>
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="Cancel" Margin="10" Width="100" Height="35" FontSize="14" Click="Button_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="LightGray"/>
+                        <Setter Property="BorderBrush" Value="Gray"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DarkGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Content="Confirm" Margin="10" Width="100" Height="35" FontSize="14" Click="Button_Click_Confirm">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="BorderBrush" Value="DarkBlue"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Blue"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

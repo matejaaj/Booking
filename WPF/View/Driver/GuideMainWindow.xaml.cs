@@ -83,7 +83,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnStats_Click(sender, e, currentPage);
-                lbl_Page.Text = "Stats";
+                lbl_Page.Text = "    Statistics";
             }
         }
 
@@ -93,7 +93,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnData_Click(sender, e, currentPage);
-                lbl_Page.Text = "User";
+                lbl_Page.Text = "  User Data";
             }
         }
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
@@ -102,7 +102,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.ShowCreateVehicleForm(sender, e, currentPage);
-                lbl_Page.Text = "Register vehicle";
+                lbl_Page.Text = "Registration";
             }
         }
 
@@ -112,7 +112,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnTutorial_Click(sender,e,currentPage);
-                lbl_Page.Text = "Tutorial";
+                lbl_Page.Text = "User Tutorial";
             }
         }
         private void btnVacatioRequest_Click(object sender, RoutedEventArgs e)
@@ -121,7 +121,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnVacatioRequest_Click(sender,e, currentPage);
-                lbl_Page.Text = "Vacation request";
+                lbl_Page.Text = "Request Vac";
             }
         }
 
@@ -131,7 +131,7 @@ namespace BookingApp.WPF.View.Driver
             if (currentPage != null)
             {
                 VM.btnVacationReports_Click(sender,e,currentPage);
-                lbl_Page.Text = "Vacation reports";
+                lbl_Page.Text = "Vac Reports";
             }
         }
         private void ViewDrive_Cancel(object? sender, EventArgs e)

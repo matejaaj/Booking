@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
         mc:Ignorable="d"
-        Title="ViewDrive" Height="550" Width="936">
+        Title="ViewDrive" Height="570" Width="936">
     <Grid>
-        <!-- Header Section -->
+        
         <TextBlock Text="View Drive" 
                    FontSize="24" 
                    FontWeight="Bold" 
@@ -15,9 +15,9 @@
                    VerticalAlignment="Top"
                    Margin="10,10,10,0"/>
 
-        <!-- Main Content Section -->
+        
         <StackPanel Margin="20" VerticalAlignment="Center">
-            <!-- Radio Buttons for Drive Status -->
+            
             <RadioButton x:Name="rbAtLocation" 
                          IsChecked="{Binding SelectedAtLocation, UpdateSourceTrigger=PropertyChanged}"
                          Checked="rbAtLocation_Checked" 
