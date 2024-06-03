@@ -39,7 +39,7 @@ namespace BookingApp.DTO.Factories
         public List<TourRequestDTO> GetRequestDTOs(List<TourRequestSegment> requests)
         {
             List<TourRequestDTO> dtos = new List<TourRequestDTO>();
-            foreach(TourRequestSegment segment in requests)
+            foreach (TourRequestSegment segment in requests)
             {
                 dtos.Add(CreateTourRequestDTO(segment));
             }
@@ -75,7 +75,7 @@ namespace BookingApp.DTO.Factories
                 Capacity = segment.Capacity,
                 FromDate = segment.FromDate,
                 ToDate = segment.ToDate,
-                AcceptedDate = segment.IsAccepted == TourRequestStatus.ACCEPTED ? segment.AcceptedDate : DateTime.MinValue, 
+                AcceptedDate = segment.IsAccepted == TourRequestStatus.ACCEPTED ? segment.AcceptedDate : DateTime.MinValue,
                 TourRequestId = segment.TourRequestId,
                 Location = _locationService.GetLocationById(segment.LocationId).City + " " + _locationService.GetLocationById(segment.LocationId).Country,
                 Language = _languageService.GetById(segment.LanguageId).Name,
@@ -83,8 +83,6 @@ namespace BookingApp.DTO.Factories
                 Status = GetStatusDescription(segment.IsAccepted)
             };
         }
-
-
         private string GetStatusDescription(TourRequestStatus status)
         {
             switch (status)

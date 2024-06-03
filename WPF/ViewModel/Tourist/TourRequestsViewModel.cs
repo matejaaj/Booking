@@ -8,6 +8,8 @@ using BookingApp.DTO;
 using BookingApp.DTO.Factories;
 using BookingApp.WPF.View.Tourist;
 using System.ComponentModel;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
@@ -45,11 +47,30 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
 
             InitializeFields();
-            CheckForExpiredRequests();
+            UpdateRequestsStatuses();
             UpdateTourRequests();
 
             TranslationSource.Instance.PropertyChanged += OnLanguageChanged;
         }
+
+        private void UpdateRequestsStatuses()
+        {
+
+            var (allRequests, allSegments) = GetPendingRequestsAndSegments();
+            _expirationChecker.CheckAndAcceptCompleteRequests(allRequests, allSegments);
+
+
+            (allRequests, allSegments) = GetPendingRequestsAndSegments();
+            _expirationChecker.CheckAndExpireRequests(allRequests, allSegments);
+        }
+
+        private (List<TourRequest>, List<TourRequestSegment>) GetPendingRequestsAndSegments()
+        {
+            var allSegments = _tourSegmentService.GetAll();
+            var allRequests = _tourRequestService.GetAll().Where(r => r.IsAccepted == TourRequestStatus.PENDING).ToList();
+            return (allRequests, allSegments);
+        }
+
 
         private void InitializeFields()
         {
@@ -68,10 +89,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             ShowComplexRequestDetailsCommand = new RelayCommand(ShowComplexRequestDetails);
         }
 
-        private void CheckForExpiredRequests()
-        {
-            _expirationChecker.CheckAndExpireRequests();
-        }
+
 
         public void UpdateTourRequests()
         {

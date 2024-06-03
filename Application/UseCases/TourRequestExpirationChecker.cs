@@ -17,11 +17,8 @@ namespace BookingApp.Application.UseCases
             _tourRequestSegmentService = tourRequestSegmentService;
         }
 
-        public void CheckAndExpireRequests()
+        public void CheckAndExpireRequests(IEnumerable<TourRequest> allRequests, IEnumerable<TourRequestSegment> allSegments)
         {
-            var allSegments = _tourRequestSegmentService.GetAll();
-            var allRequests = _tourRequestService.GetAll().Where(r => r.IsAccepted == TourRequestStatus.PENDING).ToList();
-
             foreach (var request in allRequests)
             {
                 var segments = allSegments.Where(segment => segment.TourRequestId == request.Id).ToList();
@@ -32,10 +29,8 @@ namespace BookingApp.Application.UseCases
 
                     if (earliestSegment.FromDate < DateTime.Now || timeUntilExpiration.TotalHours < 48)
                     {
-
                         request.IsAccepted = TourRequestStatus.CANCELED;
                         _tourRequestService.Update(request);
-
 
                         foreach (var segment in segments)
                         {
@@ -46,5 +41,22 @@ namespace BookingApp.Application.UseCases
                 }
             }
         }
+
+
+        public void CheckAndAcceptCompleteRequests(IEnumerable<TourRequest> allRequests, IEnumerable<TourRequestSegment> allSegments)
+        {
+            foreach (var request in allRequests)
+            {
+                var segments = allSegments.Where(segment => segment.TourRequestId == request.Id).ToList();
+
+                if (segments.Any() && segments.All(segment => segment.IsAccepted == TourRequestStatus.ACCEPTED))
+                {
+                    request.IsAccepted = TourRequestStatus.ACCEPTED;
+                    _tourRequestService.Update(request);
+                }
+            }
+        }
+
+
     }
 }
