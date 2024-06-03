@@ -24,6 +24,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourRequestService _tourRequestService;
         private TourRequestSegmentService _tourRequestSegmentService;
         private PrivateTourGuestService _privateTourGuestService;
+        private TouristVoucherAcquirer _voucherAcquirer;
 
 
         public MyToursViewModel MyToursViewModel { get;  }
@@ -47,9 +48,15 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _privateTourGuestService = privateguest;
 
 
+            _voucherAcquirer =
+                new TouristVoucherAcquirer(_tourReservationService, _voucherService, _tourInstanceService);
+
             MyToursViewModel = new MyToursViewModel(loggedUser, tourService, tourInstanceService, checkpointService, imageService, locationService, languageService, tourGuestService, tourReservationService, _voucherService, tourReviewService);
             AllToursViewModel = new AllToursViewModel(loggedUser, tourService, tourInstanceService, checkpointService, imageService, locationService, languageService, tourGuestService, tourReservationService, _voucherService);
             TourRequestsViewModel = new TourRequestsViewModel(loggedUser,_locationService, languageService, _tourRequestService, _tourRequestSegmentService, _privateTourGuestService, _privateTourGuestService);
+
+
+            _voucherAcquirer.AcquireVouchersForUser(_tourReservationService.GetAllByUserId(loggedUser.Id));
         }
         
     }

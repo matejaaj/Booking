@@ -183,11 +183,17 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public TourRequestSegmentViewModel(LocationService location, ObservableCollection<KeyValuePair<int, string>> countries, ObservableCollection<KeyValuePair<int, string>> languages)
         {
             _locationService = location;
-            Countries = countries;
-            Languages = languages;
+            _countries = countries;
+            _languages = languages;
+
 
             _fromDate = DateTime.Now;
             _toDate = DateTime.Now;
+
+
+            _selectedCountry = new KeyValuePair<int, string>(0, string.Empty);
+            _selectedCity = new KeyValuePair<int, string>(0, string.Empty);
+            _selectedLanguage = new KeyValuePair<int, string>(0, string.Empty);
 
         }
 

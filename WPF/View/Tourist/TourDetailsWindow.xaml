@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
+        xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title="Detalji ture" Height="675" Width="1100"
+        Title="{resources:Loc TourDetailsTittle}" Height="675" Width="1100"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="BoldTextBlockStyle" TargetType="TextBlock">
@@ -49,19 +50,19 @@
             <Border Style="{StaticResource BorderStyle}" Margin="30 0 0 0" Width="440" Height="570">
                 <StackPanel>
                     <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Naziv: " />
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc TourName}"/>
                         <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Name}" />
                     </StackPanel>
                     <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Lokacija: " />
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Location}" />
                         <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Location}" />
                     </StackPanel>
                     <StackPanel Margin="0, 10, 0, 0">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Opis: " />
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Description}" />
                         <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Description}" />
                     </StackPanel>
                     <StackPanel Margin="0, 10, 0, 0">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Kljucne tacke: " />
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Checkpoints}" />
                         <ItemsControl ItemsSource="{Binding Tour.Checkpoints}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -76,19 +77,19 @@
                         </ItemsControl>
                     </StackPanel>
                     <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Jezik: " />
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Language}" />
                         <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Language}" />
                     </StackPanel>
                     <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Trajanje u satima: " />
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc DurationHours}" />
                         <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.DurationHours}" />
                     </StackPanel>
                     <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Maksimalno turista: " />
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc MaxTourists}"/>
                         <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.MaximumCapacity}" />
                     </StackPanel>
                     <StackPanel Margin="0, 10, 0, 0">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="Datumi odrzavanja: " />
+                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc TourDatesAvailable}" />
                         <ItemsControl ItemsSource="{Binding Tour.Dates}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -107,7 +108,7 @@
                     <Image Source="{Binding CurrentImage}" Height="330" Width="390" Stretch="Uniform"/>
                     <Button Command="{Binding NextImageCommand}" Margin="10 0 0 0" Height="30" Width="30" Style="{StaticResource ImageButtonStyle}" Tag="{DynamicResource NextImageSource}" />
                 </StackPanel>
-                <Button Content="Rezervacija" Margin="0, 20, 0, 0" Style="{StaticResource DefaultButton}" Width="250" Height="75" HorizontalAlignment="Center" Command="{Binding ReservationCommand}"/>
+                <Button Content="{resources:Loc TourReservationButton}" Margin="0, 20, 0, 0" Style="{StaticResource DefaultButton}" Width="250" Height="75" HorizontalAlignment="Center" Command="{Binding ReservationCommand}"/>
             </StackPanel>
         </Grid>
     </Grid>

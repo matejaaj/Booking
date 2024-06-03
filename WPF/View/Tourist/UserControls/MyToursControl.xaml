@@ -4,6 +4,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+
+             xmlns:resources="clr-namespace:BookingApp"
              Style="{StaticResource UserControlStyle}">
 
     <Grid>
@@ -12,7 +14,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Moje ture" Margin="20"/>
+        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="{resources:Loc MyTours}" Margin="20"/>
 
         <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
             <ItemsControl ItemsSource="{Binding Tours}">
@@ -39,11 +41,11 @@
                                 <StackPanel Grid.Column="0" Grid.Row="0">
                                     <TextBlock Style="{StaticResource ItemHeaderTextStyle}" Text="{Binding Name}" TextTrimming="CharacterEllipsis"/>
                                     <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
-                                        <TextBlock Text="Datum: " FontWeight="Bold"/>
+                                        <TextBlock Text="{resources:Loc Date}" FontWeight="Bold"/>
                                         <TextBlock Text="{Binding Date, StringFormat='dd.MM.yyyy'}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
-                                        <TextBlock Text="Trenutna lokacija: " FontWeight="Bold"/>
+                                        <TextBlock Text="{resources:Loc CurrentLocation}" FontWeight="Bold"/>
                                         <TextBlock Text="{Binding CurrentCheckpointDisplay}"/>
                                     </StackPanel>
                                     <TextBlock Margin="0 0 0 0" Text="{Binding DisplayGuests}" TextWrapping="Wrap"/>
@@ -58,7 +60,7 @@
                                 <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource DefaultButton}" Command="{Binding DataContext.MoreDetailsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" HorizontalAlignment="Center" Width="150" Height="40" FontSize="16">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="25" Height="25" Margin="0,0,10,0"/>
-                                        <TextBlock Text="Više detalja"/>
+                                        <TextBlock Text="{resources:Loc MoreDetails}"/>
                                     </StackPanel>
                                 </Button>
 
@@ -66,7 +68,7 @@
                                 <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource DefaultButton}" Command="{Binding DataContext.RateTourCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" HorizontalAlignment="Left" Width="150" Height="40" FontSize="16" Margin="-40 0 0 0">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="pack://application:,,,/Resources/Images/Tourist/rate.png" Width="25" Height="25" Margin="0,0,10,0"/>
-                                        <TextBlock Text="Oceni"/>
+                                        <TextBlock Text="{resources:Loc RateTour}"/>
                                     </StackPanel>
                                 </Button>
                             </Grid>

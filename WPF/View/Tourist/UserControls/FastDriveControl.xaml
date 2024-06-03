@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
              xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:resources="clr-namespace:BookingApp"
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="{DynamicResource PrimaryBackground}">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -24,62 +26,90 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Izaberite drzavu:" Grid.Row="0" Grid.Column="0" Margin="40,0,0,15"/>
-        <controls:AutoCompleteBox ItemsSource="{Binding Countries}"
+        <Label Content="{resources:Loc Country}" Grid.Row="0" Grid.Column="0" Margin="40,0,0,15"
+               Width="190" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+        <controls:AutoCompleteBox x:Name="autoCompleteCountry" ItemsSource="{Binding Countries}"
                                   SelectedItem="{Binding SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   ValueMemberPath="Value"
-                                  Grid.Row="0" Grid.Column="1" Margin="0,0,60,15">
+                                  Grid.Row="0" Grid.Column="1" Margin="0,0,60,15"
+                                  Style="{StaticResource FormAutoCompleteBox}">
             <controls:AutoCompleteBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Value}" />
+                    <TextBlock Text="{Binding Value}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}"/>
                 </DataTemplate>
             </controls:AutoCompleteBox.ItemTemplate>
         </controls:AutoCompleteBox>
 
-        <Label Content="Izaberite grad:" Grid.Row="1" Grid.Column="0" Margin="40,0,0,15"/>
-        <controls:AutoCompleteBox ItemsSource="{Binding Cities}"
+        <Label Content="{resources:Loc City}" Grid.Row="1" Grid.Column="0" Margin="40,0,0,15"
+               Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+        <controls:AutoCompleteBox x:Name="autoCompleteCity" ItemsSource="{Binding Cities}"
                                   SelectedItem="{Binding SelectedCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   ValueMemberPath="Value"
-                                  Grid.Row="1" Grid.Column="1" Margin="0,0,60,15">
+                                  Grid.Row="1" Grid.Column="1" Margin="0,0,60,15"
+                                  Style="{StaticResource FormAutoCompleteBox}">
             <controls:AutoCompleteBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Value}" />
+                    <TextBlock Text="{Binding Value}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}"/>
                 </DataTemplate>
             </controls:AutoCompleteBox.ItemTemplate>
         </controls:AutoCompleteBox>
 
-        <Label Content="Izaberite ulicu polaska:" Grid.Row="2" Grid.Column="0" Margin="40,0,0,15"/>
-        <TextBox Text="{Binding StartAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="2" Grid.Column="1" Margin="0,0,60,15"/>
+        <Label Content="{resources:Loc StartLocation}" Grid.Row="2" Grid.Column="0" Margin="40,0,0,15"
+               Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+        <TextBox x:Name="startAddressTextBox" Text="{Binding StartAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                 Grid.Row="2" Grid.Column="1" Margin="0,0,60,15" Style="{StaticResource FormInput}" FontSize="16"
+                 Foreground="{DynamicResource PrimaryTextColor}"/>
 
-        <Label Content="Izaberite krajnju ulicu:" Grid.Row="3" Grid.Column="0" Margin="40,0,0,15"/>
-        <TextBox Text="{Binding EndAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="3" Grid.Column="1" Margin="0,0,60,15"/>
+        <Label Content="{resources:Loc DestinationLocation}" Grid.Row="3" Grid.Column="0" Margin="40,0,0,15"
+               Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+        <TextBox x:Name="endAddressTextBox" Text="{Binding EndAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                 Grid.Row="3" Grid.Column="1" Margin="0,0,60,15" Style="{StaticResource FormInput}" FontSize="16"
+                 Foreground="{DynamicResource PrimaryTextColor}"/>
 
-        <Label Content="Izaberite datum:" Grid.Row="4" Grid.Column="0" Margin="40,0,0,15"/>
-        <DatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" Margin="0,0,60,15"/>
+        <Label Content="{resources:Loc Date}" Grid.Row="4" Grid.Column="0" Margin="40,0,0,15"
+               Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+        <DatePicker x:Name="datePicker" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                    Grid.Row="4" Grid.Column="1" Margin="0,0,60,15" Style="{StaticResource FormDatePicker}"
+                    Foreground="{DynamicResource PrimaryTextColor}"/>
 
-        <Label Content="Izaberite sate i minute:" Grid.Row="5" Grid.Column="0" Margin="40,0,0,15"/>
+        <Label Content="{resources:Loc HourMinutes}" Grid.Row="5" Grid.Column="0" Margin="40,0,0,15"
+               Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
         <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="0,0,60,15" HorizontalAlignment="Left">
-            <controls:AutoCompleteBox ItemsSource="{Binding Hours}"
+            <controls:AutoCompleteBox x:Name="autoCompleteHour" ItemsSource="{Binding Hours}"
                                       SelectedItem="{Binding SelectedHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      Width="50">
+                                      Width="50" Style="{StaticResource FormAutoCompleteBox}">
                 <controls:AutoCompleteBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}" />
+                        <TextBlock Text="{Binding}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}"/>
                     </DataTemplate>
                 </controls:AutoCompleteBox.ItemTemplate>
             </controls:AutoCompleteBox>
-            <TextBlock Text=":" VerticalAlignment="Center" Margin="5,0"/>
-            <controls:AutoCompleteBox ItemsSource="{Binding Minutes}"
+            <TextBlock Text=":" VerticalAlignment="Center" Margin="5,0" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}"/>
+            <controls:AutoCompleteBox x:Name="autoCompleteMinute" ItemsSource="{Binding Minutes}"
                                       SelectedItem="{Binding SelectedMinute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      Width="50">
+                                      Width="50" Style="{StaticResource FormAutoCompleteBox}"
+                                      >
                 <controls:AutoCompleteBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}" />
+                        <TextBlock Text="{Binding}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}"/>
                     </DataTemplate>
                 </controls:AutoCompleteBox.ItemTemplate>
             </controls:AutoCompleteBox>
         </StackPanel>
 
-        <Button x:Name="btnReserveFast" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Content="Rezerviši" Click="btnReserve_Click" Margin="20,20,20,20"/>
+
+
+        <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,20,20,20">
+            <Button x:Name="btnReserveFast" Content="{resources:Loc ReserveDrive}" Command="{Binding ReserveCommand}"
+                    Margin="10"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                    Style="{StaticResource SmallButton}" FontSize="16" Foreground="{DynamicResource BlackTextColor}"/>
+            <Button Content="{resources:Loc CancelButton}"
+                    FontSize="16"
+                    Style="{StaticResource SmallButton}"
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                    Margin="10"/>
+        </StackPanel>
     </Grid>
 </UserControl>

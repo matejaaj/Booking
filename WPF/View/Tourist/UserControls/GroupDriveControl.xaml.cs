@@ -26,17 +26,6 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             InitializeComponent();
         }
 
-        private void btnReserve_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is GroupDriveFormViewModel viewModel)
-            {
-                viewModel.ReserveGroupDrive();
-                MessageBox.Show("Rezervacija uspešno izvršena!");
 
-
-                Window parentWindow = Window.GetWindow(this);
-                parentWindow?.Close();
-            }
-        }
     }
 }

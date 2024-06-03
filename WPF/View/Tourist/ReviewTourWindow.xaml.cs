@@ -30,7 +30,7 @@ namespace BookingApp.WPF.View.Tourist
             DataContext = _viewModel;
         }
 
-/*        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.SaveReviews();
             this.Close();
@@ -50,16 +50,21 @@ namespace BookingApp.WPF.View.Tourist
         }
 
 
-        private void RemovePictureButton_Click(object sender, RoutedEventArgs e)
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var button = sender as Button;
-            var imagePath = button.Tag as string;
-            var itemControl = FindParent<ItemsControl>(button);
+            var image = sender as Image;
+            var imagePath = image.Tag as string;
+
+            // Find the parent ItemsControl to get the correct DataContext
+            var itemControl = FindParent<ItemsControl>(image);
             var reviewFormViewModel = itemControl.DataContext as ReviewTourFormViewModel;
-            
-            _viewModel.RemovePicture(reviewFormViewModel, imagePath);
+
+            if (reviewFormViewModel != null && imagePath != null)
+            {
+                _viewModel.RemovePicture(reviewFormViewModel, imagePath);
+            }
         }
-*/
+
         public static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
             DependencyObject parentObject = VisualTreeHelper.GetParent(child);
@@ -68,5 +73,7 @@ namespace BookingApp.WPF.View.Tourist
             if (parent != null) return parent;
             return FindParent<T>(parentObject);
         }
+
+
     }
 }

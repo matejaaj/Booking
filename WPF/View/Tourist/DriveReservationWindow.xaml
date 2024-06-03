@@ -5,21 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         xmlns:controls="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
+        xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title="RequestDriveWindow" Height="600" Width="500"
+        Title="{resources:Loc DriveFormTittle}" Height="600" Width="500"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryBackground}">
 
 
     <Grid>
         <TabControl>
-            <TabItem Header="Obicna voznja" Style="{StaticResource ChildTabStyle}">
+            <TabItem Header="{resources:Loc RegularDrive}" Style="{StaticResource ChildTabStyle}">
                 <controls:RegularDriveControl DataContext="{Binding RegularDriveViewModel}" />
             </TabItem>
-            <TabItem Header="Brza voznja" Style="{StaticResource ChildTabStyle}">
+            <TabItem Header="{resources:Loc FastDrive}" Style="{StaticResource ChildTabStyle}">
                 <controls:FastDriveControl DataContext="{Binding FastDriveViewModel}" />
             </TabItem>
-            <TabItem Header="Grupna voznja" Style="{StaticResource ChildTabStyle}">
+            <TabItem Header="{resources:Loc GroupDrive}" Style="{StaticResource ChildTabStyle}">
                 <controls:GroupDriveControl DataContext="{Binding GroupDriveViewModel}" />
             </TabItem>
         </TabControl>

@@ -162,6 +162,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public BaseDriveFormViewModel()
         {
+
+
             InitializeFields();
             FillCountries();
             FillHours();
