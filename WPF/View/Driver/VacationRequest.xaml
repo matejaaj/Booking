@@ -51,7 +51,7 @@
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Vacation type" VerticalAlignment="Center" FontSize="15"/>
-                <ComboBox ItemsSource="{Binding VacTypes}" SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="60,10,-61,5">
+                <ComboBox  ItemsSource="{Binding VacTypes}" SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="60,10,-61,5">
                 </ComboBox>
             </Grid>
         </StackPanel>

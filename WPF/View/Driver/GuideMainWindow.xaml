@@ -136,9 +136,7 @@
         </Canvas>
 
         <DockPanel>
-            <StatusBar DockPanel.Dock="Bottom">
-                <TextBlock Name="StatusBarText">Ready</TextBlock>
-            </StatusBar>
+            
 
             <Frame Grid.Row="1" Name="MainNavigationFrame" NavigationUIVisibility="Hidden" Height="456" Margin="0,50,0,0"/>
         </DockPanel>

@@ -37,7 +37,7 @@
         <StackPanel Grid.Row="1" Grid.ColumnSpan="4">
             <ListView ItemsSource="{Binding DriveReservations}" 
                     Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}" 
-                    Height="558" 
+                    Height="607" 
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedReservation}">
                 <ListView.ItemContainerStyle>

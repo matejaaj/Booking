@@ -6,21 +6,60 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
         mc:Ignorable="d"
         Title="Stats" Height="570" Width="800">
-
+    <Page.Resources>
+        <Style x:Key="WatermarkTextBox" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <Border x:Name="border"
+                                    Background="White"
+                                    BorderBrush="Gray"
+                                    BorderThickness="1"
+                                    CornerRadius="3">
+                                <Grid>
+                                    <TextBox x:Name="textBox" 
+                                             Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             Background="Transparent" 
+                                             BorderThickness="0"
+                                             Padding="5,2"/>
+                                    <TextBlock x:Name="watermark" 
+                                               Text="Enter Year" 
+                                               Margin="5,0,0,0" 
+                                               VerticalAlignment="Center" 
+                                               Foreground="Gray" 
+                                               IsHitTestVisible="False" 
+                                               Visibility="Collapsed"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="watermark" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="watermark" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
     <Grid Margin="10">
         <TextBlock x:Name="txtDisplayMode" Text="{Binding DisplayMode}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.441,0.631" Width="189" Height="30"/>
         <Button Content="Cancel" Click="btnCancel_Click" HorizontalAlignment="Right" Margin="0,0,10,60" VerticalAlignment="Bottom" Width="75" Height="30" RenderTransformOrigin="0.486,-0.414"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="279">
             <Button Content="Yearly" Click="btnYearly_Click" Width="75" Height="30" Margin="0,0,5,0"/>
             <Button Content="Monthly" Click="btnMonthly_Click" Width="75" Height="30" Margin="0,0,5,0"/>
-            <TextBox x:Name="txtYear" Text="{Binding Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="119" Height="30"/>
+            <TextBox  x:Name="txtYear" Text="{Binding Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="119" Height="30" Style="{StaticResource WatermarkTextBox}"/>
         </StackPanel>
-        <DataGrid x:Name="lvReports" HorizontalAlignment="Center" Height="335" Margin="0,50,0,0" VerticalAlignment="Top" Width="760" ItemsSource="{Binding ListReport}" AutoGenerateColumns="False">
+        <DataGrid x:Name="lvReports" HorizontalAlignment="Center" Height="335" Margin="0,50,0,0" VerticalAlignment="Top" Width="780" ItemsSource="{Binding ListReport}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Year/Month" Binding="{Binding YearMonth}" Width="100"/>
-                <DataGridTextColumn Header="Number of Rides" Binding="{Binding NumberOfRides}" Width="120"/>
-                <DataGridTextColumn Header="Average Duration" Binding="{Binding AverageDuration, StringFormat=N2}" Width="120"/>
-                <DataGridTextColumn Header="Average Price" Binding="{Binding AveragePrice, StringFormat=N2}" Width="100"/>
+                <DataGridTextColumn Header="Year/Month" Binding="{Binding YearMonth}" Width="*"/>
+                <DataGridTextColumn Header="Number of Rides" Binding="{Binding NumberOfRides}" Width="*"/>
+                <DataGridTextColumn Header="Average Duration(Minutes)" Binding="{Binding AverageDuration, StringFormat=N2}" Width="*"/>
+                <DataGridTextColumn Header="Average Price" Binding="{Binding AveragePrice, StringFormat=N2}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
