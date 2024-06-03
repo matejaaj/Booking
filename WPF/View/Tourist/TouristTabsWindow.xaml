@@ -12,12 +12,12 @@
         Background="{DynamicResource PrimaryBackground}">
 
     <Window.InputBindings>
-        <KeyBinding Key="D1" Modifiers="Control" Command="{Binding ShowAllToursCommand}"/>
-        <KeyBinding Key="D2" Modifiers="Control" Command="{Binding ShowMyToursCommand}"/>
-        <KeyBinding Key="D3" Modifiers="Control" Command="{Binding ShowTourRequestsCommand}"/>
-        <KeyBinding Key="D4" Modifiers="Control" Command="{Binding ShowMyDrivesCommand}"/>
+        <KeyBinding Key="T" Modifiers="Control" Command="{Binding ShowAllToursCommand}"/>
+        <KeyBinding Key="M" Modifiers="Control" Command="{Binding ShowMyToursCommand}"/>
+        <KeyBinding Key="R" Modifiers="Control" Command="{Binding ShowTourRequestsCommand}"/>
+        <KeyBinding Key="D" Modifiers="Control" Command="{Binding ShowMyDrivesCommand}"/>
         <KeyBinding Key="L" Modifiers="Control" Command="{Binding ChangeLanguageCommand}"/>
-        <KeyBinding Key="T" Modifiers="Control" Command="{Binding ChangeThemeCommand}"/>
+        <KeyBinding Key="H" Modifiers="Control" Command="{Binding ChangeThemeCommand}"/>
     </Window.InputBindings>
 
     <Grid>
@@ -29,7 +29,7 @@
 
         <TabControl x:Name="MainTabControl" Grid.Row="0" TabStripPlacement="Left"
                     Background="{DynamicResource PrimaryBackground}">
-            <TabItem x:Name="ToursTabItem" Style="{StaticResource ParentTabStyle}" ToolTip="Ctrl + 1: Sve ture">
+            <TabItem x:Name="ToursTabItem" Style="{StaticResource ParentTabStyle}" ToolTip="{resources:Loc TooltipAllTours}">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -39,7 +39,7 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <TabControl>
-                    <TabItem x:Name="AllToursTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="Ctrl + 1: Sve ture">
+                    <TabItem x:Name="AllToursTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="{resources:Loc TooltipAllTours}">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -51,7 +51,7 @@
                         <control:AllToursControl DataContext="{Binding ToursMainViewModel.AllToursViewModel}"
                                                  Tourist="{Binding Tourist}"/>
                     </TabItem>
-                    <TabItem x:Name="MyToursTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="Ctrl + 2: Moje ture">
+                    <TabItem x:Name="MyToursTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="{resources:Loc TooltipMyTours}">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -64,7 +64,7 @@
                                                 Tourist="{Binding Tourist}"/>
                     </TabItem>
 
-                    <TabItem x:Name="TourRequestsTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="Ctrl + 3: Zahtev ture">
+                    <TabItem x:Name="TourRequestsTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="{resources:Loc TooltipTourRequests}">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -77,7 +77,7 @@
                     </TabItem>
                 </TabControl>
             </TabItem>
-            <TabItem x:Name="DrivesTabItem" Style="{StaticResource ParentTabStyle}" ToolTip="Ctrl + 4: Vožnje">
+            <TabItem x:Name="DrivesTabItem" Style="{StaticResource ParentTabStyle}" ToolTip="{resources:Loc TooltipTaxi}">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -87,7 +87,7 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <TabControl>
-                    <TabItem x:Name="MyDrivesTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="Ctrl + 4: Vožnje">
+                    <TabItem x:Name="MyDrivesTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="{resources:Loc TooltipDrives}">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -108,13 +108,13 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10,-130,0,0">
-            <Button Style="{StaticResource SmallButton}" Width="175" Command="{Binding ChangeLanguageCommand}" ToolTip="Ctrl + L: Promeni jezik">
+            <Button Style="{StaticResource SmallButton}" Width="175" Command="{Binding ChangeLanguageCommand}" ToolTip="{resources:Loc TooltipLanguage}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Resources/Images/Tourist/language.png" Width="25" Height="25" Margin="0,0,10,0"/>
                     <TextBlock Text="{resources:Loc ChangeLanguage}"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource SmallButton}" Command="{Binding ChangeThemeCommand}" ToolTip="Ctrl + T: Promeni temu">
+            <Button Style="{StaticResource SmallButton}" Command="{Binding ChangeThemeCommand}" ToolTip="{resources:Loc TooltipTheme}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Resources/Images/Tourist/theme.png" Width="25" Height="25" Margin="0,0,10,0"/>
                     <TextBlock Text="{resources:Loc ChangeTheme}"/>

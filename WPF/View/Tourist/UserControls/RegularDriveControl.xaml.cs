@@ -35,5 +35,26 @@ namespace BookingApp.WPF.View.Tourist.UserControls
                 viewModel.UpdateDriverList();
             }
         }
+
+        private void AutoCompleteBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            var autoCompleteBox = sender as AutoCompleteBox;
+            if (autoCompleteBox != null && autoCompleteBox.SelectedItem == null)
+            {
+                var viewModel = DataContext as RegularDriveFormViewModel;
+                if (viewModel != null)
+                {
+                    if (autoCompleteBox.Name == "autoCompleteCountry")
+                    {
+                        viewModel.ValidateCountry(autoCompleteBox.Text);
+                    }
+                    else if (autoCompleteBox.Name == "autoCompleteCity")
+                    {
+                        viewModel.ValidateCity(autoCompleteBox.Text);
+                    }
+                    // Add similar validation for other AutoCompleteBox controls if needed
+                }
+            }
+        }
     }
 }

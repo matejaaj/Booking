@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="PrimaryBackground" Color="#27374D"/>
     <SolidColorBrush x:Key="SecondaryBackground" Color="#526D82"/>
-    <SolidColorBrush x:Key="ButtonBackground" Color="#9DB2BF"/>
+    <SolidColorBrush x:Key="ButtonBackground" Color="#bccad3"/>
     <SolidColorBrush x:Key="BorderBrushColor" Color="#888888"/>
     <SolidColorBrush x:Key="SelectedTabBackground" Color="#3C5B6F"/>
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFFFFF"/>

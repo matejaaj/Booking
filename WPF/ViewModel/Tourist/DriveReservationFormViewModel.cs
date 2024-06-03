@@ -57,27 +57,5 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
 
         }
-
-
-        public void CheckForDriverAssignment()
-        {
-            var statusesToCheck = new List<string> { "CONFIRMED_FAST", "FAST_RESERVATION" };
-            var reservations = _driveReservationService.GetByTouristAndStatuses(Tourist.Id, statusesToCheck);
-
-            foreach (var reservation in reservations)
-            {
-                string formattedDeparture = reservation.DepartureTime.ToString("f");
-
-                if (reservation.DriveReservationStatusId == 13)
-                {
-                    var driver = _userService.GetById(reservation.DriverId);
-                    MessageBox.Show($"Your driver {driver.Username} has been assigned to your trip on {formattedDeparture}.");
-                }
-                else if (reservation.DriveReservationStatusId == 12)
-                {
-                    MessageBox.Show($"A driver has not yet been found for your fast reservation scheduled for {formattedDeparture}.");
-                }
-            }
-        }
     }
 }

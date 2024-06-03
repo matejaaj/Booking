@@ -86,13 +86,13 @@ namespace BookingApp.DTO.Factories
             switch (status)
             {
                 case TourRequestStatus.PENDING:
-                    return "Na čekanju";
+                    return TranslationSource.Instance["PendingStatus"];
                 case TourRequestStatus.ACCEPTED:
-                    return "Prihvaćen";
+                    return TranslationSource.Instance["AcceptedStatus"];
                 case TourRequestStatus.CANCELED:
-                    return "Odbijen";
+                    return TranslationSource.Instance["CanceledStatus"];
                 default:
-                    return "Nepoznat";
+                    return TranslationSource.Instance["UnknownStatus"];
             }
         }
     }

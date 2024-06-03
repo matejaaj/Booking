@@ -126,6 +126,9 @@
   <data name="AcceptedRequests" xml:space="preserve">
     <value>Accepted requests</value>
   </data>
+  <data name="AcceptedStatus" xml:space="preserve">
+    <value>Accepted</value>
+  </data>
   <data name="AddTourSegment" xml:space="preserve">
     <value>Add segment</value>
   </data>
@@ -143,6 +146,12 @@
   </data>
   <data name="CancelButton" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="CanceledStatus" xml:space="preserve">
+    <value>Declined</value>
+  </data>
+  <data name="CannotMarkDriverMessage" xml:space="preserve">
+    <value>Not enough time has passed</value>
   </data>
   <data name="ChangeLanguage" xml:space="preserve">
     <value>Change language</value>
@@ -192,6 +201,9 @@
   <data name="DestinationLocation" xml:space="preserve">
     <value>Destination: </value>
   </data>
+  <data name="DriveAcceptedMessage" xml:space="preserve">
+    <value>Accepted </value>
+  </data>
   <data name="DriveFormTittle" xml:space="preserve">
     <value>Reserve drive</value>
   </data>
@@ -200,6 +212,24 @@
   </data>
   <data name="Driver" xml:space="preserve">
     <value>Driver: </value>
+  </data>
+  <data name="DriverAlreadyMarkedMessage" xml:space="preserve">
+    <value>Driver already marked as unreliable</value>
+  </data>
+  <data name="DriverArrivedMessage" xml:space="preserve">
+    <value>Driver arrived</value>
+  </data>
+  <data name="DriverDelayMessage" xml:space="preserve">
+    <value>Driver will be late {0} minutes</value>
+  </data>
+  <data name="DriverMarkedUnreliableMessage" xml:space="preserve">
+    <value>Driver successfully marked as unrealible.</value>
+  </data>
+  <data name="DriverNotAssignedMessage" xml:space="preserve">
+    <value>Driver not assigned yet</value>
+  </data>
+  <data name="DriverNotFoundMessage" xml:space="preserve">
+    <value>Driver not found yet</value>
   </data>
   <data name="DriverUnreliable" xml:space="preserve">
     <value>Driver unreliable</value>
@@ -268,6 +298,9 @@
   <data name="NumberOfPeople" xml:space="preserve">
     <value>Number of people: </value>
   </data>
+  <data name="PendingStatus" xml:space="preserve">
+    <value>Pending</value>
+  </data>
   <data name="Present" xml:space="preserve">
     <value>Present</value>
   </data>
@@ -292,6 +325,9 @@
   <data name="ReserveDrive" xml:space="preserve">
     <value>Reserve drive</value>
   </data>
+  <data name="ReviewExistsMessage" xml:space="preserve">
+    <value>Already reviewed</value>
+  </data>
   <data name="StartLocation" xml:space="preserve">
     <value>Start location: </value>
   </data>
@@ -310,6 +346,27 @@
   <data name="To" xml:space="preserve">
     <value>To: </value>
   </data>
+  <data name="TooltipAllTours" xml:space="preserve">
+    <value>Ctrl + T:  All tours</value>
+  </data>
+  <data name="TooltipDrives" xml:space="preserve">
+    <value>Ctrld + D: My drives</value>
+  </data>
+  <data name="TooltipLanguage" xml:space="preserve">
+    <value>Ctrl + L: Change language</value>
+  </data>
+  <data name="TooltipMyTours" xml:space="preserve">
+    <value>Ctrl + M: My tours</value>
+  </data>
+  <data name="TooltipTaxi" xml:space="preserve">
+    <value>Ctrl + D: Taxi</value>
+  </data>
+  <data name="TooltipTheme" xml:space="preserve">
+    <value>Ctrl + H: Change theme</value>
+  </data>
+  <data name="TooltipTourRequests" xml:space="preserve">
+    <value>Ctrl + R: Tour requests</value>
+  </data>
   <data name="TourDatesAvailable" xml:space="preserve">
     <value>Dates available: </value>
   </data>
@@ -324,6 +381,9 @@
   </data>
   <data name="TourName" xml:space="preserve">
     <value>Name: </value>
+  </data>
+  <data name="TourNotFinishedMessage" xml:space="preserve">
+    <value>Tour is not finished yet.</value>
   </data>
   <data name="TourRequest" xml:space="preserve">
     <value>Tour requests</value>
@@ -345,6 +405,9 @@
   </data>
   <data name="TourSegment" xml:space="preserve">
     <value>Tour segment</value>
+  </data>
+  <data name="UnknownStatusMessage" xml:space="preserve">
+    <value>Unknown</value>
   </data>
   <data name="Year" xml:space="preserve">
     <value>Year: </value>
