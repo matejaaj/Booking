@@ -259,6 +259,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="24.2.9" />
@@ -334,5 +335,9 @@
     <Resource Include="Resources\Images\wizard2.png" />
     <Resource Include="Resources\Images\wizard3.png" />
     <Resource Include="Resources\Images\zuruckgehen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PDF\" />
   </ItemGroup>
 </Project>

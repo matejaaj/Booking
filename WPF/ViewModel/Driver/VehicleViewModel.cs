@@ -114,6 +114,8 @@ namespace BookingApp.WPF.ViewModel.Driver
             images = new List<Domain.Model.Image>();
             _imageService = new ImageService();
             Pictures = new ObservableCollection<string>();
+            SelectedLanguages.Add(languages.FirstOrDefault());
+            SelectedLocations.Add(locations.FirstOrDefault());
         }
 
         public void btnConfirm_Click(object sender, RoutedEventArgs e)

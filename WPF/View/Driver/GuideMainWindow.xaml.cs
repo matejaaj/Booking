@@ -30,6 +30,7 @@ namespace BookingApp.WPF.View.Driver
         private User driver;
         public bool? DialogOverlayResult {  get; set; }
 
+      
         public MainWindow(User user)
         {
             driver = user;
@@ -85,6 +86,7 @@ namespace BookingApp.WPF.View.Driver
                 VM.btnStats_Click(sender, e, currentPage);
                 lbl_Page.Text = "    Statistics";
             }
+            HideMenuBar(sender, e);
         }
 
         public void btnData_Click(object sender, RoutedEventArgs e)
@@ -95,6 +97,7 @@ namespace BookingApp.WPF.View.Driver
                 VM.btnData_Click(sender, e, currentPage);
                 lbl_Page.Text = "  User Data";
             }
+            HideMenuBar(sender, e);
         }
         private void ShowCreateVehicleForm(object sender, RoutedEventArgs e)
         {
@@ -104,6 +107,7 @@ namespace BookingApp.WPF.View.Driver
                 VM.ShowCreateVehicleForm(sender, e, currentPage);
                 lbl_Page.Text = "Registration";
             }
+            HideMenuBar(sender, e);
         }
 
         public void btnTutorial_Click(object sender, RoutedEventArgs e)
@@ -114,6 +118,7 @@ namespace BookingApp.WPF.View.Driver
                 VM.btnTutorial_Click(sender,e,currentPage);
                 lbl_Page.Text = "User Tutorial";
             }
+            HideMenuBar(sender, e);
         }
         private void btnVacatioRequest_Click(object sender, RoutedEventArgs e)
         {
@@ -123,6 +128,7 @@ namespace BookingApp.WPF.View.Driver
                 VM.btnVacatioRequest_Click(sender,e, currentPage);
                 lbl_Page.Text = "Request Vac";
             }
+            HideMenuBar(sender, e);
         }
 
         private void btnVacationReports_Click(object sender, RoutedEventArgs e)
@@ -133,6 +139,7 @@ namespace BookingApp.WPF.View.Driver
                 VM.btnVacationReports_Click(sender,e,currentPage);
                 lbl_Page.Text = "Vac Reports";
             }
+            HideMenuBar(sender, e);
         }
         private void ViewDrive_Cancel(object? sender, EventArgs e)
         {

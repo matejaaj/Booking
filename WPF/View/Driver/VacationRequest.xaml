@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
+      xmlns:val="clr-namespace:BookingApp.Validation"
       mc:Ignorable="d" 
       d:DesignHeight="570" Width="936"
       Title="VacationRequest">
@@ -29,7 +30,31 @@
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Beginning Date" VerticalAlignment="Center" FontSize="15"/>
-                <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="50,10,-49,5" />
+                <DatePicker x:Name="datStart" Grid.Column="1" Margin="50,10,-49,5" >
+                    <DatePicker.SelectedDate>
+                        <Binding Path="StartDate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <val:DateRangeValidationRule ValidationStep="RawProposedValue"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DatePicker.SelectedDate>
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                                <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </DatePicker>
             </Grid>
         </StackPanel>
 
@@ -40,7 +65,31 @@
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Ending Date" VerticalAlignment="Center" FontSize="15"/>
-                <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="72,10,-72,5"/>
+                <DatePicker x:Name="datEnd" Grid.Column="1" Margin="72,10,-72,5">
+                    <DatePicker.SelectedDate>
+                        <Binding Path="EndDate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <val:DateRangeValidationRule ValidationStep="RawProposedValue"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DatePicker.SelectedDate>
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                                <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </DatePicker>
             </Grid>
         </StackPanel>
 
@@ -87,6 +136,12 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="Blue"/>
                             </Trigger>
+                            <DataTrigger Binding="{Binding ElementName=datStart, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=datEnd, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

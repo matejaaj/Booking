@@ -58,5 +58,10 @@ namespace BookingApp.Domain.Model
             };
             return values;
         }
+
+        public override string ToString()
+        {
+            return $"Pocetak {StartDate.ToString()} Zavrsetak {EndDate.ToString()} --- TIP {Type.Name}";
+        }
     }
 }

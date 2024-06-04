@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
+        xmlns:val="clr-namespace:BookingApp.Validation"
         mc:Ignorable="d"
         Title="Taxi Meter" Height="300" Width="500">
     <Page.Resources>
@@ -39,8 +40,42 @@
 
             <GroupBox Header="Taxi Meter Settings" Margin="10">
                 <StackPanel Margin="10">
-                    <TextBox x:Name="txtStartingPrice" Text="{Binding StartingPrice, UpdateSourceTrigger=PropertyChanged}" Width="135" Height="24" Margin="0,0,0,10" ToolTip="Start price" />
-                    <Button Content="Start" Width="80" Click="btnStart" Margin="0,0,0,10" />
+                    <TextBox x:Name="txtStartingPrice" Width="135" Height="24" Margin="0,0,0,10" ToolTip="Start price" >
+                        <TextBox.Text>
+                            <Binding Path="StartingPrice" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <val:OnlyNumberValidation ValidationStep="RawProposedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                                    <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </TextBox>
+                    <Button Content="Start" Width="80" Click="btnStart" Margin="0,0,0,10" >
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=txtStartingPrice, Path=(Validation.HasError)}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Current price:" Width="82" />
                         <Label x:Name="price" Content="{Binding Price}" Width="82" Height="26" />

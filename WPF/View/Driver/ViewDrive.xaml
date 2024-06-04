@@ -4,6 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
+      xmlns:val="clr-namespace:BookingApp.Validation"
       mc:Ignorable="d"
       Title="ViewDrive" Height="570" Width="936">
 
@@ -82,14 +83,47 @@
                     </StackPanel>
                 </RadioButton>
                 <TextBox x:Name="txtDelayMinutes" 
-                         IsEnabled="{Binding IsChecked, ElementName=rbDelayed}"
-                         Text="{Binding TxtDelayMinutes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                         IsEnabled="{Binding IsChecked, ElementName=rbDelayed}">
+                    <TextBox.Text>
+                        <Binding Path="TxtDelayMinutes" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <val:OnlyNumberValidation ValidationStep="RawProposedValue"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                                <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </TextBox>
                 <Image Source="../../../Resources/Images/vozacKasni.png" Width="250" Height="186" Margin="0,20,0,0"/>
             </StackPanel>
         </GroupBox>
 
         <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Confirm" 
                 HorizontalAlignment="Center" 
-                Click="Confirm_Click"/>
+                Click="Confirm_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=txtDelayMinutes, Path=(Validation.HasError)}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </Page>
