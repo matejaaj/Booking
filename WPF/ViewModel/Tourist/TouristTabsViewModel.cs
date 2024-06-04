@@ -28,6 +28,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public ICommand ShowTourRequestsCommand { get; private set; }
         public ICommand ShowMyDrivesCommand { get; private set; }
 
+        public ICommand DeleteNotificationCommand { get; private set; }
+
         public event EventHandler RequestClose;
         public event EventHandler ShowAllToursRequested;
         public event EventHandler ShowMyToursRequested;
@@ -81,6 +83,17 @@ namespace BookingApp.WPF.ViewModel.Tourist
             ShowMyToursCommand = new RelayCommand(_ => ShowMyTours());
             ShowTourRequestsCommand = new RelayCommand(_ => ShowTourRequests());
             ShowMyDrivesCommand = new RelayCommand(_ => ShowMyDrives());
+
+            DeleteNotificationCommand = new RelayCommand(DeleteNotification);
+        }
+
+        private void DeleteNotification(object parameter)
+        {
+            if (parameter is NotificationDTO dto)
+            {
+                _notificationService.RemoveNotification(dto.Id);
+                UpdateNotifications();
+            }
         }
 
         private void InitializeServices()
@@ -108,13 +121,17 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private void UpdateNotifications()
         {
             Notifications.Clear();
-            var notifications = _notificationService.GetNotificationsForUser(Tourist.Id);
+            var notifications = _notificationService.GetNotificationsForUser(Tourist.Id)
+                .OrderByDescending(n => n.DateIssued)
+                .Take(4)
+                .ToList();
             foreach (var notification in notifications)
             {
                 NotificationDTO dto = new NotificationDTO(notification.Id, notification.Title, notification.Text, notification.DateIssued, notification.TargetUserId);
                 Notifications.Add(dto);
             }
         }
+
 
         public void DeleteNotification(int notificationId)
         {

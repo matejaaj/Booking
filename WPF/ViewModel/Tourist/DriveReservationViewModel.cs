@@ -78,6 +78,22 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+        private string _timeDisplay;
+
+        public string TimeDisplay
+        {
+            get { return _timeDisplay; }
+            set
+            {
+                if (_timeDisplay != value)
+                {
+                    _timeDisplay = value;
+                    OnPropertyChanged(nameof(TimeDisplay));
+                }
+            }
+        }
+    
+
         public string Driver
         {
             get { return _driver; }

@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
         xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title="{resources:Loc DriveFormTittle}" Height="600" Width="500"
+        Title="{resources:Loc DriveFormTittle}" Height="660" Width="500"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryBackground}">
 

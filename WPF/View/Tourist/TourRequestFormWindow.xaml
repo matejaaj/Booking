@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title="{resources:Loc TourRequestFormTittle}" Height="600" Width="630"
+        Title="{resources:Loc TourRequestFormTittle}" Height="600" Width="650"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryBackground}">
 
@@ -30,7 +30,8 @@
                             <DockPanel>
                                 <Button Content="{resources:Loc Remove}" Margin="5" DockPanel.Dock="Right"
                                         HorizontalAlignment="Right"
-                                        Click="RemoveSegment_Click" Width="auto" Height="30"
+                                        Command="{Binding DataContext.RemoveSegmentCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}" Width="auto" Height="30"
                                         Style="{StaticResource SmallButton}" FontSize="16"
                                         Foreground="{DynamicResource BlackTextColor}"/>
                                 <Expander Header="{resources:Loc TourSegment}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="5"
@@ -145,8 +146,8 @@
             </ItemsControl>
 
             <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,20,20,20">
-                <Button Content="{resources:Loc AddTourSegment}" Margin="10" Click="AddSegment_Click" Style="{StaticResource SmallButton}" FontSize="16"/>
-                <Button Content="{resources:Loc SubmitRequest}" Margin="10" Click="Submit_Click" Style="{StaticResource SmallButton}" FontSize="16"/>
+                <Button Content="{resources:Loc AddTourSegment}" Margin="10" Command="{Binding AddSegmentCommand}" Style="{StaticResource SmallButton}" FontSize="16"/>
+                <Button Content="{resources:Loc SubmitRequest}" Margin="10" Command="{Binding SubmitCommand}" Style="{StaticResource SmallButton}" FontSize="16"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

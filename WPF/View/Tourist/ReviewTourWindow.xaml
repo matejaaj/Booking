@@ -6,17 +6,35 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title= "{resources:Loc RateTourWindowTittle}" Height="600" Width="500"
+        Title="{resources:Loc RateTourWindowTittle}" Height="600" Width="500"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryBackground}"
         FontSize="16">
 
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel>
+                            <Border BorderBrush="Red" BorderThickness="1">
+                                <AdornedElementPlaceholder x:Name="adorner"/>
+                            </Border>
+                            <TextBlock Foreground="Red" FontSize="10" Margin="5"
+                                       Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <Grid Margin="0 20 0 0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- Reviews Area -->
@@ -24,37 +42,53 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Padding="10" Margin="5" BorderThickness="1" BorderBrush="{DynamicResource BorderBrushColor}">
-                            <StackPanel Margin="5">
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
                                 <TextBlock Text="{Binding Guest.Name}" FontWeight="Bold" Margin="0,0,0,5"
-                                           Foreground="{DynamicResource PrimaryTextColor}"/>
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                    <TextBlock Text= "{resources:Loc InputRateTour}" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource PrimaryTextColor}" Grid.Row="0"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5" Grid.Row="1">
+                                    <TextBlock Text="{resources:Loc InputRateTour}" VerticalAlignment="Center"
                                                Foreground="{DynamicResource PrimaryTextColor}"/>
                                     <StackPanel Orientation="Horizontal">
                                         <RadioButton Content="1" GroupName="{Binding Guest.Id}" Margin="5,0"
                                                      IsChecked="{Binding IsRating1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     Foreground="{DynamicResource PrimaryTextColor}"/>
+                                                     Foreground="{DynamicResource PrimaryTextColor}" x:Name="Rating1"/>
                                         <RadioButton Content="2" GroupName="{Binding Guest.Id}" Margin="5,0"
                                                      IsChecked="{Binding IsRating2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     Foreground="{DynamicResource PrimaryTextColor}"/>
+                                                     Foreground="{DynamicResource PrimaryTextColor}" x:Name="Rating2"/>
                                         <RadioButton Content="3" GroupName="{Binding Guest.Id}" Margin="5,0"
                                                      IsChecked="{Binding IsRating3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     Foreground="{DynamicResource PrimaryTextColor}"/>
+                                                     Foreground="{DynamicResource PrimaryTextColor}" x:Name="Rating3"/>
                                         <RadioButton Content="4" GroupName="{Binding Guest.Id}" Margin="5,0"
                                                      IsChecked="{Binding IsRating4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     Foreground="{DynamicResource PrimaryTextColor}"/>
+                                                     Foreground="{DynamicResource PrimaryTextColor}" x:Name="Rating4"/>
                                         <RadioButton Content="5" GroupName="{Binding Guest.Id}" Margin="5,0"
                                                      IsChecked="{Binding IsRating5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     Foreground="{DynamicResource PrimaryTextColor}"/>
+                                                     Foreground="{DynamicResource PrimaryTextColor}" x:Name="Rating5"/>
                                     </StackPanel>
                                 </StackPanel>
-                                <TextBlock Text= "{resources:Loc InputComment}" VerticalAlignment="Center"
-                                           Foreground="{DynamicResource PrimaryTextColor}"/>
-                                <TextBox Text="{Binding Comment}" Height="60" TextWrapping="Wrap" Margin="0,0,0,5"
-                                         Style="{DynamicResource FormInput}"/>
-                                <StackPanel Orientation="Vertical">
+                                <TextBlock Foreground="Red" FontSize="10" Grid.Row="2"
+                                           Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName=Rating1, Mode=OneWay}"
+                                           Margin="0, -10, 0, 5"/>
+                                <TextBlock Text="{resources:Loc InputComment}" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource PrimaryTextColor}" Grid.Row="3"/>
+                                <TextBox Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                         Height="60" TextWrapping="Wrap" Margin="0,0,0,5"
+                                         Style="{DynamicResource FormInput}" Grid.Row="4" x:Name="CommentBox"/>
+                                <TextBlock Foreground="Red" FontSize="10" Grid.Row="5"
+                                           Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=CommentBox, Mode=OneWay}"/>
+                                <StackPanel Orientation="Vertical" Grid.Row="6">
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                        <TextBlock Text= "{resources:Loc ImageInput}" VerticalAlignment="Center"
+                                        <TextBlock Text="{resources:Loc ImageInput}" VerticalAlignment="Center"
                                                    Foreground="{DynamicResource PrimaryTextColor}"/>
                                         <Button Content="+" Width="25" Height="25" VerticalAlignment="Center"
                                                 Margin="5,0,0,0" Padding="1"
@@ -81,7 +115,7 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </StackPanel>
-                            </StackPanel>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -89,9 +123,9 @@
 
             <!-- Action Buttons -->
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="10">
-                <Button Content= "{resources:Loc Submit}" Width="120" Click="ConfirmButton_Click" Margin="5,0,0,0"
+                <Button Content="{resources:Loc Submit}" Width="120" Command="{Binding SubmitCommand}" Margin="5,0,0,0"
                         Style="{StaticResource SmallButton}"/>
-                <Button Content= "{resources:Loc CancelButton}" Width="120" Click="CancelButton_Click" Margin="5,0,0,0"
+                <Button Content="{resources:Loc CancelButton}" Width="120" Click="CancelButton_Click" Margin="5,0,0,0"
                         Style="{StaticResource SmallButton}"/>
             </StackPanel>
         </Grid>

@@ -138,6 +138,9 @@
   <data name="AllTours" xml:space="preserve">
     <value>All tours</value>
   </data>
+  <data name="AllYears" xml:space="preserve">
+    <value>All years</value>
+  </data>
   <data name="Booking" xml:space="preserve">
     <value>Booking</value>
   </data>
@@ -240,12 +243,17 @@
   <data name="FastDrive" xml:space="preserve">
     <value>Fast drive</value>
   </data>
+  <data name="FastSuccessful" xml:space="preserve">
+    <value>Fast drive reservation successful.</value>
+  </data>
   <data name="From" xml:space="preserve">
     <value>From: </value>
   </data>
   <data name="GroupDrive" xml:space="preserve">
     <value>Group drive</value>
-    <comment> </comment>
+  </data>
+  <data name="GroupSucessful" xml:space="preserve">
+    <value>Group drive reservation successful.</value>
   </data>
   <data name="HourMinutes" xml:space="preserve">
     <value>Hours and minutes: </value>
@@ -271,6 +279,9 @@
   <data name="InputVoucher" xml:space="preserve">
     <value>Voucher: </value>
   </data>
+  <data name="InsufficientSpots" xml:space="preserve">
+    <value>Insufficient spots available for the selected tour. Remaining spots for the selected date: {0}.</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Language: </value>
   </data>
@@ -295,6 +306,9 @@
   <data name="MyTours" xml:space="preserve">
     <value>My tours</value>
   </data>
+  <data name="NoDatesAvailable" xml:space="preserve">
+    <value>No available dates for this tour.</value>
+  </data>
   <data name="NumberOfPeople" xml:space="preserve">
     <value>Number of people: </value>
   </data>
@@ -316,17 +330,26 @@
   <data name="RegularDrive" xml:space="preserve">
     <value>Regular drive</value>
   </data>
+  <data name="RegularSuccessful" xml:space="preserve">
+    <value>Drive reservation successful.</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
   <data name="RequestDetailsTittle" xml:space="preserve">
     <value>Tour request</value>
   </data>
+  <data name="ReservationSuccessful" xml:space="preserve">
+    <value>Reservation successful.</value>
+  </data>
   <data name="ReserveDrive" xml:space="preserve">
     <value>Reserve drive</value>
   </data>
   <data name="ReviewExistsMessage" xml:space="preserve">
     <value>Already reviewed</value>
+  </data>
+  <data name="ReviewSuccessful" xml:space="preserve">
+    <value>Tour review was successful.</value>
   </data>
   <data name="StartLocation" xml:space="preserve">
     <value>Start location: </value>
@@ -408,6 +431,75 @@
   </data>
   <data name="UnknownStatusMessage" xml:space="preserve">
     <value>Unknown</value>
+  </data>
+  <data name="ValidationAgeFormat" xml:space="preserve">
+    <value>Must be greater than 0</value>
+  </data>
+  <data name="ValidationCity" xml:space="preserve">
+    <value>Enter a valid city</value>
+  </data>
+  <data name="ValidationComment" xml:space="preserve">
+    <value>Comment is required.</value>
+  </data>
+  <data name="ValidationCountry" xml:space="preserve">
+    <value>Enter a valid country</value>
+  </data>
+  <data name="ValidationDate" xml:space="preserve">
+    <value>Date must not be in the past</value>
+  </data>
+  <data name="ValidationDateNotChosen" xml:space="preserve">
+    <value>Not chosen yet</value>
+  </data>
+  <data name="ValidationDriver" xml:space="preserve">
+    <value>Driver required</value>
+  </data>
+  <data name="ValidationEndLocationFormat" xml:space="preserve">
+    <value>Only number and letters allowed</value>
+  </data>
+  <data name="ValidationEndLocationRequired" xml:space="preserve">
+    <value>Destination location required</value>
+  </data>
+  <data name="ValidationFirstNameFormat" xml:space="preserve">
+    <value>Only letters allowed</value>
+  </data>
+  <data name="ValidationFirstNameRequired" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="ValidationHour" xml:space="preserve">
+    <value>Value between 00 and 23</value>
+  </data>
+  <data name="ValidationLanguage" xml:space="preserve">
+    <value>Choose language</value>
+  </data>
+  <data name="ValidationLastNameFormat" xml:space="preserve">
+    <value>Only letters allowed</value>
+  </data>
+  <data name="ValidationMinute" xml:space="preserve">
+    <value>Value between 00 and 59</value>
+  </data>
+  <data name="ValidationNumberOfPeople" xml:space="preserve">
+    <value>Enter valid number</value>
+  </data>
+  <data name="ValidationNumberOfPeopleStartTime" xml:space="preserve">
+    <value>Select a start time first.</value>
+  </data>
+  <data name="ValidationRating" xml:space="preserve">
+    <value>Rating is required.</value>
+  </data>
+  <data name="ValidationStartLocationFormat" xml:space="preserve">
+    <value>Only number and letters allowed</value>
+  </data>
+  <data name="ValidationStartLocationRequired" xml:space="preserve">
+    <value>Start location required</value>
+  </data>
+  <data name="ValidationStartTime" xml:space="preserve">
+    <value>Select start time.</value>
+  </data>
+  <data name="ValidationSurnameRequired" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="VoucherUntil" xml:space="preserve">
+    <value>Valid until: </value>
   </data>
   <data name="Year" xml:space="preserve">
     <value>Year: </value>

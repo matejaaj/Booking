@@ -30,7 +30,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _userId = userId;
             InitializeYears();
             PieChartData = new SeriesCollection();
-            SelectedYear = "Sve godine";
+            SelectedYear = TranslationSource.Instance["AllYears"];
         }
 
 
@@ -64,13 +64,14 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         private void InitializeYears()
         {
-            Years.Add("Sve godine");
+
+            Years.Add(TranslationSource.Instance["AllYears"]);
 
             int currentYear = DateTime.Now.Year;
             int startYear = _statisticCalculator.GetEarliestYear(_userId);
 
             Years.Clear();
-            Years.Add("Sve godine");
+            Years.Add(TranslationSource.Instance["AllYears"]);
             for (int year = startYear; year <= currentYear; year++)
             {
                 Years.Add(year.ToString());
@@ -82,7 +83,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private void LoadStatsForYear(string year)
         {
             TourRequestStat stats;
-            if (year == "Sve godine")
+            if (year == TranslationSource.Instance["AllYears"])
             {
                 stats = _statisticCalculator.CreateUserStatForAllYears(_userId);
             }

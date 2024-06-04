@@ -172,7 +172,7 @@ namespace BookingApp.DTO
         }
 
 
-        public string DisplayAcceptedDate => AcceptedDate == DateTime.MinValue ? "Nije jos izabran" : AcceptedDate.ToString("dd.MM.yyyy");
+        public string DisplayAcceptedDate => AcceptedDate == DateTime.MinValue ? TranslationSource.Instance["ValidationDateNotChosen"] : AcceptedDate.ToString("dd.MM.yyyy");
 
 
         private TourRequestStatus _isAccepted;

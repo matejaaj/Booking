@@ -15,7 +15,6 @@
 
         <TextBlock Style="{StaticResource HeaderTextStyle}"
                    Text="{resources:Loc AllTours}"
-
                    Margin="20"/>
 
         <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
@@ -40,7 +39,7 @@
                                     <TextBlock Style="{StaticResource ItemHeaderTextStyle}"
                                                Text="{Binding Name}"
                                                TextTrimming="CharacterEllipsis"/>
-                                    <TextBlock Text="{Binding Description}"
+                                    <TextBlock Text="{Binding ShortDescription}"
                                                TextWrapping="Wrap"/>
                                 </StackPanel>
 
@@ -55,13 +54,12 @@
                                            Source="{Binding Images[0]}"
                                            Stretch="Fill"/>
 
-
                                     <Button Style="{StaticResource DefaultButton}"
                                             Command="{Binding DataContext.ShowTourDetailsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                             CommandParameter="{Binding}">
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="30" Height="30" Margin="0,0,10,0"/>
-                                            <TextBlock Text="{resources:Loc MoreDetails}"/>
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                            <TextBlock Text="{resources:Loc MoreDetails}" FontSize="16"/>
                                         </StackPanel>
                                     </Button>
 

@@ -27,5 +27,7 @@ namespace BookingApp.WPF.View.Tourist
             _viewModel = new DriveReservationFormViewModel(user);
             DataContext = _viewModel;
         }
+
+
     }
 }

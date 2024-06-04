@@ -16,7 +16,7 @@
 
         <TextBlock Style="{StaticResource HeaderTextStyle}" Text="{resources:Loc MyTours}" Margin="20"/>
 
-        <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
+        <ScrollViewer Grid.Row="1" Margin="0 00 00 0">
             <ItemsControl ItemsSource="{Binding Tours}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -25,7 +25,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Style="{StaticResource DefaultBorder}" Width="420" Height="auto">
+                        <Border Style="{StaticResource DefaultBorder}" Width="420" Height="auto" Margin="50 30 30 0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>

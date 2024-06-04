@@ -3,8 +3,9 @@ using BookingApp.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Input;
 using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using BookingApp.Domain.Model;
 using BookingApp.View.Tourist;
 
@@ -65,6 +66,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         private void ReserveTour(object parameter)
         {
+            if (Tour.Dates == null || !Tour.Dates.Any())
+            {
+                MessageBox.Show(TranslationSource.Instance["NoDatesAvailable"]);
+                return;
+            }
+
             var reservationWindow = new TourReservationForm(Tour, _user);
             reservationWindow.Show();
         }

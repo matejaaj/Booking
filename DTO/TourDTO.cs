@@ -184,6 +184,18 @@ namespace BookingApp.DTO
         }
 
 
+        public string ShortDescription
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_description))
+                {
+                    return string.Empty;
+                }
+                return _description.Length <= 70 ? _description : _description.Substring(0, 80) + "...";
+            }
+        }
+
         public TourDTO()
         {
             Language = "not set";

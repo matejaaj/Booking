@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookingApp.Application.UseCases.Factories;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 
 namespace BookingApp.WPF.ViewModel.Tourist
@@ -30,21 +31,28 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private TourRequestSegmentService _tourRequestSegmentService;
         private PrivateTourGuestService _privateTourGuestService;
 
-        
+
+
+        public RelayCommand AddSegmentCommand { get; private set; }
+        public RelayCommand RemoveSegmentCommand { get; private set; }
+        public RelayCommand SubmitCommand { get; private set; }
 
         public TourRequestFormViewModel(User loggedUser, LocationService locationService, LanguageService languageService, TourRequestService tourRequestService, TourRequestSegmentService tourRequestSegmentService, PrivateTourGuestService privateTourGuestService)
         {
-            _user =  loggedUser;
+            _user = loggedUser;
             _locationService = locationService;
             _languageService = languageService;
             _tourRequestService = tourRequestService;
             _tourRequestSegmentService = tourRequestSegmentService;
             _privateTourGuestService = privateTourGuestService;
 
-
+            AddSegmentCommand = new RelayCommand(_ => AddSegment());
+            RemoveSegmentCommand = new RelayCommand(segment => RemoveSegment((TourRequestSegmentViewModel)segment), segment => TourSegments.Count > 1);
+            SubmitCommand = new RelayCommand(_ => Submit());
 
             InitialieFields();
         }
+
 
         private void InitialieFields()
         {
@@ -87,13 +95,15 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
 
 
-        public void RemoveSegment(TourRequestSegmentViewModel segment)
+        public void RemoveSegment(object segment)
         {
-            if (TourSegments.Count > 1)
+            var segmentViewModel = segment as TourRequestSegmentViewModel;
+            if (TourSegments.Count > 1 && segmentViewModel != null)
             {
-                TourSegments.Remove(segment);
+                TourSegments.Remove(segmentViewModel);
             }
         }
+
 
         public void Submit()
         {
