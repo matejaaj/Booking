@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
         <TabPanel Panel.ZIndex="10">
 
-            <ToolBar  Background="#FFA9A9A9"  Margin="0,0,-12,-3" Height="44" VerticalAlignment="Bottom">
+            <ToolBar  Background="#FFA9A9A9"  Margin="0,0,-12,-2" Height="43" VerticalAlignment="Bottom">
                 <Button Click="ShowMenuBar">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/menuBar.png" Width="20" Height="25"/>
@@ -136,7 +136,7 @@
         </Canvas>
 
         <DockPanel>
-            
+
 
             <Frame Grid.Row="1" Name="MainNavigationFrame" NavigationUIVisibility="Hidden" Height="456" Margin="0,50,0,0"/>
         </DockPanel>
