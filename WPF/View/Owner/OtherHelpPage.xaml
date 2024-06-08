@@ -1,0 +1,175 @@
+﻿<Page x:Class="BookingApp.WPF.View.Owner.OtherHelpPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookingApp.WPF.View.Owner"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="OtherHelpPage">
+
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <StackPanel Margin="10">
+                <TextBlock Text="Help Page" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+
+                <Expander Header="View Renovations" IsExpanded="True" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This page allows you to view past, current, and future renovations." TextWrapping="Wrap" Margin="0,0,0,10"/>
+                        <TextBlock Text="Past Renovations Tab:" FontWeight="Bold"/>
+                        <TextBlock Text="• Displays a list of past renovations." Margin="10,0,0,0"/>
+                        <TextBlock Text="Current and Future Renovations Tab:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Displays a list of current and future renovations." Margin="10,0,0,0"/>
+                        <TextBlock Text="• You can cancel a future renovation by clicking the 'Cancel' button." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Schedule Renovations" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This page allows you to schedule new renovations." Margin="0,0,0,10"/>
+                        <TextBlock Text="From and To Date:" FontWeight="Bold"/>
+                        <TextBlock Text="• Select the start and end date for the renovation." Margin="10,0,0,0"/>
+                        <TextBlock Text="Estimated Duration:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Enter the estimated duration of the renovation in days." Margin="10,0,0,0"/>
+                        <TextBlock Text="Search Button:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Click to find available dates for scheduling the renovation." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="Available Dates:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• A list of available dates will be displayed. Click 'Schedule' to confirm." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="View Ratings" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This page allows you to view ratings given by guests." TextWrapping="Wrap" Margin="0,0,0,10"/>
+                        <TextBlock Text="Ratings List:" FontWeight="Bold"/>
+                        <TextBlock Text="• Displays a list of ratings for your accommodations." Margin="10,0,0,0"/>
+                        <TextBlock Text="• Each rating includes the guest name, accommodation, cleanliness, owner ethics, and any comments." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Rescheduling Requests" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This page allows you to view and manage rescheduling requests from guests." TextWrapping="Wrap" Margin="0,0,0,10"/>
+                        <TextBlock Text="Requests List:" FontWeight="Bold"/>
+                        <TextBlock Text="• Displays a list of rescheduling requests." Margin="10,0,0,0"/>
+                        <TextBlock Text="• Each request includes the guest name, accommodation, original period, new period, availability status, and current status." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="Approve/Reject Buttons:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Click 'Approve' to accept the new period or 'Reject' to decline the request." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Accommodations Page" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Accommodations Page" FontSize="20" FontWeight="Bold" Margin="0,10,0,10"/>
+                        <TextBlock Text="This page allows you to view and manage your accommodations. You can add new accommodations and view details of existing ones." TextWrapping="Wrap"/>
+                        <TextBlock Text="Features:" FontWeight="Bold" Margin="5,10,0,5"/>
+                        <TextBlock Text="1. Add Accommodation: Click the 'Add Accommodation' button to create a new accommodation. Fill in the required details and save." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="2. View Accommodations: The list view displays all your accommodations. Click on any accommodation to view its details." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="View Accommodation Page" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="View Accommodation Page" FontSize="20" FontWeight="Bold" Margin="20,10,0,10"/>
+                        <TextBlock Text="This page provides detailed information about a selected accommodation, including images, recent and past reservations, and options for actions like statistics and renovations." TextWrapping="Wrap"/>
+                        <TextBlock Text="Features:" FontWeight="Bold" Margin="5,10,0,5"/>
+                        <TextBlock Text="1. Navigation: Use the left (←) and right (→) arrows to navigate through the images of the accommodation." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="2. Accommodation Details: This section displays detailed information about the selected accommodation such as name, location, type, capacity, minimum reservation days, and cancellation window." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="3. Actions: You can perform various actions such as viewing statistics or initiating a renovation by clicking the corresponding buttons." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="4. Reservations: The tabs for 'Recent Reservations', 'Past Reservations', and 'Other Reservations' provide lists of reservations related to the accommodation. Click on each tab to view the respective reservations." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+
+                <Expander Header="Accommodation Form" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This form allows you to create a new accommodation." Margin="0,0,0,10"/>
+                        <TextBlock Text="Name:" FontWeight="Bold"/>
+                        <TextBlock Text="• Enter the name of the accommodation." Margin="10,0,0,0"/>
+                        <TextBlock Text="Location:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Select the location from the dropdown list." Margin="10,0,0,0"/>
+                        <TextBlock Text="Type:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Choose the type of accommodation (Apartment, House, Cottage)."  TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="Capacity:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Enter the maximum number of guests." Margin="10,0,0,0"/>
+                        <TextBlock Text="Minimum Reservation Days:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Enter the minimum number of days for a reservation." Margin="10,0,0,0"/>
+                        <TextBlock Text="Cancelation Threshold:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Enter the number of days before the start date within which the reservation can be canceled without penalty."  TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="Add Images:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Click 'Add Image' to upload pictures of the accommodation." Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Accommodation Monthly Stats" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This page displays monthly statistics for your accommodation." TextWrapping="Wrap" Margin="0,0,0,10"/>
+                        <TextBlock Text="Busiest Month:" FontWeight="Bold"/>
+                        <TextBlock Text="• Displays the month with the highest number of bookings." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="Monthly Stats Table:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Displays statistics such as bookings, cancellations, reschedulings, and renovation suggestions for each month." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Accommodation Yearly Stats" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This page displays yearly statistics for your accommodation." Margin="0,0,0,10"/>
+                        <TextBlock Text="Busiest Year:" FontWeight="Bold"/>
+                        <TextBlock Text="• Displays the year with the highest number of bookings." Margin="10,0,0,0"/>
+                        <TextBlock Text="Yearly Stats Table:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Displays statistics such as bookings, cancellations, reschedulings, and renovation suggestions for each year." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Super Owner Page" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This page allows you to check if you qualify to become a Super Owner and to apply for it." TextWrapping="Wrap" Margin="0,0,0,10"/>
+                        <TextBlock Text="Super Owner Criteria:" FontWeight="Bold"/>
+                        <TextBlock Text="• To become a Super Owner, you need at least 50 ratings from guests with an average rating above 4.5." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="Your Average Rating:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Displays your average rating." Margin="10,0,0,0"/>
+                        <TextBlock Text="Your Number of Ratings:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Displays the number of ratings you have received." Margin="10,0,0,0"/>
+                        <TextBlock Text="Become Super Owner Button:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Click to apply for Super Owner status." Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="View Forums" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This page allows you to view forums related to your accommodations." Margin="0,0,0,10"/>
+                        <TextBlock Text="Forums List:" FontWeight="Bold"/>
+                        <TextBlock Text="• Displays a list of forums for locations where you have accommodations." Margin="10,0,0,0"/>
+                        <TextBlock Text="• Each forum includes information such as location, forum status, and number of comments." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="• Clicking on a forum opens the View Forum page." Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="View Forum" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="This page allows you to view and interact with a specific forum." Margin="0,0,0,10"/>
+                        <TextBlock Text="Forum Information:" FontWeight="Bold"/>
+                        <TextBlock Text="• Displays the location of the forum and its status (open/closed)." Margin="10,0,0,0"/>
+                        <TextBlock Text="Comments List:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Displays a list of comments posted on the forum." Margin="10,0,0,0"/>
+                        <TextBlock Text="• Each comment includes the author's name, comment content, and number of reports." Margin="10,0,0,0"/>
+                        <TextBlock Text="• You can report comments that are inaccurate or posted by users who haven't stayed at the location." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <TextBlock Text="Add Comment Button:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Click to add a new comment to the forum." Margin="10,0,0,0"/>
+                        <TextBlock Text="Closed Forum Label:" FontWeight="Bold" Margin="10,10,0,0"/>
+                        <TextBlock Text="• Indicates when the forum is closed, and comments cannot be added." Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Forum Functionality" IsExpanded="False" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Additional information about forum functionality:" Margin="0,0,0,10"/>
+                        <TextBlock Text="When a guest opens a forum for a location where you have at least one accommodation, you will receive a notification that the forum has been opened and can leave a comment. Only owners who have accommodations at that location can leave comments. Comments left by owners will be clearly marked as such. Forums with 10 owner comments and 20 guest comments (from guests who have stayed at the location) will be labeled as very useful. Owners can report comments from guests who have never been to the location but have left inaccurate comments on the forum. The number of reports on a specific comment in the forum is visible to everyone on the forum, so they know which comments may be invalid, as they were left by guests who (according to the data in this application) have not been to that location." TextWrapping="Wrap" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Expander>
+
+                <Line Margin="0,0,100,50"></Line>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
