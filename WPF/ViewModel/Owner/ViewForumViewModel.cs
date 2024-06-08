@@ -25,6 +25,8 @@ namespace BookingApp.WPF.ViewModel.Owner
         private ForumCommentService _commentService;
         private UserService _userService;
         private ViewForumPage _currentPage;
+        private ForumService _forumService;
+        public bool IsClosed { get; set; }
         public ICommand ReportCommand { get; }
         public ICommand AddCommand { get; }
         public CommentDisplayOwnerDTO SelectedComment { get; set; }
@@ -49,13 +51,20 @@ namespace BookingApp.WPF.ViewModel.Owner
         {
             _loggedInOwner = loggedInOwner;
             _forum = forum;
+            IsClosed = forum.IsCancelled;
             _currentPage = viewForumPage;
             Location = forum.Location;
-            _commentService = new ForumCommentService(Injector.CreateInstance<IForumCommentRepository>());
-            _userService = new UserService(Injector.CreateInstance<IUserRepository>());
+            InitializeServices();
             ReportCommand = new RelayCommand(Report);
             AddCommand = new RelayCommand(Add);
             Update();
+        }
+
+        private void InitializeServices()
+        {
+            _commentService = new ForumCommentService(Injector.CreateInstance<IForumCommentRepository>());
+            _userService = new UserService(Injector.CreateInstance<IUserRepository>());
+            _forumService = new ForumService(Injector.CreateInstance<IForumRepository>(), _commentService, _userService);
         }
 
         private void Add(object obj)
@@ -64,6 +73,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             input.Owner = Window.GetWindow(_currentPage);
             input.Closed += (s, args) => Update();
             input.Show();
+            _forumService.IsForumUseful(_forum.Id);
         }
 
         private void Report(object obj)

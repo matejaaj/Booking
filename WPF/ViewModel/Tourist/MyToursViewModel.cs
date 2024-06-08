@@ -1,23 +1,23 @@
-﻿using BookingApp.Application;
-using BookingApp.Application.UseCases;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using BookingApp.Application;
+using BookingApp.Commands;
+using BookingApp.DTO;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using BookingApp.Domain.Model.BookingApp.Domain.Model;
-using System.Windows.Input;
-using BookingApp.Commands;
+using BookingApp.Repository;
+using BookingApp.WPF.View;
+using BookingApp.Application.UseCases;
 using BookingApp.WPF.View.Tourist;
+using System.Collections.Generic;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
-    public class MyToursViewModel
+    public class MyToursViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<TourInstanceViewModel> Tours { get; set; }
         public User Tourist { get; }
@@ -34,6 +34,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public ICommand MoreDetailsCommand { get; }
         public ICommand RateTourCommand { get; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public MyToursViewModel(User loggedUser, TourService tourService, TourInstanceService tourInstanceService, CheckpointService checkpointService, ImageService imageService, LocationService locationService, LanguageService languageService, TourGuestService tourGuestService, TourReservationService tourReservationService, VoucherService voucherService, TourReviewService tourReviewService)
         {
             _tourService = tourService;
@@ -45,7 +47,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _tourReviewService = tourReviewService;
             _imageService = imageService;
 
-
             MoreDetailsCommand = new RelayCommand(MoreDetailsExecute);
             RateTourCommand = new RelayCommand(RateTourExecute);
 
@@ -53,7 +54,42 @@ namespace BookingApp.WPF.ViewModel.Tourist
             Tours = new ObservableCollection<TourInstanceViewModel>();
 
             CreateViewModels();
+
+
         }
+
+        private void RateTourExecute(object parameter)
+        {
+            var tourInstanceViewModel = parameter as TourInstanceViewModel;
+            if (tourInstanceViewModel != null)
+            {
+                if (!tourInstanceViewModel.IsFinished)
+                {
+                    MessageBox.Show(TranslationSource.Instance["TourNotFinishedMessage"]);
+                    return;
+                }
+
+                if (CheckIfAlreadyReviewed(Tourist.Id, tourInstanceViewModel.Id))
+                {
+                    MessageBox.Show(TranslationSource.Instance["ReviewExistsMessage"]);
+                    return;
+                }
+
+                var reviewWindow = new ReviewTourWindow(tourInstanceViewModel, Tourist.Id);
+                reviewWindow.Show();
+            }
+        }
+
+        private void MoreDetailsExecute(object parameter)
+        {
+            var tour = parameter as TourInstanceViewModel;
+            if (tour != null)
+            {
+                var detailsWindow = new MyTourMoreDetailsWindow(tour);
+                detailsWindow.Show();
+            }
+        }
+
         private void CreateViewModels()
         {
             foreach (var tourInstanceId in GetMyTourInstanceIds())
@@ -91,38 +127,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
             return _tourReviewService.HasUserReviewedTour(userId, tourId);
         }
 
-
-        private void MoreDetailsExecute(object parameter)
+        protected void OnPropertyChanged(string name)
         {
-            var tour = parameter as TourInstanceViewModel;
-            if (tour != null)
-            {
-                var detailsWindow = new MyTourMoreDetailsWindow(tour);
-                detailsWindow.Show();
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-
-        private void RateTourExecute(object parameter)
-        {
-            var tourInstanceViewModel = parameter as TourInstanceViewModel;
-            if (tourInstanceViewModel != null)
-            {
-                if (!tourInstanceViewModel.IsFinished)
-                {
-                    MessageBox.Show("Tura nije gotova i dalje");
-                    return;
-                }
-
-                if (CheckIfAlreadyReviewed(Tourist.Id, tourInstanceViewModel.Id))
-                {
-                    MessageBox.Show("Tura je već ocenjena");
-                    return;
-                }
-
-                var reviewWindow = new ReviewTourWindow(tourInstanceViewModel, Tourist.Id);
-                reviewWindow.Show();
-            }
-        }
-
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View"
+        xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
         Title="Sign in" Height="250" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
@@ -29,7 +30,7 @@
             <TextBox Grid.Row="0" Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Height="25" TextWrapping="Wrap" VerticalAlignment="Center"/>
             <PasswordBox Name="txtPassword" Grid.Row="1" Grid.Column="1" Height="25" VerticalAlignment="Center"/>
         </Grid>
-        
+
         <Button Grid.Row="2" Click="SignIn" Content="Sign in" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="60"/>
 
     </Grid>

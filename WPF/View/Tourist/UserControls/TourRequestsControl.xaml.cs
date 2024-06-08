@@ -30,49 +30,5 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             InitializeComponent();
         }
 
-        private void OpenTourRequestForm_Click(object sender, RoutedEventArgs e)
-        {
-            var viewModel = this.DataContext as TourRequestsViewModel;
-            viewModel.OpenFormWindow();
-
-        }
-
-
-        private void OpenRequestStatistics_Click(object sender, RoutedEventArgs e)
-        {
-            var viewModel = this.DataContext as TourRequestsViewModel;
-            viewModel.OpenStatisticsWindow();
-        }
-
-        private void SimpleRequestDetails_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            if (button == null)
-                return;
-
-            var tourRequest = button.Tag as TourRequestDTO;
-            if (tourRequest == null)
-                return;
-
-
-            SimpleTourRequestDetails detailsWindow = new SimpleTourRequestDetails(tourRequest);
-            detailsWindow.Show(); 
-        }
-
-
-        private void ComplexRequestDetails_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            if (button == null)
-                return;
-
-            var complexTourRequest = button.Tag as ComplexTourRequestDTO;
-            if (complexTourRequest == null)
-                return;
-
-            ComplexTourRequestDetails detailsWindow = new ComplexTourRequestDetails(complexTourRequest);
-            detailsWindow.Show();
-        }
-
     }
 }

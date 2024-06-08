@@ -13,11 +13,14 @@ namespace BookingApp.Domain.Model
         public int TourInstanceId { get; set; }
         public int UserId { get; set; }
 
+        public bool VoucherAcquired { get; set; }
+
         public TourReservation() { }
         public TourReservation(int tourInstanceId, int userId)
         {
             TourInstanceId = tourInstanceId;
             UserId = userId;
+            VoucherAcquired = false;
         }
 
         public void FromCSV(string[] values)
@@ -25,6 +28,7 @@ namespace BookingApp.Domain.Model
             Id = int.Parse(values[0]);
             TourInstanceId = int.Parse(values[1]);
             UserId = int.Parse(values[2]);
+            VoucherAcquired = bool.Parse(values[3]);
         }
 
         public string[] ToCSV()
@@ -32,7 +36,8 @@ namespace BookingApp.Domain.Model
             return new string[] {
                 Id.ToString(),
                 TourInstanceId.ToString(),
-                UserId.ToString()
+                UserId.ToString(),
+                VoucherAcquired.ToString(),
             };
         }
     }

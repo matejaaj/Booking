@@ -1,91 +1,82 @@
-﻿using BookingApp.Application.UseCases;
-using BookingApp.Application;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
-using System.Windows.Input;
-using BookingApp.Commands;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
-public class ReviewTourViewModel : INotifyPropertyChanged
+namespace BookingApp.WPF.ViewModel.Tourist
 {
-    private TourReviewService _tourReviewService;
-    private ImageService _imageService;
-
-    public TourInstanceViewModel SelectedTourInstance { get; set; }
-    public int TouristId { get; set; }
-    public ObservableCollection<ReviewTourFormViewModel> ReviewForms { get; set; }
-
-    public ICommand AddPictureCommand { get; }
-    public ICommand ConfirmCommand { get; }
-    public ICommand CancelCommand { get; }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    public ReviewTourViewModel(TourInstanceViewModel tour, int touristId)
+    public class ReviewTourViewModel
     {
-        TouristId = touristId;
-        SelectedTourInstance = tour;
+        private TourReviewService _tourReviewService;
+        private ImageService _imageService;
 
-        _tourReviewService = new TourReviewService(Injector.CreateInstance<ITourReviewRepository>());
-        _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
 
-        ReviewForms = new ObservableCollection<ReviewTourFormViewModel>();
-        SetReviewForms();
+        public TourInstanceViewModel SelectedTourInstance { get; set; }
+        public int TouristId { get; set; }
+        public ObservableCollection<ReviewTourFormViewModel> ReviewForms { get; set; }
 
-        AddPictureCommand = new RelayCommand(param => AddPicture((ReviewTourFormViewModel)param));
-        ConfirmCommand = new RelayCommand(param => SaveReviews());
-        CancelCommand = new RelayCommand(param => Cancel());
-    }
 
-    private void SetReviewForms()
-    {
-        foreach (var guest in SelectedTourInstance.Guests.Where(g => g.CheckpointId != 0))
+        public ReviewTourViewModel(TourInstanceViewModel tour, int touristId)
         {
-            ReviewForms.Add(new ReviewTourFormViewModel { Guest = guest });
+            TouristId = touristId;
+            SelectedTourInstance = tour;
+
+            _tourReviewService = new TourReviewService(Injector.CreateInstance<ITourReviewRepository>());
+            _imageService = new ImageService(Injector.CreateInstance<IImageRepository>());
+
+            ReviewForms = new ObservableCollection<ReviewTourFormViewModel>();
+            SetReviewForms();
         }
-    }
 
-    private void AddPicture(ReviewTourFormViewModel reviewTourFormViewModel)
-    {
-        OpenFileDialog openFileDialog = new OpenFileDialog
+
+
+        private void SetReviewForms()
         {
-            Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*",
-            Multiselect = true
-        };
-        if (openFileDialog.ShowDialog() == true)
-        {
-            foreach (var fileName in openFileDialog.FileNames)
+            foreach (var guest in SelectedTourInstance.Guests.Where(g => g.CheckpointId != 0))
             {
-                reviewTourFormViewModel.ImagePaths.Add(fileName);
+                ReviewForms.Add(new ReviewTourFormViewModel { Guest = guest });
             }
         }
-    }
-
-    private void SaveReviews()
-    {
-        foreach (var reviewForm in ReviewForms)
+        public void AddPicture(ReviewTourFormViewModel reviewTourFormViewModel)
         {
-            var review = new TourReview(SelectedTourInstance.Id, TouristId, reviewForm.Guest.Id, reviewForm.SelectedRating, reviewForm.Comment, true);
-            _tourReviewService.Save(review);
-            foreach (var path in reviewForm.ImagePaths)
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
+            openFileDialog.Multiselect = true;
+            if (openFileDialog.ShowDialog() == true)
             {
-                var image = new Image(path, review.Id, ImageResourceType.TOUR_REVIEW, TouristId);
-                _imageService.Save(image);
+                reviewTourFormViewModel.ImagePaths.Add(openFileDialog.FileName);
             }
         }
-    }
+        public void RemovePicture(ReviewTourFormViewModel reviewForm, string imagePath)
+        {
+            if (reviewForm != null && reviewForm.ImagePaths.Contains(imagePath))
+            {
+                reviewForm.ImagePaths.Remove(imagePath);
+            }
+        }
+        public void SaveReviews()
+        {
+            foreach (var reviewForm in ReviewForms)
+            {
+                TourReview review = new TourReview(SelectedTourInstance.Id, TouristId, reviewForm.Guest.Id, reviewForm.SelectedRating, reviewForm.Comment, true);
+                _tourReviewService.Save(review);
+                foreach (var path in reviewForm.ImagePaths)
+                {
+                    Domain.Model.Image image = new Domain.Model.Image(path, review.Id, ImageResourceType.TOUR_REVIEW, TouristId);
+                    _imageService.Save(image);
+                }
+            }
+        }
 
-    private void Cancel()
-    {
-        // Implement cancel logic here
-    }
 
-    protected void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

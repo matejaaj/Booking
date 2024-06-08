@@ -7,6 +7,29 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="ViewForumPage">
+    <Page.Resources>
+        <Style x:Key="ButtonVisibilityToggleStyle" TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsClosed}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsClosed}" Value="False">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="TextBoxVisibilityToggleStyle" TargetType="Label">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsClosed}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsClosed}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -48,7 +71,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding AuthorName}" Margin="5,0,0,0" FontSize="18" FontWeight="Bold" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" TextAlignment="Center"/>
-                            <Image Source="{Binding IconPath}" Margin="100,0,0,0" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="0" Width="18" Height="18"></Image>
+                            <Image Source="{Binding IconPath}" Margin="130,0,0,0" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="0" Width="20" Height="20"></Image>
                             <Button Command="{Binding DataContext.ReportCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}" Margin="0,0,5,0" HorizontalAlignment="Right" Background="Transparent" Grid.Row="0" BorderThickness="0" Grid.Column="1">
                                 <Image Source="../../../Resources/Images/reportComment.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                             </Button>
@@ -74,11 +97,13 @@
                 </ControlTemplate>
             </ListView.Template>
         </ListView>
-        <Button Grid.Row="2" Command="{Binding AddCommand}" Margin="5,-5,5,5" Width="185">
+        <Button Grid.Row="2" Command="{Binding AddCommand}" Margin="5,-5,5,5" Width="185" Style="{StaticResource ButtonVisibilityToggleStyle}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../../../Resources/Images/add.png" Width="25" Height="25"/>
                 <TextBlock Text="Add Comment" FontSize="16" Margin="5,0,0,0"/>
             </StackPanel>
         </Button>
+        <Label Grid.Row="2" Margin="0,5,0,0" HorizontalAlignment="Center" FontSize="22" FontWeight="DemiBold" Style="{StaticResource TextBoxVisibilityToggleStyle}" Content="Forum is Closed" />
     </Grid>
+    </ScrollViewer>
 </Page>

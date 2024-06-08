@@ -1,7 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
-using BookingApp.Commands;
 using BookingApp.Domain.Model;
 
 public class ReviewTourFormViewModel : INotifyPropertyChanged
@@ -83,28 +81,6 @@ public class ReviewTourFormViewModel : INotifyPropertyChanged
         }
     }
 
-    public ICommand RemovePictureCommand { get; }
-
-    public ReviewTourFormViewModel()
-    {
-        RemovePictureCommand = new RelayCommand(param =>
-        {
-            if (param is string imagePath && !string.IsNullOrEmpty(imagePath))
-            {
-                RemovePicture(imagePath);
-            }
-        });
-    }
-
-    private void RemovePicture(string imagePath)
-    {
-        if (ImagePaths.Contains(imagePath))
-        {
-            ImagePaths.Remove(imagePath);
-        }
-    }
-
-    // Implement INotifyPropertyChanged
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged(string propertyName)
     {

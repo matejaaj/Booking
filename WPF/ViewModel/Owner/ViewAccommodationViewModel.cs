@@ -93,6 +93,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         public ICommand StatisticsCommand { get; }
         public ICommand NextImageCommand { get; }
         public ICommand PreviousImageCommand { get; }
+        public ICommand DeleteCommand { get; }
 
         private ViewAccommodationPage _currentPage;
 
@@ -110,6 +111,13 @@ namespace BookingApp.WPF.ViewModel.Owner
             StatisticsCommand = new RelayCommand(ShowStatistics);
             NextImageCommand = new RelayCommand(NextImage);
             PreviousImageCommand = new RelayCommand(PreviousImage);
+            DeleteCommand = new RelayCommand(Delete);
+        }
+
+        private void Delete(object obj)
+        {
+           // _accommodationService.Delete(Accommodation);
+           // _currentPage.NavigationService.Navigate(new AccommodationsPage(logg));
         }
 
         private void PreviousImage(object obj)
