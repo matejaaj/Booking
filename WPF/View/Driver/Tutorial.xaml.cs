@@ -23,6 +23,45 @@ namespace BookingApp.WPF.View.Driver
         public Tutorial()
         {
             InitializeComponent();
+            videoPlayer.MediaOpened += VideoPlayer_MediaOpened;
+        }
+        private void VideoPlayer_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            videoPlayer.Position = TimeSpan.Zero;
+            videoPlayer.Pause();
+            statusTextBlock.Text = "Video Loaded.";
+        }
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            videoPlayer.Play();
+            statusTextBlock.Text = "Playing video...";
+        }
+
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            videoPlayer.Pause();
+            statusTextBlock.Text = "Video paused.";
+        }
+
+        
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            videoPlayer.Stop();
+            videoPlayer.Position = TimeSpan.Zero;
+            statusTextBlock.Text = "Video reset.";
+        }
+
+        private void videoPlayer_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            statusTextBlock.Text = "Media Failed: " + e.ErrorException.Message;
+        }
+
+        private void videoPlayer_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            videoPlayer.Position = TimeSpan.Zero;
+            videoPlayer.Pause();
+            statusTextBlock.Text = "Media Loaded Successfully.";
         }
     }
 }

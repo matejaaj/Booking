@@ -28,9 +28,11 @@ namespace BookingApp.WPF.View.Driver
     public partial class DriveOverview : Page
     {
         public DriveOverviewViewModel VM {  get; set; }
-        public DriveOverview(DriveReservationService service)
+        public int Driver;
+        public DriveOverview(DriveReservationService service, int driver)
         {
             InitializeComponent();
+            Driver = driver;
             VM = new DriveOverviewViewModel(service);
             DataContext = VM;
         }
@@ -49,7 +51,7 @@ namespace BookingApp.WPF.View.Driver
         private void btnFinish(object sender, RoutedEventArgs e)
         {
             VM.btnFinish(sender, e);
-            NavigationService.GoBack();
+            NavigationService.Navigate(new DriverOverview(VM.GetUser(Driver)));
         }
 
     }

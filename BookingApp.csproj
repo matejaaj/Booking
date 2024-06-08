@@ -90,6 +90,8 @@
 		<None Remove="Resources\Images\vacations.png" />
 		<None Remove="Resources\Images\VideoTutorial.jpg" />
 		<None Remove="Resources\Images\view.png" />
+		<None Remove="Resources\Images\vozacAdresa.jpeg" />
+		<None Remove="Resources\Images\vozacKasni.png" />
 		<None Remove="Resources\Images\wizard1.png" />
 		<None Remove="Resources\Images\wizard2.png" />
 		<None Remove="Resources\Images\wizard3.png" />
@@ -265,6 +267,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="24.2.9" />
@@ -334,6 +337,8 @@
     <Resource Include="Resources\Images\vacationIcon.png" />
     <Resource Include="Resources\Images\vacations.png" />
     <Resource Include="Resources\Images\VideoTutorial.jpg" />
+    <Resource Include="Resources\Images\vozacAdresa.jpeg" />
+    <Resource Include="Resources\Images\vozacKasni.png" />
     <Resource Include="Resources\Images\wizard1.png" />
     <Resource Include="Resources\Images\wizard2.png" />
     <Resource Include="Resources\Images\wizard3.png" />
@@ -341,6 +346,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="PDF\" />
     <Folder Include="Resources\Languages\en-US\" />
     <Folder Include="Resources\Languages\sr-LATN\" />
   </ItemGroup>

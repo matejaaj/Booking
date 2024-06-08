@@ -30,6 +30,28 @@ namespace BookingApp.WPF.View.Driver
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private int _yearStart;
+        public int YearStart
+        {
+            get { return _yearStart; }
+            set
+            {
+                _yearStart = value;
+                OnPropertyChanged(nameof(YearStart));
+            }
+        }
+
+        private int _yearEnd;
+        public int YearEnd
+        {
+            get { return _yearEnd; }
+            set
+            {
+                _yearEnd = value;
+                OnPropertyChanged(nameof(YearEnd));
+            }
+        }
+
         private ObservableCollection<DriverOnVacation> vacations = new ObservableCollection<DriverOnVacation>();
         public ObservableCollection<DriverOnVacation> Vacations
         {
@@ -52,6 +74,11 @@ namespace BookingApp.WPF.View.Driver
                 vacations.Add(d);
             }
             DataContext = this;
+        }
+
+        private void btnGenerate(object sender, RoutedEventArgs e)
+        {
+            VM.GeneratePDF(vacations.ToList(), YearStart, YearEnd);
         }
     }
 }
