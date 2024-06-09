@@ -1,5 +1,6 @@
 ﻿using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
+using BookingApp.DTO;
 using BookingApp.Serializer;
 using System;
 using System.Collections.Generic;
@@ -81,6 +82,19 @@ namespace BookingApp.Application.UseCases
         public double CalculateAverageScore(List<double> individualAverages, int ratingsNumber)
         {
             return (double)individualAverages.Sum(a => a) / ratingsNumber;
+        }
+        internal List<OwnerPdfDTO> GetAverageScores(List<Accommodation> accommodations)
+        {
+            List<OwnerPdfDTO> retVal = new List<OwnerPdfDTO> ();
+            foreach (var accommodation in accommodations)
+            {
+                var reservations = accommodationReservationService.GetByAccommodation(accommodation);
+                int ratingsNumber = GetByReservations(reservations).Count();
+                var individualAverages = CalculateIndividualAverages(GetByReservations(reservations));
+                double averageScore = CalculateAverageScore(individualAverages, ratingsNumber);
+                retVal.Add(new OwnerPdfDTO(accommodation, averageScore));
+            }
+            return retVal;
         }
     }
 }

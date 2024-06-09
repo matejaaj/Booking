@@ -75,7 +75,7 @@
                         <TextBlock Text="Forum" FontSize="23" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Row="9 " VerticalAlignment="Bottom" Padding="5" Margin="5,130,0,5" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                <Button Grid.Row="9" Command="{Binding GeneratePDFCommand}" VerticalAlignment="Bottom" Padding="5" Margin="5,130,0,5" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/statistics.png" Width="25" Height="25"/>
                         <TextBlock Text="Generate Statistics" FontSize="23" Margin="5,0,0,0"/>
