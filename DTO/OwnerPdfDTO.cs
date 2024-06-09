@@ -75,7 +75,7 @@ namespace BookingApp.DTO
 
         public override string ToString()
         {
-            return $"Name: {Name}, Average Score: {AvgScore}";
+            return $"Name: {Name}, Average Score: {AvgScore:F2}";
         }
     }
 }

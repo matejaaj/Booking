@@ -10,24 +10,46 @@
       d:DesignHeight="750" d:DesignWidth="430"
       Title="AccommodationsPage">
     <Grid>
+        <Grid.Resources>
+            <!-- Define the animation storyboard -->
+            <Storyboard x:Key="ButtonClickAnimation">
+                <DoubleAnimation
+                    Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                    From="1.0" To="1.1" Duration="0:0:0.1" AutoReverse="True" />
+                <DoubleAnimation
+                    Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                    From="1.0" To="1.1" Duration="0:0:0.1" AutoReverse="True" />
+            </Storyboard>
+        </Grid.Resources>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Command="{Binding AddCommand}" Margin="5,5,5,5" Width="185">
+        <!-- Add Accommodation Button -->
+        <Button Grid.Row="0" Command="{Binding AddCommand}" Margin="10" Width="200" Background="#007ACC" Foreground="White">
+            <Button.RenderTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+            </Button.RenderTransform>
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard Storyboard="{StaticResource ButtonClickAnimation}" />
+                </EventTrigger>
+            </Button.Triggers>
             <StackPanel Orientation="Horizontal">
                 <Image Source="../../../Resources/Images/add.png" Width="25" Height="25"/>
-                <TextBlock Text="Add Accommodation" FontSize="16" Margin="5,0,0,0"/>
+                <TextBlock Text="Add Accommodation" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
-        
+
+        <!-- Accommodations List View -->
         <ListView
             Grid.Row="1"
             x:Name="AccommodationsListView"
-            Margin="10,0,10,20"
+            Margin="10,0,10,10"
             Background="Transparent"
-            BorderThickness="1"
+            BorderThickness="0"
             ItemsSource="{Binding AccommodationsDTOs}"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectedItem="{Binding SelectedAccommodation}"
@@ -36,8 +58,19 @@
                 <Style TargetType="ListViewItem">
                     <Setter Property="Background" Value="White" />
                     <Setter Property="Padding" Value="0" />
-                    <Setter Property="Margin" Value="5,5,5,5" />
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="BorderBrush" Value="LightGray" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                     <Setter Property="commands:ListViewItemClickedBehavior.Command" Value="{Binding DataContext.ItemClickedCommand, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#DCE6F1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#E8F0FE" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
