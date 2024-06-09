@@ -100,6 +100,12 @@ namespace BookingApp.WPF.ViewModel.Tourist
         {
             SaveReviews();
             MessageBox.Show(TranslationSource.Instance["ReviewSuccessful"]);
+
+            // Zatvaranje prozora
+            if (parameter is Window window)
+            {
+                window.Close();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

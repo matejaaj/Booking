@@ -23,6 +23,7 @@ namespace BookingApp.WPF.View.Tourist
         public MyTourMoreDetailsWindow(TourInstanceViewModel tourInstanceViewModel)
         {
             InitializeComponent();
+
             var viewModel = new MyTourMoreDetailsViewModel(tourInstanceViewModel);
             DataContext = viewModel;
         }

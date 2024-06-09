@@ -31,27 +31,6 @@ namespace BookingApp.WPF.View.Tourist
             DataContext = ViewModel;
         }
 
-        private void AddSegment_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.AddSegment();
-        }
-
-        private void RemoveSegment_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            if (button != null && button.DataContext is TourRequestSegmentViewModel segment)
-            {
-                ViewModel.RemoveSegment(segment);
-            }
-        }
-
-        private void Submit_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.Submit();
-            MessageBox.Show("Form submitted successfully!");
-            this.Close();
-        }
-
         private void AutoCompleteBox_Loaded(object sender, RoutedEventArgs e)
         {
             var autoCompleteBox = sender as AutoCompleteBox;
@@ -60,5 +39,28 @@ namespace BookingApp.WPF.View.Tourist
                 autoCompleteBox.SelectedItem = new KeyValuePair<int,string>();
             }
         }
+
+        private void AutoCompleteBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            var autoCompleteBox = sender as AutoCompleteBox;
+            if (autoCompleteBox != null && autoCompleteBox.SelectedItem == null)
+            {
+                var viewModel = autoCompleteBox.DataContext as TourRequestSegmentViewModel;
+                if (viewModel != null)
+                {
+                    if (autoCompleteBox.Name == "autoCompleteCountry")
+                    {
+                        viewModel.ValidateCountry(autoCompleteBox.Text);
+                    }
+                    else if (autoCompleteBox.Name == "autoCompleteCity")
+                    {
+                        viewModel.ValidateCity(autoCompleteBox.Text);
+                    }
+                }
+            }
+        }
+
+
+        
     }
 }

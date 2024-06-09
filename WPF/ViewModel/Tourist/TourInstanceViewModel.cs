@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System;
 using System.Linq;
+using BookingApp;
 
 public class TourInstanceViewModel : INotifyPropertyChanged
 {
@@ -61,12 +62,12 @@ public class TourInstanceViewModel : INotifyPropertyChanged
         {
             if (CurrentCheckpoint == "START")
             {
-                return "Tura nije počela";
+                return TranslationSource.Instance["TourStatusNotStart"];
             }
 
-            if (CurrentCheckpoint == "END")
+            if (isFinished)
             {
-                return "Tura se završila";
+                return TranslationSource.Instance["TourStatusEnd"];
             }
 
             return CurrentCheckpoint;

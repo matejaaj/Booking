@@ -129,6 +129,9 @@
   <data name="AcceptedStatus" xml:space="preserve">
     <value>Prihvaćen</value>
   </data>
+  <data name="AddDelay" xml:space="preserve">
+    <value>Dodaj kašnjenje</value>
+  </data>
   <data name="AddTourSegment" xml:space="preserve">
     <value>Dodaj još</value>
   </data>
@@ -197,6 +200,18 @@
   </data>
   <data name="Delay" xml:space="preserve">
     <value>Kašnjenje</value>
+  </data>
+  <data name="DelayAdded" xml:space="preserve">
+    <value>Dodali ste kašnjenje od {0} minuta</value>
+  </data>
+  <data name="DelayAlreadySet" xml:space="preserve">
+    <value>Već ste jednom dodali kašnjenje</value>
+  </data>
+  <data name="DelayTittle" xml:space="preserve">
+    <value>Kašnjenje</value>
+  </data>
+  <data name="DelayTourist" xml:space="preserve">
+    <value>Unesite svoje kašnjenje u minutima: </value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Opis:</value>
@@ -339,6 +354,9 @@
   <data name="RequestDetailsTittle" xml:space="preserve">
     <value>Zahtev za turu</value>
   </data>
+  <data name="RequestSuccess" xml:space="preserve">
+    <value>Zahtev uspešno podnešen</value>
+  </data>
   <data name="ReservationSuccessful" xml:space="preserve">
     <value>Rezervacija uspešna.</value>
   </data>
@@ -429,6 +447,12 @@
   <data name="TourSegment" xml:space="preserve">
     <value>Deo ture</value>
   </data>
+  <data name="TourStatusEnd" xml:space="preserve">
+    <value>Tura se zavrišila</value>
+  </data>
+  <data name="TourStatusNotStart" xml:space="preserve">
+    <value>Tura nije počela</value>
+  </data>
   <data name="UnknownStatusMessage" xml:space="preserve">
     <value>Nepoznat</value>
   </data>
@@ -447,8 +471,14 @@
   <data name="ValidationDate" xml:space="preserve">
     <value>Datum ne sme biti u prošlosti</value>
   </data>
+  <data name="ValidationDateBefore" xml:space="preserve">
+    <value>Ne može biti pre "od" datuma</value>
+  </data>
   <data name="ValidationDateNotChosen" xml:space="preserve">
     <value>Još nije izabran</value>
+  </data>
+  <data name="ValidationDescription" xml:space="preserve">
+    <value>Unesite opis</value>
   </data>
   <data name="ValidationDriver" xml:space="preserve">
     <value>Unesite vozača</value>

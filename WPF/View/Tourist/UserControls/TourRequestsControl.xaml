@@ -53,7 +53,7 @@
                 <Button Style="{StaticResource DefaultButton}" Command="{Binding OpenRequestStatisticsCommand}" Margin="5,0">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="pack://application:,,,/Resources/Images/Tourist/stats.png" Width="25" Height="25" Margin="0,0,10,0"/>
-                        <TextBlock Text="{resources:Loc TourRequestStatistics}" FontSize="16"/>
+                        <TextBlock Text="{resources:Loc TourRequestStatistics}" FontSize="20"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -116,10 +116,12 @@
                         <DataTemplate>
                             <Border Style="{StaticResource DefaultBorder}" Width="300">
                                 <StackPanel>
-                                    <TextBlock Text="{Binding DisplayLocations}"
-                                               Style="{StaticResource ItemHeaderTextStyle}"/>
+                                    <StackPanel Height="112">
+                                        <TextBlock Text="{Binding DisplayLocations}"
+                                                   Style="{StaticResource ItemHeaderTextStyle}"/>
 
-                                    <TextBlock Height="60" Text="{Binding DisplayGuestNames}"/>
+                                        <TextBlock Text="{Binding DisplayGuestNames}"/>
+                                    </StackPanel>
 
                                     <TextBlock HorizontalAlignment="Center">
                                         <Run Text="Status: " FontWeight="Bold"/>
@@ -133,6 +135,7 @@
                                         </StackPanel>
                                     </Button>
                                 </StackPanel>
+
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

@@ -123,8 +123,8 @@
 
             <!-- Action Buttons -->
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="10">
-                <Button Content="{resources:Loc Submit}" Width="120" Command="{Binding SubmitCommand}" Margin="5,0,0,0"
-                        Style="{StaticResource SmallButton}"/>
+                <Button Content="{resources:Loc Submit}" Width="120" Command="{Binding SubmitCommand}"
+                        Style="{StaticResource SmallButton}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Margin="5,0,0,0"/>
                 <Button Content="{resources:Loc CancelButton}" Width="120" Click="CancelButton_Click" Margin="5,0,0,0"
                         Style="{StaticResource SmallButton}"/>
             </StackPanel>

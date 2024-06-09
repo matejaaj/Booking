@@ -6,11 +6,17 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
-        Title="Kasnjenje" Height="150" Width="300"
-        WindowStartupLocation="CenterScreen">
+        Title="{resources:Loc DelayTittle}" Height="200" Width="300"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource PrimaryBackground}">
     <StackPanel Margin="10">
-        <Label>Enter delay in minutes:</Label>
-        <TextBox x:Name="DelayTextBox"/>
-        <Button Content="Submit" Margin="5" Padding="3" Click="SubmitButton_Click"/>
+        <Label Content="{resources:Loc DelayTourist}" FontSize="16"
+               Foreground="{DynamicResource PrimaryTextColor}"/>
+        <TextBox x:Name="DelayTextBox" Width="45" Style="{DynamicResource FormInput}"/>
+        <Button Content="{resources:Loc AddDelay}"
+                Style="{StaticResource SmallButton}"
+                Margin="5" Padding="3"
+                Width="auto"
+                Click="SubmitButton_Click"/>
     </StackPanel>
 </Window>

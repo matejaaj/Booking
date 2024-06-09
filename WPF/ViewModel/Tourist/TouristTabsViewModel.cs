@@ -173,6 +173,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 // Handle the case where TranslationSource.Instance or CurrentCulture is null
                 MessageBox.Show("Translation source or current culture is not initialized properly.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            ToursMainViewModel.MyToursViewModel.CreateViewModels();
         }
 
         private void Logout()

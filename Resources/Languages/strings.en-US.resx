@@ -129,6 +129,9 @@
   <data name="AcceptedStatus" xml:space="preserve">
     <value>Accepted</value>
   </data>
+  <data name="AddDelay" xml:space="preserve">
+    <value>Add delay</value>
+  </data>
   <data name="AddTourSegment" xml:space="preserve">
     <value>Add segment</value>
   </data>
@@ -197,6 +200,18 @@
   </data>
   <data name="Delay" xml:space="preserve">
     <value>Delay</value>
+  </data>
+  <data name="DelayAdded" xml:space="preserve">
+    <value>You have added delay of {0} minutes</value>
+  </data>
+  <data name="DelayAlreadySet" xml:space="preserve">
+    <value>You have already set a delay</value>
+  </data>
+  <data name="DelayTittle" xml:space="preserve">
+    <value>Delay</value>
+  </data>
+  <data name="DelayTourist" xml:space="preserve">
+    <value>Enter your delay in minutes: </value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description: </value>
@@ -339,6 +354,9 @@
   <data name="RequestDetailsTittle" xml:space="preserve">
     <value>Tour request</value>
   </data>
+  <data name="RequestSuccess" xml:space="preserve">
+    <value>Request submitted successfully</value>
+  </data>
   <data name="ReservationSuccessful" xml:space="preserve">
     <value>Reservation successful.</value>
   </data>
@@ -429,6 +447,12 @@
   <data name="TourSegment" xml:space="preserve">
     <value>Tour segment</value>
   </data>
+  <data name="TourStatusEnd" xml:space="preserve">
+    <value>Tour has ended</value>
+  </data>
+  <data name="TourStatusNotStart" xml:space="preserve">
+    <value>Not started yet</value>
+  </data>
   <data name="UnknownStatusMessage" xml:space="preserve">
     <value>Unknown</value>
   </data>
@@ -447,8 +471,14 @@
   <data name="ValidationDate" xml:space="preserve">
     <value>Date must not be in the past</value>
   </data>
+  <data name="ValidationDateBefore" xml:space="preserve">
+    <value>From date cannot be before From date</value>
+  </data>
   <data name="ValidationDateNotChosen" xml:space="preserve">
     <value>Not chosen yet</value>
+  </data>
+  <data name="ValidationDescription" xml:space="preserve">
+    <value>Enter description</value>
   </data>
   <data name="ValidationDriver" xml:space="preserve">
     <value>Driver required</value>
