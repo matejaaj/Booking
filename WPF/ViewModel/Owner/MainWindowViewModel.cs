@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using BookingApp.Domain.Model;
 using System.Collections.ObjectModel;
 using BookingApp.DTO;
+using System.Diagnostics.Eventing.Reader;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
@@ -65,6 +66,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         public ICommand HideNotificationsCommand { get; }
         public ICommand ShowForumCommand { get; }
         public ICommand ItemClickedCommand { get; private set; }
+        public ICommand HelpCommand { get; }
         private static AccommodationService _accommodationService;
         private static AccommodationReservationService _accommodationReservationService;
         private static AccommodationAndOwnerRatingService _accommodationAndOwnerRatingService;
@@ -132,6 +134,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             HideNotificationsCommand = new RelayCommand(HideNotifications);
             ItemClickedCommand = new RelayCommand(ExecuteItemClicked);
             ShowForumCommand = new RelayCommand(ShowForum);
+            HelpCommand = new RelayCommand(Help);
 
             Notifications = new List<Notification>();
             StartUp();            
@@ -141,6 +144,11 @@ namespace BookingApp.WPF.ViewModel.Owner
             NotifyNewForum();
         }
 
+        private void Help(object obj)
+        {
+            PageName = "Help";
+            MainFrame.Navigate(new OtherHelpPage());
+        }
 
         private void StartUp()
         {

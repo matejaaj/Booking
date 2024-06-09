@@ -183,7 +183,7 @@
             <Button Command="{Binding ShowAccommodationsCommand}" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0" FontSize="16" Grid.Column="1">
                 <Image Source="../../../Resources/Images/home.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             </Button>
-            <Button Command="{Binding BottomButton3Command}" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0" FontSize="16" Grid.Column="2">
+            <Button Command="{Binding HelpCommand}" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Center" BorderThickness="0" FontSize="16" Grid.Column="2">
                 <Image Source="../../../Resources/Images/help.png" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             </Button>
         </Grid>
