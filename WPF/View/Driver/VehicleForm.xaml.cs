@@ -1,11 +1,13 @@
 ﻿using BookingApp.Domain.Model;
 using BookingApp.Repository;
+using BookingApp.Validation;
 using BookingApp.WPF.View.Guide;
 using BookingApp.WPF.ViewModel.Driver;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -56,6 +58,7 @@ namespace BookingApp.WPF.View.Driver
         {
             VM.btnShowImages_Click(sender, e, this);
         }
+
 
     }
 }

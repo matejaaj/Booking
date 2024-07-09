@@ -15,16 +15,18 @@ namespace BookingApp.Domain.Model
         public int RemainingSlots { get; set; }
         public DateTime StartTime { get; set; }
 
+        public int GuideId { get; set; }
         public bool IsCompleted { get; set; }
 
         public string CurrentCheckpoint { get; set; }
 
         public TourInstance() { }
 
-        public TourInstance(int tourId, int capacity, DateTime startTime)
+        public TourInstance(int tourId, int capacity, DateTime startTime, int guideId)
         {
             TourId = tourId;
             RemainingSlots = capacity;
+            GuideId = guideId;
             StartTime = startTime;
             IsCompleted = false;
             CurrentCheckpoint = "START";
@@ -36,9 +38,10 @@ namespace BookingApp.Domain.Model
             Id = int.Parse(values[0]);
             TourId = int.Parse(values[1]);
             RemainingSlots = int.Parse(values[2]);
-            StartTime = DateTime.Parse(values[3]);
-            IsCompleted = bool.Parse(values[4]);
-            CurrentCheckpoint = values[5];
+            GuideId = int.Parse(values[3]);
+            StartTime = DateTime.Parse(values[4]);
+            IsCompleted = bool.Parse(values[5]);
+            CurrentCheckpoint = values[6];
         }
 
         public string[] ToCSV()
@@ -47,6 +50,7 @@ namespace BookingApp.Domain.Model
             Id.ToString(),
             TourId.ToString(),
             RemainingSlots.ToString(),
+            GuideId.ToString(),
             StartTime.ToString(),
             IsCompleted.ToString(),
             CurrentCheckpoint

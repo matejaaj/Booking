@@ -26,18 +26,32 @@ namespace BookingApp.WPF.View.Tourist
 
         public TouristTabsWindow(User user)
         {
-
-
             InitializeComponent();
             ViewModel = new TouristTabsViewModel(user);
+
+            ViewModel.RequestClose += (s, e) => this.Close();
+            ViewModel.ShowAllToursRequested += (s, e) => SwitchToTab(AllToursTabItem);
+            ViewModel.ShowMyToursRequested += (s, e) => SwitchToTab(MyToursTabItem);
+            ViewModel.ShowTourRequestsRequested += (s, e) => SwitchToTab(TourRequestsTabItem);
+            ViewModel.ShowMyDrivesRequested += (s, e) => SwitchToTab(MyDrivesTabItem);
 
             DataContext = ViewModel;
         }
 
-        private void ChangeTheme_click(object sender, RoutedEventArgs e)
+        private void SwitchToTab(TabItem tabItem)
         {
-            ViewModel.ChangeTheme();
+            // First, switch the main TabControl to the appropriate parent tab
+            if (tabItem.Parent is TabControl parentTabControl)
+            {
+                if (parentTabControl.Parent is TabItem parentTabItem)
+                {
+                    MainTabControl.SelectedItem = parentTabItem;
+                }
+                // Then switch the nested TabControl to the appropriate child tab
+                parentTabControl.SelectedItem = tabItem;
+            }
         }
+
 
 
     }

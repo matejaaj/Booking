@@ -57,34 +57,28 @@ namespace BookingApp.WPF.ViewModel.Tourist.Factories
 
         private string GetReservationStatus(int reservationStatusId, double delayDriver, double delayTourist)
         {
-            string status = "";
+            string status;
             if (delayDriver != 0)
             {
-                status = $"Vozac kasni {delayDriver} minuta";
-                
+                status = string.Format(TranslationSource.Instance["DriverDelayMessage"], delayDriver);
             }
-
             else
             {
                 switch (reservationStatusId)
                 {
                     case 12:
-                        status = "Vozac jos nije pronadjen";
+                        status = TranslationSource.Instance["DriverNotFoundMessage"];
                         break;
                     case 4:
-                        status = "Vozac je stigao na adresu";
+                        status = TranslationSource.Instance["DriverArrivedMessage"];
                         break;
                     case 5:
-                        status = "Prihvacena voznja";
-                        break;
                     case 2:
-                        status = "Prihvacena voznja";
-                        break;
                     case 13:
-                        status = "Prihvacena voznja";
+                        status = TranslationSource.Instance["DriveAcceptedMessage"];
                         break;
                     default:
-                        status = "Nepoznat";  
+                        status = TranslationSource.Instance["UnknownStatusMessage"];
                         break;
                 }
             }

@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using BookingApp.Application;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.WPF.ViewModel.Tourist;
+using BookingApp.DTO;
 
 namespace BookingApp.WPF.View.Tourist.UserControls
 {
@@ -29,23 +30,5 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             InitializeComponent();
         }
 
-        private void OpenTourRequestForm_Click(object sender, RoutedEventArgs e)
-        {
-            var viewModel = this.DataContext as TourRequestsViewModel;
-            viewModel.OpenFormWindow();
-
-        }
-
-
-        private void OpenRequestStatistics_Click(object sender, RoutedEventArgs e)
-        {
-            var viewModel = this.DataContext as TourRequestsViewModel;
-            viewModel.OpenStatisticsWindow();
-        }
-
-        private void MoreDetails_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Test");
-        }
     }
 }

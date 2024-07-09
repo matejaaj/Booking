@@ -112,5 +112,71 @@ namespace BookingApp.Application.UseCases
 
             return todayTours;
         }
+
+        public int GetTotalGuidedTours(int guideId, int languageId)
+        {
+            int totalGuidedTours = 0;
+            var appropriateTours = GetAll().Where(t => t.LanguageId == languageId).ToList();
+
+            foreach (var instance in _tourInstanceService.GetAll())
+            {
+                if (appropriateTours.Any(t => t.Id == instance.TourId)){
+                    if(instance.GuideId == guideId && instance.StartTime.AddYears(1) > DateTime.Now)
+                        totalGuidedTours++;
+                }
+            }
+
+            return totalGuidedTours;
+        }
+
+        public int GetTotalGuidedToursSinceSuperStatus(int guideId, int languageId, DateTime achievedDate)
+        {
+            int totalGuidedTours = 0;
+            var appropriateTours = GetAll().Where(t => t.LanguageId == languageId).ToList();
+
+            foreach (var instance in _tourInstanceService.GetAll())
+            {
+                if (appropriateTours.Any(t => t.Id == instance.TourId))
+                {
+                    if (instance.GuideId == guideId && instance.StartTime > achievedDate)
+                        totalGuidedTours++;
+                }
+            }
+
+            return totalGuidedTours;
+        }
+
+        
+        public List<int> GetInstancesSinceSuperStatus(int guideId, int languageId, DateTime accuiredDate)
+        {
+            List<int> ids = new List<int>();
+            var appropriateTours = GetAll().Where(t => t.LanguageId == languageId).ToList();
+
+            foreach (var instance in _tourInstanceService.GetAll())
+            {
+                if (appropriateTours.Any(t => t.Id == instance.TourId))
+                {
+                    if (instance.GuideId == guideId && instance.StartTime > accuiredDate)
+                        ids.Add(instance.Id);
+                }
+            }
+            return ids;
+        }
+
+        public List<int> GetInstances(int guideId, int languageId)
+        {
+            List<int> ids = new List<int>();
+            var appropriateTours = GetAll().Where(t => t.LanguageId == languageId).ToList();
+
+            foreach (var instance in _tourInstanceService.GetAll())
+            {
+                if (appropriateTours.Any(t => t.Id == instance.TourId))
+                {
+                    if (instance.GuideId == guideId && instance.StartTime.AddYears(1) > DateTime.Now)
+                        ids.Add(instance.Id);
+                }
+            }
+            return ids;
+        }
     }
 }

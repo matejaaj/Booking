@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
         mc:Ignorable="d"
-        Title="CityConnect Firma" Height="550" Width="936">
+        Title="CityConnect Firma" Height="570" Width="936"
+        Loaded="OnLoad">
     <Page.Resources>
         <local:LocationConverterDriver x:Key="LocationConverterDriver" />
         <Style TargetType="Button" x:Key="AcceptButtonStyle">
@@ -36,7 +37,7 @@
         <StackPanel Grid.Row="1" Grid.ColumnSpan="4">
             <ListView ItemsSource="{Binding DriveReservations}" 
                     Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}" 
-                    Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}" 
+                    Height="607" 
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedReservation}">
                 <ListView.ItemContainerStyle>

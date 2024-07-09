@@ -27,17 +27,5 @@ namespace BookingApp.WPF.View.Tourist.UserControls
         }
 
 
-        public void btnReserve_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is FastDriveFormViewModel viewModel)
-            {
-                viewModel.ReserveFastDrive();
-                MessageBox.Show("Rezervacija uspešno izvršena!");
-
-                Window parentWindow = Window.GetWindow(this);
-                parentWindow?.Close();
-            }
-        }
-
     }
 }

@@ -5,13 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist"
         xmlns:control="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
+        xmlns:resources="clr-namespace:BookingApp"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Booking"  Width="1320" Height="743"
+        Title="Booking" Width="1320" Height="743"
         Background="{DynamicResource PrimaryBackground}">
 
-
-
+    <Window.InputBindings>
+        <KeyBinding Key="T" Modifiers="Control" Command="{Binding ShowAllToursCommand}"/>
+        <KeyBinding Key="M" Modifiers="Control" Command="{Binding ShowMyToursCommand}"/>
+        <KeyBinding Key="R" Modifiers="Control" Command="{Binding ShowTourRequestsCommand}"/>
+        <KeyBinding Key="D" Modifiers="Control" Command="{Binding ShowMyDrivesCommand}"/>
+        <KeyBinding Key="L" Modifiers="Control" Command="{Binding ChangeLanguageCommand}"/>
+        <KeyBinding Key="H" Modifiers="Control" Command="{Binding ChangeThemeCommand}"/>
+    </Window.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,48 +27,105 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TabControl Grid.Row="0" TabStripPlacement="Left"
+        <TabControl x:Name="MainTabControl" Grid.Row="0" TabStripPlacement="Left"
                     Background="{DynamicResource PrimaryBackground}">
-            <TabItem Header="Ture" Style="{StaticResource ParentTabStyle}">
+            <TabItem x:Name="ToursTabItem" Style="{StaticResource ParentTabStyle}" ToolTip="{resources:Loc TooltipAllTours}">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="pack://application:,,,/Resources/Images/Tourist/map.png" Width="30" Height="20" Margin="0,0,10,0"/>
+                            <TextBlock Text="{resources:Loc TourMainTab}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
                 <TabControl>
-                    <TabItem Header="Sve ture" Style="{StaticResource ChildTabStyle}">
+                    <TabItem x:Name="AllToursTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="{resources:Loc TooltipAllTours}">
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="pack://application:,,,/Resources/Images/Tourist/map.png" Width="30" Height="20" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{resources:Loc AllTours}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
                         <control:AllToursControl DataContext="{Binding ToursMainViewModel.AllToursViewModel}"
                                                  Tourist="{Binding Tourist}"/>
                     </TabItem>
-                    <TabItem Header="Moje ture" Style="{StaticResource ChildTabStyle}">
+                    <TabItem x:Name="MyToursTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="{resources:Loc TooltipMyTours}">
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="pack://application:,,,/Resources/Images/Tourist/saved.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{resources:Loc MyTours}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
                         <control:MyToursControl DataContext="{Binding ToursMainViewModel.MyToursViewModel}"
                                                 Tourist="{Binding Tourist}"/>
                     </TabItem>
 
-                    <TabItem Header="Zahtev ture" Style="{StaticResource ChildTabStyle}">
+                    <TabItem x:Name="TourRequestsTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="{resources:Loc TooltipTourRequests}">
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="pack://application:,,,/Resources/Images/Tourist/request.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{resources:Loc TourRequest}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
                         <control:TourRequestsControl DataContext="{Binding ToursMainViewModel.TourRequestsViewModel}"/>
                     </TabItem>
-
                 </TabControl>
             </TabItem>
-            <TabItem Header="Taksi" Style="{StaticResource ParentTabStyle}">
+            <TabItem x:Name="DrivesTabItem" Style="{StaticResource ParentTabStyle}" ToolTip="{resources:Loc TooltipTaxi}">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="pack://application:,,,/Resources/Images/Tourist/car.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                            <TextBlock Text="{resources:Loc DriveMainTab}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
                 <TabControl>
-                    <TabItem Header="Moje vožnje" Style="{StaticResource ChildTabStyle}"
-                             >
+                    <TabItem x:Name="MyDrivesTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="{resources:Loc TooltipDrives}">
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="pack://application:,,,/Resources/Images/Tourist/car.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Vožnje"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
                         <control:DriveReservationControl DataContext="{Binding DriveMainViewModel}"
-                                                         Tourist="{Binding Tourist}"       />
+                                                         Tourist="{Binding Tourist}" />
                     </TabItem>
                 </TabControl>
             </TabItem>
         </TabControl>
 
         <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Left" Margin="0,-600,0,0">
-            <TextBlock>Notifikacije</TextBlock>
             <control:NotificationControl/>
         </StackPanel>
 
-
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="3,-100,0,0">
-            <Button Content="Promeni jezik"  Style="{StaticResource SmallButton}"
-                    />
-            <Button Content="Promeni temu" Style="{StaticResource SmallButton}"
-                    Click="ChangeTheme_click"/>
-            <Button Content="Odjavi se" Style="{StaticResource SmallButton}"/>
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10,-130,0,0">
+            <Button Style="{StaticResource SmallButton}" Width="175" Command="{Binding ChangeLanguageCommand}" ToolTip="{resources:Loc TooltipLanguage}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Resources/Images/Tourist/language.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                    <TextBlock Text="{resources:Loc ChangeLanguage}"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource SmallButton}" Command="{Binding ChangeThemeCommand}" ToolTip="{resources:Loc TooltipTheme}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Resources/Images/Tourist/theme.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                    <TextBlock Text="{resources:Loc ChangeTheme}"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource SmallButton}" Command="{Binding LogoutCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Resources/Images/Tourist/logout.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                    <TextBlock Text="{resources:Loc Logout}"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

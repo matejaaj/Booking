@@ -1,20 +1,18 @@
-﻿using BookingApp.Application.UseCases;
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
+using BookingApp.Application.UseCases;
 using BookingApp.Application;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
     public class DriveReservationFormViewModel
     {
         public User Tourist { get; set; }
-
         public RegularDriveFormViewModel RegularDriveViewModel { get; private set; }
         public FastDriveFormViewModel FastDriveViewModel { get; private set; }
         public GroupDriveFormViewModel GroupDriveViewModel { get; private set; }
@@ -25,20 +23,21 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private DriveReservationService _driveReservationService;
         private UserService _userService;
 
+        public ICommand CloseWindowCommand { get; }
+
         public DriveReservationFormViewModel(User loggedUser)
         {
+            CloseWindowCommand = new RelayCommand(CloseWindow);
             Tourist = loggedUser;
             InitializeServices();
             InitializeViewModels();
-            CheckForDriverAssignment();
         }
 
         private void InitializeViewModels()
         {
-            RegularDriveViewModel = new RegularDriveFormViewModel(Tourist,_userService, _vehicleService, _detailedLocationService, _locationService, _driveReservationService);
-            FastDriveViewModel = new FastDriveFormViewModel(Tourist, _detailedLocationService, _driveReservationService);
-            GroupDriveViewModel = new GroupDriveFormViewModel(Tourist, _detailedLocationService);
-
+            RegularDriveViewModel = new RegularDriveFormViewModel(Tourist, _userService, _vehicleService, _detailedLocationService, _locationService, _driveReservationService, CloseWindowCommand);
+            FastDriveViewModel = new FastDriveFormViewModel(Tourist, _detailedLocationService, _driveReservationService, CloseWindowCommand);
+            GroupDriveViewModel = new GroupDriveFormViewModel(Tourist, _detailedLocationService, _driveReservationService, CloseWindowCommand);
         }
 
         private void InitializeServices()
@@ -50,26 +49,13 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _userService = new UserService(Injector.CreateInstance<IUserRepository>());
         }
 
-
-        public void CheckForDriverAssignment()
+        public void CloseWindow(object param)
         {
-            var statusesToCheck = new List<string> { "CONFIRMED_FAST", "FAST_RESERVATION" };
-            var reservations = _driveReservationService.GetByTouristAndStatuses(Tourist.Id, statusesToCheck);
-
-            foreach (var reservation in reservations)
+            if (param is Window window)
             {
-                string formattedDeparture = reservation.DepartureTime.ToString("f");
-
-                if (reservation.DriveReservationStatusId == 13)
-                {
-                    var driver = _userService.GetById(reservation.DriverId);
-                    MessageBox.Show($"Your driver {driver.Username} has been assigned to your trip on {formattedDeparture}.");
-                }
-                else if (reservation.DriveReservationStatusId == 12)
-                {
-                    MessageBox.Show($"A driver has not yet been found for your fast reservation scheduled for {formattedDeparture}.");
-                }
+                window.Close();
             }
+
         }
     }
 }

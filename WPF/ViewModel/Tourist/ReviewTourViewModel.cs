@@ -67,9 +67,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
         {
             foreach (var reviewForm in ReviewForms)
             {
-                TourReview review = new TourReview(SelectedTourInstance.Id, TouristId ,reviewForm.Guest.Id, reviewForm.SelectedRating, reviewForm.Comment, true);
+                TourReview review = new TourReview(SelectedTourInstance.Id, TouristId, reviewForm.Guest.Id, reviewForm.SelectedRating, reviewForm.Comment, true);
                 _tourReviewService.Save(review);
-                foreach(var path in reviewForm.ImagePaths)
+                foreach (var path in reviewForm.ImagePaths)
                 {
                     Domain.Model.Image image = new Domain.Model.Image(path, review.Id, ImageResourceType.TOUR_REVIEW, TouristId);
                     _imageService.Save(image);

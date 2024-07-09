@@ -4,8 +4,48 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Owner"
+        xmlns:val="clr-namespace:BookingApp.Validation"
         mc:Ignorable="d"
-        Title="Guest Rating" Height="331" Width="350" WindowStartupLocation="CenterOwner">
+        Title="Guest Rating" Height="345" Width="350" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style x:Key="RoundedButton" TargetType="Button">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="IsEnabled" Value="True"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                            BorderBrush="Black"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                              Margin="10"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="Gray"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="DarkSlateGray"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding ElementName=txtRulesRespect, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=txtCleanliness, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,16 +60,89 @@
         </Grid.RowDefinitions>
 
         <Label Content="Cleanliness:" Grid.Row="0" Grid.Column="0" Margin="0,0,5,5"/>
-        <TextBox x:Name="txtCleanliness" Text="{Binding Path=Cleanliness, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtCleanliness" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5">
+            <TextBox.Text>
+                <Binding Path="Cleanliness" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
+                        <val:MinMaxValidationRule ValidationStep="ConvertedProposedValue" Min="1" Max="5"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-        <Label Content="Rules Respect:" Grid.Row="1" Grid.Column="0" Margin="0,5,5,5"/>
-        <TextBox x:Name="txtRulesRespect" Text="{Binding Path=RulesRespect, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5"/>
+                        <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                        <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
 
-        <Label Content="Comment:" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5,0,5"/>
-        <TextBox x:Name="txtComment" Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,0,5" TextWrapping="Wrap" AcceptsReturn="True" Height="100"/>
+        <Label Content="Rules Respect:" Grid.Row="1" Grid.Column="0" Margin="0,10,5,5"/>
+        <TextBox x:Name="txtRulesRespect" Grid.Row="1" Grid.Column="1" Margin="0,10,0,5">
+            <TextBox.Text>
+                <Binding Path="RulesRespect" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
+                        <val:MinMaxValidationRule ValidationStep="ConvertedProposedValue" Min="1" Max="5"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-        <Button Content="Confirm" Grid.Row="4" Grid.Column="0" Click="ConfirmButton_Click" HorizontalAlignment="Center" Margin="0,5,5,0"/>
-        <Button Content="Cancel" Grid.Row="4" Grid.Column="1" Click="CancelButton_Click" HorizontalAlignment="Center" Margin="5,5,0,0"/>
+                        <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                        <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+
+        <Label Content="Comment:" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,5"/>
+        <TextBox x:Name="txtComment" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,0,5" TextWrapping="Wrap" AcceptsReturn="True" Height="100">
+            <TextBox.Text>
+                <Binding Path="Comment" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:GuestRatingFormValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                        <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+
+        <Button Style="{StaticResource RoundedButton}" Content="Confirm" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding Confirm}" Width="200" HorizontalAlignment="Center" Margin="0,10,5,0"/>
     </Grid>
 </Window>
 

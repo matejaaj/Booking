@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using BookingApp.DTO;
@@ -16,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
@@ -40,6 +42,9 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static UserService _userService;
         private static AccommodationService _accommodationService;
 
+        public ICommand ApproveCommand { get; set; }
+        public ICommand RejectCommand { get; set; }
+
         public ReschedulingOverviewViewModel(Domain.Model.Owner loggedInOwner)
         {
             InitializeServices();
@@ -47,6 +52,9 @@ namespace BookingApp.WPF.ViewModel.Owner
             AccommodationReservations = _accommodationReservationService.GetByOwner(loggedInOwner);
             ReservationModificationRequests = _reservationModificationRequestService.GetByReservationIds(AccommodationReservations);
             Update();
+
+            ApproveCommand = new RelayCommand(ApproveRequest);
+            RejectCommand = new RelayCommand(RejectRequest);
         }
 
         private void InitializeServices()
@@ -60,7 +68,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         private void Update()
         {
             Requests.Clear();
-            foreach(var request in ReservationModificationRequests)
+            foreach (var request in ReservationModificationRequests)
             {
                 var reservation = _accommodationReservationService.GetByReservationId(request.ReservationId);
                 var guest = _userService.GetById(reservation.GuestId);
@@ -70,40 +78,12 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
         }
 
-        internal void btnApprove_Click(object sender, RoutedEventArgs e)
+        private bool CanExecuteRequest(object parameter)
         {
-            if(SelectedRequest == null)
-            {
-                MessageBox.Show("Please select a request",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                ApproveRequest();
-                Update();
-            }
+            return SelectedRequest != null;
         }
 
-        private void ApproveRequest()
-        {
-            ReservationModificationRequest request = _reservationModificationRequestService.GetById(SelectedRequest.Id);
-            AccommodationReservation reservation = _accommodationReservationService.GetByReservationId(request.ReservationId);
-            if (request.Status == ReservationModificationRequest.RequestStatus.APPROVED)
-            {
-                MessageBox.Show("Request is already approved!",
-                                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                request.Status = ReservationModificationRequest.RequestStatus.APPROVED;
-                reservation.StartDate = SelectedRequest.NewStartDate;
-                reservation.EndDate = SelectedRequest.NewEndDate;
-                _reservationModificationRequestService.Update(request);
-                _accommodationReservationService.Update(reservation);
-            }
-        }
-
-        internal void btnReject_Click(object sender, RoutedEventArgs e)
+        private void ApproveRequest(object parameter)
         {
             if (SelectedRequest == null)
             {
@@ -112,27 +92,49 @@ namespace BookingApp.WPF.ViewModel.Owner
             }
             else
             {
-                RejectRequest();
-                Update();
+                var request = _reservationModificationRequestService.GetById(SelectedRequest.Id);
+                var reservation = _accommodationReservationService.GetByReservationId(request.ReservationId);
+                if (request.Status == ReservationModificationRequest.RequestStatus.APPROVED)
+                {
+                    MessageBox.Show("Request is already approved!",
+                                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    request.Status = ReservationModificationRequest.RequestStatus.APPROVED;
+                    reservation.StartDate = SelectedRequest.NewStartDate;
+                    reservation.EndDate = SelectedRequest.NewEndDate;
+                    _reservationModificationRequestService.Update(request);
+                    _accommodationReservationService.Update(reservation);
+                    Update();
+                }
             }
         }
 
-        private void RejectRequest()
+        private void RejectRequest(object parameter)
         {
-            ReservationModificationRequest request = _reservationModificationRequestService.GetById(SelectedRequest.Id);
-            string comment = PromptForComment();
-            if (request.Status == ReservationModificationRequest.RequestStatus.REJECTED)
+            if (SelectedRequest == null)
             {
-                MessageBox.Show("Request is already rejected!",
-                                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select a request",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if(comment.Length > 0) 
+            else
             {
-                request.Status = ReservationModificationRequest.RequestStatus.REJECTED;
-                request.OwnerComment = comment;
-                _reservationModificationRequestService.Update(request);
+                var request = _reservationModificationRequestService.GetById(SelectedRequest.Id);
+                string comment = PromptForComment();
+                if (request.Status == ReservationModificationRequest.RequestStatus.REJECTED)
+                {
+                    MessageBox.Show("Request is already rejected!",
+                                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (comment.Length > 0)
+                {
+                    request.Status = ReservationModificationRequest.RequestStatus.REJECTED;
+                    request.OwnerComment = comment;
+                    _reservationModificationRequestService.Update(request);
+                    Update();
+                }
             }
-            return;
         }
 
         private string PromptForComment()

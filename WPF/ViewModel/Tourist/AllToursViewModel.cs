@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.DTO;
 using BookingApp.DTO.Factories;
+using BookingApp.WPF.View.Tourist;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
@@ -29,7 +32,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         public List<TourDTO> Tours { get; private set; }
 
-
+        public ICommand ShowTourDetailsCommand { get; }
 
 
         public AllToursViewModel(User loggedUser, TourService tourService, TourInstanceService tourInstanceService, CheckpointService checkpointService, ImageService imageService, LocationService locationService, LanguageService languageService, TourGuestService tourGuestService, TourReservationService tourReservationService, VoucherService voucherService)
@@ -46,12 +49,22 @@ namespace BookingApp.WPF.ViewModel.Tourist
             _languageService = languageService;
             _imageService = imageService;
 
+            ShowTourDetailsCommand = new RelayCommand(ShowTourDetails);
 
             _tourDTOFactory = new TourDTOFactory(_locationService, _languageService, _imageService, _checkPointService,
                 _tourInstanceService);
 
 
             Tours = _tourDTOFactory.CreateTourDTOs(_tourService.GetAll());
+        }
+
+        private void ShowTourDetails(object parameter)
+        {
+            if (parameter is TourDTO tour)
+            {
+                var window = new TourDetailsWindow(tour, Tourist);
+                window.Show();
+            }
         }
     }
 }

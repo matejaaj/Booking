@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BookingApp.WPF.View.Guide"
         xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="AdvancedStatistics" Height="450" Width="400">
+        Title="AdvancedStatistics" Height="450" Width="400" Style="{StaticResource GuideWindowStyle}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -15,16 +15,16 @@
 
         <StackPanel Grid.Row="0" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Number of tourists under 18 years:" />
-                <TextBlock Text="{Binding TouristsUnder18}" Margin="5,0,0,0"/>
+                <Label Style="{StaticResource GuideLabelStyle}"  Content="Number of tourists under 18 years:" />
+                <Label Style="{StaticResource GuideLabelStyle}" Content="{Binding TouristsUnder18}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Number of tourists between 18 and 50 years:" />
-                <TextBlock Text="{Binding TouristsBetween18And50}" Margin="5,0,0,0"/>
+                <Label Style="{StaticResource GuideLabelStyle}"  Content="Number of tourists between 18 and 50 years:" />
+                <Label Style="{StaticResource GuideLabelStyle}" Content="{Binding TouristsBetween18And50}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Number of tourists over 50 years:" />
-                <TextBlock Text="{Binding TouristsOver50}" Margin="5,0,0,0"/>
+                <Label Style="{StaticResource GuideLabelStyle}"  Content="Number of tourists over 50 years:" />
+                <Label Style="{StaticResource GuideLabelStyle}" Content="{Binding TouristsOver50}" />
             </StackPanel>
         </StackPanel>
 

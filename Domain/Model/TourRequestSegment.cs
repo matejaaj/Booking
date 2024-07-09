@@ -23,6 +23,7 @@ namespace BookingApp.Domain.Model
         public DateTime ToDate { get; set; }
         public DateTime AcceptedDate { get; set; }
         public TourRequestStatus IsAccepted { get; set; }
+        public int GuideId { get; set; }
 
         public TourRequestSegment(int tourRequestId, string description, int locationId, int languageId, int capacity, DateTime fromDate, DateTime toDate) 
         {
@@ -31,6 +32,7 @@ namespace BookingApp.Domain.Model
             LocationId = locationId;
             LanguageId = languageId;
             Capacity = capacity;
+            GuideId = -1;
             FromDate = fromDate;
             ToDate = toDate;
             AcceptedDate = DateTime.Now;
@@ -50,10 +52,11 @@ namespace BookingApp.Domain.Model
             LocationId = int.Parse(values[3]);
             LanguageId = int.Parse(values[4]);
             Capacity = int.Parse(values[5]);
-            FromDate = DateTime.Parse(values[6]);
-            ToDate = DateTime.Parse(values[7]);
-            AcceptedDate = DateTime.Parse(values[8]);
-            IsAccepted = (TourRequestStatus)Enum.Parse(typeof(TourRequestStatus), values[9]);
+            GuideId = int.Parse(values[6]);
+            FromDate = DateTime.Parse(values[7]);
+            ToDate = DateTime.Parse(values[8]);
+            AcceptedDate = DateTime.Parse(values[9]);
+            IsAccepted = (TourRequestStatus)Enum.Parse(typeof(TourRequestStatus), values[10]);
         }
 
         public string[] ToCSV()
@@ -65,6 +68,7 @@ namespace BookingApp.Domain.Model
                 LocationId.ToString(),
                 LanguageId.ToString(),
                 Capacity.ToString(),
+                GuideId.ToString(),
                 FromDate.ToString(),
                 ToDate.ToString(),
                 AcceptedDate.ToString(),

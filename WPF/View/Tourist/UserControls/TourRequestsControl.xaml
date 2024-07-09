@@ -4,9 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
+             xmlns:resources="clr-namespace:BookingApp"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Style="{StaticResource UserControlStyle}">
+
+    <UserControl.Resources>
+        <Style x:Key="HeaderTextStyleHidden" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+            <Setter Property="Margin" Value="20"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ComplexRequests.Count}" Value="0">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,91 +31,113 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Margin="20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0"
                        Style="{StaticResource HeaderTextStyle}"
-                       Text="Zahtevi za ture"
+                       Text="{resources:Loc TourRequestsHeader}"
                        HorizontalAlignment="Left"
-                       Margin="10,10,0,10"
                        VerticalAlignment="Center"/>
 
-            <Button Grid.Column="1"
-                    Style="{StaticResource DefaultButton}"
-                    Content="Zatraži turu"
-                    HorizontalAlignment="Right"
-                    Margin="10,10,10,10"
-                    Click="OpenTourRequestForm_Click"/>
-
-            <Button Grid.Column="2"
-                    Style="{StaticResource DefaultButton}"
-                    Content="Statistika zahteva"
-                    HorizontalAlignment="Right"
-                    Margin="10,10,10,10"
-                    Click="OpenRequestStatistics_Click"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="-70,0,0,0">
+                <Button Style="{StaticResource DefaultButton}" Command="{Binding OpenTourRequestFormCommand}" Margin="5,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/Images/Tourist/add.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                        <TextBlock Text="{resources:Loc CreateRequest}"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource DefaultButton}" Command="{Binding OpenRequestStatisticsCommand}" Margin="5,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Resources/Images/Tourist/stats.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                        <TextBlock Text="{resources:Loc TourRequestStatistics}"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </Grid>
 
-        <ScrollViewer Grid.Row="1" Margin="0,20,0,0">
-            <ItemsControl ItemsSource="{Binding Requests}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Style="{StaticResource DefaultBorder}" Width="300" >
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding SimpleRequests}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource DefaultBorder}" Width="300">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Location}"
+                                               Style="{StaticResource ItemHeaderTextStyle}"/>
 
-                                <TextBlock Grid.Row="0"
-                                           Style="{StaticResource ItemHeaderTextStyle}"
-                                           Text="Zahtev"
-                                           Margin="0,0,0,0"/>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0:dd.MM.yyyy} - {1:dd.MM.yyyy}">
+                                                <Binding Path="FromDate"/>
+                                                <Binding Path="ToDate"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
 
-                                <TextBlock Grid.Row="1"
-                                           Text="{Binding Location}"
-                                           FontWeight="Bold"
-                                           Margin="0,0,0,0"/>
+                                    <TextBlock Height="60" Text="{Binding DisplayGuests}" />
 
-                                <ItemsControl Grid.Row="2"
-                                              ItemsSource="{Binding Guests}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Name}"
-                                                       Margin="0,2,0,2"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                    <TextBlock HorizontalAlignment="Center">
+                                        <Run Text="Status: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Status}"/>
+                                    </TextBlock>
 
-                                <TextBlock Grid.Row="3"
-                                           Text="{Binding Status}"
-                                           FontWeight="Bold"
-                                           Margin="0,10,0,10"
-                                           HorizontalAlignment="Center"/>
+                                    <Button Style="{StaticResource DefaultButton}" HorizontalAlignment="Center" Command="{Binding DataContext.ShowSimpleRequestDetailsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                            <TextBlock Text="{resources:Loc MoreDetails}"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-                                <Button Grid.Row="4"
-                                        Style="{StaticResource DefaultButton}"
-                                        Content="Više detalja"
-                                        HorizontalAlignment="Center"
-                                        Margin="10"
-                                        Click="MoreDetails_Click"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                <TextBlock Text="{resources:Loc ComplexRequestsHeader}"
+                           Style="{StaticResource HeaderTextStyleHidden}"
+                           />
+
+                <ItemsControl ItemsSource="{Binding ComplexRequests}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource DefaultBorder}" Width="300">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding DisplayLocations}"
+                                               Style="{StaticResource ItemHeaderTextStyle}"/>
+
+                                    <TextBlock Height="60" Text="{Binding DisplayGuestNames}"/>
+
+                                    <TextBlock HorizontalAlignment="Center">
+                                        <Run Text="Status: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Status}"/>
+                                    </TextBlock>
+
+                                    <Button Style="{StaticResource DefaultButton}" HorizontalAlignment="Center" Command="{Binding DataContext.ShowComplexRequestDetailsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/view.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                            <TextBlock Text="{resources:Loc MoreDetails}"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>

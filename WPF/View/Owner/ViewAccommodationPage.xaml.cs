@@ -28,33 +28,8 @@ namespace BookingApp.WPF.View.Owner
         public ViewAccommodationPage(AccommodationPageDTO accommodation)
         {
             InitializeComponent();
-            viewModel = new ViewAccommodationViewModel(accommodation);
+            viewModel = new ViewAccommodationViewModel(accommodation, this);
             DataContext = viewModel;
-        }
-
-        private void RecentReservationsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            viewModel.RecentReservationsListBox_SelectionChanged(sender, RecentListView, this);
-        }
-
-        private void RenovateAccommodation_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.RenovateAccommodation_Click(sender, e, this);
-        }
-
-        private void Statistics_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.Statistics_Click(sender, e, this);
-        }
-
-        private void NextImage_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.NextImage_Click(sender, e);
-        }
-
-        private void PreviousImage_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.PreviousImage_Click(sender, e);
         }
     }
 }

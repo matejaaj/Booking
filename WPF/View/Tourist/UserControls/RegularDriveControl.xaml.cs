@@ -27,27 +27,34 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             InitializeComponent();
         }
 
-        public void btnReserve_Click(object sender, RoutedEventArgs e)
+        private void Minute_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataContext is RegularDriveFormViewModel viewModel)
-            {
-                viewModel.ReserveRegularDrive();
-                
-
-
-                Window parentWindow = Window.GetWindow(this);
-                parentWindow?.Close();
-            }
-        }
-
-        private void Minutes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox comboBox = sender as ComboBox;
-            if (comboBox.SelectedItem != null && DataContext is RegularDriveFormViewModel viewModel)
+            var autoCompleteBox = sender as AutoCompleteBox;
+            if (autoCompleteBox?.SelectedItem != null && DataContext is RegularDriveFormViewModel viewModel)
             {
                 viewModel.UpdateDriverList();
             }
         }
 
+        private void AutoCompleteBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            var autoCompleteBox = sender as AutoCompleteBox;
+            if (autoCompleteBox != null && autoCompleteBox.SelectedItem == null)
+            {
+                var viewModel = DataContext as RegularDriveFormViewModel;
+                if (viewModel != null)
+                {
+                    if (autoCompleteBox.Name == "autoCompleteCountry")
+                    {
+                        viewModel.ValidateCountry(autoCompleteBox.Text);
+                    }
+                    else if (autoCompleteBox.Name == "autoCompleteCity")
+                    {
+                        viewModel.ValidateCity(autoCompleteBox.Text);
+                    }
+                    // Add similar validation for other AutoCompleteBox controls if needed
+                }
+            }
+        }
     }
 }

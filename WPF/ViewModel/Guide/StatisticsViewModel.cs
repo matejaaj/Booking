@@ -30,7 +30,7 @@ namespace BookingApp.WPF.ViewModel.Guide
             set
             {
                 _yearlyOrMonthlyVisits = value;
-                OnPropertyChanged(nameof(YearlyOrMonthlyVisits));
+                OnPropertyChanged("YearlyOrMonthlyVisits");
             }
         }
 

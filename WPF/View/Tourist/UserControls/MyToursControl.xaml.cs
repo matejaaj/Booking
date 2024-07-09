@@ -38,46 +38,6 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             InitializeComponent();
         }
 
-        private void MoreDetails_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var tour = button.Tag as TourInstanceViewModel;
-            if (tour != null)
-            {
-                var detailsWindow = new MyTourMoreDetailsWindow(tour);
-                detailsWindow.Show();
-            }
 
-        }
-        private void RateTour_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var tourInstanceViewModel = button.Tag as TourInstanceViewModel;
-            if (tourInstanceViewModel != null)
-            {
-                if (!tourInstanceViewModel.IsFinished)
-                {
-                    MessageBox.Show("Tura nije gotova i dalje");
-                    return;
-                }
-
-                var viewModel = this.DataContext as MyToursViewModel;
-                if (viewModel != null)
-                {
-                    if (viewModel.CheckIfAlreadyReviewed(viewModel.Tourist.Id, tourInstanceViewModel.Id))
-                    {
-                        MessageBox.Show("Tura je već ocenjena");
-                        return;
-                    }
-
-                    var reviewWindow = new ReviewTourWindow(tourInstanceViewModel, viewModel.Tourist.Id);
-                    reviewWindow.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Problem sa pristupom ViewModel-u.");
-                }
-            }
-        }
     }
 }

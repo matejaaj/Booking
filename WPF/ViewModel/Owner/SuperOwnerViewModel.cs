@@ -1,5 +1,6 @@
 ﻿using BookingApp.Application;
 using BookingApp.Application.UseCases;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 using BookingApp.Domain.RepositoryInterfaces;
 using System;
@@ -11,11 +12,23 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
     public class SuperOwnerViewModel : INotifyPropertyChanged
     {
+        private string validationMessage;
+        public string ValidationMessage
+        {
+            get { return validationMessage; }
+            set
+            {
+                validationMessage = value;
+                OnPropertyChanged(nameof(ValidationMessage));
+            }
+        }
+
         private int ratingsNumber { get; set; }
         public int RatingsNumber
         {
@@ -45,6 +58,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         private static AccommodationReservationService _accommodationReservationService;
         private static AccommodationAndOwnerRatingService _accommodationAndOwnerRatingService;
         private static OwnerService _ownerService;
+        public ICommand SuperOwnerCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -60,7 +74,30 @@ namespace BookingApp.WPF.ViewModel.Owner
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(LoggedInOwner));
             InitializeAccommodationReservaions();
             CalculateRating();
+            SuperOwnerCommand = new RelayCommand(SuperOwnerClick);
         }
+
+        private void SuperOwnerClick(object obj)
+        {
+            if (LoggedInOwner.SuperOwner)
+            {
+                ValidationMessage = $"You are already a Super owner!";
+            }
+            else
+            {
+                if (isSuperOwner == false)
+                {
+                    ValidationMessage = $"You do not meet the requirements to become a Super owner!";
+                }
+                else
+                {
+                    ValidationMessage = $"You have become a Super owner!";
+                    LoggedInOwner.SuperOwner = true;
+                    _ownerService.Update(LoggedInOwner);
+                }
+            }
+        }
+
 
         private void InitializeServices()
         {
@@ -101,30 +138,6 @@ namespace BookingApp.WPF.ViewModel.Owner
         private List<AccommodationAndOwnerRating> GetRatings()
         {
             return _accommodationAndOwnerRatingService.GetByReservations(OwnerAccommodationReservations);
-        }
-
-        internal void SuperOwnerButton(object sender, RoutedEventArgs e)
-        {
-            if (LoggedInOwner.SuperOwner)
-            {
-                MessageBox.Show($"You are already a Super owner\nNumber of ratings: {RatingsNumber}\nAverage Rating: {AverageScore:F2}",
-                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
-                if (isSuperOwner == false)
-                {
-                    MessageBox.Show($"You do not meet the requirements to become a Super owner\nNumber of ratings: {RatingsNumber}\nAverage Rating: {AverageScore:F2}",
-                       "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else
-                {
-                    MessageBox.Show($"You have become a Super owner\nNumber of ratings: {RatingsNumber}\nAverage Rating: {AverageScore:F2}",
-                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    LoggedInOwner.SuperOwner = true;
-                    _ownerService.Update(LoggedInOwner);
-                }
-            }
         }
     }
 }

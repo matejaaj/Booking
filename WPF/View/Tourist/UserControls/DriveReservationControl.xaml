@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:BookingApp.WPF.View.Tourist.UserControls"
+             xmlns:resources="clr-namespace:BookingApp"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Style="{StaticResource UserControlStyle}">
@@ -25,19 +26,24 @@
 
             <TextBlock Grid.Column="0"
                        Style="{StaticResource HeaderTextStyle}"
-                       Text="Moje vožnje"
+                       Margin="20"
+                       Text="{resources:Loc MyDrives}"
                        HorizontalAlignment="Left"
-                       Margin="10,10,0,10"
                        VerticalAlignment="Center"/>
 
             <Button Grid.Column="1"
                     Width="auto"
                     Height="auto"
-                    Content="Rezervišite vožnju"
+                    Margin="20"
                     Style="{StaticResource DefaultButton}"
                     HorizontalAlignment="Center"
-                    Margin="10,10,10,10"
-                    Click="ResserveDrive_Click"/>
+                    Click="ResserveDrive_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Resources/Images/Tourist/add.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                    <TextBlock Text="{resources:Loc ReserveDrive}"/>
+                </StackPanel>
+            </Button>
+
         </Grid>
 
 
@@ -51,7 +57,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Style="{StaticResource DefaultBorder}"
-                                Width="330">
+                                Width="350">
 
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -69,35 +75,35 @@
 
                                 <TextBlock Grid.Row="0" Grid.Column="0"
                                            Style="{StaticResource DriveItemHeaderTextStyle}"
-                                           Text="Početna adresa:"/>
+                                           Text="{resources:Loc StartLocation}"/>
 
                                 <TextBlock Grid.Row="0" Grid.Column="1"
                                            Text="{Binding StartAddress}"/>
 
                                 <TextBlock Grid.Row="1" Grid.Column="0"
                                            Style="{StaticResource DriveItemHeaderTextStyle}"
-                                           Text="Krajnja adresa:"/>
+                                           Text="{resources:Loc DestinationLocation}"/>
 
                                 <TextBlock Grid.Row="1" Grid.Column="1"
                                            Text="{Binding EndAddress}"/>
 
                                 <TextBlock Grid.Row="2" Grid.Column="0"
                                            Style="{StaticResource DriveItemHeaderTextStyle}"
-                                           Text="Datum i vreme: "/>
+                                           Text="{resources:Loc DateTime}"/>
 
                                 <TextBlock Grid.Row="2" Grid.Column="1"
                                            Text="{Binding Time}"/>
 
                                 <TextBlock Grid.Row="3" Grid.Column="0"
                                            Style="{StaticResource DriveItemHeaderTextStyle}"
-                                           Text="Vozač:"/>
+                                           Text="{resources:Loc Driver}"/>
 
                                 <TextBlock Grid.Row="3" Grid.Column="1"
                                            Text="{Binding Driver}"/>
 
                                 <TextBlock Grid.Row="4" Grid.Column="0"
                                            Style="{StaticResource DriveItemHeaderTextStyle}"
-                                           Text="Status:"/>
+                                           Text="{resources:Loc Status}"/>
 
                                 <TextBlock Grid.Row="4" Grid.Column="1"
                                            Text="{Binding Status}"/>
@@ -105,14 +111,19 @@
                                 <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
                                             Orientation="Horizontal"
                                             HorizontalAlignment="Center">
-                                    <Button Style="{StaticResource SmallButton}"
-                                            Content="Dodajte kasnjenje"
-                                            Click="AddDelay_Click"
-                                            Tag="{Binding}"/>
-                                    <Button Style="{StaticResource SmallButton}"
-                                            Content="Vozač nepouzdan"
-                                            Click="MarkDriverAsUnreliable_Click"
-                                            Tag="{Binding}"/>
+                                    <Button Style="{StaticResource SmallButton}" Click="AddDelay_Click" Tag="{Binding}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/clock.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                            <TextBlock Text="{resources:Loc Delay}" Margin="0 0 10 0 "/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource SmallButton}" Click="MarkDriverAsUnreliable_Click" Tag="{Binding}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="pack://application:,,,/Resources/Images/Tourist/report.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                                            <TextBlock Text="{resources:Loc DriverUnreliable}"/>
+                                        </StackPanel>
+                                    </Button>
+
                                 </StackPanel>
                             </Grid>
                         </Border>

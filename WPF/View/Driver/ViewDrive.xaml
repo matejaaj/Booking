@@ -1,54 +1,129 @@
 ﻿<Page x:Class="BookingApp.WPF.View.Driver.ViewDrive"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
-        mc:Ignorable="d"
-        Title="ViewDrive" Height="550" Width="936">
-    <Grid>
-        <!-- Header Section -->
-        <TextBlock Text="View Drive" 
-                   FontSize="24" 
-                   FontWeight="Bold" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Top"
-                   Margin="10,10,10,0"/>
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
+      xmlns:val="clr-namespace:BookingApp.Validation"
+      mc:Ignorable="d"
+      Title="ViewDrive" Height="570" Width="936">
 
-        <!-- Main Content Section -->
-        <StackPanel Margin="20" VerticalAlignment="Center">
-            <!-- Radio Buttons for Drive Status -->
-            <RadioButton x:Name="rbAtLocation" 
-                         IsChecked="{Binding SelectedAtLocation, UpdateSourceTrigger=PropertyChanged}"
-                         Checked="rbAtLocation_Checked" 
-                         Margin="0,10">
-                <StackPanel Orientation="Horizontal">
-                    <Image  Source="../../../Resources/Images/destination.png"  Width="20" Height="25"/>
-                    <TextBlock Text="At the location" Margin="15,0,0,0"/>
-                </StackPanel>
-            </RadioButton>
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Margin" Value="0,10"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1.1" ScaleY="1.1"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-            <RadioButton x:Name="rbDelayed" 
-                         IsChecked="{Binding SelectedDelayed, UpdateSourceTrigger=PropertyChanged}" 
-                         Margin="0,10">
-                <StackPanel Orientation="Horizontal">
-                    <Image  Source="../../../Resources/Images/time.png" Width="20" Height="25"/>
-                    <TextBlock Text="Delayed" Margin="15,0,0,0"/>
-                </StackPanel>
-            </RadioButton>
+        <Style TargetType="RadioButton">
+            <Setter Property="Margin" Value="0,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
 
-            <!-- Delay Minutes Input -->
-            <TextBox x:Name="txtDelayMinutes" 
-                     Margin="0,10" 
-                     IsEnabled="{Binding IsChecked, ElementName=rbDelayed}"
-                     Text="{Binding TxtDelayMinutes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,10"/>
+            <Setter Property="Width" Value="200"/>
+        </Style>
+    </Page.Resources>
 
-            <!-- Confirmation Button -->
-            <Button Content="Confirm" 
-                    HorizontalAlignment="Center" 
-                    Margin="0,10" 
-                    Click="Confirm_Click" Width="199"/>
+    <Grid Margin="20,20,20,118">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Image Source="../../../Resources/Images/pickup.png" Width="32" Height="32" Margin="0,0,10,0"/>
+            <TextBlock Text="View Drive" FontSize="24" FontWeight="Bold"/>
         </StackPanel>
-    </Grid>
 
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Drive Status" Margin="10">
+            <StackPanel Margin="10">
+                <RadioButton x:Name="rbAtLocation" 
+                             IsChecked="{Binding SelectedAtLocation, UpdateSourceTrigger=PropertyChanged}"
+                             GroupName="DriveOptions"
+                             Checked="rbAtLocation_Checked">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/destination.png" Width="20" Height="25"/>
+                        <TextBlock Text="At the location" Margin="15,0,0,0"/>
+                    </StackPanel>
+                </RadioButton>
+                <Image Source="../../../Resources/Images/vozacAdresa.jpeg" Width="250" Height="200" Margin="0,20,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Delay Status" Margin="10">
+            <StackPanel Margin="10">
+                <RadioButton x:Name="rbDelayed" 
+                             IsChecked="{Binding SelectedDelayed, UpdateSourceTrigger=PropertyChanged}"
+                             GroupName="DriveOptions">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../../Resources/Images/time.png" Width="20" Height="25"/>
+                        <TextBlock Text="Delayed" Margin="15,0,0,0"/>
+                    </StackPanel>
+                </RadioButton>
+                <TextBox x:Name="txtDelayMinutes" 
+                         IsEnabled="{Binding IsChecked, ElementName=rbDelayed}">
+                    <TextBox.Text>
+                        <Binding Path="TxtDelayMinutes" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <val:OnlyNumberValidation ValidationStep="RawProposedValue"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <AdornedElementPlaceholder Grid.Row="0" x:Name="textBox"/>
+                                <TextBlock FontSize="10" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </TextBox>
+                <Image Source="../../../Resources/Images/vozacKasni.png" Width="250" Height="186" Margin="0,20,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Confirm" 
+                HorizontalAlignment="Center" 
+                Click="Confirm_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=txtDelayMinutes, Path=(Validation.HasError)}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
 </Page>
