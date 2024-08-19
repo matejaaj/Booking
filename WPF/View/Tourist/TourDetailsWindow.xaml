@@ -48,57 +48,59 @@
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
             <Border Style="{StaticResource BorderStyle}" Margin="30 0 0 0" Width="440" Height="570">
-                <StackPanel>
-                    <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc TourName}"/>
-                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Name}" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc TourName}"/>
+                            <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Name}" />
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Location}" />
+                            <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Location}" />
+                        </StackPanel>
+                        <StackPanel Margin="0, 10, 0, 0">
+                            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Description}" />
+                            <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Description}" />
+                        </StackPanel>
+                        <StackPanel Margin="0, 10, 0, 0">
+                            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Checkpoints}" />
+                            <ItemsControl ItemsSource="{Binding Tour.Checkpoints}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Name}" Margin="0, 0, 10, 0" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Language}" />
+                            <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Language}" />
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc DurationHours}" />
+                            <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.DurationHours}" />
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc MaxTourists}"/>
+                            <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.MaximumCapacity}" />
+                        </StackPanel>
+                        <StackPanel Margin="0, 10, 0, 0">
+                            <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc TourDatesAvailable}" />
+                            <ItemsControl ItemsSource="{Binding Tour.Dates}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Margin="20 0 0 0 " Style="{StaticResource NormalTextBlockStyle}" Text="{Binding}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Location}" />
-                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Location}" />
-                    </StackPanel>
-                    <StackPanel Margin="0, 10, 0, 0">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Description}" />
-                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Description}" />
-                    </StackPanel>
-                    <StackPanel Margin="0, 10, 0, 0">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Checkpoints}" />
-                        <ItemsControl ItemsSource="{Binding Tour.Checkpoints}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Name}" Margin="0, 0, 10, 0" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                    <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc Language}" />
-                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.Language}" />
-                    </StackPanel>
-                    <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc DurationHours}" />
-                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.DurationHours}" />
-                    </StackPanel>
-                    <StackPanel Style="{StaticResource StackPanelStyle}">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc MaxTourists}"/>
-                        <TextBlock Style="{StaticResource NormalTextBlockStyle}" Text="{Binding Tour.MaximumCapacity}" />
-                    </StackPanel>
-                    <StackPanel Margin="0, 10, 0, 0">
-                        <TextBlock Style="{StaticResource BoldTextBlockStyle}" Text="{resources:Loc TourDatesAvailable}" />
-                        <ItemsControl ItemsSource="{Binding Tour.Dates}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Margin="20 0 0 0 " Style="{StaticResource NormalTextBlockStyle}" Text="{Binding}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </StackPanel>
+                </ScrollViewer>
             </Border>
         </ScrollViewer>
         <Grid Grid.Column="1">

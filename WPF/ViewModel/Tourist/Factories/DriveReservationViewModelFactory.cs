@@ -40,6 +40,7 @@ namespace BookingApp.WPF.ViewModel.Tourist.Factories
                     DriveReservationId = reservation.Id,
                     Driver = driver,
                     Time = reservation.DepartureTime,
+                    TimeDisplay = reservation.DepartureTime.ToString("dd.MM.yyyy HH:mm"),
                     StartAddress = _detailedLocationService.GetById(reservation.PickupLocationId).Address,
                     EndAddress = _detailedLocationService.GetById(reservation.DropoffLocationid).Address,
                     DelayDriver = reservation.DelayMinutesDriver,

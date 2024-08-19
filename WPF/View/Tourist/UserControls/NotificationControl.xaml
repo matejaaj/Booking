@@ -12,8 +12,7 @@
             <DataTemplate>
                 <Border Style="{StaticResource DefaultBorder}"
                         Margin="5"
-                        Padding="10"
-                        Width="185">
+                        Width="190">
                     <StackPanel>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -25,13 +24,17 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Title}" FontWeight="Bold" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0"/>
-                            <TextBlock Text="{Binding TimeElapsed}" FontSize="10" Margin="5,0,0,0" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                            <Button Content="X" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ButtonDeleteNotification_Click"
-                                    Background="{DynamicResource ButtonBackground}"
-                                    Tag="{Binding}"/>
+                            <TextBlock Text="{Binding Title}" FontWeight="Bold" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" Foreground="{DynamicResource PrimaryTextColor}"/>
+                            <TextBlock Text="{Binding TimeElapsed}" FontSize="10" Margin="5,0,0,0" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="{DynamicResource PrimaryTextColor}"/>
+                            <Image Source="pack://application:,,,/Resources/Images/delete.png"
+                                   Width="15" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                   Tag="{Binding}" Margin="2,0,0,0" Grid.Row="0" Grid.Column="2">
+                                <Image.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.DeleteNotificationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                </Image.InputBindings>
+                            </Image>
                         </Grid>
-                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}"/>
                     </StackPanel>
                 </Border>
             </DataTemplate>

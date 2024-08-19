@@ -129,6 +129,9 @@
   <data name="AcceptedStatus" xml:space="preserve">
     <value>Prihvaćen</value>
   </data>
+  <data name="AddDelay" xml:space="preserve">
+    <value>Dodaj kašnjenje</value>
+  </data>
   <data name="AddTourSegment" xml:space="preserve">
     <value>Dodaj još</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="AllTours" xml:space="preserve">
     <value>Sve ture</value>
+  </data>
+  <data name="AllYears" xml:space="preserve">
+    <value>Sve godine</value>
   </data>
   <data name="Booking" xml:space="preserve">
     <value>Rezervacije</value>
@@ -195,6 +201,18 @@
   <data name="Delay" xml:space="preserve">
     <value>Kašnjenje</value>
   </data>
+  <data name="DelayAdded" xml:space="preserve">
+    <value>Dodali ste kašnjenje od {0} minuta</value>
+  </data>
+  <data name="DelayAlreadySet" xml:space="preserve">
+    <value>Već ste jednom dodali kašnjenje</value>
+  </data>
+  <data name="DelayTittle" xml:space="preserve">
+    <value>Kašnjenje</value>
+  </data>
+  <data name="DelayTourist" xml:space="preserve">
+    <value>Unesite svoje kašnjenje u minutima: </value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Opis:</value>
   </data>
@@ -240,11 +258,17 @@
   <data name="FastDrive" xml:space="preserve">
     <value>Brza vožnja</value>
   </data>
+  <data name="FastSuccessful" xml:space="preserve">
+    <value>Uspešna rezervacija brze vožnje.</value>
+  </data>
   <data name="From" xml:space="preserve">
     <value>Od: </value>
   </data>
   <data name="GroupDrive" xml:space="preserve">
     <value>Grupna vožnja</value>
+  </data>
+  <data name="GroupSucessful" xml:space="preserve">
+    <value>Uspešna rezervacija grupne vožnje.</value>
   </data>
   <data name="HourMinutes" xml:space="preserve">
     <value>Sati i minuti: </value>
@@ -270,6 +294,9 @@
   <data name="InputVoucher" xml:space="preserve">
     <value>Vaučer: </value>
   </data>
+  <data name="InsufficientSpots" xml:space="preserve">
+    <value>Nedovoljno mesta za selektovan datum. Ostalo je {0} mesta.</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value> Jezik: </value>
   </data>
@@ -294,6 +321,9 @@
   <data name="MyTours" xml:space="preserve">
     <value>Moje ture</value>
   </data>
+  <data name="NoDatesAvailable" xml:space="preserve">
+    <value>Nema dostupnih datuma za odžavanje ture.</value>
+  </data>
   <data name="NumberOfPeople" xml:space="preserve">
     <value>Broj ljudi: </value>
   </data>
@@ -304,7 +334,7 @@
     <value>Prisutan</value>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>Opseg mogućeg održavanja</value>
+    <value>Opseg mogućeg održavanja: </value>
   </data>
   <data name="RateTour" xml:space="preserve">
     <value>Oceni</value>
@@ -315,17 +345,29 @@
   <data name="RegularDrive" xml:space="preserve">
     <value>Obična vožnja</value>
   </data>
+  <data name="RegularSuccessful" xml:space="preserve">
+    <value>Uspešna rezervacija vožnje.</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Ukloni</value>
   </data>
   <data name="RequestDetailsTittle" xml:space="preserve">
     <value>Zahtev za turu</value>
   </data>
+  <data name="RequestSuccess" xml:space="preserve">
+    <value>Zahtev uspešno podnešen</value>
+  </data>
+  <data name="ReservationSuccessful" xml:space="preserve">
+    <value>Rezervacija uspešna.</value>
+  </data>
   <data name="ReserveDrive" xml:space="preserve">
     <value>Rezerviši vožnju</value>
   </data>
   <data name="ReviewExistsMessage" xml:space="preserve">
     <value>Tura je već ocenjena</value>
+  </data>
+  <data name="ReviewSuccessful" xml:space="preserve">
+    <value>Uspešno ste ocenili turu.</value>
   </data>
   <data name="StartLocation" xml:space="preserve">
     <value>Početna adresa: </value>
@@ -405,8 +447,86 @@
   <data name="TourSegment" xml:space="preserve">
     <value>Deo ture</value>
   </data>
+  <data name="TourStatusEnd" xml:space="preserve">
+    <value>Tura se zavrišila</value>
+  </data>
+  <data name="TourStatusNotStart" xml:space="preserve">
+    <value>Tura nije počela</value>
+  </data>
   <data name="UnknownStatusMessage" xml:space="preserve">
     <value>Nepoznat</value>
+  </data>
+  <data name="ValidationAgeFormat" xml:space="preserve">
+    <value>Mora biti broj veći od 0</value>
+  </data>
+  <data name="ValidationCity" xml:space="preserve">
+    <value>Unesite ispravnu vrednost za grad</value>
+  </data>
+  <data name="ValidationComment" xml:space="preserve">
+    <value>Komentar je obavezan</value>
+  </data>
+  <data name="ValidationCountry" xml:space="preserve">
+    <value>Unesite ispravnu vrednost za državu</value>
+  </data>
+  <data name="ValidationDate" xml:space="preserve">
+    <value>Datum ne sme biti u prošlosti</value>
+  </data>
+  <data name="ValidationDateBefore" xml:space="preserve">
+    <value>Ne može biti pre "od" datuma</value>
+  </data>
+  <data name="ValidationDateNotChosen" xml:space="preserve">
+    <value>Još nije izabran</value>
+  </data>
+  <data name="ValidationDescription" xml:space="preserve">
+    <value>Unesite opis</value>
+  </data>
+  <data name="ValidationDriver" xml:space="preserve">
+    <value>Unesite vozača</value>
+  </data>
+  <data name="ValidationEndLocationFormat" xml:space="preserve">
+    <value>Unesite ispravnu vrednost za ulicu (slova i brojevi)</value>
+  </data>
+  <data name="ValidationEndLocationRequired" xml:space="preserve">
+    <value>Unesite krajnju adresu</value>
+  </data>
+  <data name="ValidationFirstNameFormat" xml:space="preserve">
+    <value>Samo slova dopuštena</value>
+  </data>
+  <data name="ValidationFirstNameRequired" xml:space="preserve">
+    <value>Obavezno polje</value>
+  </data>
+  <data name="ValidationHour" xml:space="preserve">
+    <value>Vrednost između 00 i 23</value>
+  </data>
+  <data name="ValidationLanguage" xml:space="preserve">
+    <value>Izaberite jezik</value>
+  </data>
+  <data name="ValidationLastNameFormat" xml:space="preserve">
+    <value>Samo slova dopuštena</value>
+  </data>
+  <data name="ValidationMinute" xml:space="preserve">
+    <value>Vrednost između 00 i 59</value>
+  </data>
+  <data name="ValidationNumberOfPeople" xml:space="preserve">
+    <value>Unesite broj</value>
+  </data>
+  <data name="ValidationNumberOfPeopleStartTime" xml:space="preserve">
+    <value>Prvo izaberite datum i vreme.</value>
+  </data>
+  <data name="ValidationStartLocationFormat" xml:space="preserve">
+    <value>Unesite ispravnu vrednost za ulicu (slova i brojevi)</value>
+  </data>
+  <data name="ValidationStartLocationRequired" xml:space="preserve">
+    <value>Unesite početnu adresu</value>
+  </data>
+  <data name="ValidationStartTime" xml:space="preserve">
+    <value>Izaberite datum i vreme.</value>
+  </data>
+  <data name="ValidationSurnameRequired" xml:space="preserve">
+    <value>Obavezno polje</value>
+  </data>
+  <data name="VoucherUntil" xml:space="preserve">
+    <value>Važi do: </value>
   </data>
   <data name="Year" xml:space="preserve">
     <value>Godina: </value>

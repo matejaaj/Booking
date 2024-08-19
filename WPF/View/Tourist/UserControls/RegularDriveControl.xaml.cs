@@ -32,6 +32,7 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             var autoCompleteBox = sender as AutoCompleteBox;
             if (autoCompleteBox?.SelectedItem != null && DataContext is RegularDriveFormViewModel viewModel)
             {
+                viewModel.SelectedDriver = new KeyValuePair<int, string>();
                 viewModel.UpdateDriverList();
             }
         }
@@ -52,9 +53,17 @@ namespace BookingApp.WPF.View.Tourist.UserControls
                     {
                         viewModel.ValidateCity(autoCompleteBox.Text);
                     }
-                    // Add similar validation for other AutoCompleteBox controls if needed
+                    else if (autoCompleteBox.Name == "autoCompleteHour")
+                    {
+                        viewModel.ValidateHour(autoCompleteBox.Text);
+                    }
+                    else if (autoCompleteBox.Name == "autoCompleteMinute")
+                    {
+                        viewModel.ValidateMinute(autoCompleteBox.Text);
+                    }
                 }
             }
         }
+
     }
 }

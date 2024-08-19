@@ -91,37 +91,46 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 {
                     case nameof(SelectedCountry):
                         if (SelectedCountry.Value == string.Empty || !Countries.Any(c => c.Value == SelectedCountry.Value))
-                            result = "Izaberite validnu državu.";
+                            result = TranslationSource.Instance["ValidationCountry"];
                         break;
                     case nameof(SelectedCity):
                         if (SelectedCity.Value == string.Empty || !Cities.Any(c => c.Value == SelectedCity.Value))
-                            result = "Izaberite validan grad.";
+                            result = TranslationSource.Instance["ValidationCity"];
                         break;
                     case nameof(StartAddress):
-                        if (string.IsNullOrWhiteSpace(StartAddress) || !Regex.IsMatch(StartAddress, @"^[a-zA-Z0-9\s]+$"))
-                            result = "Unesite validnu početnu adresu.";
+                        if (string.IsNullOrWhiteSpace(StartAddress))
+                            result = TranslationSource.Instance["ValidationStartLocationRequired"];
+                        else if (!Regex.IsMatch(StartAddress, @"^[a-zA-Z0-9\s]+$"))
+                            result = TranslationSource.Instance["ValidationStartLocationFormat"];
                         break;
                     case nameof(EndAddress):
-                        if (string.IsNullOrWhiteSpace(EndAddress) || !Regex.IsMatch(EndAddress, @"^[a-zA-Z0-9\s]+$"))
-                            result = "Unesite validnu krajnju adresu.";
+                        if (string.IsNullOrWhiteSpace(EndAddress))
+                            result = TranslationSource.Instance["ValidationEndLocationRequired"];
+                        else if (!Regex.IsMatch(EndAddress, @"^[a-zA-Z0-9\s]+$"))
+                            result = TranslationSource.Instance["ValidationEndLocationFormat"];
                         break;
                     case nameof(SelectedDate):
                         if (SelectedDate < DateTime.Today)
-                            result = "Datum ne sme biti u prošlosti.";
+                            result = TranslationSource.Instance["ValidationDate"];
                         break;
                     case nameof(SelectedHour):
                         if (string.IsNullOrWhiteSpace(SelectedHour))
-                            result = "Izaberite sat.";
+                            result = TranslationSource.Instance["ValidationHour"];
+                        else if (!Regex.IsMatch(SelectedHour, @"^[0-2][0-9]$"))
+                            result = TranslationSource.Instance["ValidationHour"];
                         break;
                     case nameof(SelectedMinute):
                         if (string.IsNullOrWhiteSpace(SelectedMinute))
-                            result = "Izaberite minut.";
+                            result = TranslationSource.Instance["ValidationMinute"];
+                        else if (!Regex.IsMatch(SelectedMinute, @"^[0-5][0-9]$"))
+                            result = TranslationSource.Instance["ValidationMinute"];
                         break;
                     case nameof(SelectedDriver):
                         if (SelectedDriver.Key == 0)
-                            result = "Izaberite vozača.";
+                            result = TranslationSource.Instance["ValidationDriver"];
                         break;
                 }
+
                 return result;
             }
         }
@@ -154,24 +163,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
         }
 
 
-
-        public void ValidateCountry(string input)
-        {
-            if (!Countries.Any(c => c.Value == input))
-            {
-                SelectedCountry = new KeyValuePair<int, string>(-1, string.Empty);
-                OnPropertyChanged(nameof(SelectedCountry));
-            }
-        }
-
-        public void ValidateCity(string input)
-        {
-            if (!Cities.Any(c => c.Value == input))
-            {
-                SelectedCity = new KeyValuePair<int, string>(-1, string.Empty);
-                OnPropertyChanged(nameof(SelectedCity));
-            }
-        }
         public void ReserveRegularDrive(object parameter)
         {
 
@@ -185,7 +176,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
             DriveReservation reservation = new DriveReservation(start.Id, end.Id, departure, SelectedDriver.Key, _tourist.Id, 2, 0, 0);
             _driveReservationService.Save(reservation);
-            MessageBox.Show("Rezervacija uspešno izvršena!");
+            MessageBox.Show(TranslationSource.Instance["RegularSuccessful"]);
 
             if (parameter is Window window)
             {

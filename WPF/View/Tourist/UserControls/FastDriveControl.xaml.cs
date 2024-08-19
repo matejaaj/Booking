@@ -26,6 +26,32 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             InitializeComponent();
         }
 
-
+        private void AutoCompleteBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            var autoCompleteBox = sender as AutoCompleteBox;
+            if (autoCompleteBox != null && autoCompleteBox.SelectedItem == null)
+            {
+                var viewModel = DataContext as FastDriveFormViewModel;
+                if (viewModel != null)
+                {
+                    if (autoCompleteBox.Name == "autoCompleteCountry")
+                    {
+                        viewModel.ValidateCountry(autoCompleteBox.Text);
+                    }
+                    else if (autoCompleteBox.Name == "autoCompleteCity")
+                    {
+                        viewModel.ValidateCity(autoCompleteBox.Text);
+                    }
+                    else if (autoCompleteBox.Name == "autoCompleteHour")
+                    {
+                        viewModel.ValidateHour(autoCompleteBox.Text);
+                    }
+                    else if (autoCompleteBox.Name == "autoCompleteMinute")
+                    {
+                        viewModel.ValidateMinute(autoCompleteBox.Text);
+                    }
+                }
+            }
+        }
     }
 }

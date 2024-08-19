@@ -38,7 +38,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
-                <TabControl>
+                <TabControl SelectionChanged="OnToursTabSelectionChanged">
                     <TabItem x:Name="AllToursTabItem" Style="{StaticResource ChildTabStyle}" ToolTip="{resources:Loc TooltipAllTours}">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>

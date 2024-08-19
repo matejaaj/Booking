@@ -242,7 +242,6 @@ namespace BookingApp.Application.UseCases
                 (startDate <= reservation.EndDate && endDate >= reservation.StartDate) ||
                 (startDate >= reservation.StartDate && endDate <= reservation.EndDate));
         }
-
     }
 
 }

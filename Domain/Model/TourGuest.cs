@@ -25,7 +25,7 @@ namespace BookingApp.Domain.Model
             TourReservationId = tourInstanceId;
             TouristId = touristId;
             CheckpointId = checkpointId;
-            Age = Age;
+            Age = age;
         }
 
         public void FromCSV(string[] values)

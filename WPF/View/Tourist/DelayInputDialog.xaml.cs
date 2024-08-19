@@ -35,7 +35,8 @@ namespace BookingApp.WPF.View.Tourist
             }
             else
             {
-                MessageBox.Show("Please enter a valid number.");
+                MessageBox.Show(TranslationSource.Instance["ValidationNumberOfPeople"]);
+
             }
         }
     }

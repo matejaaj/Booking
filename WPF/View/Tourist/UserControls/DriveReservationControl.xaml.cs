@@ -44,8 +44,8 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             var reservation = button.Tag as DriveReservationViewModel;
             if (reservation.DelayTourist != 0)
             {
-                MessageBox.Show("Delay already set for the tourist.");
-                return;  
+                MessageBox.Show(TranslationSource.Instance["DelayAlreadySet"]);
+                return;
             }
 
             int delay = 0;
@@ -54,7 +54,7 @@ namespace BookingApp.WPF.View.Tourist.UserControls
             if (dialog.ShowDialog() == true)
             {
                 delay = dialog.DelayMinutes ?? 0;
-                MessageBox.Show($"Delay of {delay} minutes added.");
+                MessageBox.Show(string.Format(TranslationSource.Instance["DelayAdded"], delay));
 
                 if (DataContext is DriveMainTabViewModel viewModel)
                 {
@@ -62,6 +62,7 @@ namespace BookingApp.WPF.View.Tourist.UserControls
                 }
             }
         }
+
 
 
         private void MarkDriverAsUnreliable_Click(object sender, RoutedEventArgs e)

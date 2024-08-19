@@ -20,6 +20,10 @@ using BookingApp.Domain.Model;
 using System.Collections.ObjectModel;
 using BookingApp.DTO;
 using System.Diagnostics.Eventing.Reader;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.Diagnostics;
+using System.IO;
 
 namespace BookingApp.WPF.ViewModel.Owner
 {
@@ -66,6 +70,7 @@ namespace BookingApp.WPF.ViewModel.Owner
         public ICommand HideNotificationsCommand { get; }
         public ICommand ShowForumCommand { get; }
         public ICommand ItemClickedCommand { get; private set; }
+        public ICommand GeneratePDFCommand { get; }
         public ICommand HelpCommand { get; }
         private static AccommodationService _accommodationService;
         private static AccommodationReservationService _accommodationReservationService;
@@ -135,6 +140,7 @@ namespace BookingApp.WPF.ViewModel.Owner
             ItemClickedCommand = new RelayCommand(ExecuteItemClicked);
             ShowForumCommand = new RelayCommand(ShowForum);
             HelpCommand = new RelayCommand(Help);
+            GeneratePDFCommand = new RelayCommand(GeneratePDF);
 
             Notifications = new List<Notification>();
             StartUp();            
@@ -142,6 +148,48 @@ namespace BookingApp.WPF.ViewModel.Owner
             NotifyMissingRatings();
             NotifySuggestions();
             NotifyNewForum();
+        }
+
+        private void GeneratePDF(object obj)
+        {
+            Document doc = new Document(PageSize.A4);
+            string filePath = "../../../PDF/OwnerReport.pdf";  //C:\\Programiranje\\SIMS\\sims-ra-2024-group-5-team-b\\PDF\\report.pdf\""
+            PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
+            doc.Open();
+            PdfContentByte contentByte = writer.DirectContent;
+            doc.AddTitle("Average Scores");
+            Font headerFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+            var list = GetStatistics();
+            var cottageList = list.Where(dto => dto.Type.Equals("COTTAGE")).ToList();
+            var apartmentList = list.Where(dto => dto.Type.Equals("APARTMENT")).ToList();
+            var houseList = list.Where(dto => dto.Type.Equals("HOUSE")).ToList();
+            doc.Add(new Paragraph("COTTAGES:", headerFont));
+            foreach (var dto in cottageList)
+            {
+                doc.Add(new Paragraph(dto.ToString()));
+            }
+
+            doc.Add(new Paragraph("APARTMENTS:", headerFont));
+            foreach (var dto in apartmentList)
+            {
+                doc.Add(new Paragraph(dto.ToString()));
+            }
+
+            doc.Add(new Paragraph("HOUSES:", headerFont));
+            foreach (var dto in houseList)
+            {
+                doc.Add(new Paragraph(dto.ToString()));
+            }
+            writer.Flush();
+            doc.Close();
+            writer.Close();   //C:\Program Files (x86)\Microsoft\Edge\Application                       //C:\FTN\treca\drugi_sem\SIMS\projekat\sims-ra-2024-group-5-team-b
+            Process.Start("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", $"file:///\"C:\\FTN\\treca\\drugi_sem\\SIMS\\projekat\\sims-ra-2024-group-5-team-b\\PDF\\OwnerReport.pdf\"");
+        }
+
+        private List<OwnerPdfDTO> GetStatistics()
+        {
+            var accommodations = _accommodationService.GetByUser(LoggedInOwner);
+            return _accommodationAndOwnerRatingService.GetAverageScores(accommodations);
         }
 
         private void Help(object obj)

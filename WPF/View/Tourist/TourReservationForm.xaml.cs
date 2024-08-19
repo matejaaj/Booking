@@ -23,9 +23,5 @@ namespace BookingApp.View.Tourist
             this.DataContext = _viewModel;
         }
 
-        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.SaveReservation();
-        }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using BookingApp.Application;
 using BookingApp.Domain.RepositoryInterfaces;
+using System.Text.RegularExpressions;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
@@ -160,6 +161,43 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+
+        public void ValidateHour(string input)
+        {
+            if (!Regex.IsMatch(input, @"^[0-2][0-9]$"))
+            {
+                SelectedHour = string.Empty;
+                OnPropertyChanged(nameof(SelectedHour));
+            }
+        }
+
+        public void ValidateMinute(string input)
+        {
+            if (!Regex.IsMatch(input, @"^[0-5][0-9]$"))
+            {
+                SelectedMinute = string.Empty;
+                OnPropertyChanged(nameof(SelectedMinute));
+            }
+        }
+
+        public void ValidateCountry(string input)
+        {
+            if (!Countries.Any(c => c.Value == input))
+            {
+                SelectedCountry = new KeyValuePair<int, string>();
+                OnPropertyChanged(nameof(SelectedCountry));
+            }
+        }
+
+        public void ValidateCity(string input)
+        {
+            if (!Cities.Any(c => c.Value == input))
+            {
+                SelectedCity = new KeyValuePair<int, string>();
+                OnPropertyChanged(nameof(SelectedCity));
+            }
+        }
+
         public BaseDriveFormViewModel()
         {
 
@@ -214,8 +252,8 @@ namespace BookingApp.WPF.ViewModel.Tourist
         public DateTime CreateDateTimeFromSelections()
         {
             DateTime date;
-            if (SelectedMinute != null &&
-                SelectedHour != null &&
+            if (SelectedMinute != string.Empty &&
+                SelectedHour != string.Empty &&
                 SelectedDate != null)
             {
 
@@ -225,11 +263,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 date = new DateTime(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, hour, minute, 0);
                 return date;
             }
-            else
-            {
-                MessageBox.Show("Please select a valid date and time.");
-                return DateTime.MinValue;
-            }
+
+            return DateTime.MinValue;
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

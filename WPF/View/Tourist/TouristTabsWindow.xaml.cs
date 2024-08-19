@@ -52,7 +52,13 @@ namespace BookingApp.WPF.View.Tourist
             }
         }
 
-
+        private void OnToursTabSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl tabControl && tabControl.SelectedItem == MyToursTabItem)
+            {
+                ViewModel.ToursMainViewModel.MyToursViewModel.CreateViewModels();
+            }
+        }
 
     }
 }

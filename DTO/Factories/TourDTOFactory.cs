@@ -3,6 +3,7 @@ using BookingApp.Domain.Model;
 using BookingApp.DTO;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,7 +51,10 @@ namespace BookingApp.DTO.Factories
 
                 dto.Checkpoints = _checkpointService.GetAllByTourId(tour.Id);
                 dto.Images = _imageService.GetImagesByEntityAndType(tour.Id, ImageResourceType.TOUR).Select(image => image.Path).ToList();
-                dto.Dates = _tourInstanceService.GetAllByTourId(tour.Id).Select(instance => instance.StartTime).ToList();
+                dto.Dates = _tourInstanceService.GetAllByTourId(tour.Id)
+                    .Where(instance => instance.StartTime > DateTime.Now)
+                    .Select(instance => instance.StartTime)
+                    .ToList();
 
                 dtos.Add(dto);
             }

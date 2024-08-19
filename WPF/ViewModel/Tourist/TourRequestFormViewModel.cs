@@ -6,14 +6,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookingApp.Application.UseCases.Factories;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Input;
+using BookingApp.Commands;
 using BookingApp.Domain.Model;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
-    public class TourRequestFormViewModel
+    public class TourRequestFormViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private User _user;
         public ObservableCollection<TourRequestSegmentViewModel> TourSegments { get; set; } =
@@ -25,23 +27,26 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
         private LocationService _locationService;
         private LanguageService _languageService;
-
         private TourRequestService _tourRequestService;
         private TourRequestSegmentService _tourRequestSegmentService;
         private PrivateTourGuestService _privateTourGuestService;
 
-        
+        public RelayCommand AddSegmentCommand { get; private set; }
+        public RelayCommand RemoveSegmentCommand { get; private set; }
+        public RelayCommand SubmitCommand { get; private set; }
 
         public TourRequestFormViewModel(User loggedUser, LocationService locationService, LanguageService languageService, TourRequestService tourRequestService, TourRequestSegmentService tourRequestSegmentService, PrivateTourGuestService privateTourGuestService)
         {
-            _user =  loggedUser;
+            _user = loggedUser;
             _locationService = locationService;
             _languageService = languageService;
             _tourRequestService = tourRequestService;
             _tourRequestSegmentService = tourRequestSegmentService;
             _privateTourGuestService = privateTourGuestService;
 
-
+            AddSegmentCommand = new RelayCommand(_ => AddSegment());
+            RemoveSegmentCommand = new RelayCommand(segment => RemoveSegment((TourRequestSegmentViewModel)segment), segment => TourSegments.Count > 1);
+            SubmitCommand = new RelayCommand(Submit, CanSubmit);
 
             InitialieFields();
         }
@@ -73,7 +78,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-
         public void AddSegment()
         {
             foreach (var segment in TourSegments)
@@ -82,20 +86,32 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
 
             var newSegment = new TourRequestSegmentViewModel(_locationService, Countries, Languages);
-            newSegment.IsExpanded = true;  
+            newSegment.IsExpanded = true;
             TourSegments.Add(newSegment);
         }
 
-
-        public void RemoveSegment(TourRequestSegmentViewModel segment)
+        public void RemoveSegment(object segment)
         {
-            if (TourSegments.Count > 1)
+            var segmentViewModel = segment as TourRequestSegmentViewModel;
+            if (TourSegments.Count > 1 && segmentViewModel != null)
             {
-                TourSegments.Remove(segment);
+                TourSegments.Remove(segmentViewModel);
             }
         }
 
-        public void Submit()
+        private bool CanSubmit(object parameter)
+        {
+            foreach (var segment in TourSegments)
+            {
+                if (!segment.IsValid())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void Submit(object parameter)
         {
             bool isComplexRequest = TourSegments.Count != 1;
             var request = new TourRequest(_user.Id, isComplexRequest);
@@ -110,13 +126,49 @@ namespace BookingApp.WPF.ViewModel.Tourist
 
                 _tourRequestSegmentService.Save(tourSegment);
 
-
                 foreach (var guest in segment.GuestInputs)
                 {
                     var privateGuest = new PrivateTourGuest(guest.FirstName + " " + guest.LastName, guest.Age, _user.Id,
                         tourSegment.Id);
                     _privateTourGuestService.Save(privateGuest);
                 }
+
+                MessageBox.Show(TranslationSource.Instance["RequestSuccess"]);
+            }
+
+            if (parameter is Window window)
+            {
+                window.Close();
+            }
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = null;
+                switch (columnName)
+                {
+                    case nameof(Countries):
+                        if (Countries == null || Countries.Count == 0)
+                            result = "Please select a country.";
+                        break;
+                    case nameof(Languages):
+                        if (Languages == null || Languages.Count == 0)
+                            result = "Please select a language.";
+                        break;
+                }
+                return result;
             }
         }
     }

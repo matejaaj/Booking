@@ -1,5 +1,5 @@
-﻿using BookingApp.Application.UseCases;
-using BookingApp.Application;
+﻿using BookingApp.Application;
+using BookingApp.Application.UseCases;
 using BookingApp.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
@@ -7,12 +7,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
+using BookingApp.Commands;
 
 namespace BookingApp.WPF.ViewModel.Tourist
 {
-    public class TourRequestSegmentViewModel : INotifyPropertyChanged
+    public class TourRequestSegmentViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private LocationService _locationService;
 
@@ -20,7 +21,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private ObservableCollection<KeyValuePair<int, string>> _cities = new ObservableCollection<KeyValuePair<int, string>>();
         private ObservableCollection<KeyValuePair<int, string>> _languages = new ObservableCollection<KeyValuePair<int, string>>();
 
-       
         public ObservableCollection<TourGuestInputViewModel> GuestInputs { get; } = new ObservableCollection<TourGuestInputViewModel>();
 
         private KeyValuePair<int, string> _selectedCountry;
@@ -30,9 +30,6 @@ namespace BookingApp.WPF.ViewModel.Tourist
         private DateTime _toDate;
         private string _description;
         private int _numberOfPeople;
-
-
-
 
         public ObservableCollection<KeyValuePair<int, string>> Countries
         {
@@ -46,6 +43,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
+
         public KeyValuePair<int, string> SelectedCountry
         {
             get { return _selectedCountry; }
@@ -59,6 +57,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
+
         public ObservableCollection<KeyValuePair<int, string>> Cities
         {
             get { return _cities; }
@@ -72,6 +71,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 }
             }
         }
+
         public KeyValuePair<int, string> SelectedCity
         {
             get { return _selectedCity; }
@@ -94,6 +94,7 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 {
                     _fromDate = value;
                     OnPropertyChanged(nameof(FromDate));
+                    OnPropertyChanged(nameof(ToDate));
                 }
             }
         }
@@ -107,10 +108,10 @@ namespace BookingApp.WPF.ViewModel.Tourist
                 {
                     _toDate = value;
                     OnPropertyChanged(nameof(ToDate));
+                    OnPropertyChanged(nameof(FromDate));
                 }
             }
         }
-
 
         public ObservableCollection<KeyValuePair<int, string>> Languages
         {
@@ -180,24 +181,37 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+        public void ValidateCountry(string input)
+        {
+            if (!Countries.Any(c => c.Value == input))
+            {
+                SelectedCountry = new KeyValuePair<int, string>();
+                OnPropertyChanged(nameof(SelectedCountry));
+            }
+        }
+
+        public void ValidateCity(string input)
+        {
+            if (!Cities.Any(c => c.Value == input))
+            {
+                SelectedCity = new KeyValuePair<int, string>();
+                OnPropertyChanged(nameof(SelectedCity));
+            }
+        }
+
         public TourRequestSegmentViewModel(LocationService location, ObservableCollection<KeyValuePair<int, string>> countries, ObservableCollection<KeyValuePair<int, string>> languages)
         {
             _locationService = location;
             _countries = countries;
             _languages = languages;
 
-
             _fromDate = DateTime.Now;
             _toDate = DateTime.Now;
 
-
-            _selectedCountry = new KeyValuePair<int, string>(0, string.Empty);
-            _selectedCity = new KeyValuePair<int, string>(0, string.Empty);
-            _selectedLanguage = new KeyValuePair<int, string>(0, string.Empty);
-
+            _selectedCountry = new KeyValuePair<int, string>();
+            _selectedCity = new KeyValuePair<int, string>();
+            SelectedLanguage = new KeyValuePair<int, string>(-1, string.Empty);
         }
-
-
 
         private void GenerateGuestInputs(int numberOfPeople)
         {
@@ -208,6 +222,18 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
+        public bool IsValid()
+        {
+            return string.IsNullOrWhiteSpace(this[nameof(SelectedCountry)]) &&
+                   string.IsNullOrWhiteSpace(this[nameof(SelectedCity)]) &&
+                   string.IsNullOrWhiteSpace(this[nameof(SelectedLanguage)]) &&
+                   string.IsNullOrWhiteSpace(this[nameof(Description)]) &&
+                   string.IsNullOrWhiteSpace(this[nameof(FromDate)]) &&
+                   string.IsNullOrWhiteSpace(this[nameof(ToDate)]) &&
+                   string.IsNullOrWhiteSpace(this[nameof(NumberOfPeople)]) &&
+                   GuestInputs.All(guest => string.IsNullOrWhiteSpace(guest.Error)) &&
+                   FromDate <= ToDate;
+        }
 
         public void FillCities()
         {
@@ -219,11 +245,55 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = null;
+                switch (columnName)
+                {
+                    case nameof(SelectedCountry):
+                        if (SelectedCountry.Key == 0)
+                            result = TranslationSource.Instance["ValidationCountry"];
+                        break;
+                    case nameof(SelectedCity):
+                        if (SelectedCity.Key == 0)
+                            result = TranslationSource.Instance["ValidationCity"];
+                        break;
+                    case nameof(SelectedLanguage):
+                        if (SelectedLanguage.Key == -1)
+                            result = TranslationSource.Instance["ValidationLanguage"];
+                        break;
+                    case nameof(Description):
+                        if (string.IsNullOrWhiteSpace(Description))
+                            result = TranslationSource.Instance["ValidationDescription"];
+                        break;
+                    case nameof(FromDate):
+                        if (FromDate < DateTime.Today)
+                            result = TranslationSource.Instance["ValidationDate"];
+                        break;
+                    case nameof(ToDate):
+                        if (ToDate < FromDate)
+                            result = TranslationSource.Instance["ValidationDateBefore"];
+                        break;
+                    case nameof(NumberOfPeople):
+                        if (NumberOfPeople <= 0)
+                            result = TranslationSource.Instance["ValidationNumberOfPeople"];
+                        break;
+                }
+                return result;
+            }
+        }
     }
+
+
 }

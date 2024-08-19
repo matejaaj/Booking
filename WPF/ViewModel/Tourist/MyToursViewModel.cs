@@ -90,8 +90,9 @@ namespace BookingApp.WPF.ViewModel.Tourist
             }
         }
 
-        private void CreateViewModels()
+        public void CreateViewModels()
         {
+            Tours.Clear();
             foreach (var tourInstanceId in GetMyTourInstanceIds())
             {
                 var tourInstance = _tourInstanceService.GetById(tourInstanceId);

@@ -19,7 +19,7 @@ namespace BookingApp.Validation
             {
                 if (date < MinDate)
                 {
-                    return new ValidationResult(false, $"Date must be after {MinDate}.");
+                    return new ValidationResult(false, $"Date must be after " + MinDate.ToString("MM/dd/yy"));
                 }
                 else
                 {
