@@ -5,9 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
       mc:Ignorable="d" 
-      d:Height="550" Width="936"
+      d:Height="570" Width="936"
       Title="Tutorial">
-
+    <Page.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="3" Color="Gray" BlurRadius="5"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
@@ -90,7 +107,18 @@
                     </TextBlock>
                 </GroupBox>
 
-                <MediaElement Source="../../../Resources/Images/VideoTutorial.jpg" Width="400" Height="300"  Margin="10"/>
+                <StackPanel>
+                    <MediaElement x:Name="videoPlayer" Source="../../../Resources/Tutorijal/tutorijal.mkv" Width="500" Height="300" Margin="10"
+                      LoadedBehavior="Manual" UnloadedBehavior="Manual"
+                      MediaFailed="videoPlayer_MediaFailed" MediaOpened="videoPlayer_MediaOpened"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                        <Button Content="Play" Click="PlayButton_Click" Style="{StaticResource ButtonStyle}" Margin="5"/>
+                        <Button Content="Pause" Click="PauseButton_Click" Style="{StaticResource ButtonStyle}" Margin="5"/>
+                        <Button Content="Reset" Click="ResetButton_Click" Style="{StaticResource ButtonStyle}" Margin="5"/>
+                    </StackPanel>
+                    <TextBlock x:Name="statusTextBlock" Foreground="Red" HorizontalAlignment="Center" Margin="10"/>
+                </StackPanel>
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

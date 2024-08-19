@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
       mc:Ignorable="d" 
-      d:DesignHeight="550" Width="936"
+      d:DesignHeight="570" Width="936"
       Title="PersonalData">
 
     <Grid Margin="10">
@@ -33,36 +33,36 @@
                 
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Image Source="../../../Resources/Images/nameIcon.png" Width="24" Height="24"/>
-                    <TextBlock Text="Ime: ime vozača" Margin="5" FontSize="12"/>
+                    <TextBlock Text="Ime: Milan" Margin="5" FontSize="12"/>
                 </StackPanel>
 
                 
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Image Source="../../../Resources/Images/nameIcon.png" Width="24" Height="24"/>
-                    <TextBlock Text="Prezime: prezime vozača" Margin="5" FontSize="12"/>
+                    <TextBlock Text="Prezime: Petkovic" Margin="5" FontSize="12"/>
                 </StackPanel>
 
                 
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Image Source="../../../Resources/Images/genderIcon.png" Width="24" Height="24"/>
-                    <TextBlock Text="Pol: pol vozača" Margin="5" FontSize="12"/>
+                    <TextBlock Text="Pol: Muski" Margin="5" FontSize="12"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Image Source="../../../Resources/Images/addressIcon.png" Width="24" Height="24"/>
-                    <TextBlock Text="Adresa: adresa vozača" Margin="5" FontSize="12"/>
+                    <TextBlock Text="Adresa: Njegosevih Prosvetara 1" Margin="5" FontSize="12"/>
                 </StackPanel>
 
                 
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Image Source="../../../Resources/Images/emailIcon.png" Width="24" Height="24"/>
-                    <TextBlock Text="E-mail: email vozača" Margin="5" FontSize="12"/>
+                    <TextBlock Text="E-mail: milanpe12@gmail.com" Margin="5" FontSize="12"/>
                 </StackPanel>
 
                 
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Image Source="../../../Resources/Images/phoneIcon.png" Width="24" Height="24"/>
-                    <TextBlock Text="Kontakt: tel vozača" Margin="5" FontSize="12"/>
+                    <TextBlock Text="Kontakt:  +381 69 5566606" Margin="5" FontSize="12"/>
                 </StackPanel>
 
                 
@@ -76,26 +76,25 @@
         <Border Grid.Row="0" Grid.Column="1" Background="White" Padding="10">
             <StackPanel>
                 <TextBlock Text="Radno mesto" FontWeight="Bold" FontSize="16"/>
-                <TextBlock Text="Radni staz vozača u firmi:" Margin="5" FontSize="12"/>
-                <TextBlock Text="Trenutna firma: Firma za koju vozi" Margin="5" FontSize="12"/>
-                <TextBlock Text="Mesto: Gde se nalazi firma" Margin="5" FontSize="12"/>
-                <TextBlock Text="Broj firme: 69 317798" Margin="5" FontSize="12"/>
+                <TextBlock Text="Radni staz vozača u firmi: 5 godina 143 dana" Margin="5" FontSize="12"/>
+                <TextBlock Text="Trenutna firma: Nas Taxi DOO" Margin="5" FontSize="12"/>
+                <TextBlock Text="Mesto: Beograd" Margin="5" FontSize="12"/>
+                <TextBlock Text="Broj firme: + 381 69 317798" Margin="5" FontSize="12"/>
             </StackPanel>
         </Border>
         <Border Grid.Column="1" Background="White" Padding="10" Margin="0,145,0,0" Grid.RowSpan="4">
             <StackPanel>
                 <TextBlock Text="Status vozača" FontWeight="Bold" FontSize="16"/>
-                <TextBlock Text="Status vozača: Običan ili supervozač" Margin="5" FontSize="12"/>
-                <TextBlock Text="Odabrano vožnji:" Margin="5" FontSize="12"/>
-                <TextBlock Text="Broj odrađenih vožnji" Margin="5" FontSize="12"/>
-                <TextBlock Text="Broj poena:" Margin="5" FontSize="12"/>
-                <TextBlock Text="Bonus:" Margin="5" FontSize="12"/>
-                
+                <TextBlock Text="Status vozača: Supervozač" Margin="5" FontSize="12"/>
+                <TextBlock Text="Odradjeno vožnji: 23 odradjene 9 otkazano" Margin="5" FontSize="12"/>
+                <TextBlock Text="Broj poena: 23 " Margin="5" FontSize="12"/>
+                <TextBlock Text="Bonus na platu: 15000" Margin="5" FontSize="12"/>
+                <TextBlock Text="Model auta: Pezo 3008" Margin="5" FontSize="12"/>
             </StackPanel>
         </Border>
         
-        <WrapPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="0,171,0,0" Grid.RowSpan="3">
-            <Image Source="../../../Resources/Images/taxi1.jpeg" Width="150" Height="110" Margin="5,5,35,5"/>
+        <WrapPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="0,161,0,0" Grid.RowSpan="3">
+            <Image Source="../../../Resources/Images/taxi1.jpeg" Width="150" Height="115" Margin="5,5,35,5"/>
             <Image Source="../../../Resources/Images/taxi2.jpeg" Width="150" Height="110" Margin="5,5,5,5"/>
 
         </WrapPanel>
@@ -104,14 +103,14 @@
         <Border Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Background="LightGray" Padding="10">
             <StackPanel>
                 <TextBlock Text="Detaljnije o Vozaču" FontWeight="Bold" FontSize="16"/>
-                <TextBlock Text="Radni staz celokupan:" Margin="5" FontSize="12"/>
-                <TextBlock Text="JMBG: brojevi" Margin="5" FontSize="12"/>
-                <TextBlock Text="Ime roditelja: Ime roditelja" Margin="5" FontSize="12"/>
-                <TextBlock Text="Datum rođenja: datum" Margin="5" FontSize="12"/>
-                <TextBlock Text="Mesecna Primanja:" Margin="5" FontSize="12"/>
+                <TextBlock Text="Radni staz celokupan:10 godina" Margin="5" FontSize="12"/>
+                <TextBlock Text="JMBG: brojevi: 123859123758" Margin="5" FontSize="12"/>
+                <TextBlock Text="Ime roditelja: Ljubomir" Margin="5" FontSize="12"/>
+                <TextBlock Text="Datum rođenja: 12.6.1850" Margin="5" FontSize="12"/>
+                <TextBlock Text="Mesecna Primanja:63000" Margin="5" FontSize="12"/>
             </StackPanel>
             
         </Border>
-        <Button Content="OK" Height="30" Width="70" VerticalAlignment="Top" Grid.Column="2" Margin="80,93,79,0" Grid.Row="3" />
+        
     </Grid>
 </Page>

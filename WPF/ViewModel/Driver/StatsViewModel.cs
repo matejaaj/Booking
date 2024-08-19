@@ -137,7 +137,13 @@ namespace BookingApp.WPF.ViewModel.Driver
 
         public void btnYearly_Click(object sender, RoutedEventArgs e)
         {
-            initList(true, ParseYear());
+            int year = ParseYear();
+            if (year == 0)
+            {
+                MainWindow.EventAggregator.Publish(new ShowMessageEvent("Not correct year entered!", "Error"));
+                return;
+            }
+            initList(true, year);
             DisplayMode = "Yearly Statistics";
         }
 

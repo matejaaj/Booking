@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookingApp.WPF.View.Driver"
         mc:Ignorable="d"
-        Title="CityConnect Firma" Height="550" Width="936">
+        Title="CityConnect Firma" Height="570" Width="936">
     <Grid>
         <Grid.ColumnDefinitions>
 
@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
         <TabPanel Panel.ZIndex="10">
 
-            <ToolBar  Background="#FFA9A9A9"  Margin="0,0,-12,-3" Height="44" VerticalAlignment="Bottom">
+            <ToolBar  Background="#FFA9A9A9"  Margin="0,0,-12,-2" Height="43" VerticalAlignment="Bottom">
                 <Button Click="ShowMenuBar">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/menuBar.png" Width="20" Height="25"/>
@@ -64,8 +64,8 @@
             </ToolBar>
         </TabPanel>
 
-        <Canvas x:Name="SideMenu" Canvas.ZIndex="100" Visibility="Collapsed" Background="Transparent"  MouseLeave="SideMenu_MouseLeave">
-            <StackPanel Width="250" Background="#FFA9A9A9" VerticalAlignment="Top">
+        <Canvas x:Name="SideMenu" Canvas.ZIndex="100"  Visibility="Collapsed"  Background="Transparent"  MouseLeave="SideMenu_MouseLeave">
+            <StackPanel Width="250" Background="#FFA9A9A9" VerticalAlignment="Top" HorizontalAlignment="Center" Height="554">
                 <Button Click="HideMenuBar" Background="#FF808080" BorderBrush="#3E3E40" Padding="0" HorizontalAlignment="Stretch" Height="39">
                     <DockPanel>
                         <Image Source="../../../Resources/Images/goBack.png" Width="20" Height="20" DockPanel.Dock="Left"/>
@@ -79,9 +79,23 @@
                 </StackPanel>
 
 
-                <Button Click="btn_LogOff" Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5"/>
+                <Button Click="btn_LogOff" Content="Log off" HorizontalAlignment="Center" Margin="5,5,0,5" Width="70" Height="25" FontSize="16">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="LightGray"/>
+                            <Setter Property="BorderBrush" Value="Gray"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="DarkGray"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
 
-                
+
                 <Button Click="ShowCreateVehicleForm" Padding="5" Margin="5,5,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/carReg.png" Width="25" Height="25"/>
@@ -92,12 +106,6 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/stats.png" Width="25" Height="25"/>
                         <TextBlock Text="Statistics" FontSize="16" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Button>
-                <Button Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Images/notifications.png" Width="25" Height="25"/>
-                        <TextBlock Text="Notifications" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
                 <Button Click="btnVacatioRequest_Click" Padding="5" Margin="5,0,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" >
@@ -118,19 +126,17 @@
                         <TextBlock Text="Personal Data" FontSize="16" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Click="btnTutorial_Click" Padding="5" Margin="5,57,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left">
+                <Button Click="btnTutorial_Click" Padding="5" Margin="5,110,0,0" BorderThickness="0" Background="#FFA9A9A9" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Resources/Images/tutorial.png" Width="25" Height="25"/>
-                        <TextBlock Text="Tutorial" FontSize="16" Margin="5,0,0,0"/>
+                        <TextBlock Text="Tutorial" FontSize="16" Margin="5,0,0,0" Height="21"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
         </Canvas>
 
         <DockPanel>
-            <StatusBar DockPanel.Dock="Bottom">
-                <TextBlock Name="StatusBarText">Ready</TextBlock>
-            </StatusBar>
+
 
             <Frame Grid.Row="1" Name="MainNavigationFrame" NavigationUIVisibility="Hidden" Height="456" Margin="0,50,0,0"/>
         </DockPanel>

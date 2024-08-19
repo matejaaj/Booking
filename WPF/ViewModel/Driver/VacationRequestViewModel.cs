@@ -11,6 +11,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Diagnostics;
 
 namespace BookingApp.WPF.ViewModel.Driver
 {
@@ -53,6 +57,9 @@ namespace BookingApp.WPF.ViewModel.Driver
                 OnPropertyChanged(nameof(StatusId));
             }
         }
+
+        
+
         private ObservableCollection<VacationType> _vacTypes = new ObservableCollection<VacationType>();
         public ObservableCollection<VacationType> VacTypes
         {
@@ -82,10 +89,11 @@ namespace BookingApp.WPF.ViewModel.Driver
             DriverId = driverId;
             service = vacService;
             VacTypes = new ObservableCollection<VacationType>(service.GetTypes());
+            SelectedType = VacTypes.First();
 
         }
 
-        public async Task Button_Confirm(object sender, EventArgs e, Page owner)
+        public async Task Button_Confirm(object sender, EventArgs e, System.Windows.Controls.Page owner)
         {
             DateOnly timeNow = DateOnly.FromDateTime(DateTime.Now);
             timeNow.AddDays(2);
@@ -123,6 +131,25 @@ namespace BookingApp.WPF.ViewModel.Driver
         public List<DriverOnVacation> getVacationsForDriver()
         {
             return service.getVacationsForDriver(DriverId);
+        }
+
+        public void GeneratePDF(List<DriverOnVacation> vacations, int start, int end)
+        {
+            Document doc = new Document(PageSize.A4);
+            string filePath = "../../../PDF/report.pdf";
+            PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
+            doc.Open();
+            PdfContentByte contentByte = writer.DirectContent;
+            doc.AddTitle("Kita je ovo");
+            var list = vacations.Where(v => v.StartDate.Year > start && v.EndDate.Year < end).ToList();
+            foreach ( var v in list)
+            {
+                doc.Add(new Paragraph(v.ToString()));
+            }
+            writer.Flush();
+            doc.Close();
+            writer.Close();
+            Process.Start("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", $"file:///\"C:\\Programiranje\\SIMS\\sims-ra-2024-group-5-team-b\\PDF\\report.pdf\"");
         }
     }
 }

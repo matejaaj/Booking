@@ -22,6 +22,8 @@ namespace BookingApp.WPF.ViewModel.Driver
         private DriveReservationService driveReservationSerivce { get; set; }
         private Trip trip { get; set; }
 
+        private UserService userService { get; set; }
+
         public DriveOverviewViewModel(DriveReservationService service)
         {
             Price = 0;
@@ -30,6 +32,7 @@ namespace BookingApp.WPF.ViewModel.Driver
             Timer.Interval = System.TimeSpan.Parse("00:00:01");
             Timer.Tick += Timer_Tick;
             tripRepository = new TripRepository();
+            userService = new UserService();
             trip = new Trip();
             trip.Status = TripStatus.DriverArrived;
             driveReservationSerivce = service;
@@ -107,6 +110,11 @@ namespace BookingApp.WPF.ViewModel.Driver
         private void Timer_Tick(object? sender, EventArgs e)
         {
             Price += 5;
+        }
+
+        public User GetUser(int id)
+        {
+            return userService.GetById(id);
         }
     }
 }
