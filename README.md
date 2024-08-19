@@ -26,5 +26,6 @@ The user interface was specifically designed for users who are not familiar with
 - **username**: t
 - **password**: t
 
-![application](https://github.com/user-attachments/assets/9c82c180-47a5-4f02-a272-44bfe4d09699)
+
+![application](https://github.com/user-attachments/assets/9aad6839-dcf3-4e83-a6d0-0cb94484fc92)
 
